@@ -44,6 +44,14 @@ docker-build: yarn ## publish linux/amd64 platform image locally
 docker-publish: yarn ## publish linux/amd64 platform image to Dockerhub
 	@bazel run --platforms=@build_bazel_rules_nodejs//toolchains/node:linux_amd64 //docker:push
 
+#################################
+# Other targets
+#################################
+
+.PHONY: metadata-server
+metadata-server: ## start metadata json-server watching db.json
+	@json-server --watch services/metadata/backend/data/db.json
+
 .PHONY: help
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort
