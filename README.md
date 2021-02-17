@@ -8,6 +8,39 @@ Service for browsing, searching, and editing of project metadata
 
 Service for providing users with project and dataset specific metadata.
 
+#### Front-end
+
+The front-end part is basing on [Svelte](https://svelte.dev). To run it, `yarn` and/or `make` need to be installed. 
+
+1. Clone the repoistory:
+
+```
+https://github.com/dasch-swiss/dasch-service-platform.git
+```
+
+
+2. Install the dependencies:
+
+```bash
+yarn install
+```
+
+or
+
+```bash
+make yarn
+```
+
+3. Start the application:
+
+```bash
+yarn run dev
+```
+
+This starts the application on the [localhost:5000](http://localhost:5000).
+
+*Note that you will also need to have [Node.js](https://nodejs.org) installed.*
+
 #### Server
 
 For now, test data is served from a simple `json-server` in order to be able to design the API and quickly start developing the front end.
