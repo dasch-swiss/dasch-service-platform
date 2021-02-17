@@ -5,10 +5,10 @@ nodejs_image(
     name = "docker",
     data = [
         "//public",
-        "//repository-srvc:bin",
+        "//services/metadata/backend:bin",
         "@npm//express",
     ],
-    entry_point = "//repository-srvc:index.ts",
+    entry_point = "//services/metadata/backend:index.ts",
 )
 
 container_push(

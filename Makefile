@@ -30,7 +30,7 @@ node-start-dev: yarn ## start the node server in dev mode (autorefresh)
 
 .PHONY: node-start-prod
 node-start-prod: yarn ## start the node server in prod mode
-	@bazel run //repository-srvc:bin
+	@bazel run //services/metadata/backend:bin
 
 #################################
 # Docker targets

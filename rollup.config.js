@@ -31,7 +31,7 @@ function serve() {
 }
 
 export default {
-    input: 'repository-app/main.ts',
+    input: 'services/metadata/frontend/main.ts',
     output: {
         sourcemap: true,
         format: 'iife',

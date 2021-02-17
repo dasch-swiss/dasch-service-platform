@@ -24,8 +24,8 @@ export class ExpressServer {
         expressServer.use(cors());
         expressServer.use(bodyparser.json());
         expressServer.use(requestLoggerMiddleware);
-        expressServer.use("/app/", express.static(resolve(__dirname, "..", "public")));
-        expressServer.get("/app/*", (req: express.Request, res: express.Response) => {
+        expressServer.use("/", express.static(resolve(__dirname, "..", "public")));
+        expressServer.get("/*", (req: express.Request, res: express.Response) => {
             res.sendFile(resolve(__dirname, "..", "public", "index.html"));
         });
 
