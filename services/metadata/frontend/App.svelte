@@ -2,6 +2,7 @@
   import Content from "./content/Content.svelte";
   
   const name = "DaSCH";
+  let future: string;
 </script>
 
 <style>
@@ -14,7 +15,7 @@
 </style>
 
 <div class="container">
-  <h1>The {name} future is never</h1>
+  <h1>The {name} future is {future}</h1>
 
   <Content/>
 </div>

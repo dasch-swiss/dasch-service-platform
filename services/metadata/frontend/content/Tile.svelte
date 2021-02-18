@@ -1,42 +1,58 @@
 <script lang="ts">
-  import { ProjectService } from "./project-service";
-  
-  let projectService = new ProjectService();
-  export let name = projectService.name;
-  export let description = projectService.description;
+  export let name: string;
+  export let description: string;
 </script>
 
 <style>
   section {
     border: 1px solid #000;
-    border-radius: 10px;
+    border-radius: 5px;
     background-color: #fff;
-    padding: 10px;
+    padding: 10px 30px;
     margin: 10px;
-    height: 200px;
-    width: 200px;
+    width: 240px;
     float: left;
   }
-
-  div {
+  .header{
+    /* background-color: lawngreen; */
+    height: 30px;
+    padding-top: 10px;
+  }
+  .header h5 {
+      text-align: center;
+      text-overflow: ellipsis;
+      overflow: hidden; 
+      white-space: nowrap;
+      margin: 0;
+    }
+  .content {
     display: -webkit-box;
-    -webkit-line-clamp: 5;
+    -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    font-size: 0.8em;
+    /* height: 130px;
+    padding: 10px 0; */
+    height: 90px;
+    margin: 10px 0 50px;
   }
-
-  h3, a {
-    text-align: center;
-  }
-
-  a {
+  .footer {
+    font-size: 0.8em;
     margin: 10px 0;
-    float: right;
+  }
+  .footer a {
+    display: flex;
+    justify-content: center;
+    height: 20px;
   }
 </style>
 
 <section>
-  <h3>{ name }</h3>
-  <div>{ description }</div>
-  <a href="#">Read more</a>
+  <div class="header">
+    <h5>{ name }</h5>
+  </div>
+  <div class="content">{ description }</div>
+  <div class="footer">
+    <a href="#">Read more</a>
+  </div>
 </section>

@@ -2,11 +2,26 @@
 import Tile from "./Tile.svelte";
 import { ProjectService } from "./project-service";
 import Category from "./Category.svelte";
+import { onMount } from "svelte";
+import type { Project } from "./project.model";
 
 let projectService = new ProjectService();
-let projects = projectService.getProjects();
+let projects: Project[];
 let categories = projectService.getCategories();
+let message = 'Loading...';
 
+setTimeout(() => {
+    message = 'No data retrived. Please check the connection and retry.';
+  }, 3000);
+
+onMount(async () => {
+  await fetch(' http://localhost:3000/projects')
+    .then(r => r.json())
+    .then(data => {
+      console.log(data);
+      projects = data;
+    });
+});
 </script>
 
 <style>
@@ -62,16 +77,21 @@ div:after {
 <div>
   <nav>
     <div class="category-container">
-      {#each categories as { name } }
+      {#each categories as { name }}
         <Category categoryName={name}/>
       {/each}
     </div>
   </nav>
   <main>
     <div class="tile-container">
-      {#each projects as { name, description }}
-        <Tile name={name} description={description}/>
-      {/each}
+      {#if projects}
+        {#each projects as project}
+          <Tile name={project.name} description={project.description}/>
+        {/each}
+      <!-- {/if} -->
+      {:else}
+        <p>{message}</p>
+      {/if}
     </div>
   </main>
 </div>
