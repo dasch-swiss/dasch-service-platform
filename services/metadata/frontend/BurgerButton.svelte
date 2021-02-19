@@ -2,7 +2,7 @@
   export let type = "open";
 </script>
 
-<div class="button">
+<div class="button" on:click>
   {#if type=="open"}
     <span class="line" />
     <span class="line" />
