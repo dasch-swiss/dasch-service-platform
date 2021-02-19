@@ -5,8 +5,9 @@
 </script>
 
 <nav>
-  <BurgerButton></BurgerButton>
+  <BurgerButton type="open"></BurgerButton>
   <div class="menu" style="visibility: {visible}">
+    <BurgerButton type="close"></BurgerButton>
     <ul>
       <slot />
     </ul>
@@ -29,9 +30,8 @@
     top: 0px;
     right: 0px;
     background-color: lightgray;
-    padding: 32px;
-    /* display: block; */
-    height: 200vh;
+    padding: 16px 32px;
+    height: calc(100vh - 32px);
     overflow-y: visible;
   }
 </style>

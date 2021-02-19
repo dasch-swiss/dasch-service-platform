@@ -1,31 +1,43 @@
+<script>
+  export let type = "open";
+</script>
+
 <div class="button">
-    <li><span class="line" /></li>
-    <li><span class="line" /></li>
-    <li><span class="line" /></li>
+  {#if type=="open"}
+    <span class="line" />
+    <span class="line" />
+    <span class="line" />
+    {:else}
+    <span id="d1" class="line" />
+    <span id="d2" class="line" />
+  {/if}
 </div>
 
 <style>
   .button {
     height: 32px;
     width: 32px;
-    border-radius: 6px;
-    display: table;
-    border-spacing: 5px;
+    border-radius: 3px;
+    display: inline-block;
+    cursor: pointer;
   }
   .button:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
-  li {
-    display: table-row;
-  }
   .line {
-    display: table-cell;
-    height: 4px;
-    margin: 5px;
-    background: black;
+    display: block;
+    width: 26px;
+    height: 5px;
+    background-color: #333;
+    margin: 4px 3px;
     border-radius: 3px;
-    vertical-align: middle;
-    text-align: center;
-    width: 100%;
+  }
+  #d1 {
+    -webkit-transform: scale(1.1) rotate(-45deg) translate(-6px, 7px);
+    transform: scale(1.1) rotate(-45deg) translate(-6px, 7px);
+  }
+  #d2 {
+    -webkit-transform: scale(1.1) rotate(45deg) translate(1px, 0px);
+    transform: scale(1.1) rotate(45deg) translate(1px, 0px);
   }
 </style>
