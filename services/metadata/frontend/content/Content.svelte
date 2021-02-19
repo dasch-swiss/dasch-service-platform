@@ -28,53 +28,76 @@ onMount(async () => {
 * {
   box-sizing: border-box;
 }
-
+.content-container {
+  display: flex;
+  flex-direction: row;
+}
 nav, main {
-  float: left;
+  /* float: left; */
   padding: 10px;
-  height: 600px;
+  min-height: 950px;
 }
-
 nav {
-  width: 30%;
+  /* width: 30%; */
+  flex: 0 0 30%;
   background-color: hotpink;
+  display: flex;
+  justify-content: center;
 }
-
 .category-container {
-  margin-top: 20px;
-  padding: 0 10px 10px;
+  background-color: lemonchiffon;
+  /* margin-top: 20px; */
+  padding: 40px;
+  max-width: 300px;
 }
-
 main {
-  width: 70%;
+  /* width: 70%; */
+  width: 100%;
   background-color: aqua;
   display: flex;
   align-items: center;
+  justify-content: center;
 }
-
 .tile-container {
   padding: 30px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
   background-color: skyblue;
-  flex: 1;
+  max-width: 1200px;
 }
-
-div:after {
+/* div:after {
   content: "";
   display: table;
   clear: both;
-}
+} */
 
-@media screen and (max-width: 600px) {
+@media screen and (max-width: 767px) {
+  .content-container {
+    flex-direction: column;
+  }
   nav, main {
-      width: 100%;
+    width: 100%;
+    min-height: 100%;
+  }
+}
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+
+}
+@media screen and (min-width: 1024px) and (max-width: 1365px) {
+
+}
+@media screen and (min-width: 1366px) {
+  .category-container {
+    padding-top: 80px;
+  }
+  nav {
+    justify-content: flex-end;
   }
 }
 </style>
 
-<div>
+<div class="content-container">
   <nav>
     <div class="category-container">
       {#each categories as { name }}

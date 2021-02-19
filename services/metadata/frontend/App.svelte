@@ -6,15 +6,12 @@
 </script>
 
 <style>
-  .container {
-    height: 95%;
-  }
   h1 {
     text-align: center;
   }
 </style>
 
-<div class="container">
+<div>
   <h1>The {name} future is {future}</h1>
 
   <Content/>
