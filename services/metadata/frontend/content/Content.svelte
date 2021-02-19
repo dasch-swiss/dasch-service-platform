@@ -1,13 +1,10 @@
 <script lang="ts">
 import Tile from "./Tile.svelte";
-import { ProjectService } from "./project-service";
 import Category from "./Category.svelte";
 import { onMount } from "svelte";
 import type { Project } from "./project.model";
 
-let projectService = new ProjectService();
 let projects: Project[];
-let categories = projectService.getCategories();
 let message = 'Loading...';
 
 setTimeout(() => {
@@ -100,9 +97,7 @@ main {
 <div class="content-container">
   <nav>
     <div class="category-container">
-      {#each categories as { name }}
-        <Category categoryName={name}/>
-      {/each}
+      <Category/>
     </div>
   </nav>
   <main>
@@ -111,7 +106,6 @@ main {
         {#each projects as project}
           <Tile name={project.name} description={project.description}/>
         {/each}
-      <!-- {/if} -->
       {:else}
         <p>{message}</p>
       {/if}
