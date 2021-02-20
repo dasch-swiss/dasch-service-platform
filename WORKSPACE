@@ -51,6 +51,27 @@ yarn_install(
   yarn_lock = "//:yarn.lock",
 )
 
+
+#
+# Download the rules_go repository
+#
+http_archive(
+    name = "io_bazel_rules_go",
+    sha256 = "52d0a57ea12139d727883c2fef03597970b89f2cc2a05722c42d1d7d41ec065b",
+    urls = [
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.24.13/rules_go-v0.24.13.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.24.13/rules_go-v0.24.13.tar.gz",
+    ],
+)
+
+load("@io_bazel_rules_go//go:deps.bzl", "go_register_toolchains", "go_rules_dependencies")
+
+go_rules_dependencies()
+
+go_register_toolchains()
+
+
+
 ##################################
 # Support creating Docker images #
 ##################################
@@ -76,6 +97,6 @@ load("@io_bazel_rules_docker//repositories:pip_repositories.bzl", "pip_deps")
 
 pip_deps()
 
-load("@io_bazel_rules_docker//nodejs:image.bzl", nodejs_image_repos = "repositories")
+load("@io_bazel_rules_docker//go:image.bzl", go_image_repos = "repositories")
 
-nodejs_image_repos()
+go_image_repos()

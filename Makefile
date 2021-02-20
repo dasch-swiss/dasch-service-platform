@@ -19,30 +19,21 @@ build: yarn ## build all targets
 	@bazel run @nodejs//:yarn -- run build
 	@bazel build //...
 
-.PHONY: build-linux
-build-linux: yarn ## build all targets
-	@yarn run build
-	@bazel build --platforms=@build_bazel_rules_nodejs//toolchains/node:linux_amd64 //...
-
-.PHONY: node-start-dev
-node-start-dev: yarn ## start the node server in dev mode (autorefresh)
-	@bazel run @nodejs//:yarn -- run node-start-dev
-
-.PHONY: node-start-prod
+.PHONY: metadata-service-start
 node-start-prod: yarn ## start the node server in prod mode
-	@bazel run //services/metadata/backend:bin
+	@bazel run //services/metadata/backend:main
 
 #################################
 # Docker targets
 #################################
 
-.PHONY: docker-build
-docker-build: yarn ## publish linux/amd64 platform image locally
-	@bazel run --platforms=@build_bazel_rules_nodejs//toolchains/node:linux_amd64 //docker -- --norun
+.PHONY: metadata-docker-build
+metadata-docker-build: ## publish linux/amd64 platform image locally
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend:main_image -- --norun
 
-.PHONY: docker-publish
-docker-publish: yarn ## publish linux/amd64 platform image to Dockerhub
-	@bazel run --platforms=@build_bazel_rules_nodejs//toolchains/node:linux_amd64 //docker:push
+.PHONY: metadata-docker-publish
+metadata-docker-publish: ## publish linux/amd64 platform image to Dockerhub
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/docker:push
 
 #################################
 # Other targets

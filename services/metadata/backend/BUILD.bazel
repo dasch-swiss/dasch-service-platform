@@ -39,3 +39,28 @@ nodejs_binary(
     ],
     entry_point = ":index.ts",
 )
+
+
+load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
+
+go_binary(
+    name = "main",
+    srcs = ["main.go"],
+    data = [
+        "//services/metadata/backend/data",
+        "//public",
+    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend",
+)
+
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+
+go_image(
+    name = "main_image",
+    srcs = ["main.go"],
+    data = [
+        "//public",
+        "//services/metadata/backend:main",
+    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend",
+)

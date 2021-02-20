@@ -2,6 +2,7 @@ bazel-out
 dist
 node_modules
 .clwb
+.ijwb
 bazel-*
 public/build
 .DS_Store
