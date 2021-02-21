@@ -96,6 +96,14 @@ go_repository(
     # version = "v1.2.0",
 )
 
+go_repository(
+    name = "com_github_stretchr_testify",
+    importpath = "github.com/stretchr/testify",
+    commit = "acba37e5db06f0093b465a7d47822bf13644b66c",
+    # sum = "h1:zK/HqS5bZxDptfPJNq8v7vJfXtkU7r9TLIoSr1bXaP4=",
+    # version = "v1.2.0",
+)
+
 # Declare indirect dependencies and register toolchains.
 go_rules_dependencies()
 
