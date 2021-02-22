@@ -48,11 +48,11 @@
 </style>
 
 <section>
-  <div class="header">
+  <div class=header>
     <h5>{ name }</h5>
   </div>
-  <div class="content">{ description }</div>
-  <div class="footer">
-    <a href="#">Read more</a>
+  <div class=content>{ description }</div>
+  <div class=footer>
+    <a href="/">Read more</a>
   </div>
 </section>

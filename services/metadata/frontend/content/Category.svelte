@@ -22,8 +22,8 @@
     categories[cat.id - 1].isOpen = !bool;
   };
 
-  const handleSubCategory = (n: number) => (event: any) => {
-    console.log(n);
+  const handleSubCategory = (n: number, q: string) => (event: any) => {
+    console.log(n, q);
   }
 </script>
 
@@ -55,21 +55,21 @@
   .not-allowed {
     cursor: not-allowed;
   }
-  input[type="radio"] {
+  input[type=radio] {
     margin-top: -3px;
     vertical-align: middle;
 }
 </style>
 
 {#each categories as category }
-  <button class={category.sub.length > 0 ? '' : 'not-allowed'} on:click={toggleCetegory(category)}>
+  <button class={category.sub.length ? '' : 'not-allowed'} on:click={toggleCetegory(category)}>
     {category.name}
   </button>
-  {#if category.sub && category.sub.length > 0}
-    <div class="{category.isOpen ? 'visible' : 'in-visible'}">
+  {#if category.sub && category.sub.length}
+    <div class={category.isOpen ? 'visible' : 'in-visible'}>
       {#each category.sub as sub, n}
         <label class=subcategory>
-          <input on:click={handleSubCategory(n)} value={n} type=radio name=subcategory />{sub}
+          <input on:click={handleSubCategory(n, sub)} value={n} type=radio name=subcategory />{sub}
         </label>
       {/each}
     </div>

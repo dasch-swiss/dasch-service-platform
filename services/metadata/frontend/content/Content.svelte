@@ -94,14 +94,14 @@ main {
 }
 </style>
 
-<div class="content-container">
+<div class=content-container>
   <nav>
-    <div class="category-container">
+    <div class=category-container>
       <Category/>
     </div>
   </nav>
   <main>
-    <div class="tile-container">
+    <div class=tile-container>
       {#if projects}
         {#each projects as project}
           <Tile name={project.name} description={project.description}/>
