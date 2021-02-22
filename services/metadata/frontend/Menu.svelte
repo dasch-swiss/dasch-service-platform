@@ -39,7 +39,7 @@
     padding: 16px 32px;
     height: 100vh;
     z-index: 10;
-    /* height: calc(100vh - 32px); */
     overflow-y: visible;
+    text-align: right;
   }
 </style>
