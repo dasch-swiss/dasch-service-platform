@@ -3,7 +3,7 @@
 </script>
 
 <div class="button" on:click>
-  {#if type=="open"}
+  {#if type==="open"}
     <span class="line" />
     <span class="line" />
     <span class="line" />

@@ -4,9 +4,9 @@
   let visible = "hidden";
 
   function toggleVisible() {
-    if (visible == "hidden") {
+    if (visible === "hidden") {
       visible = "visible"
-    } else if (visible == "visible") {
+    } else if (visible === "visible") {
       visible = "hidden"
     }
   }
