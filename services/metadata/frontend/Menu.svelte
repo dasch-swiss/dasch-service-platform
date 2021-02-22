@@ -1,20 +1,17 @@
 <script>
   import BurgerButton from "./BurgerButton.svelte";
 
-  let visible = "hidden";
+  let isVisible = false;
 
-  function toggleVisible() {
-    if (visible === "hidden") {
-      visible = "visible"
-    } else if (visible === "visible") {
-      visible = "hidden"
-    }
+  function toggleVisible(){
+    isVisible = !isVisible;
   }
+
 </script>
 
 <nav>
   <BurgerButton type="open" on:click={toggleVisible}></BurgerButton>
-  <div class="menu" style="visibility: {visible}">
+  <div class="menu" style="visibility: {isVisible ? 'visible' : 'hidden'}">
     <BurgerButton type="close" on:click={toggleVisible}></BurgerButton>
     <ul>
       <slot />
