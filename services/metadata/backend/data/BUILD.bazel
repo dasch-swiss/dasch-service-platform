@@ -4,5 +4,5 @@ filegroup(
     name = "data",
     srcs = [
         "db.json",
-    ]
+    ],
 )

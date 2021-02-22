@@ -21,18 +21,38 @@
  *
  */
 
-package entity_test
-
+package organization
 
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
-	"github.com/stretchr/testify/assert"
-	"testing"
 )
 
-func TestNewOrganization(t *testing.T) {
-	org, err := entity.NewOrganization("TEST Org")
-	assert.Nil(t, err)
-	assert.Equal(t, org.Name, "TEST Org")
-	assert.NotNil(t, org.ID)
+//Reader interface
+type Reader interface {
+	Get(id entity.ID) (*entity.Organization, error)
+	// Search(query string) ([]*entity.Organization, error)
+	// List() ([]*entity.Organization, error)
+}
+
+//Writer interface
+type Writer interface {
+	Create(e *entity.Organization) (entity.ID, error)
+	// Update(e *entity.Organization) error
+	// Delete(e *entity.ID) error
+}
+
+//Repository interface
+type Repository interface {
+	Reader
+	Writer
+}
+
+//UseCase interface
+type UseCase interface {
+	GetOrganization(id entity.ID) (*entity.Organization, error)
+	// SearchOrganization(query string) ([]*entity.Organization, error)
+	// ListOrganizations() ([]*entity.Organization, error)
+	CreateOrganization(name string) (entity.ID, error)
+	// UpdateOrganization(e *entity.Organization) error
+	// DeleteOrganization(id entity.ID) error
 }

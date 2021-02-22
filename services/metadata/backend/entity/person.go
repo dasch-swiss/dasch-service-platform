@@ -20,14 +20,12 @@
 package entity
 
 import (
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/entity"
-	//"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/address"
 	"time"
 )
 
 //Person domain entity
 type Person struct {
-	ID         entity.ID
+	ID         ID
 	Type       string
 	Email      []string
 	FamilyName string
@@ -35,6 +33,6 @@ type Person struct {
 	JobTitle   []string
 	CreatedAt  time.Time
 	UpdatedAt  time.Time
-	Address    []entity.ID
-	MemberOf   []entity.ID // organization
+	Address    []ID
+	MemberOf   []ID // organization
 }

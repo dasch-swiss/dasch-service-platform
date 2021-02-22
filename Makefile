@@ -19,21 +19,34 @@ build: yarn ## build all targets
 	@bazel run @nodejs//:yarn -- run build
 	@bazel build //...
 
-.PHONY: metadata-service-start
-node-start-prod: yarn ## start the node server in prod mode
-	@bazel run //services/metadata/backend:main
+.PHONY: test
+test: yarn ## test all targets
+	@bazel run @nodejs//:yarn -- run build
+	@bazel test //...
 
 #################################
-# Docker targets
+# Metadata service targets
 #################################
+
+.PHONY: metadata-gen-deps
+metadata-gen-deps: ## regenerate dependencies file (services/metadata/backend/deps.bzl)
+	@bazel run //services/metadata/backend:gazelle -- update-repos -from_file=services/metadata/backend/go.mod -to_macro=deps.bzl%services_go_dependencies
 
 .PHONY: metadata-docker-build
-metadata-docker-build: ## publish linux/amd64 platform image locally
-	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend:main_image -- --norun
+metadata-docker-build: build ## publish linux/amd64 platform image locally
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/cmd:image -- --norun
 
 .PHONY: metadata-docker-publish
-metadata-docker-publish: ## publish linux/amd64 platform image to Dockerhub
+metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
 	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/docker:push
+
+.PHONY: metadata-service-run
+metadata-service-run: build ## start the metadata service
+	@bazel run //services/metadata/backend/cmd
+
+.PHONY: metadata-service-test
+metadata-service-test: ## run all metadata-service tests
+	@bazel test //services/metadata/backend/...
 
 #################################
 # Other targets

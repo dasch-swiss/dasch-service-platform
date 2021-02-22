@@ -24,27 +24,25 @@
 package entity
 
 import (
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/entity"
-	e "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/error"
 	"time"
 )
 
 //Organization domain entity
 type Organization struct {
-	ID        entity.ID
+	ID        ID
 	Type      string
 	Name      string
 	Email     string
 	Url       string
 	CreatedAt time.Time
 	UpdatedAt time.Time
-	Addresses []entity.ID
+	Addresses []ID
 }
 
 //NewOrganization create a new organization entity
 func NewOrganization(name string) (*Organization, error) {
 	org := &Organization{
-		ID:        entity.NewID(),
+		ID:        NewID(),
 		Type:      "http://ns.dasch.swiss/repository#Organization",
 		Name:      name,
 		CreatedAt: time.Now(),
@@ -52,17 +50,17 @@ func NewOrganization(name string) (*Organization, error) {
 
 	err := org.Validate()
 	if err != nil {
-		return nil, e.ErrInvalidEntity
+		return nil, ErrInvalidEntity
 	}
 
 	return org, nil
 }
 
 //AddAddress add address to organization
-func (org *Organization) AddAddress(id entity.ID) error {
+func (org *Organization) AddAddress(id ID) error {
 	_, err := org.GetAddress(id)
 	if err == nil {
-		return e.ErrAddressAlreadyAdded
+		return ErrAddressAlreadyAdded
 	}
 	org.Addresses = append(org.Addresses, id)
 	org.UpdatedAt = time.Now()
@@ -70,7 +68,7 @@ func (org *Organization) AddAddress(id entity.ID) error {
 }
 
 //RemoveAddress remove address from organization
-func (org *Organization) RemoveAddress(id entity.ID) error {
+func (org *Organization) RemoveAddress(id ID) error {
 	for i, j := range org.Addresses {
 		if j == id {
 			org.Addresses = append(org.Addresses[:i], org.Addresses[i+1:]...)
@@ -78,23 +76,23 @@ func (org *Organization) RemoveAddress(id entity.ID) error {
 			return nil
 		}
 	}
-	return e.ErrNotFound
+	return ErrNotFound
 }
 
 //GetAddress get an address
-func (org *Organization) GetAddress(id entity.ID) (entity.ID, error) {
+func (org *Organization) GetAddress(id ID) (ID, error) {
 	for _, v := range org.Addresses {
 		if v == id {
 			return id, nil
 		}
 	}
-	return id, e.ErrNotFound
+	return id, ErrNotFound
 }
 
 //Validate validate organization entity
 func (org *Organization) Validate() error {
 	if org.Name == "" {
-		return e.ErrInvalidEntity
+		return ErrInvalidEntity
 	}
 
 	return nil

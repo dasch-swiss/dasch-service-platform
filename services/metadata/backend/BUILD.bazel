@@ -1,66 +1,11 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@npm//@bazel/typescript:index.bzl", "ts_library")
+load("@bazel_gazelle//:def.bzl", "gazelle")
 
-ts_library(
-    name = "server",
-    srcs = glob(["*.ts"]),
-    tsconfig = "//:tsconfig.json",
-    data = [
-        "//public",
-    ],
-    deps = [
-        "@npm//@types",
-        "@npm//express",
-        "@npm//body-parser",
-        "@npm//compression",
-        "@npm//cors",
-        "@npm//axios",
-    ],
-    devmode_target = "es2018", # has to be one of 'es3', 'es5', 'es2015', 'es2016', 'es2017', 'es2018' or 'esnext'
-    prodmode_target = "es2018", # has to be one of 'es3', 'es5', 'es2015', 'es2016', 'es2017', 'es2018' or 'esnext'
-    devmode_module = "esnext", # has to be one of 'none', 'commonjs', 'amd', 'umd', 'system', 'es2015' or 'esnext'
-    prodmode_module = "esnext", # has to be one of 'none', 'commonjs', 'amd', 'umd', 'system', 'es2015' or 'esnext'
-)
+# gazelle:prefix github.com/dasch-swiss/dasch-service-platform/services/metadata/backend
+gazelle(name = "gazelle")
 
-load("@build_bazel_rules_nodejs//:index.bzl", "nodejs_binary")
-
-filegroup(
-    name = "server_prod",
-    srcs = ["server"],
-    # Change to es6_sources to get the 'prodmode' JS
-    output_group = "es6_sources",
-)
-
-nodejs_binary(
-    name = "bin",
-    data = [
-        ":server_prod",
-    ],
-    entry_point = ":index.ts",
-)
-
-
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
-
-go_binary(
-    name = "main",
-    srcs = ["main.go"],
-    data = [
-        "//services/metadata/backend/data",
-        "//public",
-    ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend",
-)
-
-load("@io_bazel_rules_docker//go:image.bzl", "go_image")
-
-go_image(
-    name = "main_image",
-    srcs = ["main.go"],
-    data = [
-        "//public",
-        "//services/metadata/backend:main",
-    ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend",
-)
+exports_files([
+    "deps.bzl",
+    "go.mod",
+])

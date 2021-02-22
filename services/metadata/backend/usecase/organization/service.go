@@ -21,19 +21,32 @@
  *
  */
 
-package entity
+package organization
 
-import (
-	"time"
-)
+import "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
 
-//Address domain entity
-type Address struct {
-	ID              ID
-	Type            string
-	AddressLocality string
-	PostalCode      string
-	StreetAddress   string
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
+//Service interface
+type Service struct {
+	repo Repository
+}
+
+//NewService create a new organization use case
+func NewService(r Repository) *Service {
+	return &Service{
+		repo: r,
+	}
+}
+
+//CreateOrganization
+func (s *Service) CreateOrganization(name string) (entity.ID, error) {
+	e, err := entity.NewOrganization(name)
+	if err != nil {
+		return e.ID, err
+	}
+	return s.repo.Create(e)
+}
+
+//GetOrganization get a Organization
+func (s *Service) GetOrganization(id entity.ID) (*entity.Organization, error) {
+	return s.repo.Get(id)
 }

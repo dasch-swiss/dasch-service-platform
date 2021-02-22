@@ -21,19 +21,29 @@
  *
  */
 
-package entity
+package organization
 
 import (
+	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
+	"github.com/stretchr/testify/assert"
+	"testing"
 	"time"
 )
 
-//Address domain entity
-type Address struct {
-	ID              ID
-	Type            string
-	AddressLocality string
-	PostalCode      string
-	StreetAddress   string
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
+func newFixtureOrganization() *entity.Organization {
+	return &entity.Organization{
+		ID:        entity.NewID(),
+		Name:      "TEST Organization",
+		CreatedAt: time.Now(),
+	}
+}
+
+func Test_Create(t *testing.T) {
+	repo := newInmem()
+	service := NewService(repo)
+	org := newFixtureOrganization()
+	_, err := service.CreateOrganization(org.Name)
+	assert.Nil(t, err)
+	assert.False(t, org.CreatedAt.IsZero())
+	assert.True(t, org.UpdatedAt.IsZero())
 }

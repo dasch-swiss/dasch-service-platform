@@ -6,5 +6,5 @@ filegroup(
         "favicon.png",
         "global.css",
         "index.html",
-        ] + glob(["build/**/*"]),
+    ] + glob(["build/**/*"]),
 )

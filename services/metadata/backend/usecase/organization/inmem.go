@@ -21,19 +21,33 @@
  *
  */
 
-package entity
+package organization
 
-import (
-	"time"
-)
+import "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
 
-//Address domain entity
-type Address struct {
-	ID              ID
-	Type            string
-	AddressLocality string
-	PostalCode      string
-	StreetAddress   string
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
+//inmem in memory repo
+type inmem struct {
+	m map[entity.ID]*entity.Organization
+}
+
+//newInmem create a new in memory repository
+func newInmem() *inmem {
+	var m = map[entity.ID]*entity.Organization{}
+	return &inmem{
+		m: m,
+	}
+}
+
+//Create an organization
+func (r *inmem) Create(e *entity.Organization) (entity.ID, error) {
+	r.m[e.ID] = e
+	return e.ID, nil
+}
+
+//Get an organization
+func (r *inmem) Get(id entity.ID) (*entity.Organization, error) {
+	if r.m[id] == nil {
+		return nil, entity.ErrNotFound
+	}
+	return r.m[id], nil
 }

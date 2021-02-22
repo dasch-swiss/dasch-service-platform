@@ -1,74 +1,26 @@
-load("@io_bazel_rules_go//go:def.bzl", "go_binary", "go_library", "go_test")
-
-go_library(
-    name = "address",
-    srcs = [
-        "address.go",
-    ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/address",
-    deps = [
-        ":error",
-        ":entity",
-    ],
-    visibility = ["//visibility:public"],
-)
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 
 go_library(
     name = "entity",
     srcs = [
+        "address.go",
         "entity.go",
-    ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/entity",
-    deps = [
-        "@com_github_google_uuid//:go_default_library",
-    ],
-    visibility = ["//visibility:public"],
-)
-
-go_library(
-    name = "error",
-    srcs = [
         "error.go",
-    ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/error",
-    visibility = ["//visibility:public"],
-)
-
-go_library(
-    name = "organization",
-    srcs = [
         "organization.go",
+        "person.go"
     ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/organization",
-    deps = [
-        ":error",
-        ":entity",
-    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity",
     visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_google_uuid//:uuid",
+    ],
 )
 
 go_test(
     name = "organization_test",
-    srcs = [
-        "organization_test.go",
-    ],
-    deps = [
-        ":organization",
-        "@com_github_stretchr_testify//assert:go_default_library",
-    ],
+    srcs = ["organization_test.go"],
+    size = "small",
     visibility = ["//visibility:public"],
-)
-
-
-go_library(
-    name = "person",
-    srcs = [
-        "person.go",
-    ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity/person",
-    deps = [
-        ":error",
-        ":entity",
-    ],
-    visibility = ["//visibility:public"],
+    embed = [":entity"],
+    deps = ["@com_github_stretchr_testify//assert"],
 )
