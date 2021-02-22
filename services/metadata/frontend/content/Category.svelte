@@ -8,7 +8,7 @@ import type { Project } from "./project.model";
     sub: string[];
   };
 
-  export let searched: Project[];
+  export let searched: Project[] = [];
 
   let categories = [
     { id: 1, isOpen: false, name: 'Discipline', sub: ['Agriculture', 'Antropology', 'Geography', 'History'] },
@@ -41,7 +41,7 @@ import type { Project } from "./project.model";
     min-width: 200px;
     border: 1px solid #000;
     border-radius: 3px;
-    background-color: #ddd;
+    background-color: #c4c4c4;
     padding: 5px 20px;
     margin: 5px;
     cursor: pointer;
@@ -49,24 +49,27 @@ import type { Project } from "./project.model";
   }
   .visible {
     display: block;
+    min-width: 200px;
   }
   .in-visible {
     display: none;
   }
   .subcategory {
-    display: block;
+    display: flex;
+    align-items: center;
     cursor: pointer;
-    margin: 5px 15px 5px 5px;
+    margin: 5px 5px 5px 5px;
     padding: 5px;
-    background-color: yellowgreen;
+    /* background-color: yellowgreen; */
+    background-color: #f2f2f2;
     font-size: 0.8em;
   }
   .not-allowed {
     cursor: not-allowed;
   }
   input[type=radio] {
-    margin-top: -3px;
-    vertical-align: middle;
+    margin: 5px 10px;
+    display: flex;
 }
 </style>
 

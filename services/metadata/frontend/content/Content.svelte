@@ -26,9 +26,15 @@ onMount(async () => {
 * {
   box-sizing: border-box;
 }
+.wrapper {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 .content-container {
   display: flex;
   flex-direction: row;
+  max-width: 1920px;
 }
 nav, main {
   /* float: left; */
@@ -38,20 +44,20 @@ nav, main {
 nav {
   /* width: 30%; */
   flex: 0 0 30%;
-  background-color: hotpink;
+  /* background-color: hotpink; */
   display: flex;
   justify-content: center;
 }
 .category-container {
-  background-color: lemonchiffon;
+  /* background-color: lemonchiffon; */
   /* margin-top: 20px; */
-  padding: 40px;
+  padding: 45px;
   max-width: 300px;
 }
 main {
   /* width: 70%; */
   width: 100%;
-  background-color: aqua;
+  /* background-color: aqua; */
   display: flex;
   align-items: center;
   justify-content: center;
@@ -61,7 +67,7 @@ main {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  background-color: skyblue;
+  /* background-color: skyblue; */
   max-width: 1200px;
 }
 /* div:after {
@@ -79,37 +85,28 @@ main {
     min-height: 100%;
   }
 }
-@media screen and (min-width: 768px) and (max-width: 1023px) {
-
-}
-@media screen and (min-width: 1024px) and (max-width: 1365px) {
-
-}
-@media screen and (min-width: 1366px) {
-  .category-container {
-    padding-top: 80px;
-  }
-  nav {
-    justify-content: flex-end;
-  }
-}
+@media screen and (min-width: 768px) and (max-width: 1023px) { }
+@media screen and (min-width: 1024px) and (max-width: 1365px) { }
+@media screen and (min-width: 1366px) {}
 </style>
 
-<div class=content-container>
-  <nav>
-    <div class=category-container>
-      <Category bind:searched={projects} />
-    </div>
-  </nav>
-  <main>
-    <div class=tile-container>
-      {#if projects && projects.length}
-        {#each projects as project}
-          <Tile name={project.name} description={project.description}/>
-        {/each}
-      {:else}
-        <p>{message}</p>
-      {/if}
-    </div>
-  </main>
+<div class="wrapper">
+  <div class=content-container>
+    <nav>
+      <div class=category-container>
+        <Category bind:searched={projects} />
+      </div>
+    </nav>
+    <main>
+      <div class=tile-container>
+        {#if projects && projects.length}
+          {#each projects as project}
+            <Tile name={project.name} description={project.description}/>
+          {/each}
+        {:else}
+          <p>{message}</p>
+        {/if}
+      </div>
+    </main>
+  </div>
 </div>
