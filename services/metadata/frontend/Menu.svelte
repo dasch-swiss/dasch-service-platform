@@ -35,8 +35,11 @@
     top: 0px;
     right: 0px;
     background-color: lightgray;
+    box-sizing: border-box;
     padding: 16px 32px;
-    height: calc(100vh - 32px);
+    height: 100vh;
+    z-index: 10;
+    /* height: calc(100vh - 32px); */
     overflow-y: visible;
   }
 </style>
