@@ -8,14 +8,15 @@ let projects: Project[];
 let message = 'Loading...';
 
 setTimeout(() => {
-    message = 'No data retrived. Please check the connection and retry.';
+  const noData = 'No data retrived. Please check the connection and retry.';
+  const noProject = 'No projects found.'
+    message = projects && projects.length ? noData : noProject;
   }, 3000);
 
 onMount(async () => {
-  await fetch(' http://localhost:3000/projects')
+  await fetch('http://localhost:3000/projects')
     .then(r => r.json())
     .then(data => {
-      console.log(data);
       projects = data;
     });
 });
@@ -97,12 +98,12 @@ main {
 <div class=content-container>
   <nav>
     <div class=category-container>
-      <Category/>
+      <Category bind:searched={projects} />
     </div>
   </nav>
   <main>
     <div class=tile-container>
-      {#if projects}
+      {#if projects && projects.length}
         {#each projects as project}
           <Tile name={project.name} description={project.description}/>
         {/each}

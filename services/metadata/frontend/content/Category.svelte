@@ -1,4 +1,6 @@
 <script lang="ts">
+import type { Project } from "./project.model";
+
   interface Category {
     id: number;
     isOpen: boolean;
@@ -6,8 +8,10 @@
     sub: string[];
   };
 
+  export let searched: Project[];
+
   let categories = [
-    { id: 1, isOpen: false, name: 'Discipline', sub: ['Antropology', 'Geography', 'History'] },
+    { id: 1, isOpen: false, name: 'Discipline', sub: ['Agriculture', 'Antropology', 'Geography', 'History'] },
     { id: 2, isOpen: false, name: 'Type of data', sub: ['First', 'Second'] },
     { id: 3, isOpen: false, name: 'Temporal coverage', sub: [] },
     { id: 4, isOpen: false, name: 'Spatial coverage', sub: [] },
@@ -22,8 +26,13 @@
     categories[cat.id - 1].isOpen = !bool;
   };
 
-  const handleSubCategory = (n: number, q: string) => (event: any) => {
-    console.log(n, q);
+  const handleSubCategory = (q: string) => (event: any) => {
+    fetch(`http://localhost:3000/projects?q=${q}`)
+      .then(r => r.json())
+      .then(data => {
+        console.log(data);
+        searched = data;
+    });
   }
 </script>
 
@@ -47,7 +56,7 @@
   .subcategory {
     display: block;
     cursor: pointer;
-    margin: 5px;
+    margin: 5px 15px 5px 5px;
     padding: 5px;
     background-color: yellowgreen;
     font-size: 0.8em;
@@ -69,7 +78,7 @@
     <div class={category.isOpen ? 'visible' : 'in-visible'}>
       {#each category.sub as sub, n}
         <label class=subcategory>
-          <input on:click={handleSubCategory(n, sub)} value={n} type=radio name=subcategory />{sub}
+          <input on:click={handleSubCategory(sub)} value={n} type=radio name=subcategory />{sub}
         </label>
       {/each}
     </div>
