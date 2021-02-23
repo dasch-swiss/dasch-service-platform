@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "handler",
+    srcs = [
+        "cors.go",
+        "metrics.go",
+    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api/middleware",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//services/metadata/backend/pkg/metric",
+    ],
+)

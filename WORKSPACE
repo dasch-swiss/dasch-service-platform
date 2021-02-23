@@ -6,6 +6,10 @@ workspace(
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
 load("@bazel_tools//tools/build_defs/repo:git.bzl", "git_repository")
 
+##################################
+# Base                           #
+##################################
+
 #
 # bazel-skylib 1.0.2 released 2019.10.09 (https://github.com/bazelbuild/bazel-skylib/releases/tag/1.0.2)
 #
@@ -21,6 +25,10 @@ http_archive(
 load("@bazel_skylib//:workspace.bzl", "bazel_skylib_workspace")
 
 bazel_skylib_workspace()
+
+##################################
+# Javascript                     #
+##################################
 
 #
 # Download the rules_nodejs repository
@@ -54,6 +62,28 @@ yarn_install(
     package_json = "//:package.json",
     yarn_lock = "//:yarn.lock",
 )
+
+##################################
+# Protobuf                       #
+##################################
+
+#
+# Download Protobuf
+#
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "9748c0d90e54ea09e5e75fb7fac16edce15d2028d4356f32211cfa3c0e956564",
+    strip_prefix = "protobuf-3.11.4",
+    urls = ["https://github.com/protocolbuffers/protobuf/archive/v3.11.4.zip"],
+)
+
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+protobuf_deps()
+
+##################################
+# Go                             #
+##################################
 
 #
 # Download the Go rules
@@ -95,7 +125,7 @@ go_register_toolchains(version = "1.16")
 gazelle_dependencies()
 
 ##################################
-# Support creating Docker images #
+# Docker                         #
 ##################################
 
 rules_docker_version = "0.14.4"
