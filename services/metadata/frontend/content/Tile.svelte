@@ -3,6 +3,16 @@
   export let description: string;
 </script>
 
+<section>
+  <div class=header>
+    <h5>{ name }</h5>
+  </div>
+  <div class=content>{ description }</div>
+  <div class=footer>
+    <a href="/">Read more</a>
+  </div>
+</section>
+
 <style>
   section {
     border: 1px solid #000;
@@ -11,6 +21,7 @@
     padding: 10px 30px;
     margin: 10px;
     width: 240px;
+    height: 248px;
     float: left;
   }
   .header{
@@ -46,13 +57,3 @@
     height: 20px;
   }
 </style>
-
-<section>
-  <div class=header>
-    <h5>{ name }</h5>
-  </div>
-  <div class=content>{ description }</div>
-  <div class=footer>
-    <a href="/">Read more</a>
-  </div>
-</section>

@@ -1,12 +1,11 @@
-<script>
+<script lang="ts">
   import BurgerButton from "./BurgerButton.svelte";
 
   let isVisible = false;
 
-  function toggleVisible(){
+  function toggleVisible() {
     isVisible = !isVisible;
   }
-
 </script>
 
 <nav>

@@ -22,6 +22,27 @@ onMount(async () => {
 });
 </script>
 
+<div class=wrapper>
+  <div class=content-container>
+    <nav>
+      <div class=category-container>
+        <Category bind:searched={projects} />
+      </div>
+    </nav>
+    <main>
+      <div class=tile-container>
+        {#if projects && projects.length}
+          {#each projects as project}
+            <Tile name={project.name} description={project.description}/>
+          {/each}
+        {:else}
+          <p>{message}</p>
+        {/if}
+      </div>
+    </main>
+  </div>
+</div>
+
 <style>
 * {
   box-sizing: border-box;
@@ -82,31 +103,10 @@ main {
   }
   nav, main {
     width: 100%;
-    min-height: 100%;
+    min-height: auto;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) { }
 @media screen and (min-width: 1024px) and (max-width: 1365px) { }
 @media screen and (min-width: 1366px) {}
 </style>
-
-<div class="wrapper">
-  <div class=content-container>
-    <nav>
-      <div class=category-container>
-        <Category bind:searched={projects} />
-      </div>
-    </nav>
-    <main>
-      <div class=tile-container>
-        {#if projects && projects.length}
-          {#each projects as project}
-            <Tile name={project.name} description={project.description}/>
-          {/each}
-        {:else}
-          <p>{message}</p>
-        {/if}
-      </div>
-    </main>
-  </div>
-</div>

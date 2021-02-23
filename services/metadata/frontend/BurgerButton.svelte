@@ -1,9 +1,9 @@
-<script>
+<script lang="ts">
   export let type = "open";
 </script>
 
 <div class="button" on:click>
-  {#if type==="open"}
+  {#if type === "open"}
     <span class="line" />
     <span class="line" />
     <span class="line" />

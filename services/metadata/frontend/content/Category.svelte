@@ -36,6 +36,21 @@ import type { Project } from "./project.model";
   }
 </script>
 
+{#each categories as category }
+  <button class={category.sub.length ? '' : 'not-allowed'} on:click={toggleCetegory(category)}>
+    {category.name}
+  </button>
+  {#if category.sub && category.sub.length}
+    <div class={category.isOpen ? 'visible' : 'in-visible'}>
+      {#each category.sub as sub, n}
+        <label class=subcategory>
+          <input on:click={handleSubCategory(sub)} value={n} type=checkbox name=subcategory />{sub}
+        </label>
+      {/each}
+    </div>
+  {/if}
+{/each}
+
 <style>
   button {
     min-width: 200px;
@@ -67,23 +82,8 @@ import type { Project } from "./project.model";
   .not-allowed {
     cursor: not-allowed;
   }
-  input[type=radio] {
+  input[type=checkbox] {
     margin: 5px 10px;
     display: flex;
 }
 </style>
-
-{#each categories as category }
-  <button class={category.sub.length ? '' : 'not-allowed'} on:click={toggleCetegory(category)}>
-    {category.name}
-  </button>
-  {#if category.sub && category.sub.length}
-    <div class={category.isOpen ? 'visible' : 'in-visible'}>
-      {#each category.sub as sub, n}
-        <label class=subcategory>
-          <input on:click={handleSubCategory(sub)} value={n} type=radio name=subcategory />{sub}
-        </label>
-      {/each}
-    </div>
-  {/if}
-{/each}

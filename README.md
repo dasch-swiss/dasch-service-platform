@@ -48,7 +48,7 @@ For now, test data is served from a simple `json-server` in order to be able to 
 Be sure to have `json-server` installed:
 
 ```bash
-npm install -g json-server
+yarn install -g json-server
 ```
 
 `json-server` watches and serves a single `db.json` file on port 3000.
