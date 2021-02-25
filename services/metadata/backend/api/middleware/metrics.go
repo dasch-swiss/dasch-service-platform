@@ -24,7 +24,7 @@
 package middleware
 
 import (
-	metric "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/pkg/metrics"
+	metric "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/pkg/metric"
 	"github.com/urfave/negroni"
 	"net/http"
 	"strconv"

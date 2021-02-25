@@ -31,12 +31,10 @@ import (
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/infrastructure/repository"
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/pkg/metric"
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/usecase/organization"
-	badger "github.com/dgraph-io/badger/v3"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
 	"github.com/urfave/negroni"
-	"io/ioutil"
 	"log"
 	"net/http"
 	"os"
@@ -51,16 +49,6 @@ func main() {
 		log.Println(err)
 	}
 	fmt.Println(path)
-
-
-	// Open the Badger database located in the /tmp/badger directory.
-	// It will be created if it doesn't exist.
-	db, err := badger.Open(badger.DefaultOptions("/tmp/badger"))
-	if err != nil {
-		log.Fatal(err)
-	}
-	defer db.Close()
-	// Your code here…
 
 	organizationRepository := repository.NewInmemDB()
 	organizationService := organization.NewService(organizationRepository)

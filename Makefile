@@ -34,7 +34,7 @@ metadata-gen-deps: ## regenerate dependencies file (services/metadata/backend/de
 
 .PHONY: metadata-docker-build
 metadata-docker-build: build ## publish linux/amd64 platform image locally
-	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/cmd:image -- --norun
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/api:image -- --norun
 
 .PHONY: metadata-docker-publish
 metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
@@ -42,7 +42,7 @@ metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhu
 
 .PHONY: metadata-service-run
 metadata-service-run: build ## start the metadata service
-	@bazel run //services/metadata/backend/cmd
+	@bazel run //services/metadata/backend/api
 
 .PHONY: metadata-service-test
 metadata-service-test: ## run all metadata-service tests

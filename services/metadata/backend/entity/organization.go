@@ -27,16 +27,23 @@ import (
 	"time"
 )
 
+//postalAddress domain entity
+type postalAddress struct {
+	StreetAddress   string
+	PostalCode      string
+	AddressLocality string
+}
+
 //Organization domain entity
 type Organization struct {
-	ID        ID
-	Type      string
-	Name      string
-	Email     string
-	Url       string
-	CreatedAt time.Time
-	UpdatedAt time.Time
-	Addresses []ID
+	ID              ID
+	Type            string
+	Name            string
+	Email           string
+	Url             string
+	PostalAddresses postalAddress
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
 }
 
 //NewOrganization create a new organization entity
@@ -56,37 +63,40 @@ func NewOrganization(name string) (*Organization, error) {
 	return org, nil
 }
 
-//AddAddress add address to organization
-func (org *Organization) AddAddress(id ID) error {
-	_, err := org.GetAddress(id)
-	if err == nil {
-		return ErrAddressAlreadyAdded
+//AddPostalAddress add address to organization
+func (org *Organization) AddPostalAddress(streetaddress string, postalcode string, addresslocality string) error {
+
+	address := postalAddress{
+		StreetAddress:   streetaddress,
+		PostalCode:      postalcode,
+		AddressLocality: addresslocality,
 	}
-	org.Addresses = append(org.Addresses, id)
+
+	if address.StreetAddress == "" {
+		return ErrInvalidEntity
+	}
+
+	if address.PostalCode == "" {
+		return ErrInvalidEntity
+	}
+
+	if address.AddressLocality == "" {
+		return ErrInvalidEntity
+	}
+
+	org.PostalAddresses = address
 	org.UpdatedAt = time.Now()
 	return nil
 }
 
 //RemoveAddress remove address from organization
-func (org *Organization) RemoveAddress(id ID) error {
-	for i, j := range org.Addresses {
-		if j == id {
-			org.Addresses = append(org.Addresses[:i], org.Addresses[i+1:]...)
-			org.UpdatedAt = time.Now()
-			return nil
-		}
+func (org *Organization) RemoveAddress() error {
+	if org.PostalAddresses == (postalAddress{}) {
+		return ErrPostalAddressNotSet
+	} else {
+		org.PostalAddresses = postalAddress{}
 	}
-	return ErrNotFound
-}
-
-//GetAddress get an address
-func (org *Organization) GetAddress(id ID) (ID, error) {
-	for _, v := range org.Addresses {
-		if v == id {
-			return id, nil
-		}
-	}
-	return id, ErrNotFound
+	return nil
 }
 
 //Validate validate organization entity

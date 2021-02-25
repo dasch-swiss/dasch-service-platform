@@ -3,11 +3,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "entity",
     srcs = [
-        "address.go",
         "entity.go",
         "error.go",
         "organization.go",
-        "person.go"
+        "person.go",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity",
     visibility = ["//visibility:public"],

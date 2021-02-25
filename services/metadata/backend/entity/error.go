@@ -37,8 +37,8 @@ var ErrCannotBeDeleted = errors.New("cannot be deleted")
 //ErrNotEnoughBooks cannot borrow
 var ErrNotEnoughBooks = errors.New("not enough books")
 
-//ErrBookAlreadyBorrowed cannot borrow
-var ErrAddressAlreadyAdded = errors.New("address already added")
+//ErrPostalAddressNotSet cannot be deleted
+var ErrPostalAddressNotSet = errors.New("postal address is not set")
 
 //ErrBookNotBorrowed cannot return
 var ErrBookNotBorrowed = errors.New("book not borrowed")
