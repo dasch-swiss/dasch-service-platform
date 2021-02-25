@@ -30,7 +30,7 @@ test: yarn ## test all targets
 
 .PHONY: metadata-gen-deps
 metadata-gen-deps: ## regenerate dependencies file (services/metadata/backend/deps.bzl)
-	@bazel run //services/metadata/backend:gazelle -- update-repos -from_file=services/metadata/backend/go.mod -to_macro=deps.bzl%services_go_dependencies
+	@bazel run //services/metadata/backend:gazelle -- update-repos -from_file=services/metadata/backend/go.mod -to_macro=deps.bzl%go_dependencies
 
 .PHONY: metadata-docker-build
 metadata-docker-build: build ## publish linux/amd64 platform image locally
@@ -47,6 +47,30 @@ metadata-service-run: build ## start the metadata service
 .PHONY: metadata-service-test
 metadata-service-test: ## run all metadata-service tests
 	@bazel test //services/metadata/backend/...
+
+#################################
+# Resource service targets
+#################################
+
+.PHONY: resource-gen-deps
+resource-gen-deps: ## regenerate dependencies file (services/metadata/backend/deps.bzl)
+	@bazel run //services/resource/backend:gazelle -- update-repos -from_file=services/resource/backend/go.mod -to_macro=deps.bzl%go_dependencies
+
+.PHONY: resource-docker-build
+resource-docker-build: build ## publish linux/amd64 platform image locally
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/resource/backend/api:image -- --norun
+
+.PHONY: resource-docker-publish
+resource-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/resource/docker:push
+
+.PHONY: resource-service-run
+resource-service-run: build ## start the metadata service
+	@bazel run //services/resource/backend/api
+
+.PHONY: resource-service-test
+resource-service-test: ## run all metadata-service tests
+	@bazel test //services/resource/backend/...
 
 #################################
 # Other targets
