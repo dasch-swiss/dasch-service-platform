@@ -65,7 +65,7 @@ The steps to add an external dependency are as follows:
 1. add repository and version to `go.mod`
 1. from inside this directory, run `go mod download gihub.com/stretchr/testify`
   (exchange the name of the package with the one you would like to add)
-1. from the root of the repository, run `make metadata-gazelle-generate-dependencies`
+1. from the root of the repository, run `make resource-gen-deps`
 
 Running the `make metadata-gazelle-generate-dependencies` will regenerate the `deps.bzl` file found
 in the root of the repository. This file is loaded inside the `WORKSPACE` file, so that Bazel
