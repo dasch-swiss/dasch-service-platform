@@ -67,7 +67,7 @@ The steps to add an external dependency are as follows:
   (exchange the name of the package with the one you would like to add)
 1. from the root of the repository, run `make resource-gen-deps`
 
-Running the `make metadata-gazelle-generate-dependencies` will regenerate the `deps.bzl` file found
+Running the `make metadata-gen-deps` will regenerate the `deps.bzl` file found
 in the root of the repository. This file is loaded inside the `WORKSPACE` file, so that Bazel
 can go and fetch the external repositories and make them available to be used in rules.
 
