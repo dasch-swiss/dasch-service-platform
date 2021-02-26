@@ -5,6 +5,10 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 go_binary(
     name = "api",
     srcs = ["main.go"],
+    data = [
+        "//public",
+        "//services/metadata/backend/data",
+    ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api",
     visibility = ["//visibility:public"],
     deps = [
@@ -20,10 +24,6 @@ go_binary(
         "@com_github_prometheus_client_golang//prometheus/promhttp",
         "@com_github_urfave_negroni//:negroni",
     ],
-    data = [
-        "//public",
-        "//services/metadata/backend/data",
-    ]
 )
 
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
@@ -31,6 +31,10 @@ load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 go_image(
     name = "image",
     srcs = ["main.go"],
+    data = [
+        "//public",
+        "//services/metadata/backend/data",
+    ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api",
     visibility = ["//visibility:public"],
     deps = [
@@ -46,8 +50,4 @@ go_image(
         "@com_github_prometheus_client_golang//prometheus/promhttp",
         "@com_github_urfave_negroni//:negroni",
     ],
-    data = [
-        "//public",
-        "//services/metadata/backend/data",
-    ]
 )

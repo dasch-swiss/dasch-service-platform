@@ -28,11 +28,11 @@ go_library(
 
 go_test(
     name = "service_test",
-    srcs = ["service_test.go"],
-    visibility = ["//visibility:public"],
     size = "small",
+    srcs = ["service_test.go"],
     embed = [":organization"],
+    visibility = ["//visibility:public"],
     deps = [
-        "@com_github_stretchr_testify//assert"
+        "@com_github_stretchr_testify//assert",
     ],
 )
