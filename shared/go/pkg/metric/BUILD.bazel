@@ -6,7 +6,7 @@ go_library(
         "interface.go",
         "prometheus.go",
     ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/pkg/metric",
+    importpath = "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric",
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_prometheus_client_golang//prometheus",

@@ -29,8 +29,8 @@ import (
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api/middleware"
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/config"
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/infrastructure/repository"
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/pkg/metric"
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/usecase/organization"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/prometheus/client_golang/prometheus/promhttp"
@@ -80,32 +80,31 @@ func main() {
 		WriteTimeout: 10 * time.Second,
 		Addr:         ":" + strconv.Itoa(config.API_PORT),
 		// FIXME: get rid of deprecated github.com/gorilla/context library
-		Handler:      context.ClearHandler(http.DefaultServeMux),
-		ErrorLog:     logger,
+		Handler:  context.ClearHandler(http.DefaultServeMux),
+		ErrorLog: logger,
 	}
 	err = srv.ListenAndServe()
 	if err != nil {
 		log.Fatal(err.Error())
 	}
 
+	/*
+		// create file server handler to serve public folder relative to workspace root
+		fs := http.FileServer(http.Dir("./public"))
+		http.Handle("/*", fs)
 
-/*
-	// create file server handler to serve public folder relative to workspace root
-	fs := http.FileServer(http.Dir("./public"))
-	http.Handle("/*", fs)
+		// add spa handler to serve for calls to root
+		http.HandleFunc("/", spaHandler)
 
-	// add spa handler to serve for calls to root
-	http.HandleFunc("/", spaHandler)
+		// add db route handler to serve db.json
+		http.HandleFunc("/db", dbHandler)
 
-	// add db route handler to serve db.json
-	http.HandleFunc("/db", dbHandler)
+		// add projects route handler to serve projects
+		http.HandleFunc("/projects", projectsHandler)
 
-	// add projects route handler to serve projects
-	http.HandleFunc("/projects", projectsHandler)
-
-	// start HTTP server with all the previous attached handlers
-	log.Fatal(http.ListenAndServe(":8080", nil))
-*/
+		// start HTTP server with all the previous attached handlers
+		log.Fatal(http.ListenAndServe(":8080", nil))
+	*/
 }
 
 /*

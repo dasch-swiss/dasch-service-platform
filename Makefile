@@ -30,7 +30,7 @@ test: yarn ## test all targets
 
 .PHONY: metadata-gen-deps
 metadata-gen-deps: ## regenerate dependencies file (services/metadata/backend/deps.bzl)
-	@bazel run //services/metadata/backend:gazelle -- update-repos -from_file=services/metadata/backend/go.mod -to_macro=deps.bzl%services_go_dependencies
+	@bazel run //services/metadata/backend:gazelle -- update-repos -from_file=services/metadata/backend/go.mod -to_macro=deps.bzl%go_dependencies
 
 .PHONY: metadata-docker-build
 metadata-docker-build: build ## publish linux/amd64 platform image locally

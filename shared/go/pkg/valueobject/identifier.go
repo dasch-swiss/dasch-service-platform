@@ -21,24 +21,26 @@
  *
  */
 
-package middleware
+package valueobject
 
-import (
-	metric "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/urfave/negroni"
-	"net/http"
-	"strconv"
-)
+type Identifier struct {
+	value string
+}
 
-//Metrics to prometheus
-func Metrics(mService metric.Service) negroni.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		appMetric := metric.NewHTTP(r.URL.Path, r.Method)
-		appMetric.Started()
-		next(w, r)
-		res := w.(negroni.ResponseWriter)
-		appMetric.Finished()
-		appMetric.StatusCode = strconv.Itoa(res.Status())
-		mService.SaveHTTP(appMetric)
-	}
+//NewIdentifier creates a identifier value object
+func NewIdentifier(value string) (Identifier, error) {
+	var n Identifier
+	n.value = value
+	return n, nil
+}
+
+//String returns the value as string
+func (n Identifier) String() string {
+	return n.value
+}
+
+//Equals tests for equality with another value object
+func (n Identifier) Equals(value Value) bool {
+	otherIdentifier, ok := value.(Identifier)
+	return ok && n.value == otherIdentifier.value
 }
