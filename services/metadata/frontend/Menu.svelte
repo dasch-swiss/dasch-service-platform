@@ -8,18 +8,21 @@
   }
 </script>
 
-<nav>
-  <BurgerButton type="open" on:click={toggleVisible}></BurgerButton>
+<nav class="menu">
+  <!-- <BurgerButton type="open" on:click={toggleVisible}></BurgerButton>
   <div class="menu" style="visibility: {isVisible ? 'visible' : 'hidden'}">
     <BurgerButton type="close" on:click={toggleVisible}></BurgerButton>
-    <ul>
+    <ul>-->
       <slot />
-    </ul>
-  </div>
+    <!-- </ul>
+  </div>  -->
 </nav>
 
 <style>
-  ul {
+  .menu {
+    background-color: #e6e6e6;
+  }
+  /* ul {
     list-style-type: none;
     margin: 0px;
     padding: 0px
@@ -40,5 +43,5 @@
     z-index: 10;
     overflow-y: visible;
     text-align: right;
-  }
+  } */
 </style>
