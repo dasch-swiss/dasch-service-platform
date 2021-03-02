@@ -25,7 +25,7 @@ onMount(async () => {
 <div class=wrapper>
   <div class=content-container>
     <nav>
-      <div class=category-container>
+      <div class="category-container hidden m-inline-block">
         <Category bind:searched={projects} />
       </div>
     </nav>
