@@ -3,9 +3,9 @@
 
   export let isVisible = false;
 
-  function toggleVisible() {
-    isVisible = !isVisible;
-  }
+  // function toggleVisible() {
+  //   isVisible = !isVisible;
+  // }
 </script>
 
 <nav class="menu" class:hidden={!isVisible}>
@@ -22,6 +22,18 @@
   .menu {
     background-color: var(--cl-background-light);
   }
+
+
+  @media screen and (min-width: 450px){
+	  /* small screen styles */
+    .menu {
+      width: 20rem;
+      
+    }
+  }
+
+
+
   /* ul {
     list-style-type: none;
     margin: 0px;
