@@ -29,13 +29,13 @@
 <header>
   <div class="header">
     <a href="." class="header-left">
-      <img class="logo" src="https://dasch.swiss/content/images/2021/02/DaSCH_Logo_RGB.jpeg" alt="DaSCH logo"/>
+      <img class="logo m-inline-block" src="https://dasch.swiss/content/images/2021/02/DaSCH_Logo_RGB.jpeg" alt="DaSCH logo"/>
       <h1 class="title">Repository Explorer</h1>
     </a>
     <div class="header-right">
-      <input class="searchbar-in-header" type="text" name="searchbar" placeholder="search..." />
+      <input class="searchbar-in-header s-inline-block" type="text" name="searchbar" placeholder="search..." />
       <!-- searchbar button -->
-      <button class="btn xs-hidden" on:click="{toggleSearchbar}">
+      <button class="btn s-hidden" on:click="{toggleSearchbar}">
         <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
       </button>
       <!-- filter button -->
@@ -48,10 +48,10 @@
       </button>
     </div>
   </div>
-  <div class="searchbar-container xs-hidden" class:hidden={!showSearchbar}>
+  <div class="searchbar-container s-hidden" class:hidden={!showSearchbar}>
     <input type="text" class="searchbar" name="searchbar" placeholder="search...">
   </div>
-  <div class="filter-container xs-hidden" class:hidden={!showFilters}>
+  <div class="filter-container" class:hidden={!showFilters}>
     <Category/>
   </div>
   <Menu isVisible={showMenu}>
@@ -190,22 +190,5 @@
     }
   } */
 
-  @media screen and (min-width: 450px){
-    .searchbar-in-header {
-      display: inline-block;
-    }
-    /* .searchbar {
-      display: none !important;
-    } */
-    .xs-hidden {
-      display: none;
-    }
-  }
-  
-  @media screen and (min-width: 640px){
-    .logo {
-      display: inline-block;
-    }
-  }
 
 </style>

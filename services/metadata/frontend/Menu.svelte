@@ -1,5 +1,5 @@
 <script lang="ts">
-  import BurgerButton from "./BurgerButton.svelte";
+  // import BurgerButton from "./BurgerButton.svelte";
 
   export let isVisible = false;
 
@@ -9,18 +9,18 @@
 </script>
 
 <nav class="menu" class:hidden={!isVisible}>
+  <slot />
   <!-- <BurgerButton type="open" on:click={toggleVisible}></BurgerButton>
   <div class="menu" style="visibility: {isVisible ? 'visible' : 'hidden'}">
     <BurgerButton type="close" on:click={toggleVisible}></BurgerButton>
     <ul>-->
-      <slot />
     <!-- </ul>
   </div>  -->
 </nav>
 
 <style>
   .menu {
-    background-color: #e6e6e6;
+    background-color: var(--cl-background-light);
   }
   /* ul {
     list-style-type: none;

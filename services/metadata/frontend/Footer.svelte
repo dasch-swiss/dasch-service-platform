@@ -6,6 +6,7 @@
     font-weight: bold;
     width: 100%;
     padding: 1rem;
+    box-sizing: border-box;
     /* background-color: rgb(185, 184, 184); */
     /* background-color: rgb(89, 73, 167); */ /* DaSCH Purple */
     /* color: whitesmoke; */
