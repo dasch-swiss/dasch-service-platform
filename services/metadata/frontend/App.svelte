@@ -10,15 +10,6 @@
 <Header/>
 <Content/>
 <Footer/>
-<!-- <div>
-  <h1>The {name} future is {future}</h1>
-
-  <Content/>
-</div>
-<Footer /> -->
 
 <style>
-  /* h1 {
-    text-align: center;
-  } */
-  </style>
+</style>

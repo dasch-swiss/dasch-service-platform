@@ -1,5 +1,4 @@
 <script lang="ts">
-  // import Menu from "./Menu.svelte";
   import Category from "./content/Category.svelte";
 
   let showSearchbar = false;
@@ -59,11 +58,6 @@
     <a class="menu-item" href=".">app.dasch.swiss</a>
     <a class="menu-item" href=".">admin.dasch.swiss</a>
   </div>
-  <!-- <Menu isVisible={showMenu}>
-    <a class="menu-item" href=".">dasch.swiss</a>
-    <a class="menu-item" href=".">app.dasch.swiss</a>
-    <a class="menu-item" href=".">admin.dasch.swiss</a>
-  </Menu> -->
 </header>
 
 <style>
@@ -116,10 +110,6 @@
     line-height: 1.5rem;
     width: 100%;
     box-sizing: border-box;
-    /* 
-    margin: 0.25rem auto;
-    padding: 0.25rem;
-    width: 90%; */
   }
 
   .searchbar-container, .filter-container {
@@ -174,41 +164,5 @@
       padding: 1rem;
     }
   }
-  
-  /*
-  form {
-    padding: 0px 12px;
-    border-radius: 16pt;
-  }
-  input {
-    margin: 0px; 
-  } */
-
-  /* for tiny screens? */
-  /* @media screen and (max-width: 650px) {
-    .logo {
-      display: none;
-    }
-    .header {
-      padding: 16px 0px;
-    }
-  }
-  @media screen and (max-width: 450px) {
-    .header {
-      display: block;
-      text-align: center;
-    }
-    a.title {
-      display: block;
-      padding: 12px;
-    }
-    .header-right {
-      padding: 12px;
-    }
-    form {
-      display: inline;
-    }
-  } */
-
 
 </style>
