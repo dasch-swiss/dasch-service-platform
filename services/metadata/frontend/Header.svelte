@@ -1,5 +1,29 @@
 <script lang="ts">
   import Menu from "./Menu.svelte";
+  import Category from "./content/Category.svelte";
+
+  let showSearchbar = false;
+  let showFilters = false;
+  let showMenu = false;
+
+  function toggleSearchbar() {
+    showSearchbar = !showSearchbar;
+    showFilters = false;
+    showMenu = false;
+  }
+
+  function toggleFilters() {
+    showFilters = !showFilters;
+    showSearchbar = false;
+    showMenu = false;
+  }
+
+  function toggleMenu() {
+    showMenu = !showMenu;
+    showFilters = false;
+    showSearchbar = false;
+  }
+
 </script>
 
 <header>
@@ -10,21 +34,27 @@
     </a>
     <div class="header-right">
       <input class="searchbar-in-header" type="text" name="searchbar" placeholder="search..." />
-      <button class="btn xs-hidden">
+      <!-- searchbar button -->
+      <button class="btn xs-hidden" on:click="{toggleSearchbar}">
         <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
       </button>
-      <button class="btn">
-        <!-- TODO: onclick -->
+      <!-- filter button -->
+      <button class="btn" on:click="{toggleFilters}">
         <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
       </button>
-      <button class="btn">
-        <!-- TODO: onclick -->
+      <!-- menu button -->
+      <button class="btn" on:click="{toggleMenu}">
         <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
       </button>
     </div>
   </div>
-  <input type="text" class="searchbar" name="searchbar" placeholder="search...">
-  <Menu>
+  <div class="searchbar-container xs-hidden" class:hidden={!showSearchbar}>
+    <input type="text" class="searchbar" name="searchbar" placeholder="search...">
+  </div>
+  <div class="filter-container xs-hidden" class:hidden={!showFilters}>
+    <Category/>
+  </div>
+  <Menu isVisible={showMenu}>
     <a class="menu-item" href=".">dasch.swiss</a>
     <a class="menu-item" href=".">app.dasch.swiss</a>
     <a class="menu-item" href=".">admin.dasch.swiss</a>
@@ -33,7 +63,9 @@
 
 <style>
   header {
-    background-color: #c9c9c9;
+    background-color: var(--cl-background);
+    position: sticky;
+    top: 0px;
   }
 
   .header {
@@ -59,7 +91,7 @@
   }
   
   .title {
-    color: rgb(90, 90, 90);
+    color: var(--cl-text);
     padding: 12px;
     white-space: nowrap;
     font-size: 1rem;
@@ -73,13 +105,21 @@
     line-height: 1.5rem;
     box-sizing: border-box;
   }
-
+  
   .searchbar {
     display: block;
+    line-height: 1.5rem;
+    width: 100%;
     box-sizing: border-box;
+    /* 
     margin: 0.25rem auto;
     padding: 0.25rem;
-    width: 90%;
+    width: 90%; */
+  }
+
+  .searchbar-container, .filter-container {
+    background-color: var(--cl-background-light);
+    padding: 0.5rem;
   }
 
   .btn {
@@ -92,7 +132,7 @@
     padding: 0px;
   }
   .btn:hover {
-    background-color: gray;
+    background-color: var(--cl-transparent-dark);
   }
   .btn:focus {
     outline: none;
@@ -109,8 +149,11 @@
     padding: 0.5rem;
   }
   .menu-item:hover {
-    background-color: rgb(218, 218, 218);
+    background-color: var(--cl-transparent-light);
   }
+
+
+
   
   /*
   form {
@@ -151,9 +194,9 @@
     .searchbar-in-header {
       display: inline-block;
     }
-    .searchbar {
+    /* .searchbar {
       display: none !important;
-    }
+    } */
     .xs-hidden {
       display: none;
     }

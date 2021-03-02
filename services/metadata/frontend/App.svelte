@@ -8,6 +8,8 @@
 </script>
 
 <Header/>
+<Content/>
+<Footer/>
 <!-- <div>
   <h1>The {name} future is {future}</h1>
 
