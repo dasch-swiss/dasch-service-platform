@@ -57,7 +57,11 @@ input:focus {
 		display: inline-block !important;
 	}
 	.s-hidden {
-		display: none;
+		display: none !important;
+	}
+
+	body {
+		background-color: gold !important;
 	}
 }
 
@@ -72,7 +76,7 @@ input:focus {
 
 	/* TODO: remove - just for testing */
 	body {
-		background-color: aqua !important;
+		background-color: cornflowerblue !important;
 	}
 }
 

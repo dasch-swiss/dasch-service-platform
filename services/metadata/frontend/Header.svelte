@@ -22,28 +22,34 @@
     showFilters = false;
     showSearchbar = false;
   }
-
 </script>
 
 <header>
   <div class="header">
     <a href="/" class="header-left">
-      <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_RGB_sw.png" alt="DaSCH logo"/>
+      <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
+      <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
       <h1 class="title">Repository Explorer</h1>
     </a>
     <div class="header-right">
       <input class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />
       <!-- searchbar button -->
       <button class="btn xs-hidden" on:click="{toggleSearchbar}">
-        <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+        </svg>
       </button>
       <!-- filter button -->
       <button class="btn m-hidden" on:click="{toggleFilters}">
-        <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4"></path></svg>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+        </svg>
       </button>
       <!-- menu button -->
       <button class="btn" on:click="{toggleMenu}">
-        <svg class="icon w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+        <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
       </button>
     </div>
   </div>
@@ -54,9 +60,9 @@
     <Category/>
   </div>
   <div class="menu" class:hidden={!showMenu}>
-    <a class="menu-item" href=".">dasch.swiss</a>
-    <a class="menu-item" href=".">app.dasch.swiss</a>
-    <a class="menu-item" href=".">admin.dasch.swiss</a>
+    <a class="menu-item" href="/">dasch.swiss</a>
+    <a class="menu-item" href="/">app.dasch.swiss</a>
+    <a class="menu-item" href="/">admin.dasch.swiss</a>
   </div>
 </header>
 
@@ -88,6 +94,13 @@
     cursor: pointer;
     display: none;
   }
+
+  .icon-logo {
+    height: 3rem;
+    padding: 5px;
+    vertical-align: middle;
+    cursor: pointer;
+  }
   
   .title {
     color: var(--cl-text);
@@ -99,6 +112,8 @@
 
   .searchbar-in-header {
     display: none;
+    width: 35vw;
+    max-width: 400px;
     padding: 0.25rem;
     vertical-align: middle;
     line-height: 1.5rem;
@@ -152,9 +167,7 @@
     background-color: var(--cl-transparent-light);
   }
 
-
-
-  @media screen and (min-width: 450px){
+  @media screen and (min-width: 450px) {
 	  /* extra small screen styles */
     .menu {
       width: 20rem;
@@ -162,6 +175,8 @@
       position: absolute;
       right: 0px;
     }
+    .title {
+      padding: 12px 0;
+    }
   }
-
 </style>
