@@ -27,8 +27,8 @@
 
 <header>
   <div class="header">
-    <a href="." class="header-left">
-      <img class="logo s-inline-block" src="https://dasch.swiss/content/images/2021/02/DaSCH_Logo_RGB.jpeg" alt="DaSCH logo"/>
+    <a href="/" class="header-left">
+      <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_RGB_sw.png" alt="DaSCH logo"/>
       <h1 class="title">Repository Explorer</h1>
     </a>
     <div class="header-right">
