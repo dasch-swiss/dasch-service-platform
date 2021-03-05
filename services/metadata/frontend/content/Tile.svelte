@@ -20,12 +20,10 @@
     background-color: #fff;
     padding: 10px 30px;
     margin: 10px;
-    width: 240px;
-    height: 248px;
+    width: 75%;
     float: left;
   }
   .header{
-    /* background-color: lawngreen; */
     height: 30px;
     padding-top: 10px;
   }
@@ -38,14 +36,12 @@
   }
   .content {
     display: -webkit-box;
-    -webkit-line-clamp: 6;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     font-size: 0.8em;
-    /* height: 130px;
-    padding: 10px 0; */
-    height: 90px;
-    margin: 10px 0 50px;
+    height: 45x;
+    margin: 10px 0 25px;
   }
   .footer {
     font-size: 0.8em;
@@ -55,5 +51,16 @@
     display: flex;
     justify-content: center;
     height: 20px;
+  }
+  @media screen and (min-width: 768px) {
+    section {
+      width: 240px;
+      height: 248px;
+    }
+    .content {
+      -webkit-line-clamp: 6;
+      height: 90px;
+      margin: 10px 0 50px;
+    }
   }
 </style>

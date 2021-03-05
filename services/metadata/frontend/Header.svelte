@@ -2,7 +2,7 @@
   import Category from "./content/Category.svelte";
 
   let showSearchbar = false;
-  let showFilters = true;
+  let showFilters = false;
   let showMenu = false;
 
   function toggleSearchbar() {

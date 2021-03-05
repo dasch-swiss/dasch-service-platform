@@ -54,29 +54,27 @@ onMount(async () => {
 }
 .content-container {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   max-width: 1920px;
 }
 nav, main {
-  /* float: left; */
+  width: 100%;
+  min-height: auto;
   padding: 10px;
-  min-height: 950px;
 }
 nav {
-  /* width: 30%; */
-  flex: 0 0 30%;
-  /* background-color: hotpink; */
+  flex: 0 0 20%;
+  background-color: hotpink;
   display: flex;
-  justify-content: center;
+  justify-content: flex-end;
+  padding: 0;
 }
 .category-container {
   /* background-color: lemonchiffon; */
-  /* margin-top: 20px; */
   padding-top: 45px;
-  max-width: 300px;
+  max-width: 210px;
 }
 main {
-  /* width: 70%; */
   width: 100%;
   /* background-color: aqua; */
   display: flex;
@@ -91,22 +89,15 @@ main {
   /* background-color: skyblue; */
   max-width: 1200px;
 }
-/* div:after {
-  content: "";
-  display: table;
-  clear: both;
-} */
-
-@media screen and (max-width: 991px) {
+@media screen and (min-width: 992px) {
   .content-container {
-    flex-direction: column;
+    flex-direction: row;
   }
   nav, main {
-    width: 100%;
-    min-height: auto;
+    min-height: 950px;
   }
   nav {
-    padding: 0;
+    padding: 10px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) { }

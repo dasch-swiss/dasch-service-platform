@@ -40,7 +40,7 @@ input:focus {
 	outline: none;
 }
 
-@media screen and (min-width: 576px){
+@media screen and (min-width: 576px) {
 /* @media screen and (min-width: 450px){ */
 	/* extra small screen styles */
 	.xs-inline-block {
@@ -55,7 +55,7 @@ input:focus {
 	}
 }
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 768px) {
 /* @media screen and (min-width: 640px){ */
 	/* small screen styles */
 	.s-inline-block {
@@ -70,7 +70,7 @@ input:focus {
 	}
 }
 
-@media screen and (min-width: 992px){
+@media screen and (min-width: 992px) {
 /* @media screen and (min-width: 768px){ */
 	/* medium screen styles */
 	.m-inline-block {
