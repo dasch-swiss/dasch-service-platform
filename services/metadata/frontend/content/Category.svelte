@@ -56,7 +56,6 @@ import type { Project } from "./project.model";
     min-width: 200px;
     border: 1px solid #aaa;
     border-radius: 3px;
-    /* background-color: #c4c4c4; */
     padding: 5px 20px;
     margin: 5px;
     cursor: pointer;
@@ -73,7 +72,6 @@ import type { Project } from "./project.model";
     margin: 5px 5px 5px 5px;
     padding: 5px;
     border-radius: 3px;
-    /* background-color: yellowgreen; */
     background-color: #f2f2f2;
     font-size: 0.8em;
   }

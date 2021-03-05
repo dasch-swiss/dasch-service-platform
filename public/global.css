@@ -42,79 +42,62 @@ input:focus {
 }
 
 @media screen and (min-width: 576px) {
-/* @media screen and (min-width: 450px){ */
-	/* extra small screen styles */
 	.xs-inline-block {
 		display: inline-block !important;
 	}
 	.xs-hidden {
 		display: none !important;
 	}
-
 	body {
-		background-color: lawngreen !important;
+		/* background-color: lawngreen !important; */
 	}
 }
 
 @media screen and (min-width: 768px) {
-/* @media screen and (min-width: 640px){ */
-	/* small screen styles */
 	.s-inline-block {
 		display: inline-block !important;
 	}
 	.s-hidden {
 		display: none !important;
 	}
-
 	body {
-		background-color: gold !important;
+		/* background-color: gold !important; */
 	}
 }
 
 @media screen and (min-width: 992px) {
-/* @media screen and (min-width: 768px){ */
-	/* medium screen styles */
 	.m-inline-block {
 		display: inline-block !important;
 	}
 	.m-hidden {
 		display: none !important;
 	}
-
-	/* TODO: remove - just for testing */
 	body {
-		background-color: cornflowerblue !important;
+		/* background-color: cornflowerblue !important; */
 	}
 }
 
 @media screen and (min-width: 1200px){
-/* @media screen and (min-width: 1024px){ */
-	/* large screen styles */
 	.l-inline-block {
 		display: inline-block !important;
 	}
 	.l-hidden {
 		display: none !important;
 	}
-
-	/* TODO: remove - just for testing */
 	body {
-		background-color: magenta !important;
+		/* background-color: magenta !important; */
 	}
 }
 
 @media screen and (min-width: 1280px){
-	/* extra large screen styles */
 	.xl-inline-block {
 		display: inline-block !important;
 	}
 	.xl-hidden {
 		display: none;
 	}
-
-	/* TODO: remove - just for testing */
 	body {
-		background-color: olivedrab !important;
+		/* background-color: olivedrab !important; */
 	}
 }
 

@@ -65,7 +65,7 @@ nav, main {
 }
 nav {
   flex: 0 0 20%;
-  background-color: hotpink;
+  /* background-color: hotpink; */
   display: flex;
   justify-content: flex-end;
   padding: 0;
@@ -78,7 +78,6 @@ nav {
 main {
   width: 100%;
   /* background-color: aqua; */
-  display: flex;
   align-items: center;
   justify-content: center;
 }

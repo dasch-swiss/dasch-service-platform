@@ -147,14 +147,12 @@
   }
   .menu-item {
     display: block;
-    /* padding: 0.5rem; */
     padding: 1rem 1.5rem;
   }
   .menu-item:hover {
     background-color: var(--cl-transparent-light);
   }
   @media screen and (min-width: 576px) {
-	  /* extra small screen styles */
     .menu {
       width: 20rem;
       height: 100vh;
