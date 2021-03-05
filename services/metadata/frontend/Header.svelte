@@ -25,7 +25,7 @@
 </script>
 
 <header>
-  <div class="header">
+  <div class="header-container">
     <a href="/" class="header-left">
       <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
       <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
@@ -72,44 +72,37 @@
     position: sticky;
     top: 0px;
   }
-
-  .header {
+  .header-container {
     display: flex;
     align-items: center;
     justify-content: space-between;
   }
-
   .header-left {
     padding: 0px;
   }
-  
   .header-right {
     padding: 0.5rem 0rem;
     margin-right: 0.25rem;
   }
-  
   .logo {
     height: 5rem;
     vertical-align: middle;
     cursor: pointer;
     display: none;
   }
-
   .icon-logo {
     height: 3rem;
     padding: 5px;
     vertical-align: middle;
     cursor: pointer;
   }
-  
   .title {
     color: var(--cl-text);
-    padding: 12px;
+    padding: 12px 0;
     white-space: nowrap;
-    font-size: 1rem;
+    font-size: 0.8rem;
     display: inline-block;
   }
-
   .searchbar-in-header {
     display: none;
     width: 35vw;
@@ -119,19 +112,16 @@
     line-height: 1.5rem;
     box-sizing: border-box;
   }
-  
   .searchbar {
     display: block;
     line-height: 1.5rem;
     width: 100%;
     box-sizing: border-box;
   }
-
   .searchbar-container, .filter-container {
     background-color: var(--cl-background-light);
     padding: 12px;
   }
-
   .btn {
     display: inline-block;
     vertical-align: middle;
@@ -147,17 +137,14 @@
   .btn:focus {
     outline: none;
   }
-  
   .icon {
     width: 1.5rem;
     height: 1.5rem;
     margin: 0.25rem;
   }
-
   .menu {
     background-color: var(--cl-background-light);
   }
-  
   .menu-item {
     display: block;
     /* padding: 0.5rem; */
@@ -166,7 +153,6 @@
   .menu-item:hover {
     background-color: var(--cl-transparent-light);
   }
-
   @media screen and (min-width: 576px) {
 	  /* extra small screen styles */
     .menu {
@@ -176,7 +162,8 @@
       right: 0px;
     }
     .title {
-      padding: 12px 0;
+      font-size: 1rem;
+      padding: 12px;
     }
   }
 </style>

@@ -18,9 +18,9 @@
     border: 1px solid #000;
     border-radius: 5px;
     background-color: #fff;
-    padding: 10px 30px;
-    margin: 10px;
-    width: 75%;
+    padding: 5px 5vw;
+    margin: 5px;
+    width: 75vw;
     float: left;
   }
   .header{
@@ -56,6 +56,8 @@
     section {
       width: 240px;
       height: 248px;
+      padding: 10px 30px;
+      margin: 10px;
     }
     .content {
       -webkit-line-clamp: 6;

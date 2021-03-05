@@ -51,6 +51,7 @@ onMount(async () => {
   display: flex;
   flex-direction: row;
   justify-content: center;
+  flex: 1 0 auto;
 }
 .content-container {
   display: flex;
