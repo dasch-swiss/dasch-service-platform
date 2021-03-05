@@ -81,15 +81,15 @@ import type { Project } from "./project.model";
   input[type=checkbox] {
     margin: 5px 10px;
     display: flex;
-}
-@media screen and (max-width: 991px) {
-  button {
-    width: 100%;
-    margin: 2px 0;
-    padding: 10px;
   }
-  .visible {
-    max-width: 100%;
+  @media screen and (max-width: 991px) {
+    button {
+      width: 100%;
+      margin: 2px 0;
+      padding: 10px;
+    }
+    .visible {
+      max-width: 100%;
+    }
   }
-}
 </style>

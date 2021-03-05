@@ -155,7 +155,7 @@
   @media screen and (min-width: 576px) {
     .menu {
       width: 20rem;
-      height: 100vh;
+      height: 90vh;
       position: absolute;
       right: 0px;
     }
