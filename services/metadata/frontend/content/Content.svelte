@@ -101,6 +101,11 @@ main {
     padding: 10px;
   }
 }
+@media screen and (min-width: 992px) {
+  .tile-container {
+    padding: 40px 0;
+  }
+}
 @media screen and (min-width: 768px) and (max-width: 1023px) { }
 @media screen and (min-width: 1024px) and (max-width: 1365px) { }
 @media screen and (min-width: 1366px) {}

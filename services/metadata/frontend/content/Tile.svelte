@@ -65,4 +65,9 @@
       margin: 10px 0 50px;
     }
   }
+  @media screen and (min-width: 1200px) {
+    section {
+      margin: 5px;
+    }
+  }
 </style>
