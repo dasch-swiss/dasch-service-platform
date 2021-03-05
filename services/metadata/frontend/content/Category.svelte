@@ -41,7 +41,7 @@ import type { Project } from "./project.model";
     {category.name}
   </button>
   {#if category.sub && category.sub.length}
-    <div class={category.isOpen ? 'visible' : 'in-visible'}>
+    <div class={category.isOpen ? 'visible' : 'hidden'}>
       {#each category.sub as sub, n}
         <label class=subcategory>
           <input on:click={handleSubCategory(sub)} value={n} type=checkbox name=subcategory />{sub}
@@ -54,9 +54,9 @@ import type { Project } from "./project.model";
 <style>
   button {
     min-width: 200px;
-    border: 1px solid #000;
+    border: 1px solid #aaa;
     border-radius: 3px;
-    background-color: #c4c4c4;
+    /* background-color: #c4c4c4; */
     padding: 5px 20px;
     margin: 5px;
     cursor: pointer;
@@ -64,10 +64,7 @@ import type { Project } from "./project.model";
   }
   .visible {
     display: block;
-    min-width: 200px;
-  }
-  .in-visible {
-    display: none;
+    max-width: 209px;
   }
   .subcategory {
     display: flex;
@@ -75,6 +72,7 @@ import type { Project } from "./project.model";
     cursor: pointer;
     margin: 5px 5px 5px 5px;
     padding: 5px;
+    border-radius: 3px;
     /* background-color: yellowgreen; */
     background-color: #f2f2f2;
     font-size: 0.8em;
@@ -85,5 +83,15 @@ import type { Project } from "./project.model";
   input[type=checkbox] {
     margin: 5px 10px;
     display: flex;
+}
+@media screen and (max-width: 991px) {
+  button {
+    width: 100%;
+    margin: 2px 0;
+    padding: 10px;
+  }
+  .visible {
+    max-width: 100%;
+  }
 }
 </style>

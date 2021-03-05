@@ -40,8 +40,8 @@ input:focus {
 	outline: none;
 }
 
-
-@media screen and (min-width: 450px){
+@media screen and (min-width: 576px){
+/* @media screen and (min-width: 450px){ */
 	/* extra small screen styles */
 	.xs-inline-block {
 		display: inline-block !important;
@@ -49,9 +49,14 @@ input:focus {
 	.xs-hidden {
 		display: none !important;
 	}
+
+	body {
+		background-color: lawngreen !important;
+	}
 }
 
-@media screen and (min-width: 640px){
+@media screen and (min-width: 768px){
+/* @media screen and (min-width: 640px){ */
 	/* small screen styles */
 	.s-inline-block {
 		display: inline-block !important;
@@ -65,7 +70,8 @@ input:focus {
 	}
 }
 
-@media screen and (min-width: 768px){
+@media screen and (min-width: 992px){
+/* @media screen and (min-width: 768px){ */
 	/* medium screen styles */
 	.m-inline-block {
 		display: inline-block !important;
@@ -80,7 +86,8 @@ input:focus {
 	}
 }
 
-@media screen and (min-width: 1024px){
+@media screen and (min-width: 1200px){
+/* @media screen and (min-width: 1024px){ */
 	/* large screen styles */
 	.l-inline-block {
 		display: inline-block !important;

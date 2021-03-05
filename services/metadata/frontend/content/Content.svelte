@@ -72,7 +72,7 @@ nav {
 .category-container {
   /* background-color: lemonchiffon; */
   /* margin-top: 20px; */
-  padding: 45px;
+  padding-top: 45px;
   max-width: 300px;
 }
 main {
@@ -84,7 +84,7 @@ main {
   justify-content: center;
 }
 .tile-container {
-  padding: 30px;
+  padding: 40px 5px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
@@ -97,13 +97,16 @@ main {
   clear: both;
 } */
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 991px) {
   .content-container {
     flex-direction: column;
   }
   nav, main {
     width: 100%;
     min-height: auto;
+  }
+  nav {
+    padding: 0;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) { }

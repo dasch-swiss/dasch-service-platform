@@ -2,7 +2,7 @@
   import Category from "./content/Category.svelte";
 
   let showSearchbar = false;
-  let showFilters = false;
+  let showFilters = true;
   let showMenu = false;
 
   function toggleSearchbar() {
@@ -129,7 +129,7 @@
 
   .searchbar-container, .filter-container {
     background-color: var(--cl-background-light);
-    padding: 0.5rem;
+    padding: 12px;
   }
 
   .btn {
@@ -167,7 +167,7 @@
     background-color: var(--cl-transparent-light);
   }
 
-  @media screen and (min-width: 450px) {
+  @media screen and (min-width: 576px) {
 	  /* extra small screen styles */
     .menu {
       width: 20rem;

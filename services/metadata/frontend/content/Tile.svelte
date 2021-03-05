@@ -30,12 +30,12 @@
     padding-top: 10px;
   }
   .header h5 {
-      text-align: center;
-      text-overflow: ellipsis;
-      overflow: hidden; 
-      white-space: nowrap;
-      margin: 0;
-    }
+    text-align: center;
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    white-space: nowrap;
+    margin: 0;
+  }
   .content {
     display: -webkit-box;
     -webkit-line-clamp: 6;
