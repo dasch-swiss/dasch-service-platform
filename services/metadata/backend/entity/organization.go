@@ -24,29 +24,30 @@
 package entity
 
 import (
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 	"time"
 )
 
-//postalAddress domain entity
-type postalAddress struct {
+//Organization is the domain entity.
+type Organization struct {
+	ID              ID
+	Type            string
+	Name            string
+	Email           valueobject.Email
+	Url             string
+	PostalAddresses address
+	CreatedAt       time.Time
+	UpdatedAt       time.Time
+}
+
+//postalAddress represents the postal address of the organization domain entity.
+type address struct {
 	StreetAddress   string
 	PostalCode      string
 	AddressLocality string
 }
 
-//Organization domain entity
-type Organization struct {
-	ID              ID
-	Type            string
-	Name            string
-	Email           string
-	Url             string
-	PostalAddresses postalAddress
-	CreatedAt       time.Time
-	UpdatedAt       time.Time
-}
-
-//NewOrganization create a new organization entity
+//NewOrganization creates a new organization entity.
 func NewOrganization(name string) (*Organization, error) {
 	org := &Organization{
 		ID:        NewID(),
@@ -63,13 +64,13 @@ func NewOrganization(name string) (*Organization, error) {
 	return org, nil
 }
 
-//AddPostalAddress add address to organization
-func (org *Organization) AddPostalAddress(streetaddress string, postalcode string, addresslocality string) error {
+//AddAddress adds a postal address to the organization.
+func (org *Organization) AddAddress(streetAddress string, postalCode string, addressLocality string) error {
 
-	address := postalAddress{
-		StreetAddress:   streetaddress,
-		PostalCode:      postalcode,
-		AddressLocality: addresslocality,
+	address := address{
+		StreetAddress:   streetAddress,
+		PostalCode:      postalCode,
+		AddressLocality: addressLocality,
 	}
 
 	if address.StreetAddress == "" {
@@ -89,17 +90,26 @@ func (org *Organization) AddPostalAddress(streetaddress string, postalcode strin
 	return nil
 }
 
-//RemoveAddress remove address from organization
+//RemoveAddress removes the postal address from the organization.
 func (org *Organization) RemoveAddress() error {
-	if org.PostalAddresses == (postalAddress{}) {
+	if org.PostalAddresses == (address{}) {
 		return ErrPostalAddressNotSet
 	} else {
-		org.PostalAddresses = postalAddress{}
+		org.PostalAddresses = address{}
 	}
 	return nil
 }
 
-//Validate validate organization entity
+//AddEmailAddress adds the email address to the organization.
+func (org *Organization) AddEmail(emailAddress valueobject.Email) error {
+	org.Email = emailAddress
+	org.UpdatedAt = time.Now()
+	return nil
+}
+
+//RemoveEmail removes the email address from the organization.
+
+//Validate validates the organization entity.
 func (org *Organization) Validate() error {
 	if org.Name == "" {
 		return ErrInvalidEntity

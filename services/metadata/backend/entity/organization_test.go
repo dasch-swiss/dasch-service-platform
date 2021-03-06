@@ -23,9 +23,9 @@
 
 package entity_test
 
-
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 	"github.com/stretchr/testify/assert"
 	"testing"
 )
@@ -39,14 +39,37 @@ func TestNewOrganization(t *testing.T) {
 	assert.True(t, org.UpdatedAt.IsZero())
 }
 
-func TestAddPostalAddress(t *testing.T) {
+func TestAddAddress(t *testing.T) {
 	org, err := entity.NewOrganization("new org")
 	assert.Nil(t, err)
 
-	err2 := org.AddPostalAddress("neue strasse 123", "4123", "Allschwil")
+	err2 := org.AddAddress("neue strasse 123", "4123", "Allschwil")
 	assert.Nil(t, err2)
 	assert.Equal(t, org.PostalAddresses.StreetAddress, "neue strasse 123")
 	assert.Equal(t, org.PostalAddresses.PostalCode, "4123")
 	assert.Equal(t, org.PostalAddresses.AddressLocality, "Allschwil")
 	assert.False(t, org.UpdatedAt.IsZero())
+}
+
+func TestAddEmail(t *testing.T) {
+	org, _ := entity.NewOrganization("new org")
+
+	email, _ := valueobject.NewEmail("test@example.org")
+	err := org.AddEmail(email)
+	assert.Nil(t, err)
+
+	assert.Equal(t, org.Email, email)
+}
+
+func TestRemoveEmail(t *testing.T) {
+	org, _ := entity.NewOrganization("new org")
+
+	email, _ := valueobject.NewEmail("test@example.org")
+	err := org.AddEmail(email)
+
+
+
+	assert.Nil(t, err)
+
+	assert.Equal(t, org.Email, email)
 }

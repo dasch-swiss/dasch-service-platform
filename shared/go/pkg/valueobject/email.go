@@ -30,33 +30,33 @@ import (
 
 // EmailAddress errors
 var (
-	ErrInvalidEmailAddress = errors.New("Not a valid email address")
+	ErrInvalidEmail = errors.New("not a valid email address")
 )
 
-// EmailAddress represents a valid email address
-type EmailAddress struct {
+// Email represents a valid email address.
+type Email struct {
 	value string
 }
 
-// NewEmailAddress creates a new email address
-func NewEmailAddress(email string) (EmailAddress, error) {
-	var n EmailAddress
-	match, _ := regexp.MatchString(`^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$`, email)
+// NewEmail creates a new email address.
+func NewEmail(email string) (Email, error) {
+	var n Email
+	match, _ := regexp.MatchString(`([\w.]+)@([\w.]+)`, email)
 	if !match {
-		return n, ErrInvalidEmailAddress
+		return n, ErrInvalidEmail
 	}
 	n.value = email
 
 	return n, nil
 }
 
-// String returns string representation of the email address
-func (n EmailAddress) String() string {
+// String returns string representation of the email address.
+func (n Email) String() string {
 	return n.value
 }
 
-// Equals checks that two email addresses are the same
-func (n EmailAddress) Equals(value Value) bool {
-	otherEmailAddress, ok := value.(EmailAddress)
-	return ok && n.value == otherEmailAddress.value
+// Equals checks that two email addresses are the same.
+func (n Email) Equals(value Value) bool {
+	otherEmail, ok := value.(Email)
+	return ok && n.value == otherEmail.value
 }
