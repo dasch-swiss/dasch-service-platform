@@ -99,10 +99,14 @@ main {
   nav {
     padding: 10px;
   }
-}
-@media screen and (min-width: 992px) {
   .tile-container {
     padding: 40px 0;
+    min-width: 742px;
+  }
+}
+@media screen and (min-width: 1200px) {
+  .tile-container {
+    min-width: 940px;
   }
 }
 @media screen and (min-width: 768px) and (max-width: 1023px) { }
