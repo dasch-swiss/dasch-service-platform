@@ -37,8 +37,11 @@ a:visited {
   color: inherit;
 }
 
-input:focus {
-  outline: none;
+/* remove outline but not for moblie devices */
+@media screen and (max-width: 991px) {
+  input:focus, button:focus {
+    outline: none;
+  }
 }
 
 @media screen and (min-width: 576px) {

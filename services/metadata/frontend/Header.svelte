@@ -34,19 +34,19 @@
     <div class="header-right">
       <input class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />
       <!-- searchbar button -->
-      <button class="btn xs-hidden" on:click="{toggleSearchbar}">
+      <button class="xs-hidden" on:click="{toggleSearchbar}">
         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
         </svg>
       </button>
       <!-- filter button -->
-      <button class="btn m-hidden" on:click="{toggleFilters}">
+      <button class="m-hidden" on:click="{toggleFilters}">
         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
         </svg>
       </button>
       <!-- menu button -->
-      <button class="btn" on:click="{toggleMenu}">
+      <button on:click="{toggleMenu}">
         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
         </svg>
@@ -122,7 +122,7 @@
     background-color: var(--cl-background-light);
     padding: 12px;
   }
-  .btn {
+  button {
     display: inline-block;
     vertical-align: middle;
     border-radius: 0.25rem;
@@ -131,11 +131,8 @@
     border: none;
     padding: 0px;
   }
-  .btn:hover {
+  button:hover {
     background-color: var(--cl-transparent-dark);
-  }
-  .btn:focus {
-    outline: none;
   }
   .icon {
     width: 1.5rem;

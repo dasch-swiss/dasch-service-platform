@@ -53,17 +53,13 @@ import type { Project } from "./project.model";
 
 <style>
   button {
-    min-width: 200px;
+    width: 100%;
+    margin: 2px 0;
+    padding: 10px;
     border: 1px solid #aaa;
     border-radius: 3px;
-    padding: 5px 20px;
-    margin: 5px;
     cursor: pointer;
     text-align: left;
-  }
-  .visible {
-    display: block;
-    max-width: 209px;
   }
   .subcategory {
     display: flex;
@@ -82,14 +78,15 @@ import type { Project } from "./project.model";
     margin: 5px 10px;
     display: flex;
   }
-  @media screen and (max-width: 991px) {
+  @media screen and (min-width: 992px) {
     button {
-      width: 100%;
-      margin: 2px 0;
-      padding: 10px;
+      padding: 5px 20px;
+      margin: 5px;
+      min-width: 200px;
     }
     .visible {
-      max-width: 100%;
+      display: block;
+      width: 220px;
     }
   }
 </style>
