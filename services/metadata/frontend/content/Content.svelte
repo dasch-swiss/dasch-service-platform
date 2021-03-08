@@ -14,7 +14,7 @@ setTimeout(() => {
   }, 3000);
 
 onMount(async () => {
-  await fetch('http://localhost:3000/projects')
+  await fetch('http://localhost:3000/projects?_page=1&_limit=9')
     .then(r => r.json())
     .then(data => {
       projects = data;
