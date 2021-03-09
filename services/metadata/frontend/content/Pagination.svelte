@@ -48,7 +48,10 @@
     color: white;
     border: 1px solid var(--dasch-violet);
   }
-  a:hover:not(.active) {background-color: #ddd;}
+  a:hover:not(.active) {
+    color: #fff;
+    background-color: var(--dasch-light-violet);
+  }
   a:first-child {
     border-top-left-radius: 5px;
     border-bottom-left-radius: 5px;

@@ -97,7 +97,7 @@
     cursor: pointer;
   }
   .title {
-    color: var(--cl-text);
+    color: var(--dasch-text);
     padding: 12px 0;
     white-space: nowrap;
     font-size: 0.8rem;
