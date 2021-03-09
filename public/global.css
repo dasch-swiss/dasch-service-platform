@@ -5,6 +5,7 @@ html, body {
 }
 
 :root {
+  --dasch-violet: #5949a7;
   --cl-background: #cccccc;
   --cl-background-light: #dddddd;
   --cl-background-dark: #aaaaaa;

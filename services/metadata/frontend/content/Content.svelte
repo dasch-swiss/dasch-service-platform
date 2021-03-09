@@ -3,6 +3,7 @@ import Tile from "./Tile.svelte";
 import Category from "./Category.svelte";
 import { onMount } from "svelte";
 import type { Project } from "./project.model";
+import Pagination from "./Pagination.svelte";
 
 let projects: Project[];
 let message = 'Loading...';
@@ -39,6 +40,7 @@ onMount(async () => {
           <p>{message}</p>
         {/if}
       </div>
+      <Pagination />
     </main>
   </div>
 </div>
