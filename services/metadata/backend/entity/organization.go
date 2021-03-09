@@ -32,7 +32,7 @@ import (
 type Organization struct {
 	ID              ID
 	Type            string
-	Name            string
+	Name            map[string]bool
 	Email           valueobject.Email
 	Url             string
 	PostalAddresses address
@@ -48,7 +48,11 @@ type address struct {
 }
 
 //NewOrganization creates a new organization entity.
-func NewOrganization(name string) (*Organization, error) {
+func NewOrganization(newName string) (*Organization, error) {
+
+	name := make(map[string]bool) // idiomatic way of implementing a set
+	name[newName] = true
+
 	org := &Organization{
 		ID:        NewID(),
 		Type:      "http://ns.dasch.swiss/repository#Organization",
@@ -62,6 +66,47 @@ func NewOrganization(name string) (*Organization, error) {
 	}
 
 	return org, nil
+}
+
+//AddName adds a name to the organization (up to a maximum of 3).
+func (org *Organization) AddName(newName string) error {
+
+	// dont allow adding if we already have three
+	if len(org.Name) == 3 {
+		return ErrCannotAddName
+	}
+
+	exists := org.Name[newName]
+	if exists {
+		// found the name in the list
+		// return error because we don't allow adding a name twice
+		return ErrCannotAddExistingName
+	} else {
+		// didn't find it, add to set
+		org.Name[newName] = true
+	}
+
+	return nil
+}
+
+//RemoveName removes a name from an organization if more than one is set
+func (org *Organization) RemoveName(name string) error {
+
+	// dont allow deleting name if there is only one left
+	if len(org.Name) == 1 {
+		return ErrCannotDeleteName
+	}
+
+	exists := org.Name[name]
+	if exists {
+		// found it, remove it
+		delete(org.Name, name)
+	} else {
+		// not found, returning error
+		return ErrCannotDeleteNotFoundName
+	}
+
+	return nil
 }
 
 //AddAddress adds a postal address to the organization.
@@ -108,10 +153,22 @@ func (org *Organization) AddEmail(emailAddress valueobject.Email) error {
 }
 
 //RemoveEmail removes the email address from the organization.
+func (org *Organization) RemoveEmail() error {
+	if org.Email == valueobject.ZeroEmail() {
+		return ErrEmailNotSet
+	} else {
+		org.Email = valueobject.ZeroEmail()
+	}
+	return nil
+}
 
 //Validate validates the organization entity.
 func (org *Organization) Validate() error {
-	if org.Name == "" {
+	if len(org.Name) < 1 {
+		return ErrInvalidEntity
+	}
+
+	if len(org.Name) > 3 {
 		return ErrInvalidEntity
 	}
 

@@ -2,10 +2,10 @@
 #
 # https://gqlgen.com/getting-started/
 
-type Todo {
+type Organization {
   id: ID!
-  text: String!
-  done: Boolean!
+  type: String!
+  address: Boolean!
   user: User!
 }
 

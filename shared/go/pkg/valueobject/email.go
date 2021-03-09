@@ -40,14 +40,14 @@ type Email struct {
 
 // NewEmail creates a new email address.
 func NewEmail(email string) (Email, error) {
-	var n Email
+	var e Email
 	match, _ := regexp.MatchString(`([\w.]+)@([\w.]+)`, email)
 	if !match {
-		return n, ErrInvalidEmail
+		return e, ErrInvalidEmail
 	}
-	n.value = email
+	e.value = email
 
-	return n, nil
+	return e, nil
 }
 
 // String returns string representation of the email address.
@@ -59,4 +59,9 @@ func (n Email) String() string {
 func (n Email) Equals(value Value) bool {
 	otherEmail, ok := value.(Email)
 	return ok && n.value == otherEmail.value
+}
+
+//ZeroEmail represents the zero value for an email value object.
+func ZeroEmail() Email {
+	return Email{}
 }

@@ -33,43 +33,101 @@ import (
 func TestNewOrganization(t *testing.T) {
 	org, err := entity.NewOrganization("TEST Org")
 	assert.Nil(t, err)
-	assert.Equal(t, org.Name, "TEST Org")
+	assert.Equal(t, "TEST Org", org.Name)
 	assert.NotNil(t, org.ID)
 	assert.False(t, org.CreatedAt.IsZero())
 	assert.True(t, org.UpdatedAt.IsZero())
 }
 
-func TestAddAddress(t *testing.T) {
+func TestAddName(t *testing.T) {
 	org, err := entity.NewOrganization("new org")
 	assert.Nil(t, err)
 
+	err2 := org.AddName("additional org name")
+	assert.Nil(t, err2)
+	assert.Equal(t, []string{"new org", "additional org name"}, org.Name)
+}
+
+func TestNotAllowAddSameName(t *testing.T) {
+	org, err := entity.NewOrganization("new org")
+	assert.Nil(t, err)
+
+	err2 := org.AddName("new org")
+	assert.NotNil(t, err2)
+}
+
+func TestNotAllowAddFourthName(t *testing.T) {
+	org, err1 := entity.NewOrganization("first name")
+	assert.Nil(t, err1)
+
+	err2 := org.AddName("second name")
+	assert.Nil(t, err2)
+
+	err3 := org.AddName("third name")
+	assert.Nil(t, err3)
+
+	err4 := org.AddName("fourth name")
+	assert.NotNil(t, err4)
+}
+
+func TestRemoveName(t *testing.T) {
+	org, err := entity.NewOrganization("new org")
+	assert.Nil(t, err)
+
+	err2 := org.AddName("additional org name")
+	assert.Nil(t, err2)
+
+	err3 := org.RemoveName("new org")
+	assert.Nil(t, err3)
+	assert.Equal(t, 1, len(org.Name))
+}
+
+func TestNotAllowRemoveLastName(t *testing.T) {
+	org, err1 := entity.NewOrganization("new org")
+	assert.Nil(t, err1)
+
+	err2 := org.RemoveName("new org")
+	assert.NotNil(t, err2)
+	assert.Equal(t, 1, len(org.Name))
+}
+
+func TestAddAddress(t *testing.T) {
+	org, err1 := entity.NewOrganization("new org")
+	assert.Nil(t, err1)
+
 	err2 := org.AddAddress("neue strasse 123", "4123", "Allschwil")
 	assert.Nil(t, err2)
-	assert.Equal(t, org.PostalAddresses.StreetAddress, "neue strasse 123")
-	assert.Equal(t, org.PostalAddresses.PostalCode, "4123")
-	assert.Equal(t, org.PostalAddresses.AddressLocality, "Allschwil")
+	assert.Equal(t, "neue strasse 123", org.PostalAddresses.StreetAddress)
+	assert.Equal(t, "4123", org.PostalAddresses.PostalCode)
+	assert.Equal(t, "Allschwil", org.PostalAddresses.AddressLocality)
 	assert.False(t, org.UpdatedAt.IsZero())
 }
 
 func TestAddEmail(t *testing.T) {
-	org, _ := entity.NewOrganization("new org")
+	org, err1 := entity.NewOrganization("new org")
+	assert.Nil(t, err1)
 
 	email, _ := valueobject.NewEmail("test@example.org")
-	err := org.AddEmail(email)
-	assert.Nil(t, err)
-
-	assert.Equal(t, org.Email, email)
+	err2 := org.AddEmail(email)
+	assert.Nil(t, err2)
+	assert.Equal(t, email, org.Email)
 }
 
 func TestRemoveEmail(t *testing.T) {
 	org, _ := entity.NewOrganization("new org")
 
 	email, _ := valueobject.NewEmail("test@example.org")
-	err := org.AddEmail(email)
+	err1 := org.AddEmail(email)
+	assert.Nil(t, err1)
 
+	err2 := org.RemoveEmail()
+	assert.Nil(t, err2)
+	assert.Equal(t, valueobject.ZeroEmail(), org.Email)
+}
 
+func TestNotAllowRemoveNotSetEmail(t *testing.T) {
+	org, _ := entity.NewOrganization("new org")
 
-	assert.Nil(t, err)
-
-	assert.Equal(t, org.Email, email)
+	err := org.RemoveEmail()
+	assert.NotNil(t, err)
 }
