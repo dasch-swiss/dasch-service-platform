@@ -132,6 +132,7 @@
     padding: 0px;
   }
   button:hover {
+    color: var(--dasch-violet);
     background-color: var(--cl-transparent-dark);
   }
   .icon {

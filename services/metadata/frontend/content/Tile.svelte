@@ -28,7 +28,6 @@
     padding-top: 10px;
   }
   .header h5 {
-    text-align: center;
     text-overflow: ellipsis;
     overflow: hidden; 
     white-space: nowrap;
@@ -46,6 +45,7 @@
   .footer {
     font-size: 0.8em;
     margin: 10px 0;
+    color: var(--dasch-violet);
   }
   .footer a {
     display: flex;
@@ -60,9 +60,9 @@
       margin: 10px;
     }
     .content {
-      -webkit-line-clamp: 6;
-      height: 90px;
-      margin: 10px 0 50px;
+      -webkit-line-clamp: 10;
+      height: 152px;
+      margin: 5px 0 25px;
     }
   }
   @media screen and (min-width: 1200px) {

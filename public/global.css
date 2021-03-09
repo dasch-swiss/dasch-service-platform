@@ -38,6 +38,11 @@ a:visited {
   color: inherit;
 }
 
+button:hover {
+  color: #fff;
+  background-color: var(--dasch-violet);
+}
+
 /* remove outline but not for moblie devices */
 @media screen and (max-width: 991px) {
   input:focus, button:focus {
