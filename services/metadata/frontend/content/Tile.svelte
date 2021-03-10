@@ -55,13 +55,13 @@
   @media screen and (min-width: 768px) {
     section {
       width: 240px;
-      height: 248px;
+      height: 208px;
       padding: 10px 30px;
       margin: 10px;
     }
     .content {
-      -webkit-line-clamp: 10;
-      height: 152px;
+      -webkit-line-clamp: 7;
+      height: 107px;
       margin: 5px 0 25px;
     }
   }
