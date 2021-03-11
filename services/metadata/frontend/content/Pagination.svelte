@@ -1,24 +1,30 @@
-<script>
+<script lang="ts">
   import { getProjects, pagedResults } from "./stores";
 
-  export let pagination = {};
+  interface Pagination {
+  totalCount: number;
+  totalPages: number;
+}
+
+  export let pagination = {} as Pagination;
   let currentPage = 1;
   const baseResultsRange = [1, 9];
   let currentResults = baseResultsRange;
 
-  let handlePagination = (event) => {
-    if (currentPage === event.target.id) {
+  let handlePagination = (event: MouseEvent) => {
+    let id = (event.target as HTMLElement).id;
+    if (currentPage === Number(id)) {
       return;
-    } else if (event.target.id === 'first') {
+    } else if (id === 'first') {
       currentPage = 1;
-    } else if (event.target.id === 'last') {
+    } else if (id === 'last') {
       currentPage = pagination.totalPages;
     } else {
-      currentPage = event.target.id;
+      currentPage = Number(id);
     }
     
     document.querySelector('.active').classList.remove('active');
-    document.getElementById(currentPage).classList.add('active');
+    document.getElementById((currentPage).toString()).classList.add('active');
     getProjects(currentPage);
     currentResults = baseResultsRange.map(v => v + ((currentPage - 1) * baseResultsRange[1]));
     console.log(currentPage, currentResults)
@@ -42,7 +48,7 @@
   <div class="pagination">
     <button on:click={handlePagination} id="first" title="First Page" disabled={currentPage === 1}>&laquo;</button>
     {#each Array(pagination.totalPages) as _, i}
-      <button on:click={handlePagination} id={i + 1} class={i === 0 ? 'active' : ''}>{i + 1}</button>
+      <button on:click={handlePagination} id={(i + 1).toString()} class={i === 0 ? 'active' : ''}>{i + 1}</button>
     {/each}
     <button on:click={handlePagination} id="last" title="Last Page" disabled={currentPage === pagination.totalPages}>&raquo;</button>
   </div>

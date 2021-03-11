@@ -22,12 +22,13 @@ import { pagedResults, pages } from "./stores";
     { id: 8, isOpen: false, name: 'Organization', sub: ['Last', 'Not least'] },
   ];
 
-  const toggleCetegory = (cat: any) => (event: any) => {
+  const toggleCetegory = (cat: Category) => (event: MouseEvent) => {
+    console.log(cat)
     let bool = cat.isOpen;
     categories[cat.id - 1].isOpen = !bool;
   };
 
-  const handleSubCategory = (q: string) => (event: any) => {
+  const handleSubCategory = (q: string) => (event: MouseEvent) => {
     fetch(`http://localhost:3000/projects?q=${q}`)
       .then(r => r.json())
       .then(data => {
