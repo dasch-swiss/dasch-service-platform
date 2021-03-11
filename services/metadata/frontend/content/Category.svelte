@@ -1,5 +1,6 @@
 <script lang="ts">
 import type { Project } from "./project.model";
+import { pagedResults, pages } from "./stores";
 
   interface Category {
     id: number;
@@ -30,8 +31,9 @@ import type { Project } from "./project.model";
     fetch(`http://localhost:3000/projects?q=${q}`)
       .then(r => r.json())
       .then(data => {
-        console.log(data);
         searched = data;
+        pages.set({totalCount: data.length, totalPages: 1});
+        pagedResults.set(data);
     });
   }
 </script>

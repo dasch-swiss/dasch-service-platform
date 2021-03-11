@@ -21,6 +21,7 @@
     document.getElementById(currentPage).classList.add('active');
     getProjects(currentPage);
     currentResults = baseResultsRange.map(v => v + ((currentPage - 1) * baseResultsRange[1]));
+    console.log(currentPage, currentResults)
   }
 </script>
 
