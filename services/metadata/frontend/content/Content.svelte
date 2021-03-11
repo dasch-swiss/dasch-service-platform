@@ -4,22 +4,26 @@ import Category from "./Category.svelte";
 import { onMount } from "svelte";
 import type { Project } from "./project.model";
 import Pagination from "./Pagination.svelte";
+import { getProjects, pagedResults, pages } from "./stores";
 
 let projects: Project[];
 let message = 'Loading...';
+let pagination: object;
 
 setTimeout(() => {
   const noData = 'No data retrived. Please check the connection and retry.';
   const noProject = 'No projects found.'
     message = projects && projects.length ? noData : noProject;
   }, 3000);
-
+ 
 onMount(async () => {
-  await fetch('http://localhost:3000/projects?_page=1&_limit=9')
-    .then(r => r.json())
-    .then(data => {
-      projects = data;
-    });
+  await getProjects(1);
+
+  pagedResults.subscribe(r => {
+    projects = r;
+  });
+
+  pages.subscribe(t => pagination = t);
 });
 </script>
 
@@ -40,7 +44,9 @@ onMount(async () => {
           <p>{message}</p>
         {/if}
       </div>
-      <Pagination />
+      {#if projects && projects.length}
+        <Pagination pagination={pagination} />
+      {/if}
     </main>
   </div>
 </div>

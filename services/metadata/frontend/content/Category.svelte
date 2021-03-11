@@ -37,7 +37,7 @@ import type { Project } from "./project.model";
 </script>
 
 {#each categories as category }
-  <button class={category.sub.length ? '' : 'not-allowed'} on:click={toggleCetegory(category)}>
+  <button on:click={toggleCetegory(category)} disabled={!category.sub.length}>
     {category.name}
   </button>
   {#if category.sub && category.sub.length}
@@ -58,7 +58,6 @@ import type { Project } from "./project.model";
     padding: 10px;
     border: 1px solid #aaa;
     border-radius: 3px;
-    cursor: pointer;
     text-align: left;
   }
   .subcategory {
@@ -70,9 +69,6 @@ import type { Project } from "./project.model";
     border-radius: 3px;
     background-color: #f2f2f2;
     font-size: 0.8em;
-  }
-  .not-allowed {
-    cursor: not-allowed;
   }
   input[type=checkbox] {
     margin: 5px 10px;

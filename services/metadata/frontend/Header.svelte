@@ -126,7 +126,6 @@
     display: inline-block;
     vertical-align: middle;
     border-radius: 0.25rem;
-    cursor: pointer;
     background-color: inherit;
     border: none;
     padding: 0px;
