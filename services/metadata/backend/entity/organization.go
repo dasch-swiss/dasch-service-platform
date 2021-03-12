@@ -34,7 +34,7 @@ type Organization struct {
 	Type            string
 	Name            map[string]bool
 	Email           valueobject.Email
-	Url             string
+	URL             valueobject.URL
 	PostalAddresses address
 	CreatedAt       time.Time
 	UpdatedAt       time.Time
@@ -86,6 +86,7 @@ func (org *Organization) AddName(newName string) error {
 		org.Name[newName] = true
 	}
 
+	org.UpdatedAt = time.Now()
 	return nil
 }
 
@@ -106,6 +107,7 @@ func (org *Organization) RemoveName(name string) error {
 		return ErrCannotDeleteNotFoundName
 	}
 
+	org.UpdatedAt = time.Now()
 	return nil
 }
 
@@ -142,10 +144,11 @@ func (org *Organization) RemoveAddress() error {
 	} else {
 		org.PostalAddresses = address{}
 	}
+	org.UpdatedAt = time.Now()
 	return nil
 }
 
-//AddEmailAddress adds the email address to the organization.
+//AddEmail adds the email address to the organization and overwrites an existing one.
 func (org *Organization) AddEmail(emailAddress valueobject.Email) error {
 	org.Email = emailAddress
 	org.UpdatedAt = time.Now()
@@ -159,6 +162,25 @@ func (org *Organization) RemoveEmail() error {
 	} else {
 		org.Email = valueobject.ZeroEmail()
 	}
+	org.UpdatedAt = time.Now()
+	return nil
+}
+
+//AddURL adds an URL to the organization and overwrites an existing one.
+func (org *Organization) AddURL(url valueobject.URL) error {
+	org.URL = url
+	org.UpdatedAt = time.Now()
+	return nil
+}
+
+//RemoveURL removes an URL from the organization.
+func (org *Organization) RemoveURL() error {
+	if org.URL == valueobject.ZeroURL() {
+		return ErrURLNotSet
+	} else {
+		org.URL = valueobject.ZeroURL()
+	}
+	org.UpdatedAt = time.Now()
 	return nil
 }
 

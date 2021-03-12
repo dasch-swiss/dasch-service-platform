@@ -131,3 +131,23 @@ func TestNotAllowRemoveNotSetEmail(t *testing.T) {
 	err := org.RemoveEmail()
 	assert.NotNil(t, err)
 }
+
+func TestAddURL(t *testing.T) {
+	org, _ := entity.NewOrganization("new org")
+
+	newUrlToAdd, _ := valueobject.NewURL("http://example.org")
+	err := org.AddURL(newUrlToAdd)
+	assert.Nil(t, err)
+
+	assert.Equal(t, newUrlToAdd.String(), org.URL.String())
+}
+
+func TestRemoveURL(t *testing.T) {
+	org, _ := entity.NewOrganization("new org")
+	newUrlToAdd, _ := valueobject.NewURL("http://example.org")
+	err1 := org.AddURL(newUrlToAdd)
+	assert.Nil(t, err1)
+
+	err2 := org.RemoveURL()
+	assert.Nil(t, err2)
+}

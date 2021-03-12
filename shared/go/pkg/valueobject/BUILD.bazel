@@ -6,6 +6,7 @@ go_library(
         "email.go",
         "identifier.go",
         "interface.go",
+        "url.go",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject",
     visibility = ["//visibility:public"],
@@ -17,6 +18,7 @@ go_test(
     srcs = [
         "email_test.go",
         "identifier_test.go",
+        "url_test.go",
     ],
     embed = [":valueobject"],
     visibility = ["//visibility:public"],

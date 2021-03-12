@@ -57,3 +57,6 @@ var ErrCannotDeleteName = errors.New("cannot delete last name of the organizatio
 
 //ErrEmailNotSet cannot delete the email because it is not set.
 var ErrEmailNotSet = errors.New("email is not set")
+
+//ErrURLNotSet cannot delete the URL because it is not set.
+var ErrURLNotSet = errors.New("URL is not set")
