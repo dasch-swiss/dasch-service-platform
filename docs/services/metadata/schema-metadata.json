@@ -13,12 +13,73 @@
       "description": "A project on the DSP",
       "type": "object",
       "properties": {
-
+        "@id": {
+          "type":"string",
+          "description": "Identifier of the project"
+        },
+        "@type": {
+          "type": "string",
+          "description": "Type of this object",
+          "const": "Project"
+        },
+        "name": {
+          "type": "string",
+          "description": "The name of the project"
+        },
+        "shortcode": {
+          "type": "string",
+          "description": "The four digit hexadecimal project shortcode, assigned to the project by the DaSCH.",
+          "pattern": "^[0-9A-F]{4}$"
+        },
+        "description": {
+          "description": "A human readable description of the project.",
+          "$ref": "#/definitions/text"
+        },
+        "startDate": {
+          "description": "Start date of the project.",
+          "$ref": "#/definitions/date"
+        }
       },
+      "required": [
+        "name",
+        "shortcode",
+        "description",
+        "startDate"
+      ],
       "additionalProperties": false
     },
     "datasets": {
       "description": "The datasets of the project",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+
+        }
+      }
+    },
+    "persons": {
+      "description": "",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+
+        }
+      }
+    },
+    "organizations": {
+      "description": "",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+
+        }
+      }
+    },
+    "grants": {
+      "description": "",
       "type": "array",
       "items": {
         "type": "object",
@@ -33,5 +94,24 @@
     "project",
     "datasets"
   ],
-  "additionalProperties": false
+  "additionalProperties": false,
+  "definitions": {
+    "text": {
+      "type": "object",
+      "title": "Text Property (multilingual)",
+      "patternProperties": {
+        "^[a-z]{2}$": {
+          "type": "string",
+          "title": "Text in a particular language",
+          "description": "Pairs of language short codes and text strings (e.g. `'en': 'some text'`)"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    }
+  }
 }

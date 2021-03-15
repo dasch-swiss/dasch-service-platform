@@ -3,9 +3,10 @@ classDiagram
   Project "1" --> "0..1" DataManagementPlan
 
   class Project {
-    +dataManagementPlan DataManagementPlan
+    +dataManagementPlan DataManagementPlan|nil
     +publication Text
     +name Text
+    +description 
   }
   
   class Dataset {

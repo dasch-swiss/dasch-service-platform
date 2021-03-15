@@ -1,11 +1,26 @@
 {
   "$schema": "./schema-metadata.json",
   "project": {
-    "datasets": {
-      
-    }
+    "@id": "0000-project",
+    "@type": "Project",
+    "name": "Test Project Name",
+    "shortcode": "0000",
+    "description": {
+      "de": "Dies ist ein einfaches Beipiel-Projekt zu Dokumentationszwecken.",
+      "en": "This is a simple example project for documentation purposes."
+    },
+    "startDate": "2021-01-01"
   },
   "datasets": [
+
+  ],
+  "persons": [
+
+  ],
+  "organizations": [
+
+  ],
+  "grants": [
 
   ]
 }

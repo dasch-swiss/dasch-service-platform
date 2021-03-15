@@ -1,0 +1,65 @@
+@startuml Domain Entities
+
+class Project {
+  The Project.
+  -- Required Fields --
+  .. (1) ..
+  +string shortcode
+  +string name
+  +Text description
+  +Date startDate
+
+  .. (1 - n) ..
+  +Dataset[] datasets
+  +Text[] keywords
+  +Text[]|URL discipline
+  +Text[]|URL temporalCoverage
+  +Place spatialCoverage
+
+  .. (1 - 2) ..
+  +URL url
+
+  -- Optional Fields --
+  .. (0 - 1) ..
+  +DataManagementPlan dataManagementPlan
+  +Date endDate
+
+  .. (0 - n) ..
+  +string[] publication
+  +Grant[] grant
+  +Text[] alternateName
+}
+
+note left of Project::discipline
+  how do we handle different types?
+end note
+
+note left of Project::spatialCoverage
+  Does it make sense to have `Place` as a class?
+end note
+
+class Dataset {
+  A Dataset belonging to the project.
+  -- Required Fields --
+  .. (1) ..
+
+  .. (1 - n) ..
+
+  -- Optional Fields --
+  .. (0 - 1) ..
+
+  .. (0 - n) ..
+}
+
+
+Project --> Dataset
+Project --> DataManagementPlan
+Project --> Grant
+Project --> Person
+Project --> Organization
+Dataset --> Person
+Dataset --> Organization
+Grant --> Person
+Grant --> Organization
+
+@enduml
