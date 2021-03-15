@@ -5,6 +5,8 @@ import { onMount } from "svelte";
 import type { Project } from "./project.model";
 import Pagination from "./Pagination.svelte";
 import { getProjects, pagedResults, pages } from "./stores";
+import { Route, Router } from "svelte-navigator";
+import ProjectPage from "./ProjectPage.svelte";
 
 let projects: Project[];
 let message = 'Loading...';
@@ -27,29 +29,36 @@ onMount(async () => {
 });
 </script>
 
-<div class=wrapper>
-  <div class=content-container>
-    <nav>
-      <div class="category-container hidden m-inline-block">
-        <Category bind:searched={projects} />
-      </div>
-    </nav>
-    <main>
-      <div class=tile-container>
-        {#if projects && projects.length}
-          {#each projects as project}
-            <Tile name={project.name} description={project.description}/>
-          {/each}
-        {:else}
-          <p>{message}</p>
-        {/if}
-      </div>
-      {#if projects && projects.length}
-        <Pagination pagination={pagination} />
-      {/if}
-    </main>
+<Router primary={false}>
+  <div class=wrapper>
+    <div class=content-container>
+      <Route>
+        <nav>
+          <div class="category-container hidden m-inline-block">
+            <Category bind:searched={projects} />
+          </div>
+        </nav>
+        <main>
+          <div class=tile-container>
+            {#if projects && projects.length}
+              {#each projects as project}
+                <Tile name={project.name} description={project.description}/>
+              {/each}
+            {:else}
+              <p>{message}</p>
+            {/if}
+          </div>
+          {#if projects && projects.length}
+            <Pagination pagination={pagination} />
+          {/if}
+        </main>
+      </Route>
+      <Route path=project>
+        <ProjectPage />
+      </Route>
+    </div>
   </div>
-</div>
+</Router>
 
 <style>
 * {

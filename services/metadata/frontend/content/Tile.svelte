@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { link, Router } from "svelte-navigator";
+
   export let name: string;
   export let description: string;
 </script>
@@ -9,7 +11,7 @@
   </div>
   <div class=content>{ description }</div>
   <div class=footer>
-    <a href="/">Read more</a>
+    <a href="project" use:link>Read more</a>
   </div>
 </section>
 
