@@ -40,7 +40,7 @@ onMount(async () => {
           <div class=tile-container>
             {#if projects && projects.length}
               {#each projects as project}
-                <Tile name={project.name} description={project.description}/>
+                <Tile project={project}/>
               {/each}
             {:else}
               <p>{message}</p>
@@ -51,8 +51,8 @@ onMount(async () => {
           {/if}
         </main>
       </Route>
-      <Route path=project>
-        <ProjectPage />
+      <Route path="project/:id" let:params>
+        <ProjectPage id={params.id}/>
       </Route>
     </div>
   </div>

@@ -1,17 +1,22 @@
 <script lang="ts">
-  import { link, Router } from "svelte-navigator";
+  import { link } from "svelte-navigator";
+  import type { Project } from "./interfaces";
+  import { currentProject } from "./stores";
 
-  export let name: string;
-  export let description: string;
+  export let project: Project;
+
+  let setCurrentProject = () => {
+    currentProject.set(project);
+  }
 </script>
 
 <section>
   <div class=header>
-    <h5>{ name }</h5>
+    <h5>{ project.name }</h5>
   </div>
-  <div class=content>{ description }</div>
+  <div class=content>{ project.description }</div>
   <div class=footer>
-    <a href="project" use:link>Read more</a>
+    <a on:click={setCurrentProject} href="project/{project.id}" use:link>Read more</a>
   </div>
 </section>
 
