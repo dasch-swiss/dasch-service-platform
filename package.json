@@ -28,7 +28,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public",
+    "start": "sirv public --single",
     "validate": "svelte-check",
     "node-start-dev": "ibazel run //services/metadata/backend:bin",
     "node-start-prod": "bazel run //services/metadata/backend:bin"
