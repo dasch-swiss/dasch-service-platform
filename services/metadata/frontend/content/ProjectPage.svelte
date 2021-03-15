@@ -12,7 +12,6 @@ onMount(async () => {
 
   if (!project) {
     await getProject();
-    console.log(1);
   }
 });
 
@@ -23,15 +22,23 @@ let getProject = async () => {
 
 </script>
 
-<div>
-  This is <strong>{project?.name}</strong> Project metadata page. Its ID is <strong>{project?.id}</strong>.
-  
-  <p><strong>Project description:</strong>{project?.description}</p>
-  <a href="/" use:link>Get back to projects list</a>
+<div class=container>
+  <div>ID: {project?.id}</div>
+  <div>Title: {project?.name}</div>
+  <div>Description:</div>
+  <p>{project?.description}</p>
+  <div>
+    <a href="/" use:link>Get back to projects list</a>
+  </div>
 </div>
 
 <style>
-  /* :global(.content-container){
-    flex-direction: column;
-  } */
+  .container {
+    padding: 40px;
+    display: block;
+    max-width: 1200px;
+  }
+  a {
+    color: var(--dasch-violet);
+  }
 </style>

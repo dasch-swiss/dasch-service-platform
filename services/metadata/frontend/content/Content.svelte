@@ -52,7 +52,7 @@ onMount(async () => {
         </main>
       </Route>
       <Route path="project/:id" let:params>
-        <ProjectPage id={params.id}/>
+        <ProjectPage id={params.id} />
       </Route>
     </div>
   </div>
