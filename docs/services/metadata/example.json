@@ -9,18 +9,32 @@
       "de": "Dies ist ein einfaches Beipiel-Projekt zu Dokumentationszwecken.",
       "en": "This is a simple example project for documentation purposes."
     },
-    "startDate": "2021-01-01"
+    "startDate": "2021-01-01",
+    "keywords": [
+      {
+        "en": "history",
+        "de": "Geschichte"
+      }
+    ],
+    "disciplines": [
+      "http://skos.um.es/unesco6/11"
+    ],
+    "temporalCoverage": [
+      "http://chronontology.dainst.org/period/Ef9SyESSafJ1"
+    ],
+    "spatialCoverage": [
+      "https://www.geonames.org/6255148/europe.html"
+    ],
+    "urls": [
+      "https://dasch.swiss/someproject"
+    ],
+    "dataManagementPlan": {
+      "available": true,
+      "url": "https://dasch.swiss/someproject/dmp"
+    }
   },
-  "datasets": [
-
-  ],
-  "persons": [
-
-  ],
-  "organizations": [
-
-  ],
-  "grants": [
-
-  ]
+  "datasets": [],
+  "persons": [],
+  "organizations": [],
+  "grants": []
 }

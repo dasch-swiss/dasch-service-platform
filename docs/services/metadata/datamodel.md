@@ -40,3 +40,11 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 `project` and `datasets` are required, `persons`, `organizations` and `grants` are optional.
 
 ### project
+
+## Open Questions:
+
+- How to handle URLs? Do we want/need PropertyID?
+- How to treat `Place`
+- How to handle different type options in domain entities?
+- How to handle authority file references?
+- Should plural be used for properties that can be multiple?

@@ -51,6 +51,13 @@ class Dataset {
   .. (0 - n) ..
 }
 
+class DataManagementPlan {
+  .. (0 - 1) ..
+  +boolean available
+  +URL url
+}
+
+
 
 Project --> Dataset
 Project --> DataManagementPlan
