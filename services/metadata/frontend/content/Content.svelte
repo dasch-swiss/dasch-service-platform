@@ -2,7 +2,7 @@
 import Tile from "./Tile.svelte";
 import Category from "./Category.svelte";
 import { onMount } from "svelte";
-import type { Project } from "./project.model";
+import type { PaginationData, Project } from "./interfaces";
 import Pagination from "./Pagination.svelte";
 import { getProjects, pagedResults, pages } from "./stores";
 import { Route, Router } from "svelte-navigator";
@@ -10,7 +10,7 @@ import ProjectPage from "./ProjectPage.svelte";
 
 let projects: Project[];
 let message = 'Loading...';
-let pagination: object;
+let pagination: PaginationData;
 
 setTimeout(() => {
   const noData = 'No data retrived. Please check the connection and retry.';
@@ -21,11 +21,9 @@ setTimeout(() => {
 onMount(async () => {
   await getProjects(1);
 
-  pagedResults.subscribe(r => {
-    projects = r;
-  });
+  pagedResults.subscribe(res => projects = res);
 
-  pages.subscribe(t => pagination = t);
+  pages.subscribe(p => pagination = p);
 });
 </script>
 

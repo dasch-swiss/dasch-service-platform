@@ -1,13 +1,6 @@
 <script lang="ts">
-import type { Project } from "./project.model";
+import type { Category, Project } from "./interfaces";
 import { pagedResults, pages } from "./stores";
-
-  interface Category {
-    id: number;
-    isOpen: boolean;
-    name: string;
-    sub: string[];
-  };
 
   export let searched: Project[] = [];
 
