@@ -1,6 +1,7 @@
 import {writable} from "svelte/store";
+import type {PaginationData} from "./interfaces";
 
-export const pages = writable({})
+export const pages = writable({} as PaginationData)
 export const pagedResults = writable([]);
 const pageLimit = 9;
 

@@ -1,12 +1,8 @@
 <script lang="ts">
+  import type { PaginationData } from "./interfaces";
   import { getProjects, pagedResults } from "./stores";
 
-  interface Pagination {
-  totalCount: number;
-  totalPages: number;
-}
-
-  export let pagination = {} as Pagination;
+  export let pagination = {} as PaginationData;
   let currentPage = 1;
   const baseResultsRange = [1, 9];
   let currentResults = baseResultsRange;
