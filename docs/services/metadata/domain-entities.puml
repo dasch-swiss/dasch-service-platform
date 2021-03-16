@@ -1,62 +1,98 @@
 @startuml Domain Entities
+package toplevel {
 
-class Project {
-  The Project.
-  -- Required Fields --
-  .. (1) ..
-  +string shortcode
-  +string name
-  +Text description
-  +Date startDate
+  class Project {
+    The Project.
+    -- Required Fields --
+    .. (1) ..
+    +ValueObject shortcode
+    +ValueObject name
+    +MultiLanguageText description
+    +Date startDate
 
-  .. (1 - n) ..
-  +Dataset[] datasets
-  +Text[] keywords
-  +Text[]|URL discipline
-  +Text[]|URL temporalCoverage
-  +Place spatialCoverage
+    .. (1 - n) ..
+    +Dataset[] datasets
+    +MultiLanguageText[] keywords
+    +TextOrAuthorityRef[] discipline
+    +TextOrAuthorityRef[] temporalCoverage
+    +AuthorityRef[] spatialCoverage
 
-  .. (1 - 2) ..
-  +URL url
+    .. (1 - 2) ..
+    +URL url
 
-  -- Optional Fields --
-  .. (0 - 1) ..
-  +DataManagementPlan dataManagementPlan
-  +Date endDate
+    -- Optional Fields --
+    .. (0 - 1) ..
+    +DataManagementPlan dataManagementPlan
+    +Date endDate
 
-  .. (0 - n) ..
-  +string[] publication
-  +Grant[] grant
-  +Text[] alternateName
+    .. (0 - n) ..
+    +ValueObject[] publication
+    +Grant[] grant
+    +MultiLanguageText[] alternateName
+  }
+
+  class Dataset {
+    A Dataset belonging to the project.
+    ' TODO
+    -- Required Fields --
+    .. (1) ..
+
+    .. (1 - n) ..
+
+    -- Optional Fields --
+    .. (0 - 1) ..
+
+    .. (0 - n) ..
+  }
+
+  class DataManagementPlan {
+    .. (0 - 1) ..
+    +boolean available
+    +URL url
+  }
+
+  class Grant {
+    ' TODO
+  }
+
+  class Person {
+    ' TODO
+  }
+
+  class Organization {
+    ' TODO
+  }
+
 }
 
-note left of Project::discipline
-  how do we handle different types?
-end note
+package utility {
 
-note left of Project::spatialCoverage
-  Does it make sense to have `Place` as a class?
-end note
+  class TextOrAuthorityRef {
+    ' TODO: find better name
+    Struct ensuring the object to be either a multi language text or an authority file reference.
+    -- Required: OneOf --
+    +AuthorityRef authorityRef
+    +MultiLanguageText text
+  }
 
-class Dataset {
-  A Dataset belonging to the project.
-  -- Required Fields --
-  .. (1) ..
+  class AuthorityRef {
+    Reference to an external autority file.
+    -- Required Fields --
+    +ValueObject url
+    +ValueObject authority
+  }
 
-  .. (1 - n) ..
+  class MultiLanguageText {
+    Struct holding text in multiple different languages.
+    -- Required Fields --
+    +Map[ValueObject,ValueObject] text
+  }
 
-  -- Optional Fields --
-  .. (0 - 1) ..
+  class ValueObject {
+    Struct holding exactly one value.
+  }
 
-  .. (0 - n) ..
 }
-
-class DataManagementPlan {
-  .. (0 - 1) ..
-  +boolean available
-  +URL url
-}
-
 
 
 Project --> Dataset
@@ -68,5 +104,9 @@ Dataset --> Person
 Dataset --> Organization
 Grant --> Person
 Grant --> Organization
+TextOrAuthorityRef --> MultiLanguageText
+TextOrAuthorityRef --> AuthorityRef
+AuthorityRef --> ValueObject
+MultiLanguageText --> ValueObject
 
 @enduml

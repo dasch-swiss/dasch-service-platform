@@ -105,6 +105,10 @@
             },
             "additionalProperties": false
           }
+        },
+        "endDate": {
+          "description": "End date of the project.",
+          "$ref": "#/definitions/date"
         }
       },
       "required": [

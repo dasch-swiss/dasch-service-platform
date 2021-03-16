@@ -31,7 +31,8 @@
     "dataManagementPlan": {
       "available": true,
       "url": "https://dasch.swiss/someproject/dmp"
-    }
+    },
+    "endDate": "2022-01-01"
   },
   "datasets": [],
   "persons": [],
