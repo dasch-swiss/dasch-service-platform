@@ -27,44 +27,29 @@ onMount(async () => {
 });
 </script>
 
-<div class=wrapper>
-  <div class=content-container>
-    <nav>
-      <div class="category-container hidden m-inline-block">
-        <Category bind:searched={projects} />
-      </div>
-    </nav>
-    <main>
-      <div class=tile-container>
-        {#if projects && projects.length}
-          {#each projects as project}
-            <Tile name={project.name} description={project.description}/>
-          {/each}
-        {:else}
-          <p>{message}</p>
-        {/if}
-      </div>
-      {#if projects && projects.length}
-        <Pagination pagination={pagination} />
-      {/if}
-    </main>
+<nav>
+  <div class="category-container hidden m-inline-block">
+    <Category bind:searched={projects} />
   </div>
-</div>
+</nav>
+<main>
+  <div class=tile-container>
+    {#if projects && projects.length}
+      {#each projects as project}
+        <Tile name={project.name} description={project.description}/>
+      {/each}
+    {:else}
+      <p>{message}</p>
+    {/if}
+  </div>
+  {#if projects && projects.length}
+    <Pagination pagination={pagination} />
+  {/if}
+</main>
 
 <style>
 * {
   box-sizing: border-box;
-}
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex: 1 0 auto;
-}
-.content-container {
-  display: flex;
-  flex-direction: column;
-  max-width: 1920px;
 }
 nav, main {
   width: 100%;
@@ -98,9 +83,6 @@ main {
   max-width: 1200px;
 }
 @media screen and (min-width: 992px) {
-  .content-container {
-    flex-direction: row;
-  }
   nav, main {
     min-height: 950px;
   }

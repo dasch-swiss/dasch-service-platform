@@ -9,7 +9,7 @@
   </div>
   <div class=content>{ description }</div>
   <div class=footer>
-    <a href="/">Read more</a>
+    <a href="#/project">Read more</a>
   </div>
 </section>
 
