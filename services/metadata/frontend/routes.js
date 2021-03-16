@@ -3,5 +3,5 @@ import ProjectPage from './content/ProjectPage.svelte';
 
 export default {
   '/': Content,
-  '/project': ProjectPage
+  '/project/:id': ProjectPage
 }

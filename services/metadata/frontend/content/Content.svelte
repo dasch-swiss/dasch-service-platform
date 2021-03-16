@@ -34,7 +34,7 @@ onMount(async () => {
   <div class=tile-container>
     {#if projects && projects.length}
       {#each projects as project}
-        <Tile name={project.name} description={project.description}/>
+        <Tile project={project}/>
       {/each}
     {:else}
       <p>{message}</p>
