@@ -1,31 +1,26 @@
 <script lang="ts">
-import { onMount } from "svelte";
-import type { Project } from "./interfaces";
-import { currentProject } from "./stores";
+  import { onMount } from "svelte";
+  import type { Project } from "./interfaces";
+  import { currentProject } from "./stores";
 
-  export let id: string;
+  // let id: string;
+  export let params = {} as any;
   let project: Project;
 
   onMount(async () => {
-    if (!id) {
-      const url = window.location.hash;
-      const lastItem = url.substring(url.lastIndexOf('/') + 1)
-      id = lastItem;
+    currentProject.subscribe(p => project = p);
+
+    if (!project) {
       await getProject();
-    } else {
-      currentProject.subscribe(p => project = p);
-      if (!project) {
-        await getProject();
-      }
     }
   });
   
   let getProject = async () => {
-    const res = await fetch(`http://localhost:3000/projects/${id}`)
+    const res = await fetch(`http://localhost:3000/projects/${params.id}`)
     project = await res.json();
   }
 </script>
-  
+
 <div class="container">
   <div>ID: {project?.id}</div>
   <div>Title: {project?.name}</div>

@@ -3,7 +3,7 @@ import type {PaginationData, Project} from "./interfaces";
 
 export const pages = writable({} as PaginationData)
 export const pagedResults = writable([]);
-export const currentProject = writable({} as Project);
+export const currentProject = writable(undefined);
 const pageLimit = 9;
 
 export async function getProjects(page: number): Promise<void> {
