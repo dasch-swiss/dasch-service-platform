@@ -6,7 +6,10 @@
 
 ## API representation
 
-A metadata set can be serialized to json. This json data must conform to the [json-schema](schema-metadata.json).
+A metadata set can be serialized to json. This json data must conform to the [json-schema](schema-metadata.json).  
+The following example illustrates how the json might look:
+
+![json example](./api-example.svg)
 
 The json representation is "flat", i.e. not nested, except in cases where there is a clear one-to-one relationship. Namely, if an object can only occur once and can not be referenced anywhere else.
 
@@ -41,10 +44,11 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 ### project
 
+...
+
+### dataset
+
+...
+
 ## Open Questions:
 
-- How to handle URLs? Do we want/need PropertyID?
-- How to treat `Place`
-- How to handle different type options in domain entities?
-- How to handle authority file references?
-- Should plural be used for properties that can be multiple?
