@@ -21,24 +21,24 @@
  *
  */
 
-package middleware
+package entity
 
-import (
-	metric "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/urfave/negroni"
-	"net/http"
-	"strconv"
-)
+import "errors"
 
-//Metrics to prometheus
-func Metrics(mService metric.Service) negroni.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		appMetric := metric.NewHTTP(r.URL.Path, r.Method)
-		appMetric.Started()
-		next(w, r)
-		res := w.(negroni.ResponseWriter)
-		appMetric.Finished()
-		appMetric.StatusCode = strconv.Itoa(res.Status())
-		mService.SaveHTTP(appMetric)
-	}
-}
+//ErrNotFound not found
+var ErrNotFound = errors.New("not found")
+
+//ErrInvalidEntity invalid entity
+var ErrInvalidEntity = errors.New("invalid entity")
+
+//ErrCannotBeDeleted cannot be deleted
+var ErrCannotBeDeleted = errors.New("cannot be deleted")
+
+//ErrNotEnoughBooks cannot borrow
+var ErrNotEnoughBooks = errors.New("not enough books")
+
+//ErrPostalAddressNotSet cannot be deleted
+var ErrPostalAddressNotSet = errors.New("postal address is not set")
+
+//ErrBookNotBorrowed cannot return
+var ErrBookNotBorrowed = errors.New("book not borrowed")

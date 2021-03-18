@@ -23,22 +23,16 @@
 
 package middleware
 
-import (
-	metric "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/urfave/negroni"
-	"net/http"
-	"strconv"
-)
+import "net/http"
 
-//Metrics to prometheus
-func Metrics(mService metric.Service) negroni.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		appMetric := metric.NewHTTP(r.URL.Path, r.Method)
-		appMetric.Started()
-		next(w, r)
-		res := w.(negroni.ResponseWriter)
-		appMetric.Finished()
-		appMetric.StatusCode = strconv.Itoa(res.Status())
-		mService.SaveHTTP(appMetric)
+//Cors adiciona os headers para suportar o CORS nos navegadores
+func Cors(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, OPTIONS")
+	w.Header().Set("Access-Control-Allow-Headers", "Accept, Authorization, Content-Type")
+	w.Header().Set("Content-Type", "application/json")
+	if r.Method == "OPTIONS" {
+		return
 	}
+	next(w, r)
 }

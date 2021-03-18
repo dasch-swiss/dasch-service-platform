@@ -13,7 +13,6 @@ def go_dependencies():
         sum = "h1:haLTcUp3Vwp80xMVEg5KRNwzfUrgFdRmtBY8fuB8scA=",
         version = "v0.13.0",
     )
-
     go_repository(
         name = "com_github_afex_hystrix_go",
         importpath = "github.com/afex/hystrix-go",
@@ -26,7 +25,6 @@ def go_dependencies():
         sum = "h1:M5ZnqLOoZR8ygVq0FfkXsNOKzMCk0xRiow0R5+5VkQ0=",
         version = "v1.0.3",
     )
-
     go_repository(
         name = "com_github_alecthomas_template",
         importpath = "github.com/alecthomas/template",
@@ -45,7 +43,6 @@ def go_dependencies():
         sum = "h1:bvNMNQO63//z+xNgfBlViaCIJKLlCJ6/fmUseuG0wVQ=",
         version = "v0.0.0-20170406064948-c7f18ee00883",
     )
-
     go_repository(
         name = "com_github_apache_thrift",
         importpath = "github.com/apache/thrift",
@@ -58,7 +55,6 @@ def go_dependencies():
         sum = "h1:jfIu9sQUG6Ig+0+Ap1h4unLjW6YQJpKZVmUzxsD4E/Q=",
         version = "v0.0.0-20160628152529-48b4e1c0c4d0",
     )
-
     go_repository(
         name = "com_github_armon_circbuf",
         importpath = "github.com/armon/circbuf",
@@ -275,7 +271,6 @@ def go_dependencies():
         sum = "h1:TUuUh0Xgj97tLMNtWtNvI9mIV6isjEb9lBMNv+77IGM=",
         version = "v0.0.0-20190318185328-a8d75aae118c",
     )
-
     go_repository(
         name = "com_github_dustin_go_humanize",
         importpath = "github.com/dustin/go-humanize",
@@ -354,7 +349,6 @@ def go_dependencies():
         sum = "h1:uQNcQN3NsV1j4ANsPh42P4ew4t6rnRbJb8frvpp31qQ=",
         version = "v3.3.2+incompatible",
     )
-
     go_repository(
         name = "com_github_go_delve_delve",
         importpath = "github.com/go-delve/delve",
@@ -751,7 +745,6 @@ def go_dependencies():
         sum = "h1:bqDmpDG49ZRnB5PcgP0RXtQvnMSgIF14M7CBd2shtXs=",
         version = "v0.0.0-20200102142835-e9ef32dff381",
     )
-
     go_repository(
         name = "com_github_lyft_protoc_gen_validate",
         importpath = "github.com/lyft/protoc-gen-validate",
@@ -770,7 +763,6 @@ def go_dependencies():
         sum = "h1:reVOUXwnhsYv/8UqjvhrMOu5CNT9UapHFLbQ2JcXsmg=",
         version = "v0.0.0-20200106131100-75d0ddfc0007",
     )
-
     go_repository(
         name = "com_github_mattn_go_colorable",
         importpath = "github.com/mattn/go-colorable",
@@ -1077,7 +1069,6 @@ def go_dependencies():
         sum = "h1:G9tHG9lebljV9mfp9SNPDL36nCDxmo3zTlAf1YgvzmI=",
         version = "v1.6.0",
     )
-
     go_repository(
         name = "com_github_russross_blackfriday",
         importpath = "github.com/russross/blackfriday",
@@ -1114,7 +1105,6 @@ def go_dependencies():
         sum = "h1:we8PVUC3FE2uYfodKH/nBHMSetSfHDR6scGdBi+erh0=",
         version = "v1.1.0",
     )
-
     go_repository(
         name = "com_github_shopify_sarama",
         importpath = "github.com/Shopify/sarama",
@@ -1133,7 +1123,6 @@ def go_dependencies():
         sum = "h1:SWV2fHctRpRrp49VXJ6UZja7gU9QLHwRpIPBN89SKEo=",
         version = "v0.0.0-20171119174359-809beceb2371",
     )
-
     go_repository(
         name = "com_github_shurcool_sanitized_anchor_name",
         importpath = "github.com/shurcooL/sanitized_anchor_name",
@@ -1146,7 +1135,6 @@ def go_dependencies():
         sum = "h1:JJV9CsgM9EC9w2iVkwuz+sMx8yRFe89PJRUrv6hPCIA=",
         version = "v0.0.0-20180121065927-ffb13db8def0",
     )
-
     go_repository(
         name = "com_github_sirupsen_logrus",
         importpath = "github.com/sirupsen/logrus",
@@ -1273,7 +1261,6 @@ def go_dependencies():
         sum = "h1:Qt8FeAtxE/vfdrLmR3rxR6JRE0RoVmbXu8+6kZtYU4k=",
         version = "v2.1.1",
     )
-
     go_repository(
         name = "com_github_urfave_negroni",
         importpath = "github.com/urfave/negroni",
@@ -1292,7 +1279,6 @@ def go_dependencies():
         sum = "h1:uiKJ+T5HMGGQM2kRKQ8Pxw8+Zq9qhhZhz/lieYvCMns=",
         version = "v2.1.0",
     )
-
     go_repository(
         name = "com_github_vividcortex_gohistogram",
         importpath = "github.com/VividCortex/gohistogram",
@@ -1335,7 +1321,6 @@ def go_dependencies():
         sum = "h1:e1sMhtVq9AfcEy8AXNb8eSg6gbzfdpYhoNqnPJa+GzI=",
         version = "v0.0.0-20151005221446-73f23eafcf67",
     )
-
     go_repository(
         name = "in_gopkg_alecthomas_kingpin_v2",
         importpath = "gopkg.in/alecthomas/kingpin.v2",

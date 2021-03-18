@@ -28,13 +28,33 @@ test: yarn ## test all targets
 buildifier: ## format Bazel WORKSPACE and BUILD.bazel files
 	@bazel run :buildifier
 
+.PHONY: gen-go-deps
+gen-go-deps: ## regenerate dependencies file (deps.bzl)
+	@bazel run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%go_dependencies
+
+#################################
+# Admin service targets
+#################################
+
+.PHONY: admin-docker-build
+admin-docker-build: build ## publish linux/amd64 platform image locally
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/admin/backend/cmd:image -- --norun
+
+.PHONY: admin-docker-publish
+admin-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/admin/docker:push
+
+.PHONY: admin-service-run
+admin-service-run: build ## start the admin-service
+	@bazel run //services/admin/backend/cmd
+
+.PHONY: admin-service-test
+admin-service-test: ## run all admin-service tests
+	@bazel test //services/admin/backend/...
+
 #################################
 # Metadata service targets
 #################################
-
-.PHONY: metadata-gen-deps
-metadata-gen-deps: ## regenerate dependencies file (services/metadata/backend/deps.bzl)
-	@bazel run //services/metadata/backend:gazelle -- update-repos -from_file=services/metadata/backend/go.mod -to_macro=deps.bzl%go_dependencies
 
 .PHONY: metadata-docker-build
 metadata-docker-build: build ## publish linux/amd64 platform image locally
@@ -45,7 +65,7 @@ metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhu
 	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/docker:push
 
 .PHONY: metadata-service-run
-metadata-service-run: build ## start the metadata service
+metadata-service-run: build ## start the metadata-service
 	@bazel run //services/metadata/backend/cmd
 
 .PHONY: metadata-service-test
@@ -56,24 +76,20 @@ metadata-service-test: ## run all metadata-service tests
 # Resource service targets
 #################################
 
-.PHONY: resource-gen-deps
-resource-gen-deps: ## regenerate dependencies file (services/metadata/backend/deps.bzl)
-	@bazel run //services/resource/backend:gazelle -- update-repos -from_file=services/resource/backend/go.mod -to_macro=deps.bzl%go_dependencies
-
 .PHONY: resource-docker-build
 resource-docker-build: build ## publish linux/amd64 platform image locally
-	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/resource/backend/api:image -- --norun
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/resource/backend/cmd:image -- --norun
 
 .PHONY: resource-docker-publish
 resource-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
 	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/resource/docker:push
 
 .PHONY: resource-service-run
-resource-service-run: build ## start the metadata service
-	@bazel run //services/resource/backend/api
+resource-service-run: build ## start the resource-service
+	@bazel run //services/resource/backend/cmd
 
 .PHONY: resource-service-test
-resource-service-test: ## run all metadata-service tests
+resource-service-test: ## run all resource-service tests
 	@bazel test //services/resource/backend/...
 
 #################################

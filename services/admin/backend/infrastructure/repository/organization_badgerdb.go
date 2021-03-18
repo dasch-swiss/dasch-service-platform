@@ -21,24 +21,20 @@
  *
  */
 
-package middleware
+package repository
 
 import (
-	metric "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/urfave/negroni"
-	"net/http"
-	"strconv"
+	badger "github.com/dgraph-io/badger/v3"
 )
 
-//Metrics to prometheus
-func Metrics(mService metric.Service) negroni.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		appMetric := metric.NewHTTP(r.URL.Path, r.Method)
-		appMetric.Started()
-		next(w, r)
-		res := w.(negroni.ResponseWriter)
-		appMetric.Finished()
-		appMetric.StatusCode = strconv.Itoa(res.Status())
-		mService.SaveHTTP(appMetric)
+//UserMySQL mysql repo
+type OrganizationBadgerDB struct {
+	db *badger.DB
+}
+
+//NewOrganizationBadgerDB create new repository
+func NewOrganizationBadgerDB(db *badger.DB) *OrganizationBadgerDB {
+	return &OrganizationBadgerDB{
+		db: db,
 	}
 }

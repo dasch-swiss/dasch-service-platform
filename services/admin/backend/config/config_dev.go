@@ -21,42 +21,12 @@
  *
  */
 
-package metric
+package config
 
-import "time"
-
-//HTTP application
-type HTTP struct {
-	Handler    string
-	Method     string
-	StatusCode string
-	StartedAt  time.Time
-	FinishedAt time.Time
-	Duration   float64
-}
-
-//NewHTTP create a new HTTP app
-func NewHTTP(handler string, method string) *HTTP {
-	return &HTTP{
-		Handler: handler,
-		Method:  method,
-	}
-}
-
-//Started start monitoring the app
-func (h *HTTP) Started() {
-	h.StartedAt = time.Now()
-}
-
-// Finished app finished
-func (h *HTTP) Finished() {
-	h.FinishedAt = time.Now()
-	h.Duration = time.Since(h.StartedAt).Seconds()
-}
-
-//Service definition
-type Service interface {
-	SaveHTTP(h *HTTP)
-}
-
-
+const (
+	DB_USER                = "root"
+	DB_PASSWORD            = "test"
+	DB_DATABASE            = "test"
+	DB_HOST                = "127.0.0.1"
+	API_PORT               = 8080
+)

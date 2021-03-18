@@ -6,7 +6,7 @@ go_library(
         "cors.go",
         "metrics.go",
     ],
-    importpath = "github.com/dasch-swiss/dasch-service-platform/services/resource/backend/api/middleware",
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/middleware",
     visibility = ["//visibility:public"],
     deps = [
         "//shared/go/pkg/metric",

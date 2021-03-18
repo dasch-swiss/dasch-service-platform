@@ -21,24 +21,35 @@
  *
  */
 
-package middleware
+package repository
 
 import (
-	metric "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/urfave/negroni"
-	"net/http"
-	"strconv"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
 )
 
-//Metrics to prometheus
-func Metrics(mService metric.Service) negroni.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		appMetric := metric.NewHTTP(r.URL.Path, r.Method)
-		appMetric.Started()
-		next(w, r)
-		res := w.(negroni.ResponseWriter)
-		appMetric.Finished()
-		appMetric.StatusCode = strconv.Itoa(res.Status())
-		mService.SaveHTTP(appMetric)
+//inmem in memory repo
+type inmemdb struct {
+	m map[entity.ID]*entity.Organization
+}
+
+//NewInmem create a new in memory repository
+func NewInmemDB() *inmemdb {
+	var m = map[entity.ID]*entity.Organization{}
+	return &inmemdb{
+		m: m,
 	}
+}
+
+//Create an organization
+func (r *inmemdb) Create(e *entity.Organization) (entity.ID, error) {
+	r.m[e.ID] = e
+	return e.ID, nil
+}
+
+//Get an organization
+func (r *inmemdb) Get(id entity.ID) (*entity.Organization, error) {
+	if r.m[id] == nil {
+		return nil, entity.ErrNotFound
+	}
+	return r.m[id], nil
 }

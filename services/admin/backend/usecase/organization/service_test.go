@@ -21,24 +21,29 @@
  *
  */
 
-package middleware
+package organization
 
 import (
-	metric "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/urfave/negroni"
-	"net/http"
-	"strconv"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
+	"github.com/stretchr/testify/assert"
+	"testing"
+	"time"
 )
 
-//Metrics to prometheus
-func Metrics(mService metric.Service) negroni.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		appMetric := metric.NewHTTP(r.URL.Path, r.Method)
-		appMetric.Started()
-		next(w, r)
-		res := w.(negroni.ResponseWriter)
-		appMetric.Finished()
-		appMetric.StatusCode = strconv.Itoa(res.Status())
-		mService.SaveHTTP(appMetric)
+func newFixtureOrganization() *entity.Organization {
+	return &entity.Organization{
+		ID:        entity.NewID(),
+		Name:      "TEST Organization",
+		CreatedAt: time.Now(),
 	}
+}
+
+func Test_Create(t *testing.T) {
+	repo := newInmem()
+	service := NewService(repo)
+	org := newFixtureOrganization()
+	_, err := service.CreateOrganization(org.Name)
+	assert.Nil(t, err)
+	assert.False(t, org.CreatedAt.IsZero())
+	assert.True(t, org.UpdatedAt.IsZero())
 }

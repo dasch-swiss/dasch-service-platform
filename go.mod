@@ -1,4 +1,4 @@
-module github.com/dasch-swiss/dasch-service-platform/services/metadata/backend
+module github.com/dasch-swiss/dasch-service-platform
 
 go 1.16
 

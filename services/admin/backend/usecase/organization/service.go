@@ -21,24 +21,32 @@
  *
  */
 
-package middleware
+package organization
 
-import (
-	metric "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/urfave/negroni"
-	"net/http"
-	"strconv"
-)
+import "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
 
-//Metrics to prometheus
-func Metrics(mService metric.Service) negroni.HandlerFunc {
-	return func(w http.ResponseWriter, r *http.Request, next http.HandlerFunc) {
-		appMetric := metric.NewHTTP(r.URL.Path, r.Method)
-		appMetric.Started()
-		next(w, r)
-		res := w.(negroni.ResponseWriter)
-		appMetric.Finished()
-		appMetric.StatusCode = strconv.Itoa(res.Status())
-		mService.SaveHTTP(appMetric)
+//Service interface
+type Service struct {
+	repo Repository
+}
+
+//NewService create a new organization use case
+func NewService(r Repository) *Service {
+	return &Service{
+		repo: r,
 	}
+}
+
+//CreateOrganization
+func (s *Service) CreateOrganization(name string) (entity.ID, error) {
+	e, err := entity.NewOrganization(name)
+	if err != nil {
+		return e.ID, err
+	}
+	return s.repo.Create(e)
+}
+
+//GetOrganization get a Organization
+func (s *Service) GetOrganization(id entity.ID) (*entity.Organization, error) {
+	return s.repo.Get(id)
 }
