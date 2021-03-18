@@ -58,13 +58,10 @@ To run `json-server` either navigate to the `db.json` file and run `json-server 
 make metadata-server
 ```
 
-Currently, two routes are being served: `http://localhost:3000/projects/` and `http://localhost:3000/metadata/`.
-- `/projects` returns all projects for which there is metadata available.  
-  For now, projects only contain an `id` (i.e. the project shortcode), `name` and `description`.
-- `/metadata` returns all metadata-sets available.
+Currently one route is being served: `http://localhost:3000/projects/`. It returns all projects for which there is metadata available. For now, projects only contain an `id` (i.e. the project shortcode), `name`, `description` and `metadata`.
 
-Metadata of a specific project can be retrieved by getting `/metadata/<id>`. (E.g. `http://localhost:3000/metadata/9997` to get the minimal metadata set.)
+Metadata of a specific project can be retrieved by getting `/projects/<id>`. (E.g. `http://localhost:3000/projects/9997` to get the minimal metadata set.)
 
-Full text search can be performed by adding `?q=<search-query>` (e.g. `http://localhost:3000/metadata?q=agriculture`).
+Full text search can be performed by adding `?q=<search-query>` (e.g. `http://localhost:3000/projects?q=agriculture`).
 
 `json-server` also supports updating and deleting data. For more capabilities of `json-server`, see the [the docs](https://github.com/typicode/json-server).

@@ -1,12 +1,6 @@
 <script lang="ts">
-import type { Project } from "./project.model";
-
-  interface Category {
-    id: number;
-    isOpen: boolean;
-    name: string;
-    sub: string[];
-  };
+  import type { Category, Project } from "./interfaces";
+  import { pagedResults, pages } from "./stores";
 
   export let searched: Project[] = [];
 
@@ -21,27 +15,29 @@ import type { Project } from "./project.model";
     { id: 8, isOpen: false, name: 'Organization', sub: ['Last', 'Not least'] },
   ];
 
-  const toggleCetegory = (cat: any) => (event: any) => {
+  const toggleCetegory = (cat: Category) => (event: MouseEvent) => {
+    console.log(cat)
     let bool = cat.isOpen;
     categories[cat.id - 1].isOpen = !bool;
   };
 
-  const handleSubCategory = (q: string) => (event: any) => {
+  const handleSubCategory = (q: string) => (event: MouseEvent) => {
     fetch(`http://localhost:3000/projects?q=${q}`)
       .then(r => r.json())
       .then(data => {
-        console.log(data);
         searched = data;
+        pages.set({totalCount: data.length, totalPages: 1});
+        pagedResults.set(data);
     });
   }
 </script>
 
 {#each categories as category }
-  <button class={category.sub.length ? '' : 'not-allowed'} on:click={toggleCetegory(category)}>
+  <button on:click={toggleCetegory(category)} disabled={!category.sub.length}>
     {category.name}
   </button>
   {#if category.sub && category.sub.length}
-    <div class={category.isOpen ? 'visible' : 'in-visible'}>
+    <div class={category.isOpen ? 'visible' : 'hidden'}>
       {#each category.sub as sub, n}
         <label class=subcategory>
           <input on:click={handleSubCategory(sub)} value={n} type=checkbox name=subcategory />{sub}
@@ -53,21 +49,12 @@ import type { Project } from "./project.model";
 
 <style>
   button {
-    min-width: 200px;
-    border: 1px solid #000;
+    width: 100%;
+    margin: 2px 0;
+    padding: 10px;
+    border: 1px solid #aaa;
     border-radius: 3px;
-    background-color: #c4c4c4;
-    padding: 5px 20px;
-    margin: 5px;
-    cursor: pointer;
     text-align: left;
-  }
-  .visible {
-    display: block;
-    min-width: 200px;
-  }
-  .in-visible {
-    display: none;
   }
   .subcategory {
     display: flex;
@@ -75,15 +62,23 @@ import type { Project } from "./project.model";
     cursor: pointer;
     margin: 5px 5px 5px 5px;
     padding: 5px;
-    /* background-color: yellowgreen; */
+    border-radius: 3px;
     background-color: #f2f2f2;
     font-size: 0.8em;
-  }
-  .not-allowed {
-    cursor: not-allowed;
   }
   input[type=checkbox] {
     margin: 5px 10px;
     display: flex;
-}
+  }
+  @media screen and (min-width: 992px) {
+    button {
+      padding: 5px 20px;
+      margin: 5px;
+      min-width: 200px;
+    }
+    .visible {
+      display: block;
+      width: 220px;
+    }
+  }
 </style>
