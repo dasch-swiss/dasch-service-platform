@@ -86,7 +86,7 @@ func ExampleEmail_Equals() {
 func TestShouldCompareTwoEmailAsNotEqual(t *testing.T) {
 	a, _ := valueobject.NewEmail("joe@blogs.com")
 	b, _ := valueobject.NewEmail("mandy@blogs.com")
-	assert.Equal(t, a, b)
+	assert.NotEqual(t, a, b)
 }
 
 func TestShouldNotBeEqualIfNotEmail(t *testing.T) {
