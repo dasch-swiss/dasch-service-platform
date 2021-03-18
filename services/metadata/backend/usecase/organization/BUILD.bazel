@@ -17,7 +17,7 @@ go_test(
     name = "service_test",
     size = "small",
     srcs = [
-        "service_test.go"
+        "service_test.go",
     ],
     embed = [":organization"],
     visibility = ["//visibility:public"],
