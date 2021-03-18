@@ -21,7 +21,7 @@
  *
  */
 
-package organization
+package testing_test
 
 import "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
 
@@ -30,8 +30,8 @@ type inmem struct {
 	m map[entity.ID]*entity.Organization
 }
 
-//newInmem create a new in memory repository
-func newInmem() *inmem {
+//NewInmem create a new in memory repository
+func NewInmem() *inmem {
 	var m = map[entity.ID]*entity.Organization{}
 	return &inmem{
 		m: m,

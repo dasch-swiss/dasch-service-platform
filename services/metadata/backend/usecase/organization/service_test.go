@@ -21,10 +21,12 @@
  *
  */
 
-package organization
+package organization_test
 
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
+	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/usecase/organization"
+	orgTesting "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/usecase/organization/testing"
 	"github.com/stretchr/testify/assert"
 	"testing"
 	"time"
@@ -33,16 +35,16 @@ import (
 func newFixtureOrganization() *entity.Organization {
 	return &entity.Organization{
 		ID:        entity.NewID(),
-		Name:      "TEST Organization",
+		Name:      map[string]bool{"TEST Organization": true},
 		CreatedAt: time.Now(),
 	}
 }
 
 func Test_Create(t *testing.T) {
-	repo := newInmem()
-	service := NewService(repo)
+	repo := orgTesting.NewInmem() // storage
+	service := organization.NewService(repo) // service implementing the usecases
 	org := newFixtureOrganization()
-	_, err := service.CreateOrganization(org.Name)
+	_, err := service.CreateOrganization("TEST Organization")
 	assert.Nil(t, err)
 	assert.False(t, org.CreatedAt.IsZero())
 	assert.True(t, org.UpdatedAt.IsZero())

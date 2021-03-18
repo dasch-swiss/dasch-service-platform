@@ -111,6 +111,17 @@ func (org *Organization) RemoveName(name string) error {
 	return nil
 }
 
+//GetNames returns all organization names.
+func (org *Organization) GetNames() []string  {
+	var names []string
+
+	for name, _ := range org.Name {
+		names = append(names, name)
+	}
+
+	return names
+}
+
 //AddAddress adds a postal address to the organization.
 func (org *Organization) AddAddress(streetAddress string, postalCode string, addressLocality string) error {
 

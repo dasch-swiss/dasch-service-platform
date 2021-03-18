@@ -24,3 +24,12 @@ go_test(
     visibility = ["//visibility:public"],
     deps = ["@com_github_stretchr_testify//assert"],
 )
+
+go_test(
+    name = "person_test",
+    size = "small",
+    srcs = ["person_test.go"],
+    embed = [":entity"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)

@@ -21,13 +21,4 @@
  *
  */
 
-package presenter
-
-import "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
-
-//Organization represents JSON template which can be used in serialization
-//(to JSON) and deserialization (from JSON) operations.
-type Organization struct {
-	ID   entity.ID `json:"id"`
-	Name []string  `json:"name"`
-}
+package entity_test
