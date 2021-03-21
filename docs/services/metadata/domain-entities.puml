@@ -19,6 +19,7 @@ package toplevel {
 
     .. (1 - 2) ..
     +URL url
+    ' TODO: do we want URL?
 
     -- Optional Fields --
     .. (0 - 1) ..
@@ -49,10 +50,29 @@ package toplevel {
     .. (0 - 1) ..
     +boolean available
     +URL url
+    ' TODO: do we want URL?
   }
 
   class Grant {
-    ' TODO
+    A financial grant.
+    -- Required Fields --
+    .. (1 - n) ..
+    +LegalBody funder
+
+    -- Optional Fields --
+    .. (0 - 1) ..
+    +ValueObject number
+    +MultiLanguageText name
+    +URL url
+    ' TODO: do we want URL?
+
+  }
+
+  class LegalBody {
+    Struct representing either a Person or an Organization.
+    -- Required: OneOf --
+    +Person person
+    +Organization organization
   }
 
   class Person {
@@ -102,8 +122,9 @@ Project --> Person
 Project --> Organization
 Dataset --> Person
 Dataset --> Organization
-Grant --> Person
-Grant --> Organization
+Grant --> LegalBody
+LegalBody --> Person
+LegalBody --> Organization
 TextOrAuthorityRef --> MultiLanguageText
 TextOrAuthorityRef --> AuthorityRef
 AuthorityRef --> ValueObject

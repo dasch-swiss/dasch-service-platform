@@ -52,3 +52,4 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 ## Open Questions:
 
+- [ ] how to handle URLs? separate type? or just value object? what info do we need for a URL?
