@@ -80,8 +80,36 @@ package toplevel {
   }
 
   class Organization {
-    ' TODO
+    An Organization.
+    -- Required --
+    .. (1 - n) ..
+    + ValueObject name
+    ' TODO: Or would that be Multilanguage?
+
+    -- Optional --
+    .. (0 - 1) ..
+    +URL url
+    ' TODO: do we want URL?
+    +Address address
+    +ValueObject email
+
   }
+
+  class Address {
+    Struct containing a postal address.
+    -- Required --
+    .. (1) ..
+    +ValueObject street
+    +ValueObject postalCode
+    +ValueObject locality
+    +ValueObject country
+
+    -- Optional --
+    .. (0 - 1) ..
+    +ValueObject additional
+    ' TODO: does that make sense like this?
+  }
+  
 
 }
 
@@ -125,6 +153,8 @@ Dataset --> Organization
 Grant --> LegalBody
 LegalBody --> Person
 LegalBody --> Organization
+Person --> Address
+Organization --> Address
 TextOrAuthorityRef --> MultiLanguageText
 TextOrAuthorityRef --> AuthorityRef
 AuthorityRef --> ValueObject
