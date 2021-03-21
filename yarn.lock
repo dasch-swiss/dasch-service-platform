@@ -1896,10 +1896,9 @@ node-nailgun-server@^0.1.4:
   dependencies:
     commander "^2.8.1"
 
-node-plantuml-back@^1.0.4:
+node-plantuml-back@BalduinLandolt/node-plantuml-back:
   version "1.0.4"
-  resolved "https://registry.yarnpkg.com/node-plantuml-back/-/node-plantuml-back-1.0.4.tgz#b844d041b0cfecfa20d23e281863fbfbf7f26121"
-  integrity sha512-5XhYNmHzdHcq8Ptshb0hkr+HS39SRJPD7IuKZ5Jv5jMo+0vGo88pCBhnXcQzH9VC3VUibeucn4/+7TsbdbuwTA==
+  resolved "https://codeload.github.com/BalduinLandolt/node-plantuml-back/tar.gz/ed5e23ba570399c721d848d300875ca638628cc7"
   dependencies:
     commander "^2.8.1"
     node-nailgun-client "^0.1.0"
