@@ -50,7 +50,21 @@
   },
   "datasets": [],
   "persons": [],
-  "organizations": [],
+  "organizations": [
+    {
+      "@id": "organization-001",
+      "@type": "Organization",
+      "names": [
+        "DaSCH",
+        "Data and Service Center for the Humanities"
+      ],
+      "url": "https://dasch.swiss",
+      "email": "info@dasch.swiss",
+      "address": {
+        
+      }
+    }
+  ],
   "grants": [
     {
       "@id": "grant-001",
@@ -64,7 +78,6 @@
     }
   ]
 }
-
 
 
 @endjson

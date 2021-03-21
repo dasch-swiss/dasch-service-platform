@@ -17,7 +17,7 @@
       "type": "array",
       "items": {
         "type": "object",
-        "properties": {}
+        "$ref": "#/definitions/dataset"
       }
     },
     "persons": {
@@ -25,19 +25,19 @@
       "type": "array",
       "items": {
         "type": "object",
-        "properties": {}
+        "$ref": "#/definitions/person"
       }
     },
     "organizations": {
-      "description": "",
+      "description": "Organizations relevant to the project.",
       "type": "array",
       "items": {
         "type": "object",
-        "properties": {}
+        "$ref": "#/definitions/organization"
       }
     },
     "grants": {
-      "description": "",
+      "description": "Grants relevant to the project.",
       "type": "array",
       "items": {
         "type": "object",
@@ -257,13 +257,48 @@
         "@id",
         "@type",
         "funders"
-      ]
+      ],
+      "additionalProperties": false
     },
     "person": {
-
+      "$comment": "TODO!"
+    },
+    "dataset": {
+      "$comment": "TODO!"
     },
     "organization": {
-
+      "description": "An organization.",
+      "type":"object",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "description": "ID of the organization."
+        },
+        "@type": {
+          "type":"string",
+          "const": "Organization"
+        },
+        "names": {
+          "type": "array",
+          "description": "Names of the organization."
+        },
+        "url": {
+          "$ref": "#/definitions/url",
+          "description": "The URL of the organization's website."
+        },
+        "email": {
+          "$comment": "TODO!"
+        },
+        "address": {
+          "$comment": "TODO!"
+        }
+      },
+      "required": [
+        "@id",
+        "@type",
+        "names"
+      ],
+      "additionalProperties": false
     }
   }
 }

@@ -83,7 +83,7 @@ package toplevel {
     An Organization.
     -- Required --
     .. (1 - n) ..
-    + ValueObject name
+    + ValueObject[] name
     ' TODO: Or would that be Multilanguage?
 
     -- Optional --
