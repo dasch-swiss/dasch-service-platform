@@ -10,6 +10,78 @@
       "type": "string"
     },
     "project": {
+      "$ref": "#/definitions/project"
+    },
+    "datasets": {
+      "description": "The datasets of the project",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "persons": {
+      "description": "",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "organizations": {
+      "description": "",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    "grants": {
+      "description": "",
+      "type": "array",
+      "items": {
+        "type": "object",
+        "$ref": "#/definitions/grant"
+      }
+    }
+  },
+  "required": [
+    "$schema",
+    "project",
+    "datasets"
+  ],
+  "additionalProperties": false,
+  "definitions": {
+    "text": {
+      "type": "object",
+      "title": "Text Property (multilingual)",
+      "patternProperties": {
+        "^[a-z]{2}$": {
+          "type": "string",
+          "title": "Text in a particular language",
+          "description": "Pairs of language short codes and text strings (e.g. `'en': 'some text'`)"
+        }
+      },
+      "additionalProperties": false,
+      "minProperties": 1
+    },
+    "date": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
+      "format": "date",
+      "description": "A date in the format `yyyy-mm-dd`"
+    },
+    "url": {
+      "type": "string",
+      "format": "uri",
+      "description": "A URL"
+    },
+    "place": {
+      "type": "string",
+      "format": "uri",
+      "description": "A place"
+    },
+    "project": {
       "description": "A project on the DSP",
       "type": "object",
       "properties": {
@@ -109,6 +181,29 @@
         "endDate": {
           "description": "End date of the project.",
           "$ref": "#/definitions/date"
+        },
+        "publications": {
+          "description": "Publications produced during the lifetime of the project.",
+          "type": "array",
+          "items": {
+            "description": "Citation form of a publication.",
+            "type":"string"
+          }
+        },
+        "grants": {
+          "description": "Financial grants of the project.",
+          "type":"array",
+          "items": {
+            "description": "Reference to a grant ID.",
+            "type":"string"
+          }
+        },
+        "alternateNames": {
+          "description": "Alternative names of the project.",
+          "type":"array",
+          "items": {
+            "$ref": "#/definitions/text"
+          }
         }
       },
       "required": [
@@ -124,74 +219,23 @@
       ],
       "additionalProperties": false
     },
-    "datasets": {
-      "description": "The datasets of the project",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {}
-      }
-    },
-    "persons": {
-      "description": "",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {}
-      }
-    },
-    "organizations": {
-      "description": "",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {}
-      }
-    },
-    "grants": {
-      "description": "",
-      "type": "array",
-      "items": {
-        "type": "object",
-        "properties": {}
-      }
-    }
-  },
-  "required": [
-    "$schema",
-    "project",
-    "datasets"
-  ],
-  "additionalProperties": false,
-  "definitions": {
-    "text": {
-      "type": "object",
-      "title": "Text Property (multilingual)",
-      "patternProperties": {
-        "^[a-z]{2}$": {
+    "grant": {
+      "type":"object",
+      "description": "A financial grant.",
+      "properties": {
+        "@id": {
           "type": "string",
-          "title": "Text in a particular language",
-          "description": "Pairs of language short codes and text strings (e.g. `'en': 'some text'`)"
+          "description": "Unique id of the grant."
+        },
+        "@type": {
+          "type":"string",
+          "const": "Grant"
         }
       },
-      "additionalProperties": false,
-      "minProperties": 1
-    },
-    "date": {
-      "type": "string",
-      "pattern": "^\\d{4}-\\d{2}-\\d{2}$",
-      "format": "date",
-      "description": "A date in the format `yyyy-mm-dd`"
-    },
-    "url": {
-      "type": "string",
-      "format": "uri",
-      "description": "A URL"
-    },
-    "place": {
-      "type": "string",
-      "format": "uri",
-      "description": "A place"
+      "required": [
+        "@id",
+        "@type"
+      ]
     }
   }
 }

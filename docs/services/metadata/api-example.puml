@@ -34,12 +34,29 @@
       "available": true,
       "url": "https://dasch.swiss/someproject/dmp"
     },
-    "endDate": "2022-01-01"
+    "endDate": "2022-01-01",
+    "publications": [
+      "Doe, J. (2020): Some publication. In: Journal for sample publications. Vol. 100.1, p. 1-32."
+    ],
+    "grants": [
+      "grant-001"
+    ],
+    "alternateNames": [
+      {
+        "de": "Beispielprojekt",
+        "en": "Sample Project"
+      }
+    ]
   },
   "datasets": [],
   "persons": [],
   "organizations": [],
-  "grants": []
+  "grants": [
+    {
+      "@id": "grant-001",
+      "@type": "Grant"
+    }
+  ]
 }
 
 
