@@ -230,12 +230,40 @@
         "@type": {
           "type":"string",
           "const": "Grant"
+        },
+        "funders": {
+          "description": "Legal bodies funding the grant.",
+          "type":"array",
+          "minItems":1,
+          "items": {
+            "type":"string",
+            "description": "ID of the funding person or organization."
+          }
+        },
+        "number": {
+          "type": "string",
+          "description": "The number or identifier assigned to the grant by the funding body."
+        },
+        "name": {
+          "type": "string",
+          "description": "The name that the type of grant is usually referred to."
+        },
+        "url": {
+          "$ref": "#/definitions/url",
+          "description": "The URL of the grant."
         }
       },
       "required": [
         "@id",
-        "@type"
+        "@type",
+        "funders"
       ]
+    },
+    "person": {
+
+    },
+    "organization": {
+
     }
   }
 }

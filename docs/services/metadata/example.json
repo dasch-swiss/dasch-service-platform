@@ -52,7 +52,13 @@
   "grants": [
     {
       "@id": "grant-001",
-      "@type": "Grant"
+      "@type": "Grant",
+      "funders": [
+        "organization-001"
+      ],
+      "number": "ABCD00001",
+      "name": "Eccellenca",
+      "url": "https://www.grants.ch/grant/abcd0001"
     }
   ]
 }
