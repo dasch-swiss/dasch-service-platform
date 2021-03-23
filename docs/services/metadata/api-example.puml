@@ -52,7 +52,50 @@
     ],
     "contactPoint": "organization-001"
   },
-  "datasets": [],
+  "datasets": [
+    {
+      "@id": "dataset-001",
+      "@type": "Dataset",
+      "title": "Dataset 1",
+      "conditionsOfAccess": "Embargo until 2023, then open access.",
+      "howToCite": "Dataset XY, in Project AB (ARK: ...)",
+      "status": "Ongoing",
+      "abstracts": [
+        "http://www.project.org/dataset-01/abstract",
+        {
+          "de": "Dies ist ein Datensatz, das ...",
+          "en": "This is a dataset which ..."
+        }
+      ],
+      "typeOfData": [
+        "XML",
+        "Image"
+      ],
+      "licenses": [
+        "https://creativecommons.org/licenses/by/4.0/"
+      ],
+      "languages": [
+        {
+          "de": "Englisch",
+          "en": "English"
+        },
+        {
+          "de": "Französisch",
+          "en": "French"
+        }
+      ],
+      "attributions": [
+        {
+          "person": "person-001",
+          "roles": [
+            "Project owner",
+            "Principal investigator",
+            "Editor"
+          ]
+        }
+      ]
+    }
+  ],
   "persons": [],
   "organizations": [
     {

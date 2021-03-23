@@ -1,7 +1,9 @@
 @startuml Domain Entities
 package toplevel {
+  ' TODO: add ID and type to each toplevel class
 
   class Project {
+    ' TODO: does project need a "how to cite" too?
     The Project.
     -- Required Fields --
     .. (1) ..
@@ -41,6 +43,7 @@ package toplevel {
     .. (1) ..
     +ValueObject title
     +ValueObject conditionsOfAccess
+    ' TODO: rename to accessConditions?
     +ValueObject howToCite
     +Status status
 
@@ -218,6 +221,7 @@ Attribution --> Person
 Grant --> LegalBody
 LegalBody --> Person
 LegalBody --> Organization
+Person --> Organization
 Person --> Address
 Organization --> Address
 TextOrAuthorityRef --> MultiLanguageText

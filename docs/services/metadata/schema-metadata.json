@@ -4,6 +4,7 @@
   "title": "Metadata Schema",
   "description": "Schema definition of DSP metadata",
   "type": "object",
+  "$comment": "TODO: kontrollieren, dass überall type und ID gegeben sind",
   "properties": {
     "$schema": {
       "description": "Schema definition",
@@ -15,6 +16,7 @@
     "datasets": {
       "description": "The datasets of the project",
       "type": "array",
+      "minItems": 1,
       "items": {
         "type": "object",
         "$ref": "#/definitions/dataset"
@@ -279,7 +281,109 @@
       "$comment": "TODO!"
     },
     "dataset": {
-      "$comment": "TODO!"
+      "type":"object",
+      "description": "A dataset belonging to the project.",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "description": "Unique id of the grant."
+        },
+        "@type": {
+          "type":"string",
+          "const": "Dataset"
+        },
+        "title": {
+          "type":"string",
+          "description": "The title of the dataset."
+        },
+        "conditionsOfAccess": {
+          "type":"string",
+          "description": "The conditions under which the data of the dataset can be accessed."
+        },
+        "howToCite": {
+          "type":"string",
+          "description": "A string representation of how the dataset can be cited."
+        },
+        "status": {
+          "type":"string",
+          "description": "The status of the dataset.",
+          "enum": [
+            "In planning",
+            "Ongoing",
+            "On hold",
+            "Finished"
+          ]
+        },
+        "abstracts":{
+          "type":"array",
+          "description": "Abstracts describing the dataset.",
+          "minItems":1,
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/text"
+              },
+              {
+                "$ref": "#/definitions/url"
+              }
+            ]
+          }
+        },
+        "typeOfData":{
+          "type":"array",
+          "description": "The type of data held by the dataset.",
+          "minItems":1,
+          "items": {
+            "type":"string",
+            "enum": [
+              "XML",
+              "Text",
+              "Image",
+              "Movie",
+              "Audio"
+            ]
+          }
+        },
+        "licenses":{
+          "type":"array",
+          "description": "Abstracts describing the dataset.",
+          "minItems":1,
+          "items": {
+            "description": "A reference to a license",
+            "$ref": "#/definitions/url"
+          }
+        },
+        "languages":{
+          "type":"array",
+          "description": "Languages present in the dataset.",
+          "minItems":1,
+          "items": {
+            "$ref": "#/definitions/text"
+          }
+        },
+        "attributions":{
+          "type":"array",
+          "description": "Work on the dataset attributed to individual persons.",
+          "minItems":1,
+          "items": {
+            "$ref": "#/definitions/attribution"
+          }
+        }
+      },
+      "required": [
+        "@id",
+        "@type",
+        "title",
+        "conditionsOfAccess",
+        "howToCite",
+        "status",
+        "abstracts",
+        "typeOfData",
+        "licenses",
+        "languages",
+        "attributions"
+      ],
+      "additionalProperties": false
     },
     "organization": {
       "description": "An organization.",
@@ -348,6 +452,30 @@
         "postalCode",
         "locality",
         "country"
+      ],
+      "additionalProperties": false
+    },
+    "attribution": {
+      "type":"object",
+      "description": "Attribution of work to a person, taking in one or more roles.",
+      "properties": {
+        "person":{
+          "type":"string",
+          "description": "ID of a person."
+        },
+        "roles": {
+          "type":"array",
+          "description": "Roles the person had.",
+          "minItems": 1,
+          "items": {
+            "type":"string",
+            "description": "A role."
+          }
+        }
+      },
+      "required": [
+        "person",
+        "roles"
       ],
       "additionalProperties": false
     }
