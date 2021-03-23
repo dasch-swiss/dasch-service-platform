@@ -287,16 +287,52 @@
           "description": "The URL of the organization's website."
         },
         "email": {
-          "$comment": "TODO!"
+          "description": "E-mail address.",
+          "type": "string",
+          "format": "email"
         },
         "address": {
-          "$comment": "TODO!"
+          "$ref": "#/definitions/address",
+          "description": "The postal address of the organization."
         }
       },
       "required": [
         "@id",
         "@type",
         "names"
+      ],
+      "additionalProperties": false
+    },
+    "address": {
+      "description": "A postal address.",
+      "type":"object",
+      "properties": {
+        "street": {
+          "type":"string",
+          "description": "The street."
+        },
+        "postalCode":{
+          "type":"string",
+          "description": "The postal code."
+        },
+        "locality": {
+          "type":"string",
+          "description": "The locality/place name."
+        },
+        "country": {
+          "type":"string",
+          "description": "The country."
+        },
+        "additional": {
+          "type":"string",
+          "description": "Additional address information like c/o or post box"
+        }
+      },
+      "required": [
+        "street",
+        "postalCode",
+        "locality",
+        "country"
       ],
       "additionalProperties": false
     }

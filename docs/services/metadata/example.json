@@ -59,7 +59,11 @@
       "url": "https://dasch.swiss",
       "email": "info@dasch.swiss",
       "address": {
-        
+        "street": "Petersgraben 1",
+        "additional": "Postfach",
+        "postalCode": "4000",
+        "locality": "Basel",
+        "country": "Switzerland"
       }
     }
   ],
