@@ -65,6 +65,7 @@ package toplevel {
 
     .. (0 - n) ..
     +AuthorityRef[] sameAs
+    ' TODO: what is sameAs for a dataset?
     +TextOrURL[] documentations
   }
 

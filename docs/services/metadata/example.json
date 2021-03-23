@@ -91,6 +91,19 @@
             "Editor"
           ]
         }
+      ],
+      "alternativeTitle": "The most awesome dataset.",
+      "datePublished": "2020-01-01",
+      "dateCreated": "2019-06-01",
+      "dateModified": "2021-02-01",
+      "distribution": "https://dasch.swiss/0000-project/download",
+      "sameAs": "http://something.something.org",
+      "documentations": [
+        "https://dasch.swiss/0000-project/dataset-001/docs",
+        {
+          "de": "Bei dem Datenset handelt es sich um...",
+          "en": "The dataset is about..."
+        }
       ]
     }
   ],

@@ -233,8 +233,7 @@
         "urls",
         "funders"
       ],
-      "additionalProperties": false,
-      "$comment": "TODO: funders, contactPoint missing"
+      "additionalProperties": false
     },
     "grant": {
       "type":"object",
@@ -367,6 +366,44 @@
           "minItems":1,
           "items": {
             "$ref": "#/definitions/attribution"
+          }
+        },
+        "alternativeTitle":{
+          "type":"string",
+          "description": "Alternative title of the dataset."
+        },
+        "datePublished": {
+          "description": "Publishing date of the dataset.",
+          "$ref": "#/definitions/date"
+        },
+        "dateCreated": {
+          "description": "Creation date of the dataset.",
+          "$ref": "#/definitions/date"
+        },
+        "dateModified": {
+          "description": "Last modification date of the dataset.",
+          "$ref": "#/definitions/date"
+        },
+        "distribution": {
+          "description": "A downloadable form of the dataset.",
+          "$ref": "#/definitions/url"
+        },
+        "sameAs": {
+          "description": "TODO: how to handle this?",
+          "$ref": "#/definitions/url"
+        },
+        "documentations": {
+          "type":"array",
+          "description": "Documentations of the dataset.",
+          "items": {
+            "oneOf": [
+              {
+                "$ref": "#/definitions/text"
+              },
+              {
+                "$ref": "#/definitions/url"
+              }
+            ]
           }
         }
       },
