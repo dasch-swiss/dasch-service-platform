@@ -13,12 +13,12 @@ package toplevel {
     .. (1 - n) ..
     +Dataset[] datasets
     +MultiLanguageText[] keywords
-    +TextOrAuthorityRef[] discipline
+    +TextOrAuthorityRef[] disciplines
     +TextOrAuthorityRef[] temporalCoverage
     +AuthorityRef[] spatialCoverage
 
     .. (1 - 2) ..
-    +URL url
+    +URL[] urls
     ' TODO: do we want URL?
 
     -- Optional Fields --
@@ -27,9 +27,9 @@ package toplevel {
     +Date endDate
 
     .. (0 - n) ..
-    +ValueObject[] publication
-    +Grant[] grant
-    +MultiLanguageText[] alternateName
+    +ValueObject[] publications
+    +Grant[] grants
+    +MultiLanguageText[] alternateNames
   }
 
   class Dataset {
@@ -37,13 +37,29 @@ package toplevel {
     ' TODO
     -- Required Fields --
     .. (1) ..
+    +ValueObject title
+    +ValueObject conditionsOfAccess
+    +ValueObject howToCite
+    +Status status
 
     .. (1 - n) ..
+    +TextOrURL[] abstracts
+    +TypesOfData[] typeOfData
+    +URL[] licenses
+    +MultiLanguageText[] languages
 
     -- Optional Fields --
     .. (0 - 1) ..
+    +ValueObject alternativeTitle
+    +Date datePublished
+    +Date dateCreated
+    +Date dateModified
+    +URL distribution
+    'TODO: do we need distribution?
 
     .. (0 - n) ..
+    +AuthorityRef[] sameAs
+    +TextOrURL[] documentations
   }
 
   class DataManagementPlan {
@@ -57,7 +73,7 @@ package toplevel {
     A financial grant.
     -- Required Fields --
     .. (1 - n) ..
-    +LegalBody funder
+    +LegalBody funders
 
     -- Optional Fields --
     .. (0 - 1) ..
@@ -83,7 +99,7 @@ package toplevel {
     An Organization.
     -- Required --
     .. (1 - n) ..
-    + ValueObject[] name
+    + ValueObject[] names
     ' TODO: Or would that be Multilanguage?
 
     -- Optional --
@@ -123,10 +139,19 @@ package utility {
     +MultiLanguageText text
   }
 
+  class TextOrURL {
+    ' TODO: find better name
+    Struct ensuring the object to be either a multi language text or an aURL.
+    -- Required: OneOf --
+    +URL url
+    +MultiLanguageText text
+  }
+
   class AuthorityRef {
     Reference to an external autority file.
     -- Required Fields --
     +ValueObject url
+    ' TODO: would that be an URL?
     +ValueObject authority
   }
 
@@ -138,6 +163,35 @@ package utility {
 
   class ValueObject {
     Struct holding exactly one value.
+  }
+
+  class URL {
+    ' TODO: how do we handle this?
+    ?
+  }
+
+  class Date {
+    Struct holding an ISO-Date.
+    -- Required Fields --
+    .. (1) ..
+    +ValueObject date
+  }
+  
+
+  enum TypesOfData {
+    XML
+    Text
+    Image
+    Movie
+    'TODO: should be "video"!
+    Audio
+  }
+
+  enum Status {
+    In_planning
+    Ongoing
+    On_hold
+    Finished
   }
 
 }
@@ -157,6 +211,8 @@ Person --> Address
 Organization --> Address
 TextOrAuthorityRef --> MultiLanguageText
 TextOrAuthorityRef --> AuthorityRef
+TextOrURL --> URL
+TextOrURL --> MultiLanguageText
 AuthorityRef --> ValueObject
 MultiLanguageText --> ValueObject
 

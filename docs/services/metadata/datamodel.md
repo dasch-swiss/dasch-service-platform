@@ -54,3 +54,6 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 - [ ] how to handle URLs? separate type? or just value object? what info do we need for a URL?
 - [ ] grant nested instead of flat?
+- [ ] how do we rename "sameAs"?
+- [ ] something like "sameAs" in Organization?
+- [ ] in domain entities, do we need references between datasets and project? or is this redundant?
