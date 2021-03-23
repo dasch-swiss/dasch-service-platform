@@ -204,6 +204,19 @@
           "items": {
             "$ref": "#/definitions/text"
           }
+        },
+        "funders": {
+          "description": "Funders of the project.",
+          "type":"array",
+          "minItems":1,
+          "items": {
+            "type":"string",
+            "description": "ID of the funding person or organization."
+          }
+        },
+        "contactPoint": {
+          "type":"string",
+          "description": "ID of the person or organization."
         }
       },
       "required": [
@@ -215,9 +228,11 @@
         "disciplines",
         "temporalCoverage",
         "spatialCoverage",
-        "urls"
+        "urls",
+        "funders"
       ],
-      "additionalProperties": false
+      "additionalProperties": false,
+      "$comment": "TODO: funders, contactPoint missing"
     },
     "grant": {
       "type":"object",

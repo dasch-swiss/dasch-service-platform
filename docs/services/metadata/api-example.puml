@@ -46,7 +46,11 @@
         "de": "Beispielprojekt",
         "en": "Sample Project"
       }
-    ]
+    ],
+    "funders": [
+      "organization-001"
+    ],
+    "contactPoint": "organization-001"
   },
   "datasets": [],
   "persons": [],

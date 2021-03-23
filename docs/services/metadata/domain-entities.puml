@@ -16,6 +16,7 @@ package toplevel {
     +TextOrAuthorityRef[] disciplines
     +TextOrAuthorityRef[] temporalCoverage
     +AuthorityRef[] spatialCoverage
+    +LegalBody[] funders
 
     .. (1 - 2) ..
     +URL[] urls
@@ -25,6 +26,7 @@ package toplevel {
     .. (0 - 1) ..
     +DataManagementPlan dataManagementPlan
     +Date endDate
+    +LegalBody contactPoint
 
     .. (0 - n) ..
     +ValueObject[] publications
@@ -47,6 +49,7 @@ package toplevel {
     +TypesOfData[] typeOfData
     +URL[] licenses
     +MultiLanguageText[] languages
+    +Attribution[] attributions
 
     -- Optional Fields --
     .. (0 - 1) ..
@@ -125,6 +128,15 @@ package toplevel {
     +ValueObject additional
     ' TODO: does that make sense like this?
   }
+
+  class Attribution {
+    Struct holding information on how work on a dataset can be attributed to a person.
+    -- Required Fields --
+    .. (1) ..
+    +Person person
+    .. (1 - n) ..
+    +ValueObject[] roles
+  }
   
 
 }
@@ -197,13 +209,12 @@ package utility {
 }
 
 
-Project --> Dataset
+Project <--> Dataset
 Project --> DataManagementPlan
 Project --> Grant
-Project --> Person
-Project --> Organization
-Dataset --> Person
-Dataset --> Organization
+Project --> LegalBody
+Dataset --> Attribution
+Attribution --> Person
 Grant --> LegalBody
 LegalBody --> Person
 LegalBody --> Organization
