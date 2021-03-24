@@ -194,7 +194,7 @@
             "type":"string"
           }
         },
-        "alternateNames": {
+        "alternativeNames": {
           "description": "Alternative names of the project.",
           "type":"array",
           "items": {
@@ -366,7 +366,7 @@
           "type":"string",
           "description": "The title of the dataset."
         },
-        "conditionsOfAccess": {
+        "accessConditions": {
           "type":"string",
           "description": "The conditions under which the data of the dataset can be accessed."
         },
@@ -439,9 +439,12 @@
             "$ref": "#/definitions/attribution"
           }
         },
-        "alternativeTitle":{
-          "type":"string",
-          "description": "Alternative title of the dataset."
+        "alternativeTitles":{
+          "type":"array",
+          "description": "Alternative titles of the dataset.",
+          "items": {
+            "$ref": "#/definitions/text"
+          }
         },
         "datePublished": {
           "description": "Publishing date of the dataset.",
@@ -482,7 +485,7 @@
         "@id",
         "@type",
         "title",
-        "conditionsOfAccess",
+        "accessConditions",
         "howToCite",
         "status",
         "abstracts",
@@ -505,28 +508,35 @@
           "type":"string",
           "const": "Organization"
         },
-        "names": {
-          "type": "array",
-          "description": "Names of the organization."
+        "name": {
+          "type":"string",
+          "description": "Name of the organization."
         },
         "url": {
           "$ref": "#/definitions/url",
           "description": "The URL of the organization's website."
+        },
+        "address": {
+          "$ref": "#/definitions/address",
+          "description": "The postal address of the organization."
         },
         "email": {
           "description": "E-mail address.",
           "type": "string",
           "format": "email"
         },
-        "address": {
-          "$ref": "#/definitions/address",
-          "description": "The postal address of the organization."
+        "alternativeNames": {
+          "type": "array",
+          "description": "Alternative names of the organization.",
+          "items": {
+            "$ref": "#/definitions/text"
+          }
         }
       },
       "required": [
         "@id",
         "@type",
-        "names"
+        "name"
       ],
       "additionalProperties": false
     },

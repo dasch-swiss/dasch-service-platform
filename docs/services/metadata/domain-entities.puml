@@ -35,19 +35,17 @@ package toplevel {
     .. (0 - n) ..
     +ValueObject[] publications
     +Grant[] grants
-    +MultiLanguageText[] alternateNames
+    +MultiLanguageText[] alternativeNames
   }
 
   class Dataset {
     A Dataset belonging to the project.
-    ' TODO
     -- Required Fields --
     .. (1) ..
     +UUID id
     +ValueObject type
     +ValueObject title
-    +ValueObject conditionsOfAccess
-    ' TODO: rename to accessConditions?
+    +ValueObject accessConditions
     +ValueObject howToCite
     +Status status
 
@@ -60,7 +58,6 @@ package toplevel {
 
     -- Optional Fields --
     .. (0 - 1) ..
-    +ValueObject alternativeTitle
     +Date datePublished
     +Date dateCreated
     +Date dateModified
@@ -68,6 +65,7 @@ package toplevel {
     'TODO: do we need distribution?
 
     .. (0 - n) ..
+    +MultiLanguageText[] alternativeTitles
     +AuthorityRef[] sameAs
     ' TODO: what is sameAs for a dataset?
     +TextOrURL[] documentations
@@ -139,10 +137,7 @@ package toplevel {
     .. (1) ..
     +UUID id
     +ValueObject type
-
-    .. (1 - n) ..
-    + ValueObject[] names
-    ' TODO: Or would that be Multilanguage?
+    + ValueObject name
 
     -- Optional --
     .. (0 - 1) ..
@@ -150,6 +145,9 @@ package toplevel {
     ' TODO: do we want URL?
     +Address address
     +ValueObject email
+
+    .. (0 - n) ..
+    +MultiLanguageText[] alternativeNames
 
   }
 
@@ -248,7 +246,7 @@ package utility {
 }
 
 package externals {
-  class uuid.UUID {
+  class uuid::UUID {
     Unique ID.
   }
 }

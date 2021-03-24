@@ -9,9 +9,11 @@
 A metadata set can be serialized to json. This json data must conform to the [json-schema](schema-metadata.json).  
 The following example illustrates how the json might look:
 
-![json example](./api-example.svg)
+![json example](./api-example.svg)  
+(Cf. `example.json` too.)
 
-The json representation is "flat", i.e. not nested, except in cases where there is a clear one-to-one relationship. Namely, if an object can only occur once and can not be referenced anywhere else.
+The json representation is "flat", i.e. not nested, so all top-level types are present in the first level of depth of the json document tree. All those objects have a unique `@id` property. Wherever this object is referenced further down in the document, this is done so by this ID.  
+(NB: json schema does not allow for consistency checks of internal references, so the existence of an object with a given ID can not be guaranteed by json validation.)
 
 ### Macro structure
 
@@ -34,7 +36,10 @@ The overall structure of the json representation of a metadata-set should look l
   ],
   "grants": [
     ...
-  ]
+  ],
+  "dataManagementPlan": {
+    ...
+  }
 }
 ```
 
@@ -59,7 +64,5 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 - how does ValueObject work? how do we know, what type the value is?
 - use generic to indicate type of value object?
-- change alternate to alternative
-- dataset.alternativeTitle should be array of multilanguagetext
 - rename sameAs
 - ensure to have sameAs-equivalent everywhere

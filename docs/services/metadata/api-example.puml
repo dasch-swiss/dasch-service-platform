@@ -38,7 +38,7 @@
     "grants": [
       "grant-001"
     ],
-    "alternateNames": [
+    "alternativeNames": [
       {
         "de": "Beispielprojekt",
         "en": "Sample Project"
@@ -54,7 +54,7 @@
       "@id": "dataset-001",
       "@type": "Dataset",
       "title": "Dataset 1",
-      "conditionsOfAccess": "Embargo until 2023, then open access.",
+      "accessConditions": "Embargo until 2023, then open access.",
       "howToCite": "Dataset XY, in Project AB (ARK: ...)",
       "status": "Ongoing",
       "abstracts": [
@@ -91,7 +91,11 @@
           ]
         }
       ],
-      "alternativeTitle": "The most awesome dataset.",
+      "alternativeTitles": [
+        {
+          "en": "The most awesome dataset."
+        }
+      ],
       "datePublished": "2020-01-01",
       "dateCreated": "2019-06-01",
       "dateModified": "2021-02-01",
@@ -142,9 +146,11 @@
     {
       "@id": "organization-001",
       "@type": "Organization",
-      "names": [
-        "DaSCH",
-        "Data and Service Center for the Humanities"
+      "name": "DaSCH",
+      "alternativeNames": [
+        {
+          "en": "Data and Service Center for the Humanities"
+        }
       ],
       "url": "https://dasch.swiss",
       "email": "info@dasch.swiss",
@@ -155,6 +161,17 @@
         "locality": "Basel",
         "country": "Switzerland"
       }
+    },
+    {
+      "@id": "organization-002",
+      "@type": "Organization",
+      "name": "SNF",
+      "alternativeNames": [
+        {
+          "de": "Schweizerischer Nationalfonds",
+          "en": "Swiss National Science Foundation"
+        }
+      ]
     }
   ],
   "grants": [
