@@ -50,7 +50,8 @@ func main() {
 	}
 	fmt.Println(path)
 
-	organizationRepository := repository.NewInmemDB()
+	// organizationRepository := repository.NewInmemDB()
+	organizationRepository := repository.NewO
 	organizationService := organization.NewService(organizationRepository)
 
 	metricService, err := metric.NewPrometheusService()
