@@ -28,10 +28,7 @@
     "urls": [
       "https://dasch.swiss/someproject"
     ],
-    "dataManagementPlan": {
-      "available": true,
-      "url": "https://dasch.swiss/someproject/dmp"
-    },
+    "dataManagementPlan": "dmp-001",
     "endDate": "2022-01-01",
     "publications": [
       "Doe, J. (2020): Some publication. In: Journal for sample publications. Vol. 100.1, p. 1-32."
@@ -169,5 +166,11 @@
       "name": "Eccellenca",
       "url": "https://www.grants.ch/grant/abcd0001"
     }
-  ]
+  ],
+  "dataManagementPlan": {
+    "@id": "dmp-001",
+    "@type": "DataManagementPlan",
+    "available": true,
+    "url": "https://dasch.swiss/someproject/dmp"
+  }
 }

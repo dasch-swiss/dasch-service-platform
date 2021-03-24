@@ -7,7 +7,7 @@ package toplevel {
     The Project.
     -- Required Fields --
     .. (1) ..
-    +UID id
+    +UUID id
     +ValueObject type
     +ValueObject shortcode
     +ValueObject name
@@ -18,8 +18,8 @@ package toplevel {
     +Dataset[] datasets
     +MultiLanguageText[] keywords
     +TextOrAuthorityRef[] disciplines
-    +TextOrAuthorityRef[] temporalCoverage
-    +AuthorityRef[] spatialCoverage
+    +TextOrAuthorityRef[] temporalCoverages
+    +AuthorityRef[] spatialCoverages
     +LegalBody[] funders
 
     .. (1 - 2) ..
@@ -43,7 +43,7 @@ package toplevel {
     ' TODO
     -- Required Fields --
     .. (1) ..
-    +UID id
+    +UUID id
     +ValueObject type
     +ValueObject title
     +ValueObject conditionsOfAccess
@@ -53,7 +53,7 @@ package toplevel {
 
     .. (1 - n) ..
     +TextOrURL[] abstracts
-    +TypesOfData[] typeOfData
+    +TypesOfData[] typesOfData
     +URL[] licenses
     +MultiLanguageText[] languages
     +Attribution[] attributions
@@ -75,7 +75,7 @@ package toplevel {
 
   class DataManagementPlan {
     .. (1) ..
-    +UID id
+    +UUID id
     +ValueObject type
 
     .. (0 - 1) ..
@@ -99,7 +99,7 @@ package toplevel {
 
   }
 
-  class LegalBody {
+  interface LegalBody {
     Struct representing either a Person or an Organization.
     -- Required: OneOf --
     +Person person
@@ -110,7 +110,7 @@ package toplevel {
     A Person.
     -- Required --
     .. (1) ..
-    +UID id
+    +UUID id
     +ValueObject type
 
     .. (1 - n) ..
@@ -137,7 +137,7 @@ package toplevel {
     An Organization.
     -- Required --
     .. (1) ..
-    +UID id
+    +UUID id
     +ValueObject type
 
     .. (1 - n) ..
@@ -247,8 +247,14 @@ package utility {
 
 }
 
+package externals {
+  class uuid.UUID {
+    Unique ID.
+  }
+}
 
-Project <--> Dataset
+
+Project <..> Dataset
 Project --> DataManagementPlan
 Project --> Grant
 Project --> LegalBody

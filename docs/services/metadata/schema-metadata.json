@@ -45,6 +45,9 @@
         "type": "object",
         "$ref": "#/definitions/grant"
       }
+    },
+    "dataManagementPlan": {
+      "$ref": "#/definitions/dataManagementPlan"
     }
   },
   "required": [
@@ -168,17 +171,8 @@
           }
         },
         "dataManagementPlan": {
-          "type": "object",
-          "description": "Data management plan of the project",
-          "properties": {
-            "available": {
-              "type": "boolean"
-            },
-            "url": {
-              "$ref": "#/definitions/url"
-            },
-            "additionalProperties": false
-          }
+          "description": "ID of a data management plan.",
+          "type":"string"
         },
         "endDate": {
           "description": "End date of the project.",
@@ -566,6 +560,31 @@
         "postalCode",
         "locality",
         "country"
+      ],
+      "additionalProperties": false
+    },
+    "dataManagementPlan": {
+      "type": "object",
+      "description": "Data management plan of the project",
+      "properties": {
+        "@id": {
+          "type": "string",
+          "description": "ID of the data management plan."
+        },
+        "@type": {
+          "type":"string",
+          "const": "DataManagementPlan"
+        },
+        "available": {
+          "type": "boolean"
+        },
+        "url": {
+          "$ref": "#/definitions/url"
+        }
+      },
+      "required":[
+        "@id",
+        "@type"
       ],
       "additionalProperties": false
     },
