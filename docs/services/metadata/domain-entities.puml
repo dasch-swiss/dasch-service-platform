@@ -6,9 +6,9 @@ package toplevel {
     -- Required Fields --
     .. (1) ..
     +UUID id
-    +ValueObject type
-    +ValueObject shortcode
-    +ValueObject name
+    +Type? type
+    +Shortcode shortcode
+    +String name
     +MultiLanguageText description
     +Date startDate
 
@@ -30,7 +30,7 @@ package toplevel {
     +LegalBody contactPoint
 
     .. (0 - n) ..
-    +ValueObject[] publications
+    +String[] publications
     +Grant[] grants
     +MultiLanguageText[] alternativeNames
   }
@@ -40,10 +40,10 @@ package toplevel {
     -- Required Fields --
     .. (1) ..
     +UUID id
-    +ValueObject type
-    +ValueObject title
-    +ValueObject accessConditions
-    +ValueObject howToCite
+    +Type? type
+    +String title
+    +String accessConditions
+    +String howToCite
     +Status status
 
     .. (1 - n) ..
@@ -69,7 +69,7 @@ package toplevel {
   class DataManagementPlan {
     .. (1) ..
     +UUID id
-    +ValueObject type
+    +Type? type
 
     .. (0 - 1) ..
     +boolean available
@@ -85,7 +85,7 @@ package toplevel {
 
     -- Optional Fields --
     .. (0 - 1) ..
-    +ValueObject number
+    +String number
     +MultiLanguageText name
     +URL url
 
@@ -103,12 +103,12 @@ package toplevel {
     -- Required --
     .. (1) ..
     +UUID id
-    +ValueObject type
+    +Type? type
 
     .. (1 - n) ..
-    +ValueObject[] jobTitles
-    +ValueObject[] givenNames
-    +ValueObject[] familyNames
+    +String[] jobTitles
+    +String[] givenNames
+    +String[] familyNames
     +Organization[] memberOf
 
     -- Optional --
@@ -116,7 +116,7 @@ package toplevel {
     +Address address
 
     .. (0 - 2) ..
-    +ValueObject[] emails
+    +Email[] emails
 
     .. (0 - n) ..
     +AuthorityRef[] sameAs
@@ -128,14 +128,14 @@ package toplevel {
     -- Required --
     .. (1) ..
     +UUID id
-    +ValueObject type
-    + ValueObject name
+    +Type? type
+    +String name
 
     -- Optional --
     .. (0 - 1) ..
     +URL url
     +Address address
-    +ValueObject email
+    +Email email
 
     .. (0 - n) ..
     +MultiLanguageText[] alternativeNames
@@ -146,14 +146,14 @@ package toplevel {
     Struct containing a postal address.
     -- Required --
     .. (1) ..
-    +ValueObject street
-    +ValueObject postalCode
-    +ValueObject locality
-    +ValueObject country
+    +String street
+    +String postalCode
+    +String locality
+    +String country
 
     -- Optional --
     .. (0 - 1) ..
-    +ValueObject additional
+    +String additional
 
   }
 
@@ -163,14 +163,31 @@ package toplevel {
     .. (1) ..
     +Person person
     .. (1 - n) ..
-    +ValueObject[] roles
+    +String[] roles
 
   }
   
 
 }
 
-package utility {
+package valueobject {
+
+  class Shortcode{
+    +String shortcode
+  }
+
+  class Email{
+    +String email
+  }
+
+  class URL{}
+
+  class Date {
+    Struct holding an ISO-Date.
+    -- Required Fields --
+    .. (1) ..
+    +Date?String? date
+  }
 
   class TextOrAuthorityRef {
     Struct ensuring the object to be either a multi language text or an authority file reference.
@@ -190,30 +207,21 @@ package utility {
     Reference to an external autority file.
     -- Required Fields --
     +URL url
-    +ValueObject authority
+    +String authority
   }
 
   class MultiLanguageText {
     Struct holding text in multiple different languages.
     -- Required Fields --
-    +Map[ValueObject,ValueObject] text
+    +Map[ISOLanguage,String] text
   }
 
-  class ValueObject {
-    Struct holding exactly one value.
+  class ISOLanguage {
+    +String language
   }
+}
 
-  class URL {
-    ?
-  }
-
-  class Date {
-    Struct holding an ISO-Date.
-    -- Required Fields --
-    .. (1) ..
-    +ValueObject date
-  }
-  
+package utility {
 
   enum TypesOfData {
     XML
@@ -234,7 +242,7 @@ package utility {
 
 package externals {
   class uuid::UUID {
-    Unique ID.
+    Unique ID
   }
 }
 
@@ -251,11 +259,11 @@ LegalBody --> Organization
 Person --> Organization
 Person --> Address
 Organization --> Address
-TextOrAuthorityRef --> MultiLanguageText
-TextOrAuthorityRef --> AuthorityRef
-TextOrURL --> URL
-TextOrURL --> MultiLanguageText
-AuthorityRef --> ValueObject
-MultiLanguageText --> ValueObject
+
+URL *-- TextOrURL
+MultiLanguageText *-- TextOrURL
+MultiLanguageText *-- TextOrAuthorityRef
+AuthorityRef *-- TextOrAuthorityRef
+
 
 @enduml

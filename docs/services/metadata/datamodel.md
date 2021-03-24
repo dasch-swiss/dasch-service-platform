@@ -69,7 +69,6 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 ## TODO:
 
-- how does ValueObject work? how do we know, what type the value is?
-- use generic to indicate type of value object?
 - rename sameAs
 - ensure to have sameAs-equivalent everywhere
+- add methods to all valueobjects
