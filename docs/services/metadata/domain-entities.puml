@@ -115,8 +115,8 @@ package toplevel {
 
     .. (1 - n) ..
     +ValueObject[] jobTitles
-    +ValueObject[] givenName
-    +ValueObject[] familyName
+    +ValueObject[] givenNames
+    +ValueObject[] familyNames
     +Organization[] memberOf
     ' TODO: rename to "affiliations"?
 

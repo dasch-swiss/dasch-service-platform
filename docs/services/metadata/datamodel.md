@@ -57,3 +57,15 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 - [ ] how do we rename "sameAs"?
 - [ ] something like "sameAs" in Organization?
 - [ ] in domain entities, do we need references between datasets and project? or is this redundant?
+
+## notes:
+
+- what type is UID?
+- color coding properties
+- move DMP to top level and add ID/Type
+- how does ValueObject work? how do we know, what type the value is?
+- use generic to indicate type of value object?
+- types of data, coverages should be plural
+- change alternate to alternative
+- dataset.alternativeTitle should be array of multilanguagetext
+- make LegalBody an interface

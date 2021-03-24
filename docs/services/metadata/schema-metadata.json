@@ -280,11 +280,79 @@
       "type":"object",
       "description": "A person relevant to the project.",
       "properties": {
-
+        "@id": {
+          "type": "string",
+          "description": "Unique id of the person."
+        },
+        "@type": {
+          "type":"string",
+          "const": "Person"
+        },
+        "jobTitles": {
+          "type":"array",
+          "description": "The job titles of the person.",
+          "minItems":1,
+          "items": {
+            "description": "A job title of the person",
+            "type": "string"
+          }
+        },
+        "givenNames": {
+          "type":"array",
+          "description": "The given names of the person.",
+          "minItems":1,
+          "items": {
+            "description": "Given name of the person",
+            "type": "string"
+          }
+        },
+        "familyNames": {
+          "type":"array",
+          "description": "The family names of the person.",
+          "minItems":1,
+          "items": {
+            "description": "Family name of the person",
+            "type": "string"
+          }
+        },
+        "memberOf": {
+          "type":"array",
+          "description": "Organizational affiliation of the person.",
+          "minItems":1,
+          "items": {
+            "description": "ID of an organization",
+            "type": "string"
+          }
+        },
+        "address": {
+          "$ref": "#/definitions/address",
+          "description": "The postal address of the organization."
+        },
+        "emails": {
+          "description": "E-mail addresses.",
+          "type":"array",
+          "minItems":1,
+          "maxItems": 2,
+          "items": {
+            "type": "string",
+            "format": "email"
+          }
+        },
+        "sameAs": {
+          "description": "TODO: how to handle this?",
+          "type":"array",
+          "items": {
+            "$ref": "#/definitions/url"
+          }
+        }
       },
-      "$comment": "TODO!",
       "required": [
-        ""
+        "@id",
+        "@type",
+        "jobTitles",
+        "givenNames",
+        "familyNames",
+        "memberOf"
       ],
       "additionalProperties": false
     },

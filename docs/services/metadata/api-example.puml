@@ -109,7 +109,38 @@
       ]
     }
   ],
-  "persons": [],
+  "persons": [
+    {
+      "@id": "person-001",
+      "@type": "Person",
+      "jobTitles": [
+        "Professor"
+      ],
+      "givenNames": [
+        "Jane"
+      ],
+      "familyNames": [
+        "Doe"
+      ],
+      "memberOf": [
+        "organization-001"
+      ],
+      "address": {
+        "street": "Petersgraben 1",
+        "additional": "Postfach",
+        "postalCode": "4000",
+        "locality": "Basel",
+        "country": "Switzerland"
+      },
+      "emails": [
+        "jane.doe@dasch.swiss",
+        "j.doe@gmail.com"
+      ],
+      "sameAs": [
+        "http://viaf.org/viaf/00000000"
+      ]
+    }
+  ],
   "organizations": [
     {
       "@id": "organization-001",
