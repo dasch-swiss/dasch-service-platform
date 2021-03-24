@@ -88,7 +88,7 @@ package toplevel {
     A financial grant.
     -- Required Fields --
     .. (1 - n) ..
-    +LegalBody funders
+    +LegalBody[] funders
 
     -- Optional Fields --
     .. (0 - 1) ..
@@ -114,13 +114,23 @@ package toplevel {
     +ValueObject type
 
     .. (1 - n) ..
+    +ValueObject[] jobTitles
+    +ValueObject[] givenName
+    +ValueObject[] familyName
+    +Organization[] memberOf
+    ' TODO: rename to "affiliations"?
 
     -- Optional --
     .. (0 - 1) ..
+    +Address address
+
+    .. (0 - 2) ..
+    +ValueObject[] emails
 
     .. (0 - n) ..
+    +AuthorityRef[] sameAs
+    ' TODO: rename
 
-    ' TODO
   }
 
   class Organization {

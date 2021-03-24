@@ -277,7 +277,16 @@
       "additionalProperties": false
     },
     "person": {
-      "$comment": "TODO!"
+      "type":"object",
+      "description": "A person relevant to the project.",
+      "properties": {
+
+      },
+      "$comment": "TODO!",
+      "required": [
+        ""
+      ],
+      "additionalProperties": false
     },
     "dataset": {
       "type":"object",
