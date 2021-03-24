@@ -4,7 +4,6 @@
   "title": "Metadata Schema",
   "description": "Schema definition of DSP metadata",
   "type": "object",
-  "$comment": "TODO: kontrollieren, dass überall type und ID gegeben sind",
   "properties": {
     "$schema": {
       "description": "Schema definition",
@@ -333,7 +332,6 @@
           }
         },
         "sameAs": {
-          "description": "TODO: how to handle this?",
           "type":"array",
           "items": {
             "$ref": "#/definitions/url"
@@ -463,7 +461,6 @@
           "$ref": "#/definitions/url"
         },
         "sameAs": {
-          "description": "TODO: how to handle this?",
           "$ref": "#/definitions/url"
         },
         "documentations": {

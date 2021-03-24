@@ -1,9 +1,7 @@
 @startuml Domain Entities
 package toplevel {
-  ' TODO: add ID and type to each toplevel class
 
   class Project {
-    ' TODO: does project need a "how to cite" too?
     The Project.
     -- Required Fields --
     .. (1) ..
@@ -24,7 +22,6 @@ package toplevel {
 
     .. (1 - 2) ..
     +URL[] urls
-    ' TODO: do we want URL?
 
     -- Optional Fields --
     .. (0 - 1) ..
@@ -62,12 +59,10 @@ package toplevel {
     +Date dateCreated
     +Date dateModified
     +URL distribution
-    'TODO: do we need distribution?
 
     .. (0 - n) ..
     +MultiLanguageText[] alternativeTitles
     +AuthorityRef[] sameAs
-    ' TODO: what is sameAs for a dataset?
     +TextOrURL[] documentations
   }
 
@@ -79,7 +74,7 @@ package toplevel {
     .. (0 - 1) ..
     +boolean available
     +URL url
-    ' TODO: do we want URL?
+
   }
 
   class Grant {
@@ -93,7 +88,6 @@ package toplevel {
     +ValueObject number
     +MultiLanguageText name
     +URL url
-    ' TODO: do we want URL?
 
   }
 
@@ -116,7 +110,6 @@ package toplevel {
     +ValueObject[] givenNames
     +ValueObject[] familyNames
     +Organization[] memberOf
-    ' TODO: rename to "affiliations"?
 
     -- Optional --
     .. (0 - 1) ..
@@ -127,7 +120,6 @@ package toplevel {
 
     .. (0 - n) ..
     +AuthorityRef[] sameAs
-    ' TODO: rename
 
   }
 
@@ -142,7 +134,6 @@ package toplevel {
     -- Optional --
     .. (0 - 1) ..
     +URL url
-    ' TODO: do we want URL?
     +Address address
     +ValueObject email
 
@@ -163,7 +154,7 @@ package toplevel {
     -- Optional --
     .. (0 - 1) ..
     +ValueObject additional
-    ' TODO: does that make sense like this?
+
   }
 
   class Attribution {
@@ -173,6 +164,7 @@ package toplevel {
     +Person person
     .. (1 - n) ..
     +ValueObject[] roles
+
   }
   
 
@@ -181,7 +173,6 @@ package toplevel {
 package utility {
 
   class TextOrAuthorityRef {
-    ' TODO: find better name
     Struct ensuring the object to be either a multi language text or an authority file reference.
     -- Required: OneOf --
     +AuthorityRef authorityRef
@@ -189,7 +180,6 @@ package utility {
   }
 
   class TextOrURL {
-    ' TODO: find better name
     Struct ensuring the object to be either a multi language text or an aURL.
     -- Required: OneOf --
     +URL url
@@ -199,8 +189,7 @@ package utility {
   class AuthorityRef {
     Reference to an external autority file.
     -- Required Fields --
-    +ValueObject url
-    ' TODO: would that be an URL?
+    +URL url
     +ValueObject authority
   }
 
@@ -215,7 +204,6 @@ package utility {
   }
 
   class URL {
-    ' TODO: how do we handle this?
     ?
   }
 
@@ -232,7 +220,6 @@ package utility {
     Text
     Image
     Movie
-    'TODO: should be "video"!
     Audio
   }
 

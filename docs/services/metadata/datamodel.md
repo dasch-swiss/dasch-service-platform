@@ -57,10 +57,17 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 ## Open Questions:
 
-- [ ] how to handle URLs? separate type? or just value object? what info do we need for a URL?
+- [ ] how do we want to handle `URL`? should it contain anything more than the URL itself?
 - [ ] in domain entities, do we need references between datasets and project? or is this redundant?
+- [ ] What type should `type` be?
+- [ ] should a project have `howToCite` too?
+- [ ] can I rename `memberOf` to `affiliation`?
+- [ ] Better names for utility classes?
+- [ ] how exactly do we want `AuthorityRef`? (not modelled in json yet)
+- [ ] can I rename the constant `Movie` to `Video` in `typeOfData`
 
-## notes:
+
+## TODO:
 
 - how does ValueObject work? how do we know, what type the value is?
 - use generic to indicate type of value object?
