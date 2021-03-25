@@ -100,7 +100,9 @@
       "dateCreated": "2019-06-01",
       "dateModified": "2021-02-01",
       "distribution": "https://dasch.swiss/0000-project/download",
-      "sameAs": "http://something.something.org",
+      "urls": [
+        "http://something.something.org"
+      ],
       "documentations": [
         "https://dasch.swiss/0000-project/dataset-001/docs",
         {
@@ -137,7 +139,7 @@
         "jane.doe@dasch.swiss",
         "j.doe@gmail.com"
       ],
-      "sameAs": [
+      "externalAuthorityReferences": [
         "http://viaf.org/viaf/00000000"
       ]
     }
@@ -160,7 +162,10 @@
         "postalCode": "4000",
         "locality": "Basel",
         "country": "Switzerland"
-      }
+      },
+      "externalAuthorityReferences": [
+        "https://grid.ac/institutes/grid.6612.3"
+      ]
     },
     {
       "@id": "organization-002",

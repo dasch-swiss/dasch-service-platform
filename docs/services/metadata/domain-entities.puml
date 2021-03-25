@@ -62,7 +62,7 @@ package toplevel {
 
     .. (0 - n) ..
     +MultiLanguageText[] alternativeTitles
-    +AuthorityRef[] sameAs
+    +URL[] urls
     +TextOrURL[] documentations
   }
 
@@ -119,7 +119,7 @@ package toplevel {
     +Email[] emails
 
     .. (0 - n) ..
-    +AuthorityRef[] sameAs
+    +AuthorityRef[] externalAuthorityReferences
 
   }
 
@@ -139,6 +139,7 @@ package toplevel {
 
     .. (0 - n) ..
     +MultiLanguageText[] alternativeNames
+    +AuthorityRef[] externalAuthorityReferences
 
   }
 

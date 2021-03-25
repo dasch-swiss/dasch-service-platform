@@ -331,7 +331,7 @@
             "format": "email"
           }
         },
-        "sameAs": {
+        "externalAuthorityReferences": {
           "type":"array",
           "items": {
             "$ref": "#/definitions/url"
@@ -460,8 +460,11 @@
           "description": "A downloadable form of the dataset.",
           "$ref": "#/definitions/url"
         },
-        "sameAs": {
-          "$ref": "#/definitions/url"
+        "urls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/url"
+          }
         },
         "documentations": {
           "type":"array",
@@ -527,6 +530,13 @@
           "description": "Alternative names of the organization.",
           "items": {
             "$ref": "#/definitions/text"
+          }
+        },
+        "externalAuthorityReferences": {
+          "type": "array",
+          "description": "References to external authority file entries describing the organization.",
+          "items": {
+            "$ref": "#/definitions/url"
           }
         }
       },
