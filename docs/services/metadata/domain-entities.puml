@@ -177,10 +177,23 @@ package valueobject {
   }
 
   class Email{
-    +String email
+    +String value
+    {static} +URL newEmail()
+    {static} +URL zeroEmail()
+    ..
+    +String string()
+    +boolean equals()
   }
 
-  class URL{}
+  class URL{
+    {static} +URL newURL()
+    {static} +URL zeroURL()
+    ..
+    +String value
+    'TODO: more?
+    +String string()
+    +boolean equals()
+  }
 
   class Date {
     Struct holding an ISO-Date.
