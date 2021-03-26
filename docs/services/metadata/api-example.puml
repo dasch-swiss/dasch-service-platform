@@ -139,7 +139,7 @@
         "jane.doe@dasch.swiss",
         "j.doe@gmail.com"
       ],
-      "externalAuthorityReferences": [
+      "authorityRefs": [
         "http://viaf.org/viaf/00000000"
       ]
     }
@@ -163,7 +163,7 @@
         "locality": "Basel",
         "country": "Switzerland"
       },
-      "externalAuthorityReferences": [
+      "authorityRefs": [
         "https://grid.ac/institutes/grid.6612.3"
       ]
     },

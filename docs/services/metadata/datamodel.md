@@ -45,30 +45,20 @@ The overall structure of the json representation of a metadata-set should look l
 
 As only datasets can occur that are part of the project (or vice versa: the project must contain all datasets), this connection is always assumed and not linked explicitly.
 
-`project` and `datasets` are required, `persons`, `organizations` and `grants` are optional.
+`project` and `datasets` are required, `persons`, `organizations`, `grants` and `dataManagementPlan` are optional.
 
-### project
-
-...
-
-### dataset
-
-...
 
 ## Open Questions:
 
-- [ ] how do we want to handle `URL`? should it contain anything more than the URL itself?
+### implementation / diagram
+
 - [ ] in domain entities, do we need references between datasets and project? or is this redundant?
+- [ ] should we have a super-class `metadata`, that holds `project`, `dataset[]`, etc.?
 - [ ] What type should `type` be?
+
+### Data model
+- [ ] how do we want to handle `URL`? should it contain anything more than the URL itself?
 - [ ] should a project have `howToCite` too?
 - [ ] can I rename `memberOf` to `affiliation`?
-- [ ] Better names for utility classes?
 - [ ] how exactly do we want `AuthorityRef`? (not modelled in json yet)
 - [ ] can I rename the constant `Movie` to `Video` in `typeOfData`
-
-
-## TODO:
-
-- rename sameAs
-- ensure to have sameAs-equivalent everywhere
-- add methods to all valueobjects

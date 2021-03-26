@@ -1,4 +1,5 @@
 @startuml Domain Entities
+
 package toplevel {
 
   class Project {
@@ -174,33 +175,91 @@ package toplevel {
 package valueobject {
 
   class Shortcode{
-    +String shortcode
+    Valueobject struct holding a shortcode.
+    -- Fields --
+    +String value
+    -- Methods --
+    .. Static Methods ..
+    {static} +URL newShortcode()
+    {static} +URL zeroShortcode()
+    .. Object Methods ..
+    +String string()
+    +boolean equals()
   }
 
   class Email{
+    Valueobject struct holding an e-mail address.
+    -- Fields --
     +String value
+    -- Methods --
+    .. Static Methods ..
     {static} +URL newEmail()
     {static} +URL zeroEmail()
-    ..
+    .. Object Methods ..
     +String string()
     +boolean equals()
   }
 
   class URL{
-    {static} +URL newURL()
-    {static} +URL zeroURL()
-    ..
+    Valueobject struct holding an e-mail address.
+    -- Fields --
     +String value
     'TODO: more?
+    -- Methods --
+    .. Static Methods ..
+    {static} +URL newURL()
+    {static} +URL zeroURL()
+    .. Object Methods ..
     +String string()
     +boolean equals()
   }
 
   class Date {
-    Struct holding an ISO-Date.
+    Valueobject struct holding an ISO date.
+    -- Fields --
+    +String value
+    'TODO: string or date type?
+    -- Methods --
+    .. Static Methods ..
+    {static} +URL newDate()
+    {static} +URL zeroDate()
+    .. Object Methods ..
+    +String string()
+    +boolean equals()
+  }
+
+  class AuthorityRef {
+    Reference to an external autority file.
+    'TODO: how would that work, to combine two variables to one `value`? tuple? struct?
     -- Required Fields --
-    .. (1) ..
-    +Date?String? date
+    +URL url
+    +String authority
+  }
+
+  class MultiLanguageText {
+    Valueobject struct holding text in multiple different languages.
+    -- Fields --
+    +Map[ISOLanguage,String] value
+    -- Methods --
+    .. Static Methods ..
+    {static} +URL newMultiLanguageText()
+    {static} +URL zeroMultiLanguageText()
+    .. Object Methods ..
+    +String string()
+    +boolean equals()
+  }
+
+  class ISOLanguage {
+    Valueobject struct holding a two character ISO language tag.
+    -- Fields --
+    +String value
+    -- Methods --
+    .. Static Methods ..
+    {static} +URL newISOLanguage()
+    {static} +URL zeroISOLanguage()
+    .. Object Methods ..
+    +String string()
+    +boolean equals()
   }
 
   class TextOrAuthorityRef {
@@ -215,23 +274,6 @@ package valueobject {
     -- Required: OneOf --
     +URL url
     +MultiLanguageText text
-  }
-
-  class AuthorityRef {
-    Reference to an external autority file.
-    -- Required Fields --
-    +URL url
-    +String authority
-  }
-
-  class MultiLanguageText {
-    Struct holding text in multiple different languages.
-    -- Required Fields --
-    +Map[ISOLanguage,String] text
-  }
-
-  class ISOLanguage {
-    +String language
   }
 }
 

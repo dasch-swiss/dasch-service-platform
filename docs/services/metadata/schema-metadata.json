@@ -331,7 +331,7 @@
             "format": "email"
           }
         },
-        "externalAuthorityReferences": {
+        "authorityRefs": {
           "type":"array",
           "items": {
             "$ref": "#/definitions/url"
@@ -532,7 +532,7 @@
             "$ref": "#/definitions/text"
           }
         },
-        "externalAuthorityReferences": {
+        "authorityRefs": {
           "type": "array",
           "description": "References to external authority file entries describing the organization.",
           "items": {
