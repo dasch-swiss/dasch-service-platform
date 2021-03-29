@@ -1,0 +1,10 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library")
+
+go_library(
+    name = "config",
+    srcs = [
+        "config_dev.go",
+    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/config",
+    visibility = ["//visibility:public"],
+)

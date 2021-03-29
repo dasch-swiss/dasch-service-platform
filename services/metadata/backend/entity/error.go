@@ -42,3 +42,21 @@ var ErrPostalAddressNotSet = errors.New("postal address is not set")
 
 //ErrBookNotBorrowed cannot return
 var ErrBookNotBorrowed = errors.New("book not borrowed")
+
+//ErrCannotAddName cannot add another name to the organization (max three allowed).
+var ErrCannotAddName = errors.New("cannot add another name to the organization (max three allowed)")
+
+//ErrCannotAddExistingName cannot add the same name to the organization.
+var ErrCannotAddExistingName = errors.New("cannot add the same name to the organization twice")
+
+//ErrCannotDeleteNotFoundName cannot delete the name from the organization, because it was not found.
+var ErrCannotDeleteNotFoundName = errors.New("cannot delete name from the organization because it was not found")
+
+//ErrCannotDeleteName cannot delete last name of the organization (needs at least one).
+var ErrCannotDeleteName = errors.New("cannot delete last name of the organization (needs at least one)")
+
+//ErrEmailNotSet cannot delete the email because it is not set.
+var ErrEmailNotSet = errors.New("email is not set")
+
+//ErrURLNotSet cannot delete the URL because it is not set.
+var ErrURLNotSet = errors.New("URL is not set")

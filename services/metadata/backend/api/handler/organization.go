@@ -56,7 +56,7 @@ func createOrganization(service organization.UseCase) http.Handler {
 		}
 		toJ := &presenter.Organization{
 			ID:   id,
-			Name: input.Name,
+			Name: []string{input.Name},
 		}
 
 		w.WriteHeader(http.StatusCreated)
@@ -91,9 +91,11 @@ func getOrganization(service organization.UseCase) http.Handler {
 			w.Write([]byte(errorMessage))
 			return
 		}
+
+		names := data.GetNames()
 		toJ := &presenter.Organization{
 			ID:   data.ID,
-			Name: data.Name,
+			Name: names,
 		}
 		if err := json.NewEncoder(w).Encode(toJ); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -102,7 +104,7 @@ func getOrganization(service organization.UseCase) http.Handler {
 	})
 }
 
-//MakeUserHandlers make url handlers
+//MakeOrganizationHandlers make url handlers
 func MakeOrganizationHandlers(r *mux.Router, n negroni.Negroni, service organization.UseCase) {
 	//r.Handle("/v1/user", n.With(
 	//	negroni.Wrap(listUsers(service)),

@@ -21,42 +21,35 @@
  *
  */
 
-package valueobject
+package repository
 
 import (
-	"errors"
-	"regexp"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
 )
 
-// EmailAddress errors
-var (
-	ErrInvalidEmailAddress = errors.New("Not a valid email address")
-)
-
-// EmailAddress represents a valid email address
-type EmailAddress struct {
-	value string
+//inmem in memory repo
+type inmemdb struct {
+	m map[entity.ID]*entity.Organization
 }
 
-// NewEmailAddress creates a new email address
-func NewEmailAddress(email string) (EmailAddress, error) {
-	var n EmailAddress
-	match, _ := regexp.MatchString(`^[a-z0-9._%+\-]+@[a-z0-9.\-]+\.[a-z]{2,4}$`, email)
-	if !match {
-		return n, ErrInvalidEmailAddress
+//NewInmem create a new in memory repository
+func NewInmemDB() *inmemdb {
+	var m = map[entity.ID]*entity.Organization{}
+	return &inmemdb{
+		m: m,
 	}
-	n.value = email
-
-	return n, nil
 }
 
-// String returns string representation of the email address
-func (n EmailAddress) String() string {
-	return n.value
+//Create an organization
+func (r *inmemdb) Create(e *entity.Organization) (entity.ID, error) {
+	r.m[e.ID] = e
+	return e.ID, nil
 }
 
-// Equals checks that two email addresses are the same
-func (n EmailAddress) Equals(value Value) bool {
-	otherEmailAddress, ok := value.(EmailAddress)
-	return ok && n.value == otherEmailAddress.value
+//Get an organization
+func (r *inmemdb) Get(id entity.ID) (*entity.Organization, error) {
+	if r.m[id] == nil {
+		return nil, entity.ErrNotFound
+	}
+	return r.m[id], nil
 }

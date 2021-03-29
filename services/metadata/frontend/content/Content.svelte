@@ -2,13 +2,13 @@
 import Tile from "./Tile.svelte";
 import Category from "./Category.svelte";
 import { onMount } from "svelte";
-import type { Project } from "./project.model";
+import type { PaginationData, Project } from "./interfaces";
 import Pagination from "./Pagination.svelte";
 import { getProjects, pagedResults, pages } from "./stores";
 
 let projects: Project[];
 let message = 'Loading...';
-let pagination: object;
+let pagination: PaginationData;
 
 setTimeout(() => {
   const noData = 'No data retrived. Please check the connection and retry.';
@@ -19,52 +19,35 @@ setTimeout(() => {
 onMount(async () => {
   await getProjects(1);
 
-  pagedResults.subscribe(r => {
-    projects = r;
-  });
+  pagedResults.subscribe(r => projects = r);
 
-  pages.subscribe(t => pagination = t);
+  pages.subscribe(p => pagination = p);
 });
 </script>
 
-<div class=wrapper>
-  <div class=content-container>
-    <nav>
-      <div class="category-container hidden m-inline-block">
-        <Category bind:searched={projects} />
-      </div>
-    </nav>
-    <main>
-      <div class=tile-container>
-        {#if projects && projects.length}
-          {#each projects as project}
-            <Tile name={project.name} description={project.description}/>
-          {/each}
-        {:else}
-          <p>{message}</p>
-        {/if}
-      </div>
-      {#if projects && projects.length}
-        <Pagination pagination={pagination} />
-      {/if}
-    </main>
+<nav>
+  <div class="category-container hidden m-inline-block">
+    <Category bind:searched={projects} />
   </div>
-</div>
+</nav>
+<main>
+  <div class=tile-container>
+    {#if projects && projects.length}
+      {#each projects as project}
+        <Tile project={project}/>
+      {/each}
+    {:else}
+      <p>{message}</p>
+    {/if}
+  </div>
+  {#if projects && projects.length}
+    <Pagination pagination={pagination} />
+  {/if}
+</main>
 
 <style>
 * {
   box-sizing: border-box;
-}
-.wrapper {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  flex: 1 0 auto;
-}
-.content-container {
-  display: flex;
-  flex-direction: column;
-  max-width: 1920px;
 }
 nav, main {
   width: 100%;
@@ -98,9 +81,6 @@ main {
   max-width: 1200px;
 }
 @media screen and (min-width: 992px) {
-  .content-container {
-    flex-direction: row;
-  }
   nav, main {
     min-height: 950px;
   }

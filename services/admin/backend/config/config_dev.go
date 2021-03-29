@@ -21,33 +21,12 @@
  *
  */
 
-package organization
+package config
 
-import "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/entity"
-
-//inmem in memory repo
-type inmem struct {
-	m map[entity.ID]*entity.Organization
-}
-
-//newInmem create a new in memory repository
-func newInmem() *inmem {
-	var m = map[entity.ID]*entity.Organization{}
-	return &inmem{
-		m: m,
-	}
-}
-
-//Create an organization
-func (r *inmem) Create(e *entity.Organization) (entity.ID, error) {
-	r.m[e.ID] = e
-	return e.ID, nil
-}
-
-//Get an organization
-func (r *inmem) Get(id entity.ID) (*entity.Organization, error) {
-	if r.m[id] == nil {
-		return nil, entity.ErrNotFound
-	}
-	return r.m[id], nil
-}
+const (
+	DB_USER                = "root"
+	DB_PASSWORD            = "test"
+	DB_DATABASE            = "test"
+	DB_HOST                = "127.0.0.1"
+	API_PORT               = 8080
+)

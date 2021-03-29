@@ -1,15 +1,21 @@
 <script lang="ts">
-  export let name: string;
-  export let description: string;
+import type { Project } from "./interfaces";
+import { currentProject } from "./stores";
+  
+  export let project: Project;
+
+  let setCurrentProject = () => {
+    currentProject.set(project);
+  }
 </script>
 
 <section>
   <div class=header>
-    <h5>{ name }</h5>
+    <h5>{ project.name }</h5>
   </div>
-  <div class=content>{ description }</div>
+  <div class=content>{ project.description }</div>
   <div class=footer>
-    <a href="/">Read more</a>
+    <a on:click={setCurrentProject} href="#/project/{project.id}">Read more</a>
   </div>
 </section>
 
