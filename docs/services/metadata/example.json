@@ -3,8 +3,8 @@
   "project": {
     "@id": "0000-project",
     "@type": "Project",
-    "name": "Test Project Name",
     "shortcode": "0000",
+    "name": "Test Project Name",
     "description": {
       "de": "Dies ist ein einfaches Beipiel-Projekt zu Dokumentationszwecken.",
       "en": "This is a simple example project for documentation purposes."
@@ -17,16 +17,32 @@
       }
     ],
     "disciplines": [
-      "http://skos.um.es/unesco6/11"
+      {
+        "propertyID": "Logic",
+        "type": "Skos",
+        "url": "http://skos.um.es/unesco6/11"
+      }
     ],
     "temporalCoverage": [
-      "http://chronontology.dainst.org/period/Ef9SyESSafJ1"
+      {
+        "propertyID": "17th Century",
+        "type": "Chronontology",
+        "url": "http://chronontology.dainst.org/period/Ef9SyESSafJ1"
+      }
     ],
     "spatialCoverage": [
-      "https://www.geonames.org/6255148/europe.html"
+      {
+        "propertyID": "Europe",
+        "type": "Geonames",
+        "url": "https://www.geonames.org/6255148/europe.html"
+      }
     ],
     "urls": [
-      "https://dasch.swiss/someproject"
+      {
+        "propertyID": "DaSCH.swiss",
+        "type": "URL",
+        "url": "https://dasch.swiss/someproject"
+      }
     ],
     "dataManagementPlan": "dmp-001",
     "endDate": "2022-01-01",
@@ -45,7 +61,8 @@
     "funders": [
       "organization-001"
     ],
-    "contactPoint": "organization-001"
+    "contactPoint": "organization-001",
+    "howToCite": "Doe, J. [et al.]: Project AB (ARK: ...)."
   },
   "datasets": [
     {
@@ -56,7 +73,11 @@
       "howToCite": "Dataset XY, in Project AB (ARK: ...)",
       "status": "Ongoing",
       "abstracts": [
-        "http://www.project.org/dataset-01/abstract",
+        {
+          "url": "http://www.project.org/dataset-01/abstract",
+          "propertyID": "Project.org",
+          "type": "URL"
+        },
         {
           "de": "Dies ist ein Datensatz, das ...",
           "en": "This is a dataset which ..."
@@ -67,7 +88,11 @@
         "Image"
       ],
       "licenses": [
-        "https://creativecommons.org/licenses/by/4.0/"
+        {
+          "propertyID": "CC-BY 4.0",
+          "type": "URL",
+          "url": "https://creativecommons.org/licenses/by/4.0/"
+        }
       ],
       "languages": [
         {
@@ -97,12 +122,24 @@
       "datePublished": "2020-01-01",
       "dateCreated": "2019-06-01",
       "dateModified": "2021-02-01",
-      "distribution": "https://dasch.swiss/0000-project/download",
+      "distribution": {
+        "url": "https://dasch.swiss/0000-project/download",
+        "type": "URL",
+        "propertyID": "Download"
+      },
       "urls": [
-        "http://something.something.org"
+        {
+          "url": "http://something.something.org",
+          "type": "URL",
+          "propertyID": "Something"
+        }
       ],
       "documentations": [
-        "https://dasch.swiss/0000-project/dataset-001/docs",
+        {
+          "url": "https://dasch.swiss/0000-project/dataset-001/docs",
+          "propertyID": "Documentation",
+          "type": "URL"
+        },
         {
           "de": "Bei dem Datenset handelt es sich um...",
           "en": "The dataset is about..."
@@ -123,7 +160,7 @@
       "familyNames": [
         "Doe"
       ],
-      "memberOf": [
+      "affiliation": [
         "organization-001"
       ],
       "address": {
@@ -138,7 +175,11 @@
         "j.doe@gmail.com"
       ],
       "authorityRefs": [
-        "http://viaf.org/viaf/00000000"
+        {
+          "url": "http://viaf.org/viaf/00000000",
+          "propertyID": "Jane Doe",
+          "type": "VIAF"
+        }
       ]
     }
   ],
@@ -152,7 +193,11 @@
           "en": "Data and Service Center for the Humanities"
         }
       ],
-      "url": "https://dasch.swiss",
+      "url": {
+        "url": "https://dasch.swiss",
+        "propertyID": "DaSCH.swiss",
+        "type": "URL"
+      },
       "email": "info@dasch.swiss",
       "address": {
         "street": "Petersgraben 1",
@@ -162,7 +207,11 @@
         "country": "Switzerland"
       },
       "authorityRefs": [
-        "https://grid.ac/institutes/grid.6612.3"
+        {
+          "url": "https://grid.ac/institutes/grid.6612.3",
+          "propertyID": "DaSCH",
+          "type": "Grid"
+        }
       ]
     },
     {
@@ -186,13 +235,20 @@
       ],
       "number": "ABCD00001",
       "name": "Eccellenca",
-      "url": "https://www.grants.ch/grant/abcd0001"
+      "url": {
+        "url": "https://www.grants.ch/grant/abcd0001",
+        "propertyID": "SNF Eccellenca",
+        "type": "URL"
+      }
     }
   ],
   "dataManagementPlan": {
     "@id": "dmp-001",
     "@type": "DataManagementPlan",
     "available": true,
-    "url": "https://dasch.swiss/someproject/dmp"
+    "url": {
+      "url": "https://dasch.swiss/someproject/dmp",
+      "type": "URL"
+    }
   }
 }

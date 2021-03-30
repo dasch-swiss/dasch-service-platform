@@ -50,29 +50,10 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 ## Open Questions:
 
-### implementation / diagram
+- [ ] type of Date?
+- [ ] should we link to datasets in project, in json, after all?
 
-- [ ] in domain entities, do we need references between datasets and project? or is this redundant?  
-  -> yes
-- [ ] should we have a super-class `metadata`, that holds `project`, `dataset[]`, etc.?  
-  -> no
-- [ ] What type should `type` be?  
-  -> string? valueobject?
-
-### Data model
-- [ ] how do we want to handle `URL`? should it contain anything more than the URL itself?  
-  -> add propertyID (or rename?) and type URL
-- [ ] should a project have `howToCite` too?  
-  -> yes
-- [ ] can I rename `memberOf` to `affiliation`?  
-  -> yes
-- [ ] how exactly do we want `AuthorityRef`? (not modelled in json yet)  
-  -> Like URL just with different type
-- [ ] can I rename the constant `Movie` to `Video` in `typeOfData`  
-  -> yes
 
 
 ## Tasks:
-- [ ] see questions
-- [ ] add type and id to grant
 - [ ] for all classes, that have two options, simply split it into two datastructures that hold it
