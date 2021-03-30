@@ -62,8 +62,7 @@
     </div>
   </div>
   <div class="searchbar-container xs-hidden" class:hidden={!showSearchbar}>
-    <input on:change={search} class="searchbar" name="searchbar" placeholder="search..." />
-    <!-- <input bind:value={name} placeholder="enter your name"> -->
+    <input on:change={search} bind:value={enteredString} class="searchbar" name="searchbar" placeholder="search..." />
   </div>
   <div class="filter-container m-hidden" class:hidden={!showFilters}>
     <Category/>
