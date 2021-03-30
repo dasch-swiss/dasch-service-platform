@@ -6,17 +6,17 @@ export const pagedResults = writable([]);
 export const currentProject = writable(undefined);
 const baseUrl = 'http://localhost:3000/projects?';
 const pageLimit = 9;
-let quary = '';
+let query = '';
 
 export async function getProjects(page: number, q?: string): Promise<void> {
   let url: string;
 
   if (q) {
-    quary = q;
-    url = `${baseUrl}q=${quary}&`;
+    query = q;
+    url = `${baseUrl}q=${query}&`;
   } else {
-    if (quary) {
-      url = `${baseUrl}q=${quary}&`;
+    if (query) {
+      url = `${baseUrl}q=${query}&`;
     } else {
       url = baseUrl;
     }
