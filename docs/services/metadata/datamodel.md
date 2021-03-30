@@ -52,8 +52,3 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 
 - [ ] type of Date?
 - [ ] should we link to datasets in project, in json, after all?
-
-
-
-## Tasks:
-- [ ] for all classes, that have two options, simply split it into two datastructures that hold it

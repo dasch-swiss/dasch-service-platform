@@ -16,10 +16,13 @@ package toplevel {
     .. (1 - n) ..
     +Dataset[] datasets
     +MultiLanguageText[] keywords
-    +TextOrAuthorityRef[] disciplines
-    +TextOrAuthorityRef[] temporalCoverages
+    +MultiLanguageText[] disciplineTexts
+    +URL[] disciplineRefs
+    +MultiLanguageText[] temporalCoverageTexts
+    +URL[] temporalCoverageRefs
     +URL[] spatialCoverages
-    +LegalBody[] funders
+    +Person[] funderPersons
+    +Organization[] funderOrganizations
 
     .. (1 - 2) ..
     +URL[] urls
@@ -28,7 +31,8 @@ package toplevel {
     .. (0 - 1) ..
     +DataManagementPlan dataManagementPlan
     +Date endDate
-    +LegalBody contactPoint
+    +Person contactPerson
+    +Organization contactOrganization
     +String howToCite
 
     .. (0 - n) ..
@@ -36,6 +40,30 @@ package toplevel {
     +Grant[] grants
     +MultiLanguageText[] alternativeNames
   }
+
+  note left of Project::disciplineTexts
+    `disciplineTexts` and `disciplineRefs`
+    together are `disciplines` (1-n)
+  end note
+
+  note left of Project::temporalCoverageTexts
+    `temporalCoverageTexts` and `temporalCoverageRefs`
+    together are `temporalCoverages` (1-n)
+  end note
+
+  note left of Project::spatialCoverage
+    Must be AuthorityReference
+  end note
+
+  note left of Project::funderPersons
+    `funderPersons` and `funderOrganizations`
+    together are `funders` (1-n)
+  end note
+
+  note left of Project::contactPerson
+    `contactPerson` and `contactOrganization`
+    together are `contactPoint` (0-1)
+  end note
 
   class Dataset {
     A Dataset belonging to the project.
@@ -49,7 +77,8 @@ package toplevel {
     +Status status
 
     .. (1 - n) ..
-    +TextOrURL[] abstracts
+    +MultiLanguageText[] abstractTexts
+    +URL[] abstractURLs
     +TypesOfData[] typesOfData
     +URL[] licenses
     +MultiLanguageText[] languages
@@ -65,11 +94,18 @@ package toplevel {
     .. (0 - n) ..
     +MultiLanguageText[] alternativeTitles
     +URL[] urls
-    +TextOrURL[] documentations
+    +MultiLanguageText[] documentationTexts
+    +URL[] documentationURLs
   }
 
-  note left of Project::spatialCoverage
-    Must be AuthorityReference
+  note left of Dataset::abstractTexts
+    `abstractTexts` and `abstractURLs`
+    together are `abstracts` (1-n)
+  end note
+
+  note left of Dataset::documentationTexts
+    `documentationTexts` and `documentationURLs`
+    together are `documentations` (0-n)
   end note
 
   class DataManagementPlan {
@@ -91,7 +127,8 @@ package toplevel {
     +String type
 
     .. (1 - n) ..
-    +LegalBody[] funders
+    +Person[] funderPersons
+    +Organization[] funderOrganizations
 
     -- Optional Fields --
     .. (0 - 1) ..
@@ -101,12 +138,10 @@ package toplevel {
 
   }
 
-  interface LegalBody {
-    Struct representing either a Person or an Organization.
-    -- Required: OneOf --
-    +Person person
-    +Organization organization
-  }
+  note left of Grant::funderPersons
+    `funderPersons` and `funderOrganizations`
+    together are `funders` (1-n)
+  end note
 
   class Person {
     A Person.
@@ -271,23 +306,9 @@ package valueobject {
     +String string()
     +boolean equals()
   }
-
-  class TextOrAuthorityRef {
-    Struct ensuring the object to be either a multi language text or an authority file reference.
-    -- Required: OneOf --
-    +URL authorityRef
-    +MultiLanguageText text
-  }
-
-  class TextOrURL {
-    Struct ensuring the object to be either a multi language text or an aURL.
-    -- Required: OneOf --
-    +URL url
-    +MultiLanguageText text
-  }
 }
 
-package utility {
+package enums {
 
   enum TypesOfData {
     XML
@@ -332,21 +353,11 @@ package externals {
 Project --> Dataset
 Project --> DataManagementPlan
 Project --> Grant
-Project --> LegalBody
 Dataset --> Attribution
 Attribution --> Person
-Grant --> LegalBody
-LegalBody --> Person
-LegalBody --> Organization
 Person --> Organization
 Person --> Address
 Organization --> Address
-
-URL *-- TextOrURL
-MultiLanguageText *-- TextOrURL
-MultiLanguageText *-- TextOrAuthorityRef
-
-
 
 
 @enduml
