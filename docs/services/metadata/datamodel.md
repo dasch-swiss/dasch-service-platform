@@ -51,4 +51,3 @@ As only datasets can occur that are part of the project (or vice versa: the proj
 ## Open Questions:
 
 - [ ] type of Date?
-- [ ] should we link to datasets in project, in json, after all?

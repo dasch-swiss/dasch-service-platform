@@ -141,6 +141,15 @@
           "description": "Start date of the project.",
           "$ref": "#/definitions/date"
         },
+        "datasets": {
+          "description": "The datasets of which the project consists.",
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "description": "ID of a dataset."
+          }
+        },
         "keywords": {
           "type": "array",
           "description": "Keywords/Tags describing the project.",
@@ -251,6 +260,7 @@
         "name",
         "description",
         "startDate",
+        "datasets",
         "keywords",
         "disciplines",
         "temporalCoverage",

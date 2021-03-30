@@ -46,6 +46,9 @@
     ],
     "dataManagementPlan": "dmp-001",
     "endDate": "2022-01-01",
+    "datasets": [
+      "dataset-001"
+    ],
     "publications": [
       "Doe, J. (2020): Some publication. In: Journal for sample publications. Vol. 100.1, p. 1-32."
     ],
