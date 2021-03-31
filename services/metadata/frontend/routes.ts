@@ -1,7 +1,7 @@
-import Content from './content/Content.svelte';
-import ProjectPage from './content/ProjectPage.svelte';
+import ProjectsRepository from './projects-repository/ProjectsRepository.svelte';
+import ProjectPage from './project-page/ProjectPage.svelte';
 
 export default {
-  '/': Content,
+  '/': ProjectsRepository,
   '/project/:id': ProjectPage
 }
