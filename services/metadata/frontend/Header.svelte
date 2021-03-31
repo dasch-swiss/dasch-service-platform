@@ -1,6 +1,6 @@
 <script lang="ts">
-  import Category from "./content/Category.svelte";
-  import { getProjects } from "./content/stores";
+  import Category from "./projects-repository/Category.svelte";
+  import { getProjects } from "./stores";
 
   let showSearchbar = false;
   let showFilters = false;
@@ -65,7 +65,7 @@
     <input on:change={search} bind:value={enteredString} class="searchbar" name="searchbar" placeholder="search..." />
   </div>
   <div class="filter-container m-hidden" class:hidden={!showFilters}>
-    <Category/>
+    <Category />
   </div>
   <div class="menu" class:hidden={!showMenu}>
     <a class="menu-item" href="/">dasch.swiss</a>
