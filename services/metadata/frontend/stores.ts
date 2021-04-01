@@ -4,6 +4,7 @@ import type { PaginationData } from './interfaces';
 export const pages = writable({} as PaginationData)
 export const pagedResults = writable([]);
 export const currentProject = writable(undefined);
+
 const baseUrl = 'http://localhost:3000/projects?';
 const pageLimit = 9;
 let query = '';

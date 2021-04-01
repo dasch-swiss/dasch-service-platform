@@ -2,9 +2,25 @@
   import { onMount } from 'svelte';
   import type { Project } from '../interfaces';
   import { currentProject } from '../stores';
+  import DefaultTabComponent from './DefaultTabComponent.svelte';
+  import Tab from './Tab.svelte';
 
   export let params = {} as any;
   let project: Project;
+  let tabs = [
+    { label: "Tab 1",
+      value: 1,
+      component: DefaultTabComponent
+		},
+    { label: "Tab 2",
+      value: 2,
+      component: DefaultTabComponent
+		},
+    { label: "Tab 3",
+      value: 3,
+      component: DefaultTabComponent
+		}
+  ];
 
   onMount(async () => {
     currentProject.subscribe(p => project = p);
@@ -21,7 +37,6 @@
     setTimeout(() => {
       console.log(project);
     }, 1000);
-   
   }
 
   let promise = getProject();
@@ -35,29 +50,17 @@
   </div>
   <div class="row">
     <div class="column-left">
-      <div>Description:</div>
+      <div class=label>Description:</div>
       <p class=description>{project?.description}</p>
 
       <div class="tabs">
-        <button>Project</button>
-        <button>Attribution</button>
-        <button>Dataset</button>
-      </div>
-
-      <div class="properties">
-        {#await promise then test}
-          {#each project.metadata as data}
-            {#each Object.entries(data) as [label, d]}
-              <div class=property-row>
-                <span class=label>{label}</span>
-                <span class=data>{d}</span>
-              </div>
-            {/each}
-          {/each}
-        {/await}
+        <Tab {tabs} {project}/>
       </div>
     </div>
     <div class="column-right">
+      <div class=tile>
+        <a href='/'>Get back to projects list</a>
+      </div>
       <div class=tile>
         <h3>Datasets</h3>
         <input type="radio" name=dataset1>
@@ -97,9 +100,6 @@
         <div class=data>+41 61 123 45 67</div>
         <h5 class=label>Email</h5>
         <div class=data>send@this.uni</div>
-      </div>
-      <div class=tile>
-        <a href='/'>Get back to projects list</a>
       </div>
     </div>
   </div>
