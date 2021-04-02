@@ -2,17 +2,23 @@
   import { onMount } from 'svelte';
   import type { Project } from '../interfaces';
   import { currentProject } from '../stores';
+import AnotherWidget from './AnotherWidget.svelte';
+import CiteAsWidget from './CiteAsWidget.svelte';
+import ContactWidget from './ContactWidget.svelte';
+  import DatasetsWidget from './DatasetsWidget.svelte';
   import DefaultTabComponent from './DefaultTabComponent.svelte';
+import DownloadWidget from './DownloadWidget.svelte';
+import KeywordsWidget from './KeywordsWidget.svelte';
   import Tab from './Tab.svelte';
 
   export let params = {} as any;
   let project: Project;
   let tabs = [
-    { label: "Tab 1",
+    { label: "Project",
       value: 1,
       component: DefaultTabComponent
 		},
-    { label: "Tab 2",
+    { label: "Dataset",
       value: 2,
       component: DefaultTabComponent
 		},
@@ -58,48 +64,26 @@
       </div>
     </div>
     <div class="column-right">
-      <div class=tile>
+      <div class=widget>
         <a href='/'>Get back to projects list</a>
       </div>
-      <div class=tile>
-        <h3>Datasets</h3>
-        <input type="radio" name=dataset1>
-        <label for=dataset1>dataset 1</label>
-        <input type="radio" name=dataset2>
-        <label for=dataset2>dataset 1</label>
-        <input type="radio" name=dataset3>
-        <label for=dataset3>dataset 1</label>
+      <div class=widget>
+        <DatasetsWidget {project} />
       </div>
-      <div class=tile>
-        <h3>Cite as</h3>
-        <div>blah blah blah</div>
+      <div class=widget>
+        <CiteAsWidget {project} />
       </div>
-      <div class=tile>
-        <h3>Something</h3>
-        <h5 class=label>Title</h5>
-        <div class=data>{project?.name}</div>
-        <h5 class=label>Licence</h5>
-        <div class=data>no licence</div>
-        <h5 class=label>Publication date</h5>
-        <div class=data>31/03/2021</div>
-        <h5 class=label>Keywords</h5>
-        <span class="data keyword">Birds</span>
-        <span class="data keyword">Eat</span>
-        <span class="data keyword">Dogs</span>
-        <span class="data keyword">Hungry</span>
+      <div class=widget>
+        <AnotherWidget {project} />
       </div>
-      <div class=tile>
-        <h3>Contact us</h3>
-        <h5 class=label>Website</h5>
-        <a href='/'>www.www.www</a>
-        <h5 class=label>Address</h5>
-        <div class=data>University of This</div>
-        <div class=data>This Strasse 123</div>
-        <div class=data>0987 That Postfach</div>
-        <h5 class=label>Telephone</h5>
-        <div class=data>+41 61 123 45 67</div>
-        <h5 class=label>Email</h5>
-        <div class=data>send@this.uni</div>
+      <div class=widget>
+        <KeywordsWidget {project}/>
+      </div>
+      <div class=widget>
+        <ContactWidget {project}/>
+      </div>
+      <div class=widget>
+        <DownloadWidget />
       </div>
     </div>
   </div>
@@ -162,20 +146,12 @@
     height: 45x;
     margin: 10px 0 25px;
   }
-  .tile {
+  .widget {
     border: 1px solid #cdcdcd;
     border-radius: 3px;
     background-color: lavenderblush;
     margin: 5px 0;
     padding: 10px;
-  }
-  .keyword {
-    display: inline;
-    color: #fff;
-    background-color: olivedrab;
-    border: 1px solid #cdcdcd;
-    border-radius: 3px;
-    padding: 2px 6px;
   }
   @media screen and (min-width: 992px) {
     .row {

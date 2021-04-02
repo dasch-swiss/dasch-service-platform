@@ -24,13 +24,13 @@
 {/each}
 
 <style>
-	.box {
-		margin-bottom: 10px;
-		padding: 40px;
-		border: 1px solid #dee2e6;
+  .box {
+    margin-bottom: 10px;
+    padding: 40px;
+    border: 1px solid #dee2e6;
     border-radius: 0 0 .5rem .5rem;
     border-top: 0;
-	}
+  }
   ul {
     display: flex;
     flex-wrap: wrap;
@@ -39,10 +39,9 @@
     list-style: none;
     border-bottom: 1px solid #dee2e6;
   }
-	li {
-		margin-bottom: -1px;
-	}
-
+  li {
+    margin-bottom: -1px;
+  }
   span {
     border: 1px solid transparent;
     border-top-left-radius: 0.25rem;
@@ -51,11 +50,9 @@
     padding: 0.5rem 1rem;
     cursor: pointer;
   }
-
   span:hover {
     border-color: #e9ecef #e9ecef #dee2e6;
   }
-
   li.active > span {
     color: #495057;
     background-color: #fff;
