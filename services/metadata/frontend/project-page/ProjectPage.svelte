@@ -17,15 +17,15 @@ import KeywordsWidget from './KeywordsWidget.svelte';
     { label: "Project",
       value: 1,
       component: DefaultTabComponent
-		},
+    },
     { label: "Dataset",
       value: 2,
       component: DefaultTabComponent
-		},
+    },
     { label: "Tab 3",
       value: 3,
       component: DefaultTabComponent
-		}
+    }
   ];
 
   onMount(async () => {
@@ -112,7 +112,8 @@ import KeywordsWidget from './KeywordsWidget.svelte';
     flex-basis: 100%;
     /* flex: 1; */
     justify-content: center;
-    background-color: deepskyblue;
+    margin-top: 40px;
+    /* background-color: deepskyblue; */
   }
   .column-left, .column-right {
     display: flex;
@@ -120,11 +121,11 @@ import KeywordsWidget from './KeywordsWidget.svelte';
     flex-basis: 100%;
     flex: 2;
     padding: 20px;
-    background-color:hotpink;
+    /* background-color:hotpink; */
   }
   .column-right {
     flex: 1;
-    background-color: gold; 
+    /* background-color: gold; */
   }
   .label, .data {
     display: flex;
