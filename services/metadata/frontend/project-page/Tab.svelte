@@ -3,23 +3,23 @@
 
   export let project: Project;
   export let tabs = [] as any[];
-  export let activeTabValue = 1;
+  export let activeTabLabel = 'Project';
 
-  const handleClick = (tabValue: any) => () => (activeTabValue = tabValue);
+  const handleClick = (tabValue: any) => () => (activeTabLabel = tabValue);
 </script>
 
 <ul>
   {#each tabs as item}
-    <li class={activeTabValue === item.value ? 'active' : ''}>
-      <span on:click={handleClick(item.value)}>{item.label}</span>
+    <li class={activeTabLabel === item.label ? 'active' : ''}>
+      <span on:click={handleClick(item.label)}>{item.label}</span>
     </li>
   {/each}
 </ul>
 {#each tabs as item}
-	{#if activeTabValue == item.value}
-	<div class="box">
-		<svelte:component this={item.component} {project}/>
-	</div>
+	{#if activeTabLabel === item.label}
+    <div class=box>
+      <svelte:component this={item.component} {project} {activeTabLabel}/>
+    </div>
 	{/if}
 {/each}
 

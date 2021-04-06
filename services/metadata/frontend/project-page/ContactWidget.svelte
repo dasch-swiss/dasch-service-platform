@@ -2,7 +2,7 @@
   export let project;
 </script>
 
-<h3>Contact us</h3>
+<h3 class=widget-heading>Contact us</h3>
 {#if project}
   {#each project.metadata as org}
     {#if org.type === 'http://ns.dasch.swiss/repository#Organization' && org.address && org.email}

@@ -14,16 +14,24 @@
   export let params = {} as any;
   let project: Project;
   let tabs = [
-    { label: "Project",
+    { label: 'Project',
       value: 1,
       component: DefaultTabComponent
     },
-    { label: "Dataset",
+    { label: 'Dataset',
       value: 2,
       component: DefaultTabComponent
     },
-    { label: "Tab 3",
+    { label: 'Attribution',
       value: 3,
+      component: DefaultTabComponent
+    },
+    { label: 'Terms & Conditions',
+      value: 4,
+      component: DefaultTabComponent
+    },
+    { label: 'Contact',
+      value: 5,
       component: DefaultTabComponent
     }
   ];
@@ -121,6 +129,7 @@
     flex-basis: 100%;
     flex: 2;
     padding: 20px;
+    height: fit-content;
     /* background-color:hotpink; */
   }
   .column-right {
@@ -150,8 +159,8 @@
   .widget {
     border: 1px solid #cdcdcd;
     border-radius: 3px;
-    background-color: lavenderblush;
-    margin: 5px 0;
+    background-color: var(--dasch-grey-3);
+    margin-bottom: 6px;
     padding: 10px;
   }
   @media screen and (min-width: 992px) {

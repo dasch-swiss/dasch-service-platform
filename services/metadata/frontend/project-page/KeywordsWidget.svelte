@@ -2,7 +2,7 @@
   export let project;
 </script>
 
-<h3>Keywords</h3>
+<h3 class=widget-heading>Keywords</h3>
 {#if project}
   {#each project.metadata as project}
     {#if project.type === 'http://ns.dasch.swiss/repository#Project'}

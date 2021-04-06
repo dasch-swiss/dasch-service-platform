@@ -1,18 +1,44 @@
 <script lang="ts">
+  import { onMount } from "svelte";
   import type { Project } from "../interfaces";
   
   export let project: Project;
+  export let activeTabLabel: string;
+
+  onMount(() => {
+    console.log(activeTabLabel)
+    if (activeTabLabel === 'Attribution') {
+      activeTabLabel = 'Person';
+    }
+  })
 </script>
 
-<div class="properties">
+<div class=properties>
   {#if project}
     {#each project.metadata as data}
-      {#each Object.entries(data) as [label, d]}
-        <div class=property-row>
-          <span class=label>{label}</span>
-          <span class=data>{d}</span>
-        </div>
-      {/each}
+      {#if activeTabLabel === 'Person'}
+        {#if data.type === `http://ns.dasch.swiss/repository#${activeTabLabel}`}
+          {#each Object.entries(data) as [label, d]}
+            <div class=property-row>
+              {#if label === 'type'}
+                <span class=label>Person</span>
+              {:else if label === 'id'}
+              <span></span>
+              {:else}
+                <span class=label>{label}</span>
+                <span class=data>{d}</span>
+              {/if}
+            </div>
+          {/each}
+        {/if}
+      {:else if data.type === `http://ns.dasch.swiss/repository#${activeTabLabel}`}
+        {#each Object.entries(data) as [label, d]}
+          <div class=property-row>
+            <span class=label>{label}</span>
+            <span class=data>{d}</span>
+          </div>
+        {/each}
+      {/if}
     {/each}
   {/if}
 </div>
