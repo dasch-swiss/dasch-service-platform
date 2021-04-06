@@ -30,6 +30,7 @@
     border: 1px solid #dee2e6;
     border-radius: 0 0 .5rem .5rem;
     border-top: 0;
+    overflow-wrap: break-word;
   }
   ul {
     display: flex;

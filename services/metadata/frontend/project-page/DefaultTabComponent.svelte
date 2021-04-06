@@ -21,10 +21,9 @@
   .property-row {
     display: flex;
     flex-direction: column;
-    flex-wrap: wrap;
+    /* flex-wrap: wrap; */
     width: 100%;
   }
-  .property-row {flex-direction: row;}
   .label, .data {
     display: flex;
     flex-direction: column;
@@ -35,5 +34,10 @@
   .label {
     flex: 1;
     font-weight: bold;
+  }
+  @media screen and (min-width: 992px) {
+    .property-row {
+      flex-direction: row;
+    }
   }
 </style>

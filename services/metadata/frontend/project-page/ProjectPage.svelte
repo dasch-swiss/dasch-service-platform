@@ -2,13 +2,13 @@
   import { onMount } from 'svelte';
   import type { Project } from '../interfaces';
   import { currentProject } from '../stores';
-import AnotherWidget from './AnotherWidget.svelte';
-import CiteAsWidget from './CiteAsWidget.svelte';
-import ContactWidget from './ContactWidget.svelte';
+  import AnotherWidget from './AnotherWidget.svelte';
+  import CiteAsWidget from './CiteAsWidget.svelte';
+  import ContactWidget from './ContactWidget.svelte';
   import DatasetsWidget from './DatasetsWidget.svelte';
   import DefaultTabComponent from './DefaultTabComponent.svelte';
-import DownloadWidget from './DownloadWidget.svelte';
-import KeywordsWidget from './KeywordsWidget.svelte';
+  import DownloadWidget from './DownloadWidget.svelte';
+  import KeywordsWidget from './KeywordsWidget.svelte';
   import Tab from './Tab.svelte';
 
   export let params = {} as any;
