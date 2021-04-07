@@ -24,33 +24,57 @@
 package entity
 
 import (
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/event"
 	"time"
 )
 
 //User domain entity
+//TODO: exchange strings for value objects
 type User struct {
-	ID         ID
-	Type       string
-	Username   string
-	Email      string
-	Password   string
-	GivenName  string
-	FamilyName string
-	CreatedAt  time.Time
-	UpdatedAt  time.Time
+	id            ID
+	aggregateType string
+	username      string
+	email         string
+	password      string
+	givenName     string
+	familyName    string
+	createdAt     time.Time
+	createdBy     ID
+	updatedAt     time.Time
+	updatedBy     ID
+
+	changes []event.Event
+	version int
+}
+
+// NewUserFromEvents is a helper method that creates a new user
+// from a series of events.
+func NewUserFromEvents(events []event.Event) *User {
+	u := &User{}
+
+	for _, event := range events {
+		u.On(event, false)
+	}
+
+	return u
+}
+
+// 
+func (u User) AggregateType() string {
+	return u.aggregateType
 }
 
 //NewUser create a new user entity
 func NewUser(username string, email string, password string, givenname string, familyname string) (*User, error) {
 	user := &User{
-		ID:         NewID(),
-		Type: "http://ns.dasch.swiss/admin#User",
-		Username:   username,
-		Email:      email,
-		Password:   password,
-		GivenName:  givenname,
-		FamilyName: familyname,
-		CreatedAt:  time.Now(),
+		id:         NewID(),
+		atype:      "http://ns.dasch.swiss/admin#User",
+		username:   username,
+		email:      email,
+		password:   password,
+		givenName:  givenname,
+		familyName: familyname,
+		createdAt:  time.Now(),
 	}
 
 	err := user.Validate()
