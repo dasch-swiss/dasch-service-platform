@@ -1,7 +1,7 @@
 <script lang='ts'>
   import { onMount } from 'svelte';
-  import type { Project } from '../interfaces';
-  import { currentProject } from '../stores';
+  import type { ProjectMetadata } from '../interfaces';
+  import { currentProjectMetadata } from '../stores';
   import AnotherWidget from './AnotherWidget.svelte';
   import CiteAsWidget from './CiteAsWidget.svelte';
   import ContactWidget from './ContactWidget.svelte';
@@ -12,7 +12,7 @@
   import Tab from './Tab.svelte';
 
   export let params = {} as any;
-  let project: Project;
+  let projectMetadata: ProjectMetadata;
   let tabs = [
     { label: 'Project',
       value: 1,
@@ -25,31 +25,23 @@
     { label: 'Attribution',
       value: 3,
       component: DefaultTabComponent
-    },
-    { label: 'Terms & Conditions',
-      value: 4,
-      component: DefaultTabComponent
-    },
-    { label: 'Contact',
-      value: 5,
-      component: DefaultTabComponent
     }
   ];
 
   onMount(async () => {
-    currentProject.subscribe(p => project = p);
+    currentProjectMetadata.subscribe(p => projectMetadata = p);
 
-    if (!project) {
+    if (!projectMetadata) {
       await getProject();
     }
   });
   
   let getProject = async () => {
     const res = await fetch(`http://localhost:3000/projects/${params.id}`)
-    project = await res.json();
+    projectMetadata = await res.json();
 
     setTimeout(() => {
-      console.log(project);
+      console.log(projectMetadata);
     }, 1000);
   }
 
@@ -59,16 +51,20 @@
 <div class="container">
   <div class="row">
     <h1 class="title">
-      {project?.name}
+      {projectMetadata?.name}
     </h1>
   </div>
   <div class="row">
     <div class="column-left">
-      <div class=label>Description:</div>
-      <p class=description>{project?.description}</p>
+      <!-- <div class=label>Project description</div> -->
+      <p class=description>{projectMetadata?.description}</p>
+      <div class="property-row">
+        <!-- <span class=label>{key}</span>
+        <span class=data>{val}</span> -->
+      </div>
 
       <div class="tabs">
-        <Tab {tabs} {project}/>
+        <Tab {tabs} {projectMetadata}/>
       </div>
     </div>
     <div class="column-right">
@@ -76,19 +72,19 @@
         <a href='/'>Get back to projects list</a>
       </div>
       <div class=widget>
-        <DatasetsWidget {project} />
+        <DatasetsWidget {projectMetadata} />
       </div>
       <div class=widget>
-        <CiteAsWidget {project} />
+        <CiteAsWidget {projectMetadata} />
       </div>
       <div class=widget>
-        <AnotherWidget {project} />
+        <AnotherWidget {projectMetadata} />
       </div>
       <div class=widget>
-        <KeywordsWidget {project}/>
+        <KeywordsWidget {projectMetadata}/>
       </div>
       <div class=widget>
-        <ContactWidget {project}/>
+        <ContactWidget {projectMetadata}/>
       </div>
       <div class=widget>
         <DownloadWidget />
@@ -121,6 +117,7 @@
     /* flex: 1; */
     justify-content: center;
     margin-top: 40px;
+    padding: 0 20px;
     /* background-color: deepskyblue; */
   }
   .column-left, .column-right {

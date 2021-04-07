@@ -1,10 +1,10 @@
 <script>
-  export let project;
+  export let projectMetadata;
 </script>
 
 <h3 class=widget-heading>Cite as</h3>
-{#if project}
-  {#each project.metadata as dataset}
+{#if projectMetadata}
+  {#each projectMetadata.metadata as dataset}
     {#if dataset.type === 'http://ns.dasch.swiss/repository#Dataset'}
       <div>{dataset.howToCite}</div>
     {/if}

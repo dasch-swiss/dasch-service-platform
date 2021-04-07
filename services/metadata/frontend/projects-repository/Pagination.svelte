@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { PaginationData } from '../interfaces';
-  import { getProjects, pagedResults } from '../stores';
+  import { getProjectsMetadata, pagedResults } from '../stores';
 
   export let pagination = {} as PaginationData;
   let currentPage = 1;
@@ -21,7 +21,7 @@
     
     document.querySelector('.active').classList.remove('active');
     document.getElementById((currentPage).toString()).classList.add('active');
-    getProjects(currentPage);
+    getProjectsMetadata(currentPage);
     currentResults = baseResultsRange.map(v => v + ((currentPage - 1) * baseResultsRange[1]));
   }
 </script>

@@ -1,10 +1,10 @@
 <script>
-  export let project;
+  export let projectMetadata;
 </script>
 
 <h3 class=widget-heading>Keywords</h3>
-{#if project}
-  {#each project.metadata as project}
+{#if projectMetadata}
+  {#each projectMetadata.metadata as project}
     {#if project.type === 'http://ns.dasch.swiss/repository#Project'}
       {#each project.keywords as keyword}
         <span class="keyword">{keyword}</span>

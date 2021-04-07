@@ -1,8 +1,8 @@
 <script lang="ts">
   import { onMount } from "svelte";
-  import type { Project } from "../interfaces";
+  import type { ProjectMetadata } from "../interfaces";
   
-  export let project: Project;
+  export let projectMetadata: ProjectMetadata;
   export let activeTabLabel: string;
 
   onMount(() => {
@@ -14,33 +14,44 @@
 </script>
 
 <div class=properties>
-  {#if project}
-    {#each project.metadata as data}
-      {#if activeTabLabel === 'Person'}
-        {#if data.type === `http://ns.dasch.swiss/repository#${activeTabLabel}`}
-          {#each Object.entries(data) as [label, d]}
-            <div class=property-row>
-              {#if label === 'type'}
-                <span class=label>Person</span>
-              {:else if label === 'id'}
-              <span></span>
-              {:else}
-                <span class=label>{label}</span>
-                <span class=data>{d}</span>
-              {/if}
-            </div>
-          {/each}
-        {/if}
-      {:else if data.type === `http://ns.dasch.swiss/repository#${activeTabLabel}`}
-        {#each Object.entries(data) as [label, d]}
-          <div class=property-row>
-            <span class=label>{label}</span>
-            <span class=data>{d}</span>
-          </div>
+{#if projectMetadata}
+  {#each projectMetadata.metadata as metadata}
+    {#if activeTabLabel === 'Person'}
+      {#if metadata.type === `http://ns.dasch.swiss/repository#${activeTabLabel}`}
+        {#each Object.entries(metadata) as [label, d]}
+        <div class=property-row>
+          {#if label === 'type'}
+          <span class=label>Person</span>
+          {:else if label === 'id'}
+          <span></span>
+          {:else}
+          <span class=label>{label}</span>
+          <span class=data>{d}</span>
+          {/if}
+        </div>
         {/each}
       {/if}
-    {/each}
-  {/if}
+    {:else if metadata.type === `http://ns.dasch.swiss/repository#${activeTabLabel}`}
+      {#each Object.entries(metadata) as [key, val]}
+      <div class=property-row>
+        {#if key === 'id' || key === 'type'}
+        <span></span>
+        {:else}
+        <span class=label>{key}</span>
+          {#if Array.isArray(val) && val.length > 1 && typeof val[0] === 'string'}
+          <span class=data>{val.join(', ')}</span>
+          {:else}
+          <span class=data>{val}</span>
+          {/if}
+        <!-- <span class=label>{key}</span>
+        <span class=data>{val}</span> -->
+        {/if}
+
+      </div>
+      {/each}
+    {/if}
+  {/each}
+{/if}
 </div>
 
 <style>

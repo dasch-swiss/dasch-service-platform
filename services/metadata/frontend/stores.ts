@@ -3,13 +3,13 @@ import type { PaginationData } from './interfaces';
 
 export const pages = writable({} as PaginationData)
 export const pagedResults = writable([]);
-export const currentProject = writable(undefined);
+export const currentProjectMetadata = writable(undefined);
 
 const baseUrl = 'http://localhost:3000/projects?';
 const pageLimit = 9;
 let query = '';
 
-export async function getProjects(page: number, q?: string): Promise<void> {
+export async function getProjectsMetadata(page: number, q?: string): Promise<void> {
   let url: string;
 
   if (q) {

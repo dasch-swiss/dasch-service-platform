@@ -1,10 +1,10 @@
 <script>
-  export let project;
+  export let projectMetadata;
 </script>
 
 <h3 class=widget-heading>Contact us</h3>
-{#if project}
-  {#each project.metadata as org}
+{#if projectMetadata}
+  {#each projectMetadata.metadata as org}
     {#if org.type === 'http://ns.dasch.swiss/repository#Organization' && org.address && org.email}
     <h5 class=label>Address</h5>
     <div class=data>{org.name[0]}</div>

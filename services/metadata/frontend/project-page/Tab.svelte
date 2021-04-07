@@ -1,7 +1,7 @@
 <script lang="ts">
-  import type { Project } from "../interfaces";
+  import type { ProjectMetadata } from "../interfaces";
 
-  export let project: Project;
+  export let projectMetadata: ProjectMetadata;
   export let tabs = [] as any[];
   export let activeTabLabel = 'Project';
 
@@ -9,16 +9,16 @@
 </script>
 
 <ul>
-  {#each tabs as item}
-    <li class={activeTabLabel === item.label ? 'active' : ''}>
-      <span on:click={handleClick(item.label)}>{item.label}</span>
+  {#each tabs as tab}
+    <li class={activeTabLabel === tab.label ? 'active' : ''}>
+      <span on:click={handleClick(tab.label)}>{tab.label}</span>
     </li>
   {/each}
 </ul>
-{#each tabs as item}
-	{#if activeTabLabel === item.label}
+{#each tabs as tab}
+	{#if activeTabLabel === tab.label}
     <div class=box>
-      <svelte:component this={item.component} {project} {activeTabLabel}/>
+      <svelte:component this={tab.component} {projectMetadata} {activeTabLabel}/>
     </div>
 	{/if}
 {/each}

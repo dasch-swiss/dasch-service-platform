@@ -1,8 +1,8 @@
 <script lang="ts">
-  import type { Category, Project } from '../interfaces';
+  import type { Category, ProjectMetadata } from '../interfaces';
   import { pagedResults, pages } from '../stores';
 
-  export let searched: Project[] = [];
+  export let searched: ProjectMetadata[] = [];
 
   let categories = [
     { id: 1, isOpen: false, name: 'Discipline', sub: ['Agriculture', 'Antropology', 'Geography', 'History'] },

@@ -1,6 +1,6 @@
 <script lang="ts">
   import Category from "./projects-repository/Category.svelte";
-  import { getProjects } from "./stores";
+  import { getProjectsMetadata } from "./stores";
 
   let showSearchbar = false;
   let showFilters = false;
@@ -27,7 +27,7 @@
 
   let search = (e: Event) => {
     const q = (e.target as HTMLInputElement).value;
-    getProjects(1, q);
+    getProjectsMetadata(1, q);
     enteredString = '';
   }
 </script>
