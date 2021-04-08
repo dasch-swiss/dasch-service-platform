@@ -5,6 +5,8 @@
   "project": {
     "@id": "0000-project",
     "@type": "Project",
+    "@created": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001",
+    "@modified": "2009-11-10 23:00:00 +0000 UTC m=+0.000000003",
     "shortcode": "0000",
     "name": "Test Project Name",
     "description": {
@@ -73,6 +75,8 @@
     {
       "@id": "dataset-001",
       "@type": "Dataset",
+      "@created": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001",
+      "@modified": "2009-11-10 23:00:00 +0000 UTC m=+0.000000003",
       "title": "Dataset 1",
       "accessConditions": "Embargo until 2023, then open access.",
       "howToCite": "Dataset XY, in Project AB (ARK: ...)",
@@ -156,6 +160,8 @@
     {
       "@id": "person-001",
       "@type": "Person",
+      "@created": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001",
+      "@modified": "2009-11-10 23:00:00 +0000 UTC m=+0.000000003",
       "jobTitles": [
         "Professor"
       ],
@@ -192,6 +198,8 @@
     {
       "@id": "organization-001",
       "@type": "Organization",
+      "@created": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001",
+      "@modified": "2009-11-10 23:00:00 +0000 UTC m=+0.000000003",
       "name": "DaSCH",
       "alternativeNames": [
         {
@@ -222,6 +230,8 @@
     {
       "@id": "organization-002",
       "@type": "Organization",
+      "@created": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001",
+      "@modified": "2009-11-10 23:00:00 +0000 UTC m=+0.000000003",
       "name": "SNF",
       "alternativeNames": [
         {
@@ -235,6 +245,8 @@
     {
       "@id": "grant-001",
       "@type": "Grant",
+      "@created": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001",
+      "@modified": "2009-11-10 23:00:00 +0000 UTC m=+0.000000003",
       "funders": [
         "organization-001"
       ],
@@ -250,6 +262,8 @@
   "dataManagementPlan": {
     "@id": "dmp-001",
     "@type": "DataManagementPlan",
+    "@created": "2009-11-10 23:00:00 +0000 UTC m=+0.000000001",
+    "@modified": "2009-11-10 23:00:00 +0000 UTC m=+0.000000003",
     "available": true,
     "url": {
       "url": "https://dasch.swiss/someproject/dmp",

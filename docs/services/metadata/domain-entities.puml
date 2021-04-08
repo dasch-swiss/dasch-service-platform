@@ -6,8 +6,10 @@ package toplevel {
     The Project.
     -- Required Fields --
     .. (1) ..
-    +UUID id
-    +String type
+    -UUID id
+    -String type
+    -Date created
+    -Date modified
     +Shortcode shortcode
     +String name
     +MultiLanguageText description
@@ -69,8 +71,10 @@ package toplevel {
     A Dataset belonging to the project.
     -- Required Fields --
     .. (1) ..
-    +UUID id
-    +String type
+    -UUID id
+    -String type
+    -Date created
+    -Date modified
     +String title
     +String accessConditions
     +String howToCite
@@ -110,8 +114,10 @@ package toplevel {
 
   class DataManagementPlan {
     .. (1) ..
-    +UUID id
-    +String type
+    -UUID id
+    -String type
+    -Date created
+    -Date modified
 
     .. (0 - 1) ..
     +boolean available
@@ -123,8 +129,10 @@ package toplevel {
     A financial grant.
     -- Required Fields --
     .. (1) ..
-    +UUID id
-    +String type
+    -UUID id
+    -String type
+    -Date created
+    -Date modified
 
     .. (1 - n) ..
     +Person[] funderPersons
@@ -147,8 +155,10 @@ package toplevel {
     A Person.
     -- Required --
     .. (1) ..
-    +UUID id
-    +String type
+    -UUID id
+    -String type
+    -Date created
+    -Date modified
 
     .. (1 - n) ..
     +String[] jobTitles
@@ -176,8 +186,10 @@ package toplevel {
     An Organization.
     -- Required --
     .. (1) ..
-    +UUID id
-    +String type
+    -UUID id
+    -String type
+    -Date created
+    -Date modified
     +String name
 
     -- Optional --

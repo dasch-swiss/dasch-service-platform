@@ -124,6 +124,14 @@
           "description": "Type of this object",
           "const": "Project"
         },
+        "@created": {
+          "type": "string",
+          "description": "Creation date of this object"
+        },
+        "@modified": {
+          "type": "string",
+          "description": "Last modification date of this object"
+        },
         "shortcode": {
           "type": "string",
           "description": "The four digit hexadecimal project shortcode, assigned to the project by the DaSCH.",
@@ -256,6 +264,8 @@
       "required": [
         "@id",
         "@type",
+        "@created",
+        "@modified",
         "shortcode",
         "name",
         "description",
@@ -282,6 +292,14 @@
           "type": "string",
           "const": "Grant"
         },
+        "@created": {
+          "type": "string",
+          "description": "Creation date of this object"
+        },
+        "@modified": {
+          "type": "string",
+          "description": "Last modification date of this object"
+        },
         "funders": {
           "description": "Legal bodies funding the grant.",
           "type": "array",
@@ -307,6 +325,8 @@
       "required": [
         "@id",
         "@type",
+        "@created",
+        "@modified",
         "funders"
       ],
       "additionalProperties": false
@@ -322,6 +342,14 @@
         "@type": {
           "type": "string",
           "const": "Person"
+        },
+        "@created": {
+          "type": "string",
+          "description": "Creation date of this object"
+        },
+        "@modified": {
+          "type": "string",
+          "description": "Last modification date of this object"
         },
         "jobTitles": {
           "type": "array",
@@ -383,6 +411,8 @@
       "required": [
         "@id",
         "@type",
+        "@created",
+        "@modified",
         "jobTitles",
         "givenNames",
         "familyNames",
@@ -401,6 +431,14 @@
         "@type": {
           "type": "string",
           "const": "Dataset"
+        },
+        "@created": {
+          "type": "string",
+          "description": "Creation date of this object"
+        },
+        "@modified": {
+          "type": "string",
+          "description": "Last modification date of this object"
         },
         "title": {
           "type": "string",
@@ -526,6 +564,8 @@
       "required": [
         "@id",
         "@type",
+        "@created",
+        "@modified",
         "title",
         "accessConditions",
         "howToCite",
@@ -549,6 +589,14 @@
         "@type": {
           "type": "string",
           "const": "Organization"
+        },
+        "@created": {
+          "type": "string",
+          "description": "Creation date of this object"
+        },
+        "@modified": {
+          "type": "string",
+          "description": "Last modification date of this object"
         },
         "name": {
           "type": "string",
@@ -585,6 +633,8 @@
       "required": [
         "@id",
         "@type",
+        "@created",
+        "@modified",
         "name"
       ],
       "additionalProperties": false
@@ -634,6 +684,14 @@
           "type": "string",
           "const": "DataManagementPlan"
         },
+        "@created": {
+          "type": "string",
+          "description": "Creation date of this object"
+        },
+        "@modified": {
+          "type": "string",
+          "description": "Last modification date of this object"
+        },
         "available": {
           "type": "boolean"
         },
@@ -643,7 +701,9 @@
       },
       "required": [
         "@id",
-        "@type"
+        "@type",
+        "@created",
+        "@modified"
       ],
       "additionalProperties": false
     },

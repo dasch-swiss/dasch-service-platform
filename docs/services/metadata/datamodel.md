@@ -46,8 +46,3 @@ The overall structure of the json representation of a metadata-set should look l
 As only datasets can occur that are part of the project (or vice versa: the project must contain all datasets), this connection is always assumed and not linked explicitly.
 
 `project` and `datasets` are required, `persons`, `organizations`, `grants` and `dataManagementPlan` are optional.
-
-
-## Open Questions:
-
-- [ ] type of Date?
