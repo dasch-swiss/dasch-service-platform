@@ -1,11 +1,11 @@
 <script lang="ts">  
-  export let datasets: any[];
+  export let dataset: any;
 </script>
 
 <div class=properties>
-{#if datasets}
-  {#each datasets as data}
-    {#each Object.entries(data) as [key, val]}
+{#if dataset}
+  <!-- {#each datasets as data} -->
+    {#each Object.entries(dataset.content) as [key, val]}
     <div class=property-row>
       {#if key === 'id' || key === 'type'}
       <span></span>
@@ -22,7 +22,7 @@
 
     </div>
     {/each}
-  {/each}
+  <!-- {/each} -->
 {/if}
 </div>
 

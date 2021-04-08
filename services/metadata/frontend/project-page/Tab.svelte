@@ -1,7 +1,6 @@
 <script lang="ts">
   import DefaultTabComponent from "./DefaultTabComponent.svelte";
 
-  export let datasets: any[];
   export let tabs = [] as any[];
   export let activeTabValue = 0;
 
@@ -18,7 +17,7 @@
 {#each tabs as tab}
 	{#if activeTabValue === tab.value}
   <div class=box>
-    <svelte:component this={DefaultTabComponent} {datasets}/>
+    <svelte:component this={DefaultTabComponent} dataset={tab}/>
   </div>
 	{/if}
 {/each}

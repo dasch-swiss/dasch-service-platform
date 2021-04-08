@@ -9,7 +9,7 @@
   import Tab from './Tab.svelte';
 
   export let params = {} as any;
-  const hiddenProjectProps = ['id', 'type', 'contactPoint', 'dataManagementPlan', 'description'];
+  const hiddenProjectProps = ['id', 'type', 'contactPoint', 'dataManagementPlan', 'description', 'keywords', 'name'];
 
   let project: any;
   let datasets: any[] = [];
@@ -24,7 +24,8 @@
 
     datasets.forEach(d => tabs.push({
       label: d.title,
-      value: datasets.indexOf(d)
+      value: datasets.indexOf(d),
+      content: d
     }));
   };
 
@@ -72,11 +73,11 @@
       {/if}
 
 
-{#await getProjectMetadata() then go}
-<div class="tabs">
-  <Tab {tabs} {datasets} />
-</div>
-{/await}
+      {#await getProjectMetadata() then go}
+      <div class="tabs">
+        <Tab {tabs} />
+      </div>
+      {/await}
 
     </div>
     <div class="column-right">
