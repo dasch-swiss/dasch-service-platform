@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Category, ProjectMetadata } from '../interfaces';
-  import { pagedResults, pages } from '../stores';
+  import { pagedResults, pagination } from '../stores';
 
   export let searched: ProjectMetadata[] = [];
 
@@ -25,7 +25,7 @@
       .then(r => r.json())
       .then(data => {
         searched = data;
-        pages.set({totalCount: data.length, totalPages: 1});
+        pagination.set({totalCount: data.length, totalPages: 1});
         pagedResults.set(data);
     });
   }

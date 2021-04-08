@@ -1,10 +1,10 @@
 <script>
-  export let projectMetadata;
+  import { currentProjectMetadata } from "../stores";
 </script>
 
 <h3 class=widget-heading>Keywords</h3>
-{#if projectMetadata}
-  {#each projectMetadata.metadata as project}
+{#if $currentProjectMetadata}
+  {#each $currentProjectMetadata.metadata as project}
     {#if project.type === 'http://ns.dasch.swiss/repository#Project'}
       {#each project.keywords as keyword}
         <span class="keyword">{keyword}</span>

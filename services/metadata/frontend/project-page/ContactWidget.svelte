@@ -1,10 +1,10 @@
 <script>
-  export let projectMetadata;
+  import { currentProjectMetadata } from "../stores";
 </script>
 
 <h3 class=widget-heading>Contact us</h3>
-{#if projectMetadata}
-  {#each projectMetadata.metadata as org}
+{#if $currentProjectMetadata}
+  {#each $currentProjectMetadata.metadata as org}
     {#if org.type === 'http://ns.dasch.swiss/repository#Organization' && org.address && org.email}
     <h5 class=label>Address</h5>
     <div class=data>{org.name[0]}</div>

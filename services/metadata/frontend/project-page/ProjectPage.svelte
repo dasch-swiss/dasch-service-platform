@@ -1,90 +1,102 @@
 <script lang='ts'>
-  import { onMount } from 'svelte';
-  import type { ProjectMetadata } from '../interfaces';
   import { currentProjectMetadata } from '../stores';
   import AnotherWidget from './AnotherWidget.svelte';
   import CiteAsWidget from './CiteAsWidget.svelte';
   import ContactWidget from './ContactWidget.svelte';
   import DatasetsWidget from './DatasetsWidget.svelte';
-  import DefaultTabComponent from './DefaultTabComponent.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import KeywordsWidget from './KeywordsWidget.svelte';
   import Tab from './Tab.svelte';
 
   export let params = {} as any;
-  let projectMetadata: ProjectMetadata;
-  let tabs = [
-    { label: 'Project',
-      value: 1,
-      component: DefaultTabComponent
-    },
-    { label: 'Dataset',
-      value: 2,
-      component: DefaultTabComponent
-    },
-    { label: 'Attribution',
-      value: 3,
-      component: DefaultTabComponent
-    }
-  ];
+  const hiddenProjectProps = ['id', 'type', 'contactPoint', 'dataManagementPlan', 'description'];
 
-  onMount(async () => {
-    currentProjectMetadata.subscribe(p => projectMetadata = p);
+  let project: any;
+  let datasets: any[] = [];
+  let tabs = [] as any[];
 
-    if (!projectMetadata) {
-      await getProject();
-    }
-  });
-  
-  let getProject = async () => {
+  const getProjectMetadata = async () => {
     const res = await fetch(`http://localhost:3000/projects/${params.id}`)
-    projectMetadata = await res.json();
+    const projectMetadata = await res.json();
+    currentProjectMetadata.set(projectMetadata);
+    project = $currentProjectMetadata.metadata.find((p) => p.type === 'http://ns.dasch.swiss/repository#Project');
+    datasets = $currentProjectMetadata.metadata.filter(p => p.type === 'http://ns.dasch.swiss/repository#Dataset');
 
-    setTimeout(() => {
-      console.log(projectMetadata);
-    }, 1000);
+    datasets.forEach(d => tabs.push({
+      label: d.title,
+      value: datasets.indexOf(d)
+    }));
+  };
+
+  console.log(2, project, datasets, tabs)
+
+  const handleData = (val: any) => {
+    if (Array.isArray(val) && val.length > 1) {
+      return val.join(', ')
+    } else {
+      return val
+    }
   }
-
-  let promise = getProject();
 </script>
 
 <div class="container">
   <div class="row">
     <h1 class="title">
-      {projectMetadata?.name}
+      {project?.name}
     </h1>
   </div>
   <div class="row">
     <div class="column-left">
-      <!-- <div class=label>Project description</div> -->
-      <p class=description>{projectMetadata?.description}</p>
+      <p class=description>{project?.description}</p>
+      <!-- <div class="property-row">
+        <span class=label>Alternative names</span>
+        <span class=data>{project?.alternateName}</span>
+      </div>
       <div class="property-row">
-        <!-- <span class=label>{key}</span>
-        <span class=data>{val}</span> -->
+        <span class=label>Discipline</span>
+        <span class=data>{project?.discipline}</span>
       </div>
+      <div class="property-row">
+        <span class=label>Alternative names</span>
+        <span class=data>{project?.alternateName}</span>
+      </div> -->
+      {#if project}
+        {#each Object.entries(project) as [key, val]}
+          {#if !hiddenProjectProps.includes(key)}
+          <div class="property-row">
+            <span class=label>{key}</span>
+            <span class=data>{handleData(val)}</span>
+          </div>
+          {/if}
+        {/each}
+      {/if}
 
-      <div class="tabs">
-        <Tab {tabs} {projectMetadata}/>
-      </div>
+
+{#await getProjectMetadata() then go}
+<div class="tabs">
+  <Tab {tabs} {datasets} />
+</div>
+{/await}
+
     </div>
     <div class="column-right">
       <div class=widget>
         <a href='/'>Get back to projects list</a>
       </div>
       <div class=widget>
-        <DatasetsWidget {projectMetadata} />
+        <DatasetsWidget />
       </div>
       <div class=widget>
-        <CiteAsWidget {projectMetadata} />
+        <CiteAsWidget />
       </div>
       <div class=widget>
-        <AnotherWidget {projectMetadata} />
+        <AnotherWidget />
       </div>
       <div class=widget>
-        <KeywordsWidget {projectMetadata}/>
+        <KeywordsWidget />
       </div>
       <div class=widget>
-        <ContactWidget {projectMetadata}/>
+        <ContactWidget />
       </div>
       <div class=widget>
         <DownloadWidget />

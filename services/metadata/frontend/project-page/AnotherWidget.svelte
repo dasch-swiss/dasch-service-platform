@@ -1,10 +1,10 @@
 <script>
-  export let projectMetadata;
+  import { currentProjectMetadata } from "../stores";
 </script>
 
 <h3 class=widget-heading>Another Widget</h3>
 <h5 class=label>Title</h5>
-<div class=data>{projectMetadata?.name}</div>
+<div class=data>{$currentProjectMetadata?.name}</div>
 <h5 class=label>Licence</h5>
 <div class=data>no licence</div>
 <h5 class=label>Publication date</h5>

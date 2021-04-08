@@ -2,46 +2,39 @@
   import Tile from './Tile.svelte';
   import Category from './Category.svelte';
   import { onMount } from 'svelte';
-  import type { PaginationData, ProjectMetadata } from '../interfaces';
   import Pagination from './Pagination.svelte';
-  import { getProjectsMetadata, pagedResults, pages } from '../stores';
+  import { getProjectsMetadata, pagedResults } from '../stores';
 
-  let projectsMetadata: ProjectMetadata[];
   let message = 'Loading...';
-  let pagination: PaginationData;
 
   setTimeout(() => {
     const noData = 'No data retrived. Please check the connection and retry.';
     const noProject = 'No projects found.'
-      message = projectsMetadata && projectsMetadata.length ? noData : noProject;
+      message = $pagedResults && $pagedResults.length ? noData : noProject;
     }, 3000);
   
   onMount(async () => {
     await getProjectsMetadata(1);
-
-    pagedResults.subscribe(r => projectsMetadata = r);
-
-    pages.subscribe(p => pagination = p);
   });
 </script>
 
 <nav>
   <div class="category-container hidden m-inline-block">
-    <Category bind:searched={projectsMetadata} />
+    <Category bind:searched={$pagedResults} />
   </div>
 </nav>
 <main>
   <div class=tile-container>
-    {#if projectsMetadata && projectsMetadata.length}
-      {#each projectsMetadata as project}
+    {#if $pagedResults && $pagedResults.length}
+      {#each $pagedResults as project}
         <Tile projectMetadata={project}/>
       {/each}
     {:else}
       <p>{message}</p>
     {/if}
   </div>
-  {#if projectsMetadata && projectsMetadata.length}
-    <Pagination pagination={pagination} />
+  {#if $pagedResults && $pagedResults.length}
+    <Pagination />
   {/if}
 </main>
 

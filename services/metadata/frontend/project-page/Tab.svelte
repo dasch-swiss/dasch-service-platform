@@ -1,25 +1,25 @@
 <script lang="ts">
-  import type { ProjectMetadata } from "../interfaces";
+  import DefaultTabComponent from "./DefaultTabComponent.svelte";
 
-  export let projectMetadata: ProjectMetadata;
+  export let datasets: any[];
   export let tabs = [] as any[];
-  export let activeTabLabel = 'Project';
+  export let activeTabValue = 0;
 
-  const handleClick = (tabValue: any) => () => (activeTabLabel = tabValue);
+  const handleClick = (tabValue: number) => () => (activeTabValue = tabValue);
 </script>
 
 <ul>
-  {#each tabs as tab}
-    <li class={activeTabLabel === tab.label ? 'active' : ''}>
-      <span on:click={handleClick(tab.label)}>{tab.label}</span>
-    </li>
-  {/each}
+{#each tabs as tab}
+  <li class={activeTabValue === tab.value ? 'active' : ''}>
+    <span on:click={handleClick(tab.value)}>{tab.label}</span>
+  </li>
+{/each}
 </ul>
 {#each tabs as tab}
-	{#if activeTabLabel === tab.label}
-    <div class=box>
-      <svelte:component this={tab.component} {projectMetadata} {activeTabLabel}/>
-    </div>
+	{#if activeTabValue === tab.value}
+  <div class=box>
+    <svelte:component this={DefaultTabComponent} {datasets}/>
+  </div>
 	{/if}
 {/each}
 

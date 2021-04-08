@@ -4,7 +4,7 @@
   
   export let projectMetadata: ProjectMetadata;
 
-  let setCurrentProject = () => {
+  const setCurrentProject = () => {
     currentProjectMetadata.set(projectMetadata);
   }
 </script>
@@ -15,7 +15,7 @@
   </div>
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <a on:click={setCurrentProject} href="#/project/{projectMetadata.id}">Read more</a>
+    <a on:click={setCurrentProject} href="#/project/{ projectMetadata.id }">Read more</a>
   </div>
 </section>
 
