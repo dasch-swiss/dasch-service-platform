@@ -151,7 +151,8 @@
     flex-direction: column;
     flex-basis: 100%;
     flex: 2;
-    margin: 10px 0
+    margin: 10px 0;
+    word-break: break-word;
   }
   .label {
     flex: 1;
