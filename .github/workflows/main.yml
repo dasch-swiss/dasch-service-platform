@@ -42,8 +42,8 @@ jobs:
             ${{ runner.OS }}-
       - name: Build everything
         run: |
-        make test
-        make docs-build
+          make test
+          make docs-build
       - name: Publish to Dockerhub
         if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags')
         run: |
