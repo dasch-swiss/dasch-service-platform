@@ -22,10 +22,6 @@ async function CreateProject() {
 }
 ```
 
-```typescript
-// typescript code
-```
-
 ```python
 import requests
 
@@ -87,10 +83,6 @@ async function GetAllProjects() {
 }
 ```
 
-```typescript
-// typescripe code
-```
-
 ```python
 import requests
 
@@ -141,10 +133,6 @@ async function GetProject() {
   const response = await fetch('http://localhost:8080/v1/project/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8');
   const project = await response.json();
 }
-```
-
-```typescript
-// typescript code
 ```
 
 ```python
@@ -201,10 +189,6 @@ async function UpdateProject() {
    
   const updatedProject = await response.json();
 }
-```
-
-```typescript
-// typescript code
 ```
 
 ```python
@@ -272,13 +256,12 @@ description | The updated description of the project
 
 ```javascript
 async function DeleteProject() {
-  const response = await fetch('http://localhost:8080/v1/project/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8');
+  const response = await fetch('http://localhost:8080/v1/project/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8',
+  {
+    method: 'DELETE'
+  });
   const project = await response.json();
 }
-```
-
-```typescript
-// typescript code
 ```
 
 ```python

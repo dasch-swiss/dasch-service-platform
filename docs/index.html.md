@@ -3,7 +3,6 @@ title: DSP API Docs
 
 language_tabs: # must be one of https://git.io/vQNgJ
   - javascript
-  - typescript
   - python
 
 toc_footers:
@@ -24,7 +23,7 @@ code_clipboard: true
 
 Welcome to the new and improved DSP API! You can use our API to access DSP API endpoints, which can be used to create, read, update, and delete project data.
 
-We have language bindings in JavaScript, Typescript, and Python! You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
+We have examples in JavaScript and Python. You can view code examples in the dark area to the right, and you can switch the programming language of the examples with the tabs in the top right.
 
 # Authentication
 
