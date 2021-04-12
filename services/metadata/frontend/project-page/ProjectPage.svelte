@@ -14,6 +14,7 @@
   let project: any;
   let datasets: any[] = [];
   let tabs = [] as any[];
+  let isExpanded: boolean;
 
   const getProjectMetadata = async () => {
     const res = await fetch(`http://localhost:3000/projects/${params.id}`)
@@ -38,6 +39,11 @@
       return val
     }
   }
+
+  const toggleExpand = () => {
+    isExpanded = !isExpanded;
+    console.log(isExpanded)
+  }
 </script>
 
 <div class="container">
@@ -57,38 +63,33 @@
     <div class="column-left">
       <div class="property-row">
         <span class=label>Description</span>
-        <span class=description>{project?.description}</span>
+        <span class="description {isExpanded ? '' : 'description-short'}">{project?.description}</span>
       </div>
-      {#if project?.publication && Array.isArray(project?.publication)}
-      <div class="property-row">
-        <span class=label>Publications</span>
-        {#each project?.publication as p}
-        <span class=data>{p}</span>
-        {/each}
-      </div>
-      {/if}
-      <div class="property-row">
-        <span class=label>DSP Internal Shortcode</span>
-        <span class=data>{project?.shortcode}</span>
-      </div>
-      <div class="property-row">
-        <span class=label>Data Management Plan</span>
-        {#if project?.dataManagementPlan}
-        <span class=data>available</span>
-        {:else}
-        <span class=data>unavailable</span>
+
+      <button on:click={toggleExpand}>{isExpanded ? "Show less" : "Show more"}</button>
+
+      <div class={isExpanded ? "" : "hidden"}>
+        {#if project?.publication && Array.isArray(project?.publication)}
+        <div class="property-row">
+          <span class=label>Publications</span>
+          {#each project?.publication as p}
+          <span class=data>{p}</span>
+          {/each}
+        </div>
         {/if}
-      </div>
-      <!-- {#if project}
-        {#each Object.entries(project) as [key, val]}
-          {#if !hiddenProjectProps.includes(key)}
-          <div class="property-row">
-            <span class=label>{key}</span>
-            <span class=data>{handleData(val)}</span>
-          </div>
+        <div class="property-row">
+          <span class=label>DSP Internal Shortcode</span>
+          <span class=data>{project?.shortcode}</span>
+        </div>
+        <div class="property-row">
+          <span class=label>Data Management Plan</span>
+          {#if project?.dataManagementPlan}
+          <span class=data>available</span>
+          {:else}
+          <span class=data>unavailable</span>
           {/if}
-        {/each}
-      {/if} -->
+        </div>
+      </div>
 
       {#await getProjectMetadata() then go}
       <div class="tabs">
@@ -177,13 +178,14 @@
     font-weight: bold;
   }
   .description {
+    height: 45x;
+    margin: 10px 0 25px;
+  }
+  .description-short {
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    /* font-size: 0.8em; */
-    height: 45x;
-    margin: 10px 0 25px;
   }
   .widget {
     border: 1px solid #cdcdcd;
