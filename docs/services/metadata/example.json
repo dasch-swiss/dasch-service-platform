@@ -8,8 +8,8 @@
     "shortcode": "0000",
     "name": "Test Project Name",
     "description": {
-      "de": "Dies ist ein einfaches Beipiel-Projekt zu Dokumentationszwecken.",
-      "en": "This is a simple example project for documentation purposes."
+      "de": ["Dies ist ein einfaches Beipiel-Projekt zu Dokumentationszwecken."],
+      "en": ["This is a simple example project for documentation purposes."]
     },
     "startDate": "2021-01-01",
     "keywords": {
