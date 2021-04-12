@@ -47,7 +47,7 @@
   }
   @media screen and (min-width: 992px) {
     .property-row {
-      flex-direction: row;
+      /* flex-direction: row; */
     }
   }
 </style>
