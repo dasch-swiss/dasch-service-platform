@@ -65,8 +65,8 @@
         <span class=label>Description</span>
         <span class="description {isExpanded ? '' : 'description-short'}">{project?.description}</span>
       </div>
-
-      <button on:click={toggleExpand}>{isExpanded ? "Show less" : "Show more"}</button>
+      
+      <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
 
       <div class={isExpanded ? "" : "hidden"}>
         {#if project?.publication && Array.isArray(project?.publication)}
@@ -83,11 +83,7 @@
         </div>
         <div class="property-row">
           <span class=label>Data Management Plan</span>
-          {#if project?.dataManagementPlan}
-          <span class=data>available</span>
-          {:else}
-          <span class=data>unavailable</span>
-          {/if}
+          <span class=data>{project?.dataManagementPlan ? "available" : "unavailable"}</span>
         </div>
       </div>
 
@@ -178,14 +174,14 @@
     font-weight: bold;
   }
   .description {
-    height: 45x;
-    margin: 10px 0 25px;
+    margin: 10px 0;
   }
   .description-short {
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
+    height: 45x;
   }
   .widget {
     border: 1px solid #cdcdcd;
@@ -193,6 +189,14 @@
     background-color: var(--dasch-grey-3);
     margin-bottom: 6px;
     padding: 0 10px 10px;
+  }
+  .expand-button {
+    background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
+    color: var(--dasch-violet);
+    text-align: center;
+    font-size: 0.8em;
+    padding: 2px 0;
+    cursor: pointer;
   }
   @media screen and (min-width: 992px) {
     .row {
