@@ -42,7 +42,6 @@
 
   const toggleExpand = () => {
     isExpanded = !isExpanded;
-    console.log(isExpanded)
   }
 </script>
 
@@ -65,7 +64,7 @@
         <span class=label>Description</span>
         <span class="description {isExpanded ? '' : 'description-short'}">{project?.description}</span>
       </div>
-      
+      <!-- TODO: if accepted and reused consder move it to separate component -->
       <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
 
       <div class={isExpanded ? "" : "hidden"}>

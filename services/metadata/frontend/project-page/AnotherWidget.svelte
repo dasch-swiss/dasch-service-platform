@@ -6,7 +6,6 @@
 
   const findObjectById = (id) => {
     grant = $currentProjectMetadata?.metadata.find(obj => obj.id === id);
-    console.log('gr',grant)
     return $currentProjectMetadata?.metadata.find(obj => obj.id === id);
   }
 </script>
