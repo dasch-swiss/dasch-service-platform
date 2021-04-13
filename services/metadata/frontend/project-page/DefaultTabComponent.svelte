@@ -1,11 +1,28 @@
-<script>  
+<script>
+  import { onMount } from "svelte";
+  import { currentProjectMetadata } from "../stores";
+
   export let dataset;
 
-  let isExpanded;
+  let isAbstractExpanded;
+  let abstractLinesNumber;
 
   const toggleExpand = () => {
-    isExpanded = !isExpanded;
-  }
+    isAbstractExpanded = !isAbstractExpanded;
+  };
+
+  const findObjectById = (id) => {
+    return $currentProjectMetadata?.metadata.find(obj => obj.id === id);
+  };
+
+  onMount(() => {
+    const el = document.getElementById('abstract');
+    const lineHeight = parseInt(window.getComputedStyle(el).getPropertyValue('line-height'));
+    const divHeight = el.offsetHeight;
+    abstractLinesNumber = divHeight / lineHeight;
+    isAbstractExpanded = abstractLinesNumber >= 6 ? false : true;
+  });
+
   console.log(1, dataset)
 </script>
 
@@ -55,16 +72,35 @@
 {/if}
 <div class="property-row">
   <span class=label>Abstract</span>
-  <span class="data {isExpanded ? '' : 'abstract-short'}">{dataset?.content.abstract}</span>
+  <span id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">{dataset?.content.abstract}</span>
 </div>
 
-<div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
+{#if abstractLinesNumber >= 6}
+<div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
+{/if}
 
 <div class="property-row">
   <span class=label>Attribution</span>
   {#if Array.isArray(dataset?.content.qualifiedAttribution)}
   {#each dataset?.content.qualifiedAttribution as a}
-  <span class=data>{a.role}</span>
+  <span class=data style="color: olive">{a.role}</span>
+  {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
+  <span class=data>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</span>
+  {#if findObjectById(a.agent[0].id)?.sameAs}
+  <a class=data href={findObjectById(a.agent[0].id)?.sameAs[0].name} target=_>{findObjectById(a.agent[0].id)?.sameAs[0].name}</a>
+  {/if}
+  {#if findObjectById(a.agent[0].id)?.email}
+  <div class=data>{findObjectById(a.agent[0].id)?.email[0]}</div>
+  {/if}
+  {#if Array.isArray(findObjectById(a.agent[0].id)?.memberOf)}
+  {#each findObjectById(a.agent[0].id)?.memberOf as o}
+  <span>{findObjectById(o.id).name}</span>
+  {/each}
+  {/if}
+  {:else}
+  <span>{findObjectById(a.agent[0].id)?.name}</span>
+  {/if}
+  <br /><br />
   {/each}
   {/if}
 </div>
@@ -114,6 +150,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     height: 45x;
+    line-height: 18px;
   }
   .expand-button {
     background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);

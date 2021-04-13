@@ -7,18 +7,18 @@
   const findObjectById = (id) => {
     grant = $currentProjectMetadata?.metadata.find(obj => obj.id === id);
     return $currentProjectMetadata?.metadata.find(obj => obj.id === id);
-  }
+  };
 </script>
 
 <h3 class=widget-heading>Project highlights</h3>
 
 <div class=label>Discipline</div>
 {#if Array.isArray(project?.discipline)}
-{#each project?.discipline as discipline}
-{#if typeof discipline === "string"}
-<div class="data">{discipline}</div>
+{#each project?.discipline as d}
+{#if typeof d === "string"}
+<div class="data">{d}</div>
 {:else}
-<a class=data href={discipline.url} target=_>{discipline.name}</a>
+<a class=data href={d.url} target=_>{d.name}</a>
 {/if}
 {/each}
 {/if}

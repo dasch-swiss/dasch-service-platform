@@ -38,11 +38,11 @@
     } else {
       return val
     }
-  }
+  };
 
   const toggleExpand = () => {
     isExpanded = !isExpanded;
-  }
+  };
 </script>
 
 <div class="container">
@@ -53,7 +53,7 @@
     {#if project?.alternateName}
     <div class="row">
       <h4 class="title">
-        Also known as: {project?.alternateName}
+        Also known as: {project?.alternateName.join(", ")}
       </h4>
     </div>
     {/if}
@@ -165,7 +165,7 @@
     flex-direction: column;
     flex-basis: 100%;
     flex: 2;
-    margin: 10px 0;
+    margin-bottom: 10px;
     word-break: break-word;
   }
   .label {
@@ -173,7 +173,7 @@
     font-weight: bold;
   }
   .description {
-    margin: 10px 0;
+    margin-bottom: 10px;
   }
   .description-short {
     display: -webkit-box;
