@@ -51,17 +51,24 @@ func NewEmail(email string) (Email, error) {
 }
 
 // String returns string representation of the email address.
-func (n Email) String() string {
-	return n.value
+func (v Email) String() string {
+	return v.value
+}
+
+// MarshalText used to serialize the object
+func (v Email) MarshalText() ([]byte, error) {
+	return []byte(v.value), nil
+}
+
+// UnmarshalText used to deserialize the object and returns an error if it's invalid.
+func (v *Email) UnmarshalText(b []byte) error {
+	var err error
+	*v, err = NewEmail(string(b))
+	return err
 }
 
 // Equals checks that two email addresses are the same.
-func (n Email) Equals(value Value) bool {
+func (v Email) Equals(value Value) bool {
 	otherEmail, ok := value.(Email)
-	return ok && n.value == otherEmail.value
-}
-
-//ZeroEmail represents the zero value for an email value object.
-func ZeroEmail() Email {
-	return Email{}
+	return ok && v.value == otherEmail.value
 }

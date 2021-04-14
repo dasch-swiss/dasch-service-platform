@@ -16,49 +16,64 @@
 
 package valueobject
 
-import "github.com/gofrs/uuid"
+import (
+	"time"
+)
 
-type Identifier struct {
-	value uuid.UUID
+type Timestamp struct {
+	value time.Time
 }
 
-//NewIdentifier creates a new identifier value object
-func NewIdentifier() (Identifier, error) {
-	id, err := uuid.NewV4()
-	if err != nil {
-		return Identifier{}, err
-	}
-	return Identifier{value: id}, nil
+//NewTimestamp creates a new timestamp value object
+func NewTimestamp() Timestamp {
+	v := time.Now()
+	return Timestamp{value: v}
 }
 
 //AsUUID returns the UUID of the identifier.
-func (v Identifier) UUID() uuid.UUID {
+func (v Timestamp) Time() time.Time {
 	return v.value
 }
 
 // String implements the fmt.Stringer interface.
-func (v Identifier) String() string {
+func (v Timestamp) String() string {
 	return v.value.String()
 }
 
 // MarshalText used to serialize the object
-func (v Identifier) MarshalText() ([]byte, error) {
+func (v Timestamp) MarshalText() ([]byte, error) {
 	return v.value.MarshalText()
 }
 
 // UnmarshalText used to deserialize the object and returns an error if it's invalid.
-func (v *Identifier) UnmarshalText(b []byte) error {
-	var u uuid.UUID
-	err := u.UnmarshalText(b)
+func (v *Timestamp) UnmarshalText(b []byte) error {
+	var unmarshalledValue time.Time
+	err := unmarshalledValue.UnmarshalText(b)
 	if err != nil {
 		return err
 	}
-	*v = Identifier{value: u}
+	*v = Timestamp{value: unmarshalledValue}
+	return nil
+}
+
+// MarshalJSON used to serialize the object
+func (v Timestamp) MarshalJSON() ([]byte, error) {
+	return v.value.MarshalJSON()
+}
+
+// UnmarshalJSON used to deserialize the object and returns an error if it's invalid.
+func (v *Timestamp) UnmarshalJSON(b []byte) error {
+	var unmarshalledValue time.Time
+	err := unmarshalledValue.UnmarshalJSON(b)
+	if err != nil {
+		return err
+	}
+	*v = Timestamp{value: unmarshalledValue}
 	return nil
 }
 
 //Equals tests for equality with another value object
-func (v Identifier) Equals(value Value) bool {
-	otherIdentifier, ok := value.(Identifier)
+func (v Timestamp) Equals(value Value) bool {
+	otherIdentifier, ok := value.(Timestamp)
 	return ok && v.value == otherIdentifier.value
 }

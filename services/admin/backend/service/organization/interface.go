@@ -21,36 +21,39 @@
  *
  */
 
-package repository
+package organization
 
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/organization"
 )
 
-//inmem in memory repo
-type inmemdb struct {
-	m map[entity.ID]*organization.Organization
+//Reader interface
+type Reader interface {
+	Get(id entity.ID) (*organization.Organization, error)
+	// Search(query string) ([]*entity.Organization, error)
+	// List() ([]*entity.Organization, error)
 }
 
-//NewInmem create a new in memory repository
-func NewInmemDB() *inmemdb {
-	var m = map[entity.ID]*organization.Organization{}
-	return &inmemdb{
-		m: m,
-	}
+//Writer interface
+type Writer interface {
+	Create(e *organization.Organization) (entity.ID, error)
+	// Update(e *entity.Organization) error
+	// Delete(e *entity.ID) error
 }
 
-//Create an organization
-func (r *inmemdb) Create(e *organization.Organization) (entity.ID, error) {
-	r.m[e.ID] = e
-	return e.ID, nil
+//Repository interface
+type Repository interface {
+	Reader
+	Writer
 }
 
-//Get an organization
-func (r *inmemdb) Get(id entity.ID) (*organization.Organization, error) {
-	if r.m[id] == nil {
-		return nil, organization.ErrNotFound
-	}
-	return r.m[id], nil
+//UseCase interface
+type UseCase interface {
+	GetOrganization(id entity.ID) (*organization.Organization, error)
+	// SearchOrganization(query string) ([]*entity.Organization, error)
+	// ListOrganizations() ([]*entity.Organization, error)
+	CreateOrganization(name string) (entity.ID, error)
+	// UpdateOrganization(e *entity.Organization) error
+	// DeleteOrganization(id entity.ID) error
 }

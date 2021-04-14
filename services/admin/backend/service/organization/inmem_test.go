@@ -21,7 +21,7 @@
  *
  */
 
-package repository
+package organization_test
 
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
@@ -29,26 +29,26 @@ import (
 )
 
 //inmem in memory repo
-type inmemdb struct {
+type inMemRepo struct {
 	m map[entity.ID]*organization.Organization
 }
 
-//NewInmem create a new in memory repository
-func NewInmemDB() *inmemdb {
+//newInmem create a new in memory repository
+func NewInMemRepo() *inMemRepo {
 	var m = map[entity.ID]*organization.Organization{}
-	return &inmemdb{
+	return &inMemRepo{
 		m: m,
 	}
 }
 
 //Create an organization
-func (r *inmemdb) Create(e *organization.Organization) (entity.ID, error) {
+func (r *inMemRepo) Create(e *organization.Organization) (entity.ID, error) {
 	r.m[e.ID] = e
 	return e.ID, nil
 }
 
 //Get an organization
-func (r *inmemdb) Get(id entity.ID) (*organization.Organization, error) {
+func (r *inMemRepo) Get(id entity.ID) (*organization.Organization, error) {
 	if r.m[id] == nil {
 		return nil, organization.ErrNotFound
 	}

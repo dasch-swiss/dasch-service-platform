@@ -9,6 +9,6 @@ go_library(
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/event",
     visibility = ["//services/admin:__subpackages__"],
     deps = [
-        "//services/admin/backend/entity",
+        "//shared/go/pkg/valueobject",
     ],
 )

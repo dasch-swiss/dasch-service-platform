@@ -21,36 +21,35 @@
  *
  */
 
-package repository
+package organization
 
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/organization"
 )
 
-//inmem in memory repo
-type inmemdb struct {
-	m map[entity.ID]*organization.Organization
+//Service interface
+type Service struct {
+	repo Repository
 }
 
-//NewInmem create a new in memory repository
-func NewInmemDB() *inmemdb {
-	var m = map[entity.ID]*organization.Organization{}
-	return &inmemdb{
-		m: m,
+//NewService create a new organization use case
+func NewService(r Repository) *Service {
+	return &Service{
+		repo: r,
 	}
 }
 
-//Create an organization
-func (r *inmemdb) Create(e *organization.Organization) (entity.ID, error) {
-	r.m[e.ID] = e
-	return e.ID, nil
+//CreateOrganization creates an organization
+func (s *Service) CreateOrganization(name string) (entity.ID, error) {
+	e, err := organization.NewOrganization(name)
+	if err != nil {
+		return e.ID, err
+	}
+	return s.repo.Create(e)
 }
 
-//Get an organization
-func (r *inmemdb) Get(id entity.ID) (*organization.Organization, error) {
-	if r.m[id] == nil {
-		return nil, organization.ErrNotFound
-	}
-	return r.m[id], nil
+//GetOrganization gets an Organization
+func (s *Service) GetOrganization(id entity.ID) (*organization.Organization, error) {
+	return s.repo.Get(id)
 }

@@ -21,36 +21,24 @@
  *
  */
 
-package repository
+package user
 
-import (
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/organization"
-)
+import "errors"
 
-//inmem in memory repo
-type inmemdb struct {
-	m map[entity.ID]*organization.Organization
-}
+//ErrNotFound not found
+var ErrNotFound = errors.New("not found")
 
-//NewInmem create a new in memory repository
-func NewInmemDB() *inmemdb {
-	var m = map[entity.ID]*organization.Organization{}
-	return &inmemdb{
-		m: m,
-	}
-}
+//ErrInvalidEntity invalid entity
+var ErrInvalidEntity = errors.New("invalid entity")
 
-//Create an organization
-func (r *inmemdb) Create(e *organization.Organization) (entity.ID, error) {
-	r.m[e.ID] = e
-	return e.ID, nil
-}
+//ErrCannotBeDeleted cannot be deleted
+var ErrCannotBeDeleted = errors.New("cannot be deleted")
 
-//Get an organization
-func (r *inmemdb) Get(id entity.ID) (*organization.Organization, error) {
-	if r.m[id] == nil {
-		return nil, organization.ErrNotFound
-	}
-	return r.m[id], nil
-}
+//ErrNotEnoughBooks cannot borrow
+var ErrNotEnoughBooks = errors.New("not enough books")
+
+//ErrPostalAddressNotSet cannot be deleted
+var ErrPostalAddressNotSet = errors.New("postal address is not set")
+
+//ErrBookNotBorrowed cannot return
+var ErrBookNotBorrowed = errors.New("book not borrowed")

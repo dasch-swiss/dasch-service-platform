@@ -27,7 +27,8 @@ import (
 	"encoding/json"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/presenter"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/usecase/organization"
+	organizationEntity "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/organization"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/organization"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 	"log"
@@ -80,7 +81,7 @@ func getOrganization(service organization.UseCase) http.Handler {
 		}
 		data, err := service.GetOrganization(id)
 		w.Header().Set("Content-Type", "application/json")
-		if err != nil && err != entity.ErrNotFound {
+		if err != nil && err != organizationEntity.ErrNotFound {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(errorMessage))
 			return

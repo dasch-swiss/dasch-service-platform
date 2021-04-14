@@ -17,8 +17,7 @@
 package event
 
 import (
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
-	"time"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 )
 
 // implementation of marker interface to make sure, that event structs can only
@@ -32,46 +31,52 @@ func (e UserFamilyNameChanged) isEvent() {}
 
 //UserCreated event
 type UserCreated struct {
-	ID         entity.ID `json:"id"`
-	Username   string    `json:"username"`
-	Email      string    `json:"email"`
-	Password   string    `json:"password"`
-	GivenName  string    `json:"givenName"`
-	FamilyName string    `json:"familyName"`
-	CreatedAt  time.Time `json:"createdAt"`
+	ID         valueobject.Identifier `json:"id"`
+	Username   valueobject.Username   `json:"username"`
+	Email      valueobject.Email      `json:"email"`
+	Password   valueobject.Password   `json:"password"`
+	GivenName  valueobject.GivenName  `json:"givenName"`
+	FamilyName valueobject.FamilyName `json:"familyName"`
+	CreatedAt  valueobject.Timestamp  `json:"createdAt"`
+	CreatedBy  valueobject.Identifier `json:"createdBy"`
 }
 
 //UserUsernameChanged event
 type UserUsernameChanged struct {
-	ID        entity.ID `json:"id"`
-	Username  string    `json:"username"`
-	ChangedAt time.Time `json:"changedAt"`
+	ID        valueobject.Identifier `json:"id"`
+	Username  valueobject.Username   `json:"username"`
+	ChangedAt valueobject.Timestamp  `json:"changedAt"`
+	ChangedBy valueobject.Identifier `json:"changedBy"`
 }
 
 //UserEmailChanged event
 type UserEmailChanged struct {
-	ID        entity.ID `json:"id"`
-	Email     string    `json:"email"`
-	ChangedAt time.Time `json:"changedAt"`
+	ID        valueobject.Identifier `json:"id"`
+	Email     valueobject.Email      `json:"email"`
+	ChangedAt valueobject.Timestamp  `json:"changedAt"`
+	ChangedBy valueobject.Identifier `json:"changedBy"`
 }
 
 //UserPasswordChanged event
 type UserPasswordChanged struct {
-	ID        entity.ID `json:"id"`
-	Password  string    `json:"password"`
-	ChangedAt time.Time `json:"changedAt"`
+	ID        valueobject.Identifier `json:"id"`
+	Password  valueobject.Password   `json:"password"`
+	ChangedAt valueobject.Timestamp  `json:"changedAt"`
+	ChangedBy valueobject.Identifier `json:"changedBy"`
 }
 
 //UserGivenNameChanged event
 type UserGivenNameChanged struct {
-	ID        entity.ID `json:"id"`
-	GivenName string    `json:"givenName"`
-	ChangedAt time.Time `json:"changedAt"`
+	ID        valueobject.Identifier `json:"id"`
+	GivenName valueobject.GivenName  `json:"givenName"`
+	ChangedAt valueobject.Timestamp  `json:"changedAt"`
+	ChangedBy valueobject.Identifier `json:"changedBy"`
 }
 
 //UserFamilyNameChanged event
 type UserFamilyNameChanged struct {
-	ID         entity.ID `json:"id"`
-	FamilyName string    `json:"familyName"`
-	ChangedAt  time.Time `json:"changedAt"`
+	ID         valueobject.Identifier `json:"id"`
+	FamilyName valueobject.FamilyName `json:"familyName"`
+	ChangedAt  valueobject.Timestamp  `json:"changedAt"`
+	ChangedBy  valueobject.Identifier `json:"changedBy"`
 }
