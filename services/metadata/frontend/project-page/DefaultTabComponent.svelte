@@ -28,6 +28,12 @@
 
 <div class=properties>
   {#if dataset}
+    {#if dataset?.content.alternativeTitle}
+    <div class="property-row">
+      <span class=label>Alternative Title</span>
+      <span class=data>{dataset?.content.alternativeTitle}</span>
+    </div>
+    {/if}
   <div class="grid-wrapper">
     <div class="property-row">
       <span class=label>Access</span>
@@ -83,6 +89,11 @@
       <span class=label>Languages</span>
       <span class=data>{dataset?.content.language.join(', ')}</span>
     </div>
+  </div>
+
+  <div class="property-row">
+    <span class=label>How To Cite</span>
+    <span class=data>{dataset?.content.howToCite}</span>
   </div>
 
   <div class="property-row">
