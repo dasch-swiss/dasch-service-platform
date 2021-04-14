@@ -134,6 +134,7 @@
           <div>{findObjectById(o.id).name}</div>
           {/each}
         {/if}
+        <div>{findObjectById(a.agent[0].id)?.jobTitle[0]}</div>
         {:else}
         <div>{findObjectById(a.agent[0].id)?.name}</div>
         {/if}
@@ -192,6 +193,11 @@
   @media screen and (min-width: 576px) {
     .grid-wrapper {
       grid-template-columns: repeat(2, 1fr);
+    }
+  }
+  @media screen and (min-width: 768px) {
+    .grid-wrapper {
+      grid-template-columns: repeat(3, 1fr);
     }
   }
 </style>

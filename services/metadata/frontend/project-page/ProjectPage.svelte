@@ -1,15 +1,10 @@
 <script lang='ts'>
   import { currentProjectMetadata } from '../stores';
-  import AnotherWidget from './AnotherWidget.svelte';
-  import CiteAsWidget from './CiteAsWidget.svelte';
-  import ContactWidget from './ContactWidget.svelte';
-  import DatasetsWidget from './DatasetsWidget.svelte';
+  import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
-  import KeywordsWidget from './KeywordsWidget.svelte';
   import Tab from './Tab.svelte';
 
   export let params = {} as any;
-  const hiddenProjectProps = ['id', 'type', 'contactPoint', 'dataManagementPlan', 'description', 'keywords', 'name'];
 
   let project: any;
   let datasets: any[] = [];
@@ -20,8 +15,8 @@
     const res = await fetch(`http://localhost:3000/projects/${params.id}`)
     const projectMetadata = await res.json();
     currentProjectMetadata.set(projectMetadata);
-    project = $currentProjectMetadata.metadata.find((p) => p.type === 'http://ns.dasch.swiss/repository#Project');
-    datasets = $currentProjectMetadata.metadata.filter((p) => p.type === 'http://ns.dasch.swiss/repository#Dataset');
+    project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
+    datasets = $currentProjectMetadata.metadata.filter((p: any) => p.type === 'http://ns.dasch.swiss/repository#Dataset');
 
     datasets.forEach(d => tabs.push({
       label: d.title,
@@ -98,21 +93,9 @@
       <div class=widget>
         <a href='/'>Get back to projects list</a>
       </div>
-      <!-- <div class=widget>
-        <DatasetsWidget />
-      </div>
       <div class=widget>
-        <CiteAsWidget />
-      </div> -->
-      <div class=widget>
-        <AnotherWidget {project}/>
+        <ProjectWidget {project}/>
       </div>
-      <!-- <div class=widget>
-        <KeywordsWidget />
-      </div> -->
-      <!-- <div class=widget>
-        <ContactWidget />
-      </div> -->
       <div class=widget>
         <DownloadWidget />
       </div>
@@ -124,7 +107,6 @@
   a {
     color: var(--dasch-violet);
   }
-  label {display: inline-block;}
   .container {
     padding: 0 40px;
     display: block;
@@ -136,7 +118,6 @@
     flex-wrap: wrap;
     width: 100%;
   }
-  /* .property-row {flex-direction: row;} */
   .title {
     display: flex;
     flex-direction: row;
@@ -191,6 +172,7 @@
     margin-bottom: 6px;
     padding: 0 10px 10px;
   }
+  .widget:first-child {padding: 10px}
   .expand-button {
     background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
     color: var(--dasch-violet);
