@@ -12,8 +12,8 @@
   const handleSpatialCoverageName = (s) => {
     const regex = /[^/]+\.html/i;
     // return s.split("/")[4].split('.')[0].split("-").join(' ');
-    // return s.substr(s.lastIndexOf('/') + 1).split('.')[0].split("-").join(' ');
-    return s.match(regex)[0].split('.')[0].split("-").join(' ');
+    return s.substr(s.lastIndexOf('/') + 1).split('.')[0].split("-").join(' ');
+    // return s.match(regex)[0].split('.')[0].split("-").join(' ');
   }
 </script>
 

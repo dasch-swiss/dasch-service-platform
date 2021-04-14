@@ -64,7 +64,17 @@
     {#if dataset?.content.documentation}
     <div class="property-row">
       <span class=label>Additional documentation</span>
-      <span class=data>{dataset?.content.documentation}</span>
+      {#if Array.isArray(dataset?.content.documentation)}
+        {#each dataset?.content.documentation as d}
+          {#if d.url}
+          <a class=data href={d.url} target=_>{d.name}</a>
+          {:else if d.match("http")}
+          <a class=data href={d} target=_>{d}</a>
+          {:else}
+          <span class=data>{d}</span>
+          {/if}
+        {/each}
+      {/if}
     </div>
     {/if}
   </div>
@@ -77,7 +87,17 @@
 
   <div class="property-row">
     <span class=label>Abstract</span>
-    <span id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">{dataset?.content.abstract}</span>
+    {#if Array.isArray(dataset?.content.abstract)}
+    <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
+      {#each dataset?.content.abstract as a}
+        {#if a.url}
+        <a class=data href={a.url} target=_>{a.name}</a>
+        {:else}
+        <span>{a}</span>
+        {/if}
+      {/each}
+    </div>
+    {/if}
   </div>
 
   {#if abstractLinesNumber >= 6}
