@@ -23,7 +23,7 @@
     isAbstractExpanded = abstractLinesNumber >= 6 ? false : true;
   });
 
-  console.log(1, dataset)
+  console.log(2, dataset)
 </script>
 
 <div class=properties>
@@ -59,9 +59,9 @@
 <div class="property-row">
   <span class=label>License</span>
   {#if Array.isArray(dataset?.content.license)}
-  {#each dataset?.content.license as l}
-  <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
-  {/each}
+    {#each dataset?.content.license as l}
+    <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
+    {/each}
   {/if}
 </div>
 {#if dataset?.content.documentation}
@@ -82,42 +82,28 @@
 <div class="property-row">
   <span class=label>Attribution</span>
   {#if Array.isArray(dataset?.content.qualifiedAttribution)}
-  {#each dataset?.content.qualifiedAttribution as a}
-  <span class=data style="color: olive">{a.role}</span>
-  {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
-  <span class=data>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</span>
-  {#if findObjectById(a.agent[0].id)?.sameAs}
-  <a class=data href={findObjectById(a.agent[0].id)?.sameAs[0].name} target=_>{findObjectById(a.agent[0].id)?.sameAs[0].name}</a>
-  {/if}
-  {#if findObjectById(a.agent[0].id)?.email}
-  <div class=data>{findObjectById(a.agent[0].id)?.email[0]}</div>
-  {/if}
-  {#if Array.isArray(findObjectById(a.agent[0].id)?.memberOf)}
-  {#each findObjectById(a.agent[0].id)?.memberOf as o}
-  <span>{findObjectById(o.id).name}</span>
-  {/each}
-  {/if}
-  {:else}
-  <span>{findObjectById(a.agent[0].id)?.name}</span>
-  {/if}
-  <br /><br />
-  {/each}
+    {#each dataset?.content.qualifiedAttribution as a}
+    <span class=data style="color: olivedrab">{a.role}</span>
+      {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
+      <span class=data>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</span>
+      {#if findObjectById(a.agent[0].id)?.sameAs}
+      <a class=data href={findObjectById(a.agent[0].id)?.sameAs[0].name} target=_>{findObjectById(a.agent[0].id)?.sameAs[0].name}</a>
+      {/if}
+      {#if findObjectById(a.agent[0].id)?.email}
+      <div class=data>{findObjectById(a.agent[0].id)?.email[0]}</div>
+      {/if}
+      {#if Array.isArray(findObjectById(a.agent[0].id)?.memberOf)}
+        {#each findObjectById(a.agent[0].id)?.memberOf as o}
+        <span>{findObjectById(o.id).name}</span>
+        {/each}
+      {/if}
+      {:else}
+      <span>{findObjectById(a.agent[0].id)?.name}</span>
+      {/if}
+    <br /><br />
+    {/each}
   {/if}
 </div>
-  <!-- {#each Object.entries(dataset.content) as [key, val]}
-  <div class=property-row>
-    {#if key === 'id' || key === 'type'}
-    <span></span>
-    {:else}
-    <span class=label>{key}</span>
-      {#if Array.isArray(val) && val.length > 1 && typeof val[0] === 'string'}
-      <span class=data>{val.join(', ')}</span>
-      {:else}
-      <span class=data>{val}</span>
-      {/if}
-    {/if}
-  </div>
-  {/each} -->
 {/if}
 </div>
 
@@ -138,6 +124,7 @@
     flex: 2;
     margin-bottom: 10px;
     word-break: break-word;
+    width: fit-content;
   }
   .label {
     margin: 10px 0;
