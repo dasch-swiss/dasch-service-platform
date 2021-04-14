@@ -53,7 +53,8 @@
     {#if project?.alternateName}
     <div class="row">
       <h4 class="title">
-        Also known as: {project?.alternateName.join(", ")}
+        Also known as:&nbsp;
+        <span style="color:olivedrab">{project?.alternateName.join(", ")}</span>
       </h4>
     </div>
     {/if}
@@ -140,12 +141,12 @@
     display: flex;
     flex-direction: row;
     flex-basis: 100%;
-    /* flex: 1; */
-    /* justify-content: center; */
-    /* margin-top: 40px; */
     margin-bottom: 0;
     padding: 0 20px;
     /* background-color: deepskyblue; */
+  }
+  h4.title {
+    font-size: 0.8em;
   }
   .column-left, .column-right {
     display: flex;

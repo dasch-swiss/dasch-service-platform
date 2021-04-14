@@ -27,84 +27,92 @@
 </script>
 
 <div class=properties>
-{#if dataset}
-<div class="property-row">
-  <span class=label>Type of Data</span>
-  <span class=data>{dataset?.content.typeOfData.join(', ')}</span>
-</div>
-<div class="property-row">
-  <span class=label>Languages</span>
-  <span class=data>{dataset?.content.language.join(', ')}</span>
-</div>
-{#if dataset.content.dateCreated}
-<div class="property-row">
-  <span class=label>Date Created</span>
-  <span class=data>{dataset?.content.dateCreated}</span>
-</div>
-{/if}
-{#if dataset.content.dateModified}
-<div class="property-row">
-  <span class=label>Date Modified</span>
-  <span class=data>{dataset?.content.dateModified}</span>
-</div>
-{/if}
-<div class="property-row">
-  <span class=label>Access</span>
-  <span class=data>{dataset?.content.conditionsOfAccess}</span>
-</div>
-<div class="property-row">
-  <span class=label>Status</span>
-  <span class=data>{dataset?.content.status}</span>
-</div>
-<div class="property-row">
-  <span class=label>License</span>
-  {#if Array.isArray(dataset?.content.license)}
-    {#each dataset?.content.license as l}
-    <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
-    {/each}
-  {/if}
-</div>
-{#if dataset?.content.documentation}
-<div class="property-row">
-  <span class=label>Additional documentation</span>
-  <span class=data>{dataset?.content.documentation}</span>
-</div>
-{/if}
-<div class="property-row">
-  <span class=label>Abstract</span>
-  <span id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">{dataset?.content.abstract}</span>
-</div>
-
-{#if abstractLinesNumber >= 6}
-<div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
-{/if}
-
-<div class="property-row">
-  <span class=label>Attribution</span>
-  {#if Array.isArray(dataset?.content.qualifiedAttribution)}
-    {#each dataset?.content.qualifiedAttribution as a}
-    <span class=data style="color: olivedrab">{a.role}</span>
-      {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
-      <span class=data>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</span>
-      {#if findObjectById(a.agent[0].id)?.sameAs}
-      <a class=data href={findObjectById(a.agent[0].id)?.sameAs[0].name} target=_>{findObjectById(a.agent[0].id)?.sameAs[0].name}</a>
-      {/if}
-      {#if findObjectById(a.agent[0].id)?.email}
-      <div class=data>{findObjectById(a.agent[0].id)?.email[0]}</div>
-      {/if}
-      {#if Array.isArray(findObjectById(a.agent[0].id)?.memberOf)}
-        {#each findObjectById(a.agent[0].id)?.memberOf as o}
-        <span>{findObjectById(o.id).name}</span>
+  {#if dataset}
+  <div class="grid-wrapper">
+    <div class="property-row">
+      <span class=label>Access</span>
+      <span class=data>{dataset?.content.conditionsOfAccess}</span>
+    </div>
+    <div class="property-row">
+      <span class=label>Status</span>
+      <span class=data>{dataset?.content.status}</span>
+    </div>
+    {#if dataset.content.dateCreated}
+    <div class="property-row">
+      <span class=label>Date Created</span>
+      <span class=data>{dataset?.content.dateCreated}</span>
+    </div>
+    {/if}
+    {#if dataset.content.dateModified}
+    <div class="property-row">
+      <span class=label>Date Modified</span>
+      <span class=data>{dataset?.content.dateModified}</span>
+    </div>
+    {/if}
+    <div class="property-row">
+      <span class=label>License</span>
+      {#if Array.isArray(dataset?.content.license)}
+        {#each dataset?.content.license as l}
+        <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
         {/each}
       {/if}
-      {:else}
-      <span>{findObjectById(a.agent[0].id)?.name}</span>
-      {/if}
-    <br /><br />
-    {/each}
+    </div>
+    <div class="property-row">
+      <span class=label>Type of Data</span>
+      <span class=data>{dataset?.content.typeOfData.join(', ')}</span>
+    </div>
+    {#if dataset?.content.documentation}
+    <div class="property-row">
+      <span class=label>Additional documentation</span>
+      <span class=data>{dataset?.content.documentation}</span>
+    </div>
+    {/if}
+  </div>
+  <div class="grid-wrapper" style="grid-template-columns: repeat(1, 1fr)">
+    <div class="property-row">
+      <span class=label>Languages</span>
+      <span class=data>{dataset?.content.language.join(', ')}</span>
+    </div>
+  </div>
+
+  <div class="property-row">
+    <span class=label>Abstract</span>
+    <span id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">{dataset?.content.abstract}</span>
+  </div>
+
+  {#if abstractLinesNumber >= 6}
+  <div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
   {/if}
-</div>
-{/if}
+
+  <span class=label>Attributions</span>
+  <div class="grid-wrapper">
+    {#if Array.isArray(dataset?.content.qualifiedAttribution)}
+      {#each dataset?.content.qualifiedAttribution as a}
+      <div class="attribution">
+        <div style="color: olivedrab">{a.role}</div>
+        {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
+        <div>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</div>
+        {#if findObjectById(a.agent[0].id)?.sameAs}
+        <a href={findObjectById(a.agent[0].id)?.sameAs[0].name} target=_>{findObjectById(a.agent[0].id)?.sameAs[0].name}</a>
+        {/if}
+        {#if findObjectById(a.agent[0].id)?.email}
+        <div>{findObjectById(a.agent[0].id)?.email[0]}</div>
+        {/if}
+        {#if Array.isArray(findObjectById(a.agent[0].id)?.memberOf)}
+          {#each findObjectById(a.agent[0].id)?.memberOf as o}
+          <div>{findObjectById(o.id).name}</div>
+          {/each}
+        {/if}
+        {:else}
+        <div>{findObjectById(a.agent[0].id)?.name}</div>
+        {/if}
+        <br />
+      </div>
+      {/each}
+    {/if}
+  </div>
+
+  {/if}
 </div>
 
 <style>
@@ -114,7 +122,6 @@
   .property-row {
     display: flex;
     flex-direction: column;
-    /* flex-wrap: wrap; */
     width: 100%;
   }
   .label, .data {
@@ -147,9 +154,13 @@
     padding: 2px 0;
     cursor: pointer;
   }
-  @media screen and (min-width: 992px) {
-    .property-row {
-      /* flex-direction: row; */
+  .grid-wrapper {
+    display: grid;
+    grid-template-columns: repeat(1, 1fr);
+  }
+  @media screen and (min-width: 576px) {
+    .grid-wrapper {
+      grid-template-columns: repeat(2, 1fr);
     }
   }
 </style>
