@@ -1,47 +1,40 @@
-<script lang="ts">
-import Tile from "./Tile.svelte";
-import Category from "./Category.svelte";
-import { onMount } from "svelte";
-import type { PaginationData, Project } from "./interfaces";
-import Pagination from "./Pagination.svelte";
-import { getProjects, pagedResults, pages } from "./stores";
+<script lang='ts'>
+  import Tile from './Tile.svelte';
+  import Category from './Category.svelte';
+  import { onMount } from 'svelte';
+  import Pagination from './Pagination.svelte';
+  import { getProjectsMetadata, pagedResults } from '../stores';
 
-let projects: Project[];
-let message = 'Loading...';
-let pagination: PaginationData;
+  let message = 'Loading...';
 
-setTimeout(() => {
-  const noData = 'No data retrived. Please check the connection and retry.';
-  const noProject = 'No projects found.'
-    message = projects && projects.length ? noData : noProject;
-  }, 3000);
- 
-onMount(async () => {
-  await getProjects(1);
-
-  pagedResults.subscribe(r => projects = r);
-
-  pages.subscribe(p => pagination = p);
-});
+  setTimeout(() => {
+    const noData = 'No data retrived. Please check the connection and retry.';
+    const noProject = 'No projects found.'
+      message = $pagedResults && $pagedResults.length ? noData : noProject;
+    }, 3000);
+  
+  onMount(async () => {
+    await getProjectsMetadata(1);
+  });
 </script>
 
 <nav>
   <div class="category-container hidden m-inline-block">
-    <Category bind:searched={projects} />
+    <Category bind:searched={$pagedResults} />
   </div>
 </nav>
 <main>
   <div class=tile-container>
-    {#if projects && projects.length}
-      {#each projects as project}
-        <Tile project={project}/>
+    {#if $pagedResults && $pagedResults.length}
+      {#each $pagedResults as project}
+        <Tile projectMetadata={project}/>
       {/each}
     {:else}
       <p>{message}</p>
     {/if}
   </div>
-  {#if projects && projects.length}
-    <Pagination pagination={pagination} />
+  {#if $pagedResults && $pagedResults.length}
+    <Pagination />
   {/if}
 </main>
 

@@ -94,3 +94,12 @@ go_test(
     deps = ["@com_github_stretchr_testify//assert"],
 )
 ```
+
+## Docs
+Three make commands are available for the docs
+
+`make docs-build` - builds the docs
+
+`make docs-serve` - serves the docs locally; useful for when you want to work on the docs locally
+
+`make docs-publish` - publishes the docs to Github Pages which can then be accessed via https://dasch-swiss.github.io/dasch-service-platform

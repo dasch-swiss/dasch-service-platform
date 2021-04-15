@@ -1,29 +1,26 @@
 <script lang="ts">
-  import type { PaginationData } from "./interfaces";
-  import { getProjects, pagedResults } from "./stores";
+  import { getProjectsMetadata, pagedResults, pagination } from '../stores';
 
-  export let pagination = {} as PaginationData;
-  let currentPage = 1;
   const baseResultsRange = [1, 9];
+  let currentPage = 1;
   let currentResults = baseResultsRange;
 
   let handlePagination = (event: MouseEvent) => {
-    let id = (event.target as HTMLElement).id;
+    const id = (event.target as HTMLElement).id;
     if (currentPage === Number(id)) {
       return;
     } else if (id === 'first') {
       currentPage = 1;
     } else if (id === 'last') {
-      currentPage = pagination.totalPages;
+      currentPage = $pagination.totalPages;
     } else {
       currentPage = Number(id);
     }
     
     document.querySelector('.active').classList.remove('active');
     document.getElementById((currentPage).toString()).classList.add('active');
-    getProjects(currentPage);
+    getProjectsMetadata(currentPage);
     currentResults = baseResultsRange.map(v => v + ((currentPage - 1) * baseResultsRange[1]));
-    console.log(currentPage, currentResults)
   }
 </script>
 
@@ -34,19 +31,19 @@
         Showing
         <span>{currentResults[0]}</span>
         to
-        <span>{currentResults[1] > pagination.totalCount ? pagination.totalCount : currentResults[1]}</span>
+        <span>{currentResults[1] > $pagination.totalCount ? $pagination.totalCount : currentResults[1]}</span>
         of
-        <span>{pagination.totalCount}</span>
+        <span>{$pagination.totalCount}</span>
         results
       </p>
     </div>
   </div>
   <div class="pagination">
     <button on:click={handlePagination} id="first" title="First Page" disabled={currentPage === 1}>&laquo;</button>
-    {#each Array(pagination.totalPages) as _, i}
+    {#each Array($pagination.totalPages) as _, i}
       <button on:click={handlePagination} id={(i + 1).toString()} class={i === 0 ? 'active' : ''}>{i + 1}</button>
     {/each}
-    <button on:click={handlePagination} id="last" title="Last Page" disabled={currentPage === pagination.totalPages}>&raquo;</button>
+    <button on:click={handlePagination} id="last" title="Last Page" disabled={currentPage === $pagination.totalPages}>&raquo;</button>
   </div>
 </div>
 

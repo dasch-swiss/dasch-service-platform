@@ -10,8 +10,9 @@ export interface PaginationData {
   totalPages: number;
 }
 
-export interface Project {
+export interface ProjectMetadata {
   description: string;
   id: string;
   name: string;
+  metadata: any[];
 }

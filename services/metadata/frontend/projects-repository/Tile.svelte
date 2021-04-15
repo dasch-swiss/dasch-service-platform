@@ -1,21 +1,21 @@
 <script lang="ts">
-import type { Project } from "./interfaces";
-import { currentProject } from "./stores";
+  import type { ProjectMetadata } from '../interfaces';
+  import { currentProjectMetadata } from '../stores';
   
-  export let project: Project;
+  export let projectMetadata: ProjectMetadata;
 
-  let setCurrentProject = () => {
-    currentProject.set(project);
+  const setCurrentProject = () => {
+    currentProjectMetadata.set(projectMetadata);
   }
 </script>
 
 <section>
   <div class=header>
-    <h5>{ project.name }</h5>
+    <h5>{ projectMetadata.name }</h5>
   </div>
-  <div class=content>{ project.description }</div>
+  <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <a on:click={setCurrentProject} href="#/project/{project.id}">Read more</a>
+    <a on:click={setCurrentProject} href="#/project/{ projectMetadata.id }">Read more</a>
   </div>
 </section>
 
