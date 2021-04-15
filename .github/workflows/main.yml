@@ -41,12 +41,15 @@ jobs:
             ${{ runner.OS }}-build-
             ${{ runner.OS }}-
       - name: Build everything
-        run: make test
+        run: |
+          make test
+          make docs-build
       - name: Publish to Dockerhub
         if: github.event_name == 'release' && startsWith(github.ref, 'refs/tags')
         run: |
           echo ${{ secrets.DOCKER_HUB_TOKEN }} | docker login -u ${{ secrets.DOCKER_USER }} --password-stdin
           make docker-publish
+          make docs-publish
 
   release-please:
     name: Prepare next release

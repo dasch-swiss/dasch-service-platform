@@ -65,3 +65,12 @@ Metadata of a specific project can be retrieved by getting `/projects/<id>`. (E.
 Full text search can be performed by adding `?q=<search-query>` (e.g. `http://localhost:3000/projects?q=agriculture`).
 
 `json-server` also supports updating and deleting data. For more capabilities of `json-server`, see the [the docs](https://github.com/typicode/json-server).
+
+## Docs
+Three make commands are available for the docs
+
+`make docs-build` - builds the docs
+
+`make docs-serve` - serves the docs locally; useful for when you want to work on the docs locally
+
+`make docs-publish` - publishes the docs to Github Pages which can then be accessed via https://dasch-swiss.github.io/dasch-service-platform
