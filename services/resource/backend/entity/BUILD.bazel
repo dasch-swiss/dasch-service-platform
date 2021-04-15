@@ -17,9 +17,9 @@ go_library(
 
 go_test(
     name = "organization_test",
-    srcs = ["organization_test.go"],
     size = "small",
-    visibility = ["//visibility:public"],
+    srcs = ["organization_test.go"],
     embed = [":entity"],
+    visibility = ["//visibility:public"],
     deps = ["@com_github_stretchr_testify//assert"],
 )

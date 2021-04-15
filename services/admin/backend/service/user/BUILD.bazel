@@ -16,16 +16,16 @@ go_library(
 
 go_test(
     name = "user_test",
+    size = "small",
     srcs = [
         "inmem_test.go",
-        "user_test.go"
+        "user_test.go",
     ],
-    visibility = ["//visibility:private"],
-    size = "small",
     embed = [":user"],
+    visibility = ["//visibility:private"],
     deps = [
         "//services/admin/backend/event",
         "@com_github_gofrs_uuid//:go_default_library",
-        "@com_github_stretchr_testify//assert"
+        "@com_github_stretchr_testify//assert",
     ],
 )

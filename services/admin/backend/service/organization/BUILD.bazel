@@ -16,16 +16,16 @@ go_library(
 
 go_test(
     name = "service_test",
+    size = "small",
     srcs = [
         "inmem_test.go",
-        "service_test.go"
+        "service_test.go",
     ],
-    visibility = ["//visibility:public"],
-    size = "small",
     embed = [":organization"],
+    visibility = ["//visibility:public"],
     deps = [
         "//services/admin/backend/entity",
         "//services/admin/backend/entity/organization",
-        "@com_github_stretchr_testify//assert"
+        "@com_github_stretchr_testify//assert",
     ],
 )

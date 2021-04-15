@@ -4,7 +4,7 @@ go_library(
     name = "user",
     srcs = [
         "error.go",
-        "user.go"
+        "user.go",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/user",
     visibility = ["//visibility:public"],
@@ -17,11 +17,11 @@ go_library(
 
 go_test(
     name = "user_test",
-    srcs = [
-        "user_test.go"
-    ],
     size = "small",
-    visibility = ["//visibility:public"],
+    srcs = [
+        "user_test.go",
+    ],
     embed = [":user"],
+    visibility = ["//visibility:public"],
     deps = ["@com_github_stretchr_testify//assert"],
 )
