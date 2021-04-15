@@ -80,7 +80,15 @@ func TestUser_Save(t *testing.T) {
 	}
 
 	// check if our initially created user is the same as the user created from events
-	assert.Equal(t, expectedUser, userFromEvents)
+	assert.Equal(t, expectedUser.ID(), userFromEvents.ID())
+	assert.Equal(t, expectedUser.AggregateType(), userFromEvents.AggregateType())
+	assert.Equal(t, expectedUser.Username(), userFromEvents.Username())
+	assert.Equal(t, expectedUser.Email(), userFromEvents.Email())
+	assert.Equal(t, expectedUser.Password(), userFromEvents.Password())
+	assert.Equal(t, expectedUser.GivenName(), userFromEvents.GivenName())
+	assert.Equal(t, expectedUser.FamilyName(), userFromEvents.FamilyName())
+	assert.Equal(t, expectedUser.CreatedAt().Unix(), userFromEvents.CreatedAt().Unix())
+	assert.Equal(t, expectedUser.CreatedBy(), userFromEvents.CreatedBy())
 }
 
 func TestUser_Load(t *testing.T) {

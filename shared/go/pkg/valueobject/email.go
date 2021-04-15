@@ -67,6 +67,11 @@ func (v *Email) UnmarshalText(b []byte) error {
 	return err
 }
 
+//ZeroEmail represents the zero value for an email value object.
+func ZeroEmail() Email {
+	return Email{}
+}
+
 // Equals checks that two email addresses are the same.
 func (v Email) Equals(value Value) bool {
 	otherEmail, ok := value.(Email)

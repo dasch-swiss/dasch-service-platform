@@ -17,6 +17,8 @@
 package valueobject
 
 import (
+	"fmt"
+	"strconv"
 	"time"
 )
 
@@ -30,9 +32,19 @@ func NewTimestamp() Timestamp {
 	return Timestamp{value: v}
 }
 
-//AsUUID returns the UUID of the identifier.
+//NewTimestampFromUnix creates a new timestamp value object for the supplied unix time in seconds.
+func NewTimestampFromUnix(sec int64) Timestamp{
+	return Timestamp{value: time.Unix(sec, 0)}
+}
+
+//Time returns the Time of the value.
 func (v Timestamp) Time() time.Time {
 	return v.value
+}
+
+//Unix returns the Unix time of the value in number of seconds.
+func (v Timestamp) Unix() int64 {
+	return v.value.Unix()
 }
 
 // String implements the fmt.Stringer interface.
@@ -42,33 +54,39 @@ func (v Timestamp) String() string {
 
 // MarshalText used to serialize the object
 func (v Timestamp) MarshalText() ([]byte, error) {
-	return v.value.MarshalText()
+	ts := v.value.UnixNano()
+	stamp := fmt.Sprint(ts)
+	return []byte(stamp), nil
 }
 
 // UnmarshalText used to deserialize the object and returns an error if it's invalid.
 func (v *Timestamp) UnmarshalText(b []byte) error {
-	var unmarshalledValue time.Time
-	err := unmarshalledValue.UnmarshalText(b)
+	ts, err := strconv.Atoi(string(b))
 	if err != nil {
 		return err
 	}
-	*v = Timestamp{value: unmarshalledValue}
+
+	// we marshal it as nanoseconds
+	*v = NewTimestampFromUnix(int64(ts))
 	return nil
 }
 
 // MarshalJSON used to serialize the object
 func (v Timestamp) MarshalJSON() ([]byte, error) {
-	return v.value.MarshalJSON()
+	ts := v.value.Unix()
+	stamp := fmt.Sprint(ts)
+	return []byte(stamp), nil
 }
 
 // UnmarshalJSON used to deserialize the object and returns an error if it's invalid.
 func (v *Timestamp) UnmarshalJSON(b []byte) error {
-	var unmarshalledValue time.Time
-	err := unmarshalledValue.UnmarshalJSON(b)
+	ts, err := strconv.Atoi(string(b))
 	if err != nil {
 		return err
 	}
-	*v = Timestamp{value: unmarshalledValue}
+
+	// we marshal it as nanoseconds
+	*v = NewTimestampFromUnix(int64(ts))
 	return nil
 }
 
