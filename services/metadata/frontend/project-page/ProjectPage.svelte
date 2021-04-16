@@ -63,23 +63,26 @@
       <!-- TODO: if accepted and reused consder move it to separate component -->
       <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
 
-      <div class={isExpanded ? "" : "hidden"}>
-        {#if project?.publication && Array.isArray(project?.publication)}
-        <div class="property-row">
-          <span class=label>Publications</span>
-          {#each project?.publication as p}
+      {#if project?.publication && Array.isArray(project?.publication)}
+      <div class="property-row">
+        <span class=label>Publications</span>
+        {#each project?.publication as p, i}
+          {#if i > 1}
+          <span class="{isExpanded ? "data" : "hidden"}">{p}</span>
+          {:else}
           <span class=data>{p}</span>
-          {/each}
-        </div>
-        {/if}
-        <div class="property-row">
-          <span class=label>DSP Internal Shortcode</span>
-          <span class=data>{project?.shortcode}</span>
-        </div>
-        <div class="property-row">
-          <span class=label>Data Management Plan</span>
-          <span class=data>{project?.dataManagementPlan ? "available" : "unavailable"}</span>
-        </div>
+          {/if}
+        {/each}
+      </div>
+      <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
+      {/if}
+      <div class="property-row">
+        <span class=label>DSP Internal Shortcode</span>
+        <span class=data>{project?.shortcode}</span>
+      </div>
+      <div class="property-row">
+        <span class=label>Data Management Plan</span>
+        <span class=data>{project?.dataManagementPlan ? "available" : "unavailable"}</span>
       </div>
 
       {#await getProjectMetadata() then go}
@@ -171,6 +174,7 @@
     background-color: var(--dasch-grey-3);
     margin-bottom: 6px;
     padding: 0 10px 10px;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.3);
   }
   .widget:first-child {padding: 10px}
   .expand-button {

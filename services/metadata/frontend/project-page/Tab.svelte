@@ -26,10 +26,11 @@
   .box {
     margin-bottom: 10px;
     padding: 0 10px;
-    /* border: 1px solid #dee2e6; */
+    border: 1px solid #dee2e6;
     border-radius: 0 0 .5rem .5rem;
     border-top: 0;
     overflow-wrap: break-word;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.3);
   }
   ul {
     display: flex;
