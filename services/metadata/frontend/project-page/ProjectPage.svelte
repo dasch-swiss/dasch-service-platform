@@ -1,4 +1,5 @@
 <script lang='ts'>
+  import { tick } from 'svelte';
   import { currentProjectMetadata } from '../stores';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
@@ -10,6 +11,8 @@
   let datasets: any[] = [];
   let tabs = [] as any[];
   let isExpanded: boolean;
+  let isDescriptionExpanded: boolean;
+  let descriptionLinesNumber: number;
 
   const getProjectMetadata = async () => {
     const res = await fetch(`http://localhost:3000/projects/${params.id}`)
@@ -23,6 +26,9 @@
       value: datasets.indexOf(d),
       content: d
     }));
+
+    await tick();
+    getDivHeight();
 
     console.log(2, projectMetadata, datasets, tabs)
   };
@@ -38,6 +44,16 @@
   const toggleExpand = () => {
     isExpanded = !isExpanded;
   };
+
+  const getDivHeight = () => {
+    const el = document.getElementById('description');
+    const lineHeight = parseInt(window.getComputedStyle(el).getPropertyValue('line-height'));
+    const divHeight = el.offsetHeight;
+    descriptionLinesNumber = divHeight / lineHeight;
+    isDescriptionExpanded = descriptionLinesNumber >= 6 ? false : true;
+    console.log(divHeight)
+  }
+
 </script>
 
 <div class="container">
@@ -58,10 +74,12 @@
     <div class="column-left">
       <div class="property-row">
         <span class=label>Description</span>
-        <span class="description {isExpanded ? '' : 'description-short'}">{project?.description}</span>
+        <div id=description class="data {isExpanded ? '' : 'description-short'}">{project?.description}</div>
       </div>
       <!-- TODO: if accepted and reused consder move it to separate component -->
+      {#if descriptionLinesNumber >= 6}
       <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
+      {/if}
 
       {#if project?.publication && Array.isArray(project?.publication)}
       <div class="property-row">
@@ -74,7 +92,11 @@
           {/if}
         {/each}
       </div>
+
+      {#if project?.publication.length > 2}
       <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
+      {/if}
+
       {/if}
       <div class="property-row">
         <span class=label>DSP Internal Shortcode</span>
@@ -167,6 +189,7 @@
     -webkit-box-orient: vertical;
     overflow: hidden;
     height: 45x;
+    line-height: 18px;
   }
   .widget {
     border: 1px solid #cdcdcd;
