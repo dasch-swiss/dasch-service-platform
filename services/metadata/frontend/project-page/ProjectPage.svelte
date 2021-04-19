@@ -1,5 +1,6 @@
 <script lang='ts'>
   import { tick } from 'svelte';
+  import { pop } from "svelte-spa-router";
   import { currentProjectMetadata } from '../stores';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
@@ -30,7 +31,7 @@
     await tick();
     getDivHeight();
 
-    console.log(2, project.discipline)
+    // console.log(2, projectMetadata, project, tabs)
   };
 
   const handleData = (val: any) => {
@@ -106,7 +107,7 @@
     </div>
     <div class="column-right">
       <div class=widget>
-        <a href='/'>Get back to projects list</a>
+        <button on:click={() => {pop()}}>Get back to projects list</button>
       </div>
       <div class=widget>
         <ProjectWidget {project}/>

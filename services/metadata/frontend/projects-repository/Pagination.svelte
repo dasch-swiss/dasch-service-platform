@@ -1,9 +1,9 @@
 <script lang="ts">
-  import { getProjectsMetadata, pagedResults, pagination } from '../stores';
+  import { getProjectsMetadata, pagedResults, pagination, resultsState } from '../stores';
 
   const baseResultsRange = [1, 9];
-  let currentPage = 1;
-  let currentResults = baseResultsRange;
+  let currentPage = Number(new URLSearchParams($resultsState).get('projects?_page'));
+  let currentResults = baseResultsRange.map(v => v + ((currentPage - 1) * baseResultsRange[1]));
 
   let handlePagination = (event: MouseEvent) => {
     const id = (event.target as HTMLElement).id;
@@ -41,7 +41,7 @@
   <div class="pagination">
     <button on:click={handlePagination} id="first" title="First Page" disabled={currentPage === 1}>&laquo;</button>
     {#each Array($pagination.totalPages) as _, i}
-      <button on:click={handlePagination} id={(i + 1).toString()} class={i === 0 ? 'active' : ''}>{i + 1}</button>
+      <button on:click={handlePagination} id={(i + 1).toString()} class={i + 1 === currentPage ? 'active' : ''}>{i + 1}</button>
     {/each}
     <button on:click={handlePagination} id="last" title="Last Page" disabled={currentPage === $pagination.totalPages}>&raquo;</button>
   </div>

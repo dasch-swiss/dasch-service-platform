@@ -1,12 +1,8 @@
 <script lang="ts">
+  import { replace } from 'svelte-spa-router';
   import type { ProjectMetadata } from '../interfaces';
-  import { currentProjectMetadata } from '../stores';
   
   export let projectMetadata: ProjectMetadata;
-
-  const setCurrentProject = () => {
-    currentProjectMetadata.set(projectMetadata);
-  }
 </script>
 
 <section>
@@ -15,7 +11,7 @@
   </div>
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <a on:click={setCurrentProject} href="#/project/{ projectMetadata.id }">Read more</a>
+    <button on:click={() => replace(`#/project/${projectMetadata.id}`)}>Read more</button>
   </div>
 </section>
 
