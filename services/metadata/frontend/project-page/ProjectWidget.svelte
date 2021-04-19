@@ -19,6 +19,12 @@
 
 <!-- <h3 class=widget-heading>Project highlights</h3> -->
 
+<div class=label>DSP Internal Shortcode</div>
+<div class=data>{project?.shortcode}</div>
+
+<div class=label>Data Management Plan</div>
+<div class=data>{project?.dataManagementPlan ? "available" : "unavailable"}</div>
+
 <div class=label>Discipline</div>
 {#if Array.isArray(project?.discipline)}
   {#each project?.discipline as d}
@@ -40,7 +46,6 @@
     {/if}
   {/each}
 {/if}
-
 
 <div class=label>Spatial Coverage</div>
 {#if Array.isArray(project?.spatialCoverage)}

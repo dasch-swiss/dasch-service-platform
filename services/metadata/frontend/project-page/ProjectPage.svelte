@@ -51,9 +51,7 @@
     const divHeight = el.offsetHeight;
     descriptionLinesNumber = divHeight / lineHeight;
     isDescriptionExpanded = descriptionLinesNumber >= 6 ? false : true;
-    console.log(divHeight)
   }
-
 </script>
 
 <div class="container">
@@ -98,14 +96,6 @@
       {/if}
 
       {/if}
-      <div class="property-row">
-        <span class=label>DSP Internal Shortcode</span>
-        <span class=data>{project?.shortcode}</span>
-      </div>
-      <div class="property-row">
-        <span class=label>Data Management Plan</span>
-        <span class=data>{project?.dataManagementPlan ? "available" : "unavailable"}</span>
-      </div>
 
       {#await getProjectMetadata() then go}
       <div class="tabs">

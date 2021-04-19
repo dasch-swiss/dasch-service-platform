@@ -21,13 +21,15 @@
 
 <style>
   section {
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
+    border: 1px solid #cdcdcd;
     border-radius: 5px;
     background-color: #fff;
     padding: 5px 5vw;
     margin: 5px;
     width: 75vw;
     float: left;
+    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.3);
   }
   .header{
     height: 30px;
