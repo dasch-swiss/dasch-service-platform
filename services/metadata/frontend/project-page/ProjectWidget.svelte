@@ -29,7 +29,13 @@
 {#if Array.isArray(project?.discipline)}
   {#each project?.discipline as d}
     {#if typeof d === "string"}
-    <div class="data">{d}</div>
+      {#if d.split(" ")[0].match(/^[0-9]*$/)}
+        <a href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{d}</a>
+      {:else if d.match("http")}
+        <a href={d} target=_>{d}</a>
+      {:else}
+        <div class="data">{d}</div>
+      {/if}
     {:else}
     <a class=data href={d.url} target=_>{d.name}</a>
     {/if}
