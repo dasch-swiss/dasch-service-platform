@@ -8,17 +8,13 @@ export const pagedResults = writable([]);
 export const currentProjectMetadata = writable(undefined);
 
 let query: string;
-export const currentPage = writable(undefined as number);
-export const currentResultsRange = writable(undefined as number[]);
 
 export async function getProjectsMetadata(page: number, q?: string): Promise<void> {
   const baseUrl = 'http://localhost:3000/';
   const baseResultsRange = [1, 9];
   let route: string;
-
-  currentResultsRange.set(baseResultsRange.map(v => v + ((page - 1) * baseResultsRange[1])));
-  currentPage.set(page);
-
+  let currentResultsRange = baseResultsRange.map(v => v + ((page - 1) * baseResultsRange[1]));
+  
   if (q || query) {
     if (q) {
       query = q;
@@ -38,7 +34,7 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
       const totalCount = parseInt(r.headers.get('X-Total-Count'));
       const totalPages = Math.floor(totalCount/baseResultsRange[1]) + 1;
       // console.log(totalCount, totalPages)
-      pagination.set({totalCount, totalPages});
+      pagination.set({currentPage: page, currentResultsRange, totalCount, totalPages});
       return r.json();
     })
     .then(data => {pagedResults.set(data), console.log(data)})

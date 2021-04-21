@@ -1,22 +1,22 @@
 <script lang="ts">
-  import { getProjectsMetadata, currentPage, pagedResults, pagination, currentResultsRange } from '../stores';
+  import { getProjectsMetadata, pagedResults, pagination } from '../stores';
 
   let handlePagination = (event: MouseEvent) => {
     const id = (event.target as HTMLElement).id;
-    if ($currentPage === Number(id)) {
+    if ($pagination.currentPage === Number(id)) {
       return;
     } else if (id === 'first') {
-      currentPage.set(1);
+      $pagination.currentPage = 1;
     } else if (id === 'last') {
-      currentPage.set($pagination.totalPages)
+      $pagination.currentPage = $pagination.totalPages;
     } else {
-      currentPage.set(Number(id))
+      $pagination.currentPage = Number(id);
     }
     
     document.querySelector('.active').classList.remove('active');
-    document.getElementById(($currentPage).toString()).classList.add('active');
-    console.log('curr',$currentPage);
-    getProjectsMetadata($currentPage);
+    document.getElementById(($pagination.currentPage).toString()).classList.add('active');
+    console.log('curr',$pagination.currentPage);
+    getProjectsMetadata($pagination.currentPage);
   }
 </script>
 
@@ -25,9 +25,9 @@
     <div>
       <p>
         Showing
-        <span>{$currentResultsRange[0]}</span>
+        <span>{$pagination.currentResultsRange[0]}</span>
         to
-        <span>{$currentResultsRange[1] > $pagination.totalCount ? $pagination.totalCount : $currentResultsRange[1]}</span>
+        <span>{$pagination.currentResultsRange[1] > $pagination.totalCount ? $pagination.totalCount : $pagination.currentResultsRange[1]}</span>
         of
         <span>{$pagination.totalCount}</span>
         results
@@ -35,11 +35,11 @@
     </div>
   </div>
   <div class="pagination">
-    <button on:click={handlePagination} id="first" title="First Page" disabled={$currentPage === 1}>&laquo;</button>
+    <button on:click={handlePagination} id="first" title="First Page" disabled={$pagination.currentPage === 1}>&laquo;</button>
     {#each Array($pagination.totalPages) as _, i}
-      <button on:click={handlePagination} id={(i + 1).toString()} class={i + 1 === $currentPage ? 'active' : ''}>{i + 1}</button>
+      <button on:click={handlePagination} id={(i + 1).toString()} class={i + 1 === $pagination.currentPage ? 'active' : ''}>{i + 1}</button>
     {/each}
-    <button on:click={handlePagination} id="last" title="Last Page" disabled={$currentPage === $pagination.totalPages}>&raquo;</button>
+    <button on:click={handlePagination} id="last" title="Last Page" disabled={$pagination.currentPage === $pagination.totalPages}>&raquo;</button>
   </div>
 </div>
 
