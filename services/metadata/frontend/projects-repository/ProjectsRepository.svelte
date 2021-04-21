@@ -30,7 +30,7 @@
 
 <nav>
   <div class="category-container hidden m-inline-block">
-    <Category bind:searched={$pagedResults} />
+    <Category />
   </div>
 </nav>
 <main>
