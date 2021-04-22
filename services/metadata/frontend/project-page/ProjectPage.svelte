@@ -52,7 +52,7 @@
     const divHeight = el.offsetHeight;
     descriptionLinesNumber = divHeight / lineHeight;
     isDescriptionExpanded = descriptionLinesNumber >= 6 ? false : true;
-  }
+  };
 </script>
 
 <div class="container">
@@ -107,9 +107,6 @@
     </div>
     <div class="column-right">
       <div class=widget>
-        <button on:click={() => {pop()}}>Get back to projects list</button>
-      </div>
-      <div class=widget>
         <ProjectWidget {project}/>
       </div>
       <div class=widget>
@@ -117,9 +114,37 @@
       </div>
     </div>
   </div>
+  <div class=row>
+    <button on:click={() => {window.scrollTo(0,0)}} title="get back to the top">
+      <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+      </svg>
+    </button>
+    <button on:click={() => {pop()}} title="get back to the projects list">
+      <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
+    </button>
+  </div>
 </div>
 
 <style>
+    button {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+    background-color: var(--dasch-grey-3);
+    /* border: none; */
+    border: 1px solid #cdcdcd;
+    margin: 0 -10px 20px 20px;
+    padding: 10px;
+    /* color: deeppink; */
+    color: var(--lead);
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  }
+  button:hover {
+    color: #fff;
+    /* background-color: deeppink; */
+    background-color: var(--lead);
+  }
   a {
     color: var(--lead);
   }

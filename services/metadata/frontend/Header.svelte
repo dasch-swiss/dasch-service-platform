@@ -142,11 +142,11 @@
     color: var(--lead);
     background-color: var(--cl-transparent-dark);
   }
-  .icon {
+  /* .icon {
     width: 1.5rem;
     height: 1.5rem;
     margin: 0.25rem;
-  }
+  } */
   .menu {
     background-color: var(--cl-background-light);
   }
