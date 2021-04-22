@@ -30,7 +30,7 @@
     window.getSelection().addRange(text);
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
-  }
+  };
 
   console.log(2, dataset)
 </script>
@@ -192,6 +192,7 @@
     top: 10px;
     /* color: var(--lead); */
     color: deeppink;
+    z-index: 0;
   }
   .icon {
     margin: -1rem 0 0.25rem;

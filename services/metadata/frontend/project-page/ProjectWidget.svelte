@@ -134,6 +134,11 @@
     line-height: 2em;
     padding: 4px;
   }
+  .keyword:hover {
+    color: var(--second);
+    background-color: #fff;
+    border-color: var(--second);
+  }
   .label, .data {
     display: flex;
     flex-direction: column;

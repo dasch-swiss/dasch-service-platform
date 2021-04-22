@@ -2,7 +2,7 @@
 <button>JSON</button>
 <button>JSON-LD</button>
 <button>XML</button>
-<button>Triplestore</button>
+<button>RDF</button>
 <button>CSV</button>
 
 <style>
@@ -14,5 +14,10 @@
     color: #FFFF82;
     background-color: var(--lead);
     padding: 5px 6px;
+  }
+  button:hover {
+    color: var(--lead);
+    background-color: #FFFF82;
+    border-color: var(--lead);
   }
 </style>

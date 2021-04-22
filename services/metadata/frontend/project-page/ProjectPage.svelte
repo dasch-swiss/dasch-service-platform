@@ -133,7 +133,7 @@
     border-radius: 0.25rem;
     background-color: var(--dasch-grey-3);
     /* border: none; */
-    border: 1px solid #cdcdcd;
+    border: 1px solid var(--lead);
     margin: 0 -10px 20px 20px;
     padding: 10px;
     /* color: deeppink; */

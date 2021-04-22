@@ -79,6 +79,7 @@
     background-color: var(--cl-background);
     position: sticky;
     top: 0px;
+    z-index: 1;
   }
   .header-container {
     display: flex;
