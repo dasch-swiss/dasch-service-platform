@@ -138,7 +138,7 @@
     padding: 10px;
     /* color: deeppink; */
     color: var(--lead);
-    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    box-shadow: var(--shadow-1);
   }
   button:hover {
     color: #fff;
@@ -213,7 +213,7 @@
     background-color: var(--dasch-grey-3);
     margin-bottom: 6px;
     padding: 0 10px 10px;
-    box-shadow: 0px 2px 4px -1px rgba(0,0,0,0.3);
+    box-shadow: var(--shadow-1);
   }
   .widget:first-child {padding: 10px}
   .expand-button {

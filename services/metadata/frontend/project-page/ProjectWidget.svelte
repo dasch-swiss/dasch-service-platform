@@ -129,7 +129,7 @@
     border-radius: 0.25rem;
     color: #fff;
     background-color: var(--second);
-		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+		box-shadow: var(--shadow-1);
     white-space: pre;
     line-height: 2em;
     padding: 4px;
