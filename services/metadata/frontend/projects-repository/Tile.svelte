@@ -49,7 +49,7 @@
   .footer {
     font-size: 0.8em;
     margin: 10px 0;
-    color: var(--dasch-violet);
+    color: var(--lead);
   }
   .footer a {
     display: flex;

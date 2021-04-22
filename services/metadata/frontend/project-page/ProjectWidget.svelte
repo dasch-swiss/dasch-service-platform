@@ -121,18 +121,18 @@
 
 <style>
   a {
-    color: var(--dasch-violet);
+    color: var(--lead);
   }
   .keyword {
     display: inline;
     border: 1px solid #cdcdcd;
     border-radius: 0.25rem;
     color: #fff;
-    background-color: olivedrab;
+    background-color: var(--second);
 		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
     white-space: pre;
     line-height: 2em;
-    padding: 5px 6px;
+    padding: 4px;
   }
   .label, .data {
     display: flex;

@@ -119,8 +119,8 @@
   <div class="grid-wrapper">
     {#if Array.isArray(dataset?.content.qualifiedAttribution)}
       {#each dataset?.content.qualifiedAttribution as a}
-      <div class="attribution">
-        <div style="color: olivedrab">{a.role}</div>
+      <div class="attributions data">
+        <div class=role>{a.role}</div>
         {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
         <div>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</div>
         {#if findObjectById(a.agent[0].id)?.sameAs}
@@ -149,7 +149,7 @@
 
 <style>
   a {
-    color: var(--dasch-violet);
+    color: var(--lead);
   }
   .property-row {
     display: flex;
@@ -170,17 +170,23 @@
     flex: 1;
     font-weight: bold;
   }
+  .role {
+    color: var(--second);
+  }
   .abstract-short {
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 45x;
-    line-height: 18px;
+    /* height: 45x; */
+    /* line-height: 18px; */
+  }
+  .attributions {
+    padding: 0 10px 0 0;
   }
   .expand-button {
     background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
-    color: var(--dasch-violet);
+    color: var(--lead);
     text-align: center;
     font-size: 0.8em;
     padding: 2px 0;

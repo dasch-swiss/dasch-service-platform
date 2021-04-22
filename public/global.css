@@ -1,3 +1,5 @@
+@import url(assets/fonts/Roboto/stylesheet.css);
+
 html, body {
   position: relative;
   width: 100%;
@@ -18,6 +20,70 @@ html, body {
   
   --cl-transparent-dark: rgba(0, 0, 0, 0.2);
   --cl-transparent-light: rgba(255, 255, 255, 0.3);
+
+  --lead: var(--dasch-violet);
+  --second: var(--canva-anal-2);
+  --third: var(--canva-tri-2);
+  --fourth: var();
+  --fifth: var();
+
+  --lighter-dark: #3F3F40;
+  --darker-dark: #282828;
+/* pallets related to dasch violet */
+
+  --canva-comp-2: #97a749;
+
+  --canva-mono-2: #7567BC;
+
+  --canva-anal-2: #8849A7;
+  --canva-anal-3: #4968A7;
+
+  --canva-tri-2: #A75949;
+  --canva-tri-3: #49A759;
+
+  --canva-tet-2: #A74968;
+  --canva-tet-3: #97A749;
+  --canva-tet-4: #49A788;
+
+  --adobe-anal-2: #9346B3;
+  --adobe-anal-3: #7C4ABD;
+  --adobe-anal-4: #4A55BD;
+  --adobe-anal-5: #466DB3;
+
+  --adobe-mono-2: #816BF2;
+  --adobe-mono-3: #8D86B5;
+  --adobe-mono-4: #BEB3F2;
+  --adobe-mono-5: #3D3273;
+
+  --adobe-triad-2: #281E59;
+  --adobe-triad-3: #A67A5A;
+  --adobe-triad-4: #3AA638;
+  --adobe-triad-5: #245923;
+
+  --adobe-compl-2: #281E59;
+  --adobe-compl-3: #9583F2;
+  --adobe-compl-4: #595115;
+  --adobe-compl-5: #A69B49;
+
+  --adobe-split-2: #8D51A6;
+  --adobe-split-3: #A68D5A;
+  --adobe-split-4: #87A638;
+  --adobe-split-5: #4166A6;
+
+  --adobe-squ-2: #4B38A6;
+  --adobe-squ-3: #A6645A;
+  --adobe-squ-4: #A69938;
+  --adobe-squ-5: #41A678;
+
+  --adonbe-com-2: #B04AD9;
+  --adonbe-com-3: #3D3640;
+  --adonbe-com-4: #B1A57A;
+  --adonbe-com-5: #B1A57A;
+
+  --adobe-shad-2: #362D66;
+  --adobe-shad-3: #816BF2;
+  --adobe-shad-4: #5F4FB3;
+  --adobe-shad-5: #4B3E8C;
 }
 
 body {
@@ -26,7 +92,11 @@ body {
   color: var(--dasch-text);
   margin: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen-Sans, Ubuntu, Cantarell, "Helvetica Neue", sans-serif; */
+  font-family: 'robotoregular';
+  font-style: normal;
+  font-weight: normal;
+  color: var(--darker-dark);
 }
 
 .hidden {
@@ -34,8 +104,9 @@ body {
 }
 
 a {
-  text-decoration: none;
-  color: inherit;
+  /* text-decoration: none; */
+  color: var(--third) !important;
+  width: fit-content;
 }
 
 a:visited {
@@ -50,10 +121,54 @@ button:hover {
 }
 button:focus {
   color: #fff;
-  background-color: var(--dasch-violet);
+  background-color: var(--lead);
 }
 button:disabled {
   cursor: not-allowed;
+}
+
+
+.top-heading {
+  /* font-size: 40px; */
+  font-size: 2.5rem;
+  /* line-height: 48px; */
+  line-height: 1.2;
+  padding: 0 16px;
+}
+.new-section-title {
+  /* font-size: 24px; */
+  font-size: 1.5rem;
+  /* line-height: 32px; */
+  line-height: 1;
+  padding: 0 16px;
+}
+.new-section-subtitle {
+  font-weight: bold;
+  /* font-size: 16px; */
+  font-size: 1rem;
+  /* line-height: 24px; */
+  line-height: 1;
+  letter-spacing: 0.8px;
+  padding: 0 8px;
+}
+.new-text, .new-link, .data, .abstract {
+  font-size: 1rem;
+  line-height: 1.5;
+}
+.new-link {
+  color: var(--lead);
+}
+.new-label, .label {
+  color: var(--lighter-dark);
+  font-weight: bold;
+  padding: 0;
+}
+.new-keyword, .keyword {
+  font-family: robotolight;
+  font-size: 1rem;
+  line-height: 1.25;
+  padding: 4px;
+  letter-spacing: 0.4px;
 }
 
 /* remove outline but not for moblie devices */
@@ -122,50 +237,3 @@ button:disabled {
     /* background-color: olivedrab !important; */
   }
 }
-
-
-/* a {
-  color: rgb(0,100,200);
-  text-decoration: none;
-}
-
-a:hover {
-  text-decoration: underline;
-}
-
-label {
-  display: block;
-}
-
-input, button, select, textarea {
-  font-family: inherit;
-  font-size: inherit;
-  -webkit-padding: 0.4em 0;
-  padding: 0.4em;
-  margin: 0 0 0.5em 0;
-  box-sizing: border-box;
-  border: 1px solid #ccc;
-  border-radius: 2px;
-}
-
-input:disabled {
-  color: #ccc;
-}
-
-button {
-  color: #333;
-  background-color: #f4f4f4;
-  outline: none;
-}
-
-button:disabled {
-  color: #999;
-}
-
-button:not(:disabled):active {
-  background-color: #ddd;
-}
-
-button:focus {
-  border-color: #666;
-} */

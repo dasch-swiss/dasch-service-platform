@@ -57,14 +57,14 @@
 
 <div class="container">
   <div class="row">
-    <h1 class="title" style="margin-top: 40px">
+    <h1 class="title top-heading" style="margin-top: 40px">
       {project?.name}
     </h1>
     {#if project?.alternateName}
     <div class="row">
-      <h4 class="title">
+      <h4 class="title new-title">
         Also known as:&nbsp;
-        <span style="color:olivedrab">{project?.alternateName.join(", ")}</span>
+        <span style="color:var(--second)">{project?.alternateName.join(", ")}</span>
       </h4>
     </div>
     {/if}
@@ -72,8 +72,8 @@
   <div class="row">
     <div class="column-left">
       <div class="property-row">
-        <span class=label>Description</span>
-        <div id=description class="data {isExpanded ? '' : 'description-short'}">{project?.description}</div>
+        <span class="label new-subtitle">Description</span>
+        <div id=description class="data new-text {isExpanded ? '' : 'description-short'}">{project?.description}</div>
       </div>
       <!-- TODO: if accepted and reused consder move it to separate component -->
       {#if descriptionLinesNumber >= 6}
@@ -82,12 +82,12 @@
 
       {#if project?.publication && Array.isArray(project?.publication)}
       <div class="property-row">
-        <span class=label>Publications</span>
+        <span class="label new-subtitle">Publications</span>
         {#each project?.publication as p, i}
           {#if i > 1}
-          <span class="{isExpanded ? "data" : "hidden"}">{p}</span>
+          <span class="{isExpanded ? "data new-text" : "hidden"}">{p}</span>
           {:else}
-          <span class=data>{p}</span>
+          <span class="data new-text">{p}</span>
           {/if}
         {/each}
       </div>
@@ -121,7 +121,7 @@
 
 <style>
   a {
-    color: var(--dasch-violet);
+    color: var(--lead);
   }
   .container {
     padding: 0 40px;
@@ -143,7 +143,7 @@
     /* background-color: deepskyblue; */
   }
   h4.title {
-    font-size: 0.8em;
+    /* font-size: 0.8em; */
   }
   .column-left, .column-right {
     display: flex;
@@ -179,8 +179,8 @@
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 45x;
-    line-height: 18px;
+    /* height: 45x; */
+    /* line-height: 18px; */
   }
   .widget {
     border: 1px solid #cdcdcd;
@@ -193,7 +193,7 @@
   .widget:first-child {padding: 10px}
   .expand-button {
     background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
-    color: var(--dasch-violet);
+    color: var(--lead);
     text-align: center;
     font-size: 0.8em;
     padding: 2px 0;

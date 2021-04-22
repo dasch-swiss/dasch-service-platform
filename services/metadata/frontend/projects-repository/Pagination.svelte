@@ -62,9 +62,9 @@
     border: 1px solid #ddd;
   }
   button.active {
-    background-color: var(--dasch-violet);
+    background-color: var(--lead);
     color: white;
-    border: 1px solid var(--dasch-violet);
+    border: 1px solid var(--lead);
   }
   button:hover:not(.active), button:hover:not:disabled {
     background-color: var(--dasch-light-violet);
