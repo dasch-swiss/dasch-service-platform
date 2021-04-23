@@ -64,6 +64,10 @@ metadata-docker-build: build ## publish linux/amd64 platform image locally
 metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
 	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/docker:push
 
+.PHONY: metadata-docker-run
+metadata-docker-run: build ## run linux/amd64 platform image locally
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/cmd:image
+
 .PHONY: metadata-service-run
 metadata-service-run: build ## start the metadata-service
 	@bazel run //services/metadata/backend/cmd
