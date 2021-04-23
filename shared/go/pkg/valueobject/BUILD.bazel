@@ -13,9 +13,9 @@ go_library(
         "timestamp.go",
         "url.go",
         "username.go",
-        "shortCode.go",
-        "shortName.go",
-        "longName.go",
+        "shortcode.go",
+        "shortname.go",
+        "longname.go",
         "description.go"
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject",
