@@ -110,11 +110,11 @@ func MakeOrganizationHandlers(r *mux.Router, n negroni.Negroni, service organiza
 	//	negroni.Wrap(listUsers(service)),
 	//)).Methods("GET", "OPTIONS").Name("listUsers")
 
-	r.Handle("/v1/organization", n.With(
+	r.Handle("/api/v1/organization", n.With(
 		negroni.Wrap(createOrganization(service)),
 	)).Methods("POST", "OPTIONS").Name("createOrganization")
 
-	r.Handle("/v1/organization/{id}", n.With(
+	r.Handle("/api/v1/organization/{id}", n.With(
 		negroni.Wrap(getOrganization(service)),
 	)).Methods("GET", "OPTIONS").Name("getOrganization")
 

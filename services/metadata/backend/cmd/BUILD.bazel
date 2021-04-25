@@ -1,6 +1,8 @@
 package(default_visibility = ["//visibility:public"])
 
 load("@io_bazel_rules_go//go:def.bzl", "go_binary")
+load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 go_binary(
     name = "cmd",
@@ -26,13 +28,19 @@ go_binary(
     ],
 )
 
-load("@io_bazel_rules_docker//go:image.bzl", "go_image")
+pkg_tar(
+    name = "static-app",
+    srcs = ["//public"],
+    mode = "0755",
+    package_dir = "/public",
+    strip_prefix = ".",
+)
 
 go_image(
     name = "image",
     srcs = ["main.go"],
     data = [
-        "//public",
+        ":static-app",
         "//services/metadata/backend/data",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api",
