@@ -120,6 +120,18 @@ docs-publish: publish ## publish the DSP API Slate docs to Github Pages
 metadata-server: ## start metadata json-server watching db.json
 	@yarn run json-server --watch services/metadata/backend/data/db.json
 
+.PHONY: metadata-server-docker-build
+metadata-server-docker-build: ## build metadata json-server watching db.json docker image
+	@bazel run //services/metadata/backend/data:image -- --norun
+
+.PHONY: metadata-server-docker-publish
+metadata-server-docker-publish: ## publish metadata json-server watching db.json docker image
+	@bazel run //services/metadata/backend/data:push
+
+.PHONY: metadata-server-docker-run
+metadata-server-docker-run: ## publish metadata json-server watching db.json docker image
+	@docker run --rm -p 8080:8080 bazel/services/metadata/backend/data:image
+
 .PHONY: help
 help: ## this help
 	@awk 'BEGIN {FS = ":.*?## "} /^[a-zA-Z_-]+:.*?## / {printf "\033[36m%-30s\033[0m %s\n", $$1, $$2}' $(MAKEFILE_LIST) | sort

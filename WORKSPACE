@@ -186,3 +186,18 @@ pip_deps()
 load("@io_bazel_rules_docker//go:image.bzl", go_image_repos = "repositories")
 
 go_image_repos()
+
+# load container_pull method
+load(
+    "@io_bazel_rules_docker//container:container.bzl",
+    "container_pull",
+)
+
+# get json-server docker image
+container_pull(
+  name = "json_server",
+  registry = "docker.io",
+  repository = "daschswiss/json-server",
+  # 'tag' is also supported, but digest is encouraged for reproducibility.
+  digest = "sha256:a6d11d42538488187d87ecf7d592ce3b3de7557642d64bd77422310e9ea82562",
+)

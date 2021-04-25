@@ -1,8 +1,53 @@
 package(default_visibility = ["//visibility:public"])
 
+load("@io_bazel_rules_docker//container:container.bzl", "container_push", "container_image")
+load("@rules_pkg//:pkg.bzl", "pkg_tar")
+
 filegroup(
     name = "data",
     srcs = [
         "db.json",
     ],
+)
+
+pkg_tar(
+    name = "static-app",
+    srcs = ["//public"],
+    mode = "0755",
+    package_dir = "/data",
+    strip_prefix = ".",
+)
+
+pkg_tar(
+    name = "db",
+    srcs = [":data"],
+    mode = "0755",
+    package_dir = "/data/db",
+)
+
+
+# build the json-server based image
+container_image(
+    name = "image",
+    base = "@json_server//image",
+    tars = [
+        ":static-app",
+        ":db"
+    ],
+    labels = {
+        "MAINTAINER": "400790+subotic@users.noreply.github.com",
+    },
+    ports = [
+        "8080/tcp",
+    ],
+)
+
+# push to dockerhub
+container_push(
+   name = "push",
+   image = ":image",
+   format = "Docker",
+   registry = "index.docker.io",
+   repository = "daschswiss/dsp-metadata-service",
+   tag = "{BUILD_SCM_TAG}"
 )
