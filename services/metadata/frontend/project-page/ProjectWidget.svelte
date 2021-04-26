@@ -84,8 +84,10 @@
   {#each project?.grant as g}
     {#if findObjectById(g.id)?.number && findObjectById(g.id)?.url}
     <a class=data href={findObjectById(g.id)?.url[0].url} target=_>{findObjectById(g.id)?.number}</a>
+    {:else if findObjectById(g.id)?.number}
+    <span class="data">{findObjectById(g.id)?.number}</span>
     {:else}
-    no details found
+    <span class="data">no details found</span>
     {/if}
   {/each}
 {/if}

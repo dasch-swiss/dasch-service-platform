@@ -163,6 +163,7 @@
     border: 1px solid #cdcdcd;
     /* margin: 0 -15px 20px 20px; */
     padding: 10px;
+    margin-bottom: 20px;
     color: var(--lead);
     box-shadow: var(--shadow-1);
     width: 3.5rem;
@@ -202,7 +203,7 @@
     flex-direction: column;
     flex-basis: 100%;
     flex: 2;
-    padding: 20px;
+    padding: 0 20px;
     height: fit-content;
     /* background-color:hotpink; */
   }
@@ -251,6 +252,9 @@
     cursor: pointer;
   }
   @media screen and (min-width: 992px) {
+    .column-left, .column-right{
+      padding: 20px;
+    }
     .row {
       flex-direction: row;
     }
