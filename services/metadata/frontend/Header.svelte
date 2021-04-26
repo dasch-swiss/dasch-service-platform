@@ -79,6 +79,7 @@
     background-color: var(--cl-background);
     position: sticky;
     top: 0px;
+    z-index: 1;
   }
   .header-container {
     display: flex;
@@ -139,14 +140,14 @@
     padding: 0px;
   }
   button:hover {
-    color: var(--dasch-violet);
+    color: var(--lead);
     background-color: var(--cl-transparent-dark);
   }
-  .icon {
+  /* .icon {
     width: 1.5rem;
     height: 1.5rem;
     margin: 0.25rem;
-  }
+  } */
   .menu {
     background-color: var(--cl-background-light);
   }

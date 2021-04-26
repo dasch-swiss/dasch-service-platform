@@ -1,12 +1,8 @@
 <script lang="ts">
+  import { replace } from 'svelte-spa-router';
   import type { ProjectMetadata } from '../interfaces';
-  import { currentProjectMetadata } from '../stores';
   
   export let projectMetadata: ProjectMetadata;
-
-  const setCurrentProject = () => {
-    currentProjectMetadata.set(projectMetadata);
-  }
 </script>
 
 <section>
@@ -15,19 +11,39 @@
   </div>
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <a on:click={setCurrentProject} href="#/project/{ projectMetadata.id }">Read more</a>
+    <button on:click={() => replace(`#/project/${projectMetadata.id}`)}>Read more</button>
   </div>
 </section>
 
 <style>
   section {
-    border: 1px solid #000;
+    /* border: 1px solid #000; */
+    border: 1px solid #cdcdcd;
     border-radius: 5px;
     background-color: #fff;
     padding: 5px 5vw;
     margin: 5px;
     width: 75vw;
     float: left;
+    box-shadow: var(--shadow-2);
+  }
+
+  button {
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 0.25rem;
+    background-color: #fff;
+    /* border: none; */
+    border: 1px solid var(--lead);
+    /* margin: 0 -10px 20px 20px; */
+    padding: 5px 20px;
+    /* color: deeppink; */
+    color: var(--lead);
+    box-shadow: var(--shadow-1);
+  }
+  button:hover {
+    color: #fff;
+    background-color: var(--lead);
   }
   .header{
     height: 30px;
@@ -49,9 +65,10 @@
     margin: 10px 0 25px;
   }
   .footer {
-    font-size: 0.8em;
     margin: 10px 0;
-    color: var(--dasch-violet);
+    color: var(--lead);
+    font-size: 0.8em;
+    text-align: center;
   }
   .footer a {
     display: flex;

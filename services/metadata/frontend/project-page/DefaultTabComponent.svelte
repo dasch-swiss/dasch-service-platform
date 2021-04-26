@@ -23,6 +23,15 @@
     isAbstractExpanded = abstractLinesNumber >= 6 ? false : true;
   });
 
+  const copyToClipboard = () => {
+    let text = document.createRange();
+    text.selectNode(document.getElementById('how-to-cite'));
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(text);
+    document.execCommand('copy');
+    window.getSelection().removeAllRanges();
+  };
+
   console.log(2, dataset)
 </script>
 
@@ -92,8 +101,13 @@
   </div>
 
   <div class="property-row">
-    <span class=label>How To Cite</span>
-    <span class=data>{dataset?.content.howToCite}</span>
+    <span class=label style="display:inline">
+      How To Cite
+      <button on:click={copyToClipboard} title="copy text to clpboard">
+         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+      </button>
+    </span>
+    <span id=how-to-cite class=data>{dataset?.content.howToCite}</span>
   </div>
 
   <div class="property-row">
@@ -119,8 +133,8 @@
   <div class="grid-wrapper">
     {#if Array.isArray(dataset?.content.qualifiedAttribution)}
       {#each dataset?.content.qualifiedAttribution as a}
-      <div class="attribution">
-        <div style="color: olivedrab">{a.role}</div>
+      <div class="attributions data">
+        <div class=role>{a.role}</div>
         {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
         <div>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</div>
         {#if findObjectById(a.agent[0].id)?.sameAs}
@@ -149,7 +163,7 @@
 
 <style>
   a {
-    color: var(--dasch-violet);
+    color: var(--lead);
   }
   .property-row {
     display: flex;
@@ -170,17 +184,35 @@
     flex: 1;
     font-weight: bold;
   }
+  button {
+    border: none;
+    background-color: inherit;
+    padding: 0;
+    position: relative;
+    top: 10px;
+    color: var(--lead);
+    z-index: 0;
+  }
+  .icon {
+    margin: -1rem 0 0.25rem;
+  }
+  .role {
+    color: var(--second);
+  }
   .abstract-short {
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    height: 45x;
-    line-height: 18px;
+    /* height: 45x; */
+    /* line-height: 18px; */
+  }
+  .attributions {
+    padding: 0 10px 0 0;
   }
   .expand-button {
     background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
-    color: var(--dasch-violet);
+    color: var(--lead);
     text-align: center;
     font-size: 0.8em;
     padding: 2px 0;
@@ -195,7 +227,7 @@
       grid-template-columns: repeat(2, 1fr);
     }
   }
-  @media screen and (min-width: 768px) {
+  @media screen and (min-width: 1200px) {
     .grid-wrapper {
       grid-template-columns: repeat(3, 1fr);
     }
