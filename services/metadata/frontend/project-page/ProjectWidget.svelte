@@ -107,16 +107,17 @@
 <!-- <a class=data href={project?.url[0].url} target=_>{project?.url[0].name}</a> -->
 {#if Array.isArray(project?.url)}
   {#each project?.url as url}
-  <a class=data href={url.url} target=_>{url.name}</a>
+    <a class=data href={url.url} target=_>{url.name}</a>
   {/each}
 {/if}
 
 {#if project}
-<div class=label>Keywords</div>
-  {#each project?.keywords as keyword}
-  <span class="keyword">{keyword}</span>
-  <span></span>
-  {/each}
+  <div class=label>Keywords</div>
+    <!-- {#each project?.keywords as keyword}
+    <span class="keyword">{keyword}</span>
+    <span></span>
+    {/each} -->
+  <span class="keyword">{project?.keywords.join(", ")}</span>
 {/if}
 
 <style>
@@ -124,21 +125,22 @@
     color: var(--lead);
   }
   .keyword {
-    display: inline;
+    padding: 0;
+    /* display: inline;
     border: 1px solid #cdcdcd;
     border-radius: 0.25rem;
     color: #fff;
-    background-color: var(--second);
+    background-color: var(--third);
 		box-shadow: var(--shadow-1);
     white-space: pre;
     line-height: 2em;
-    padding: 4px;
+    padding: 4px; */
   }
-  .keyword:hover {
-    color: var(--second);
+  /* .keyword:hover {
+    color: var(--third);
     background-color: #fff;
-    border-color: var(--second);
-  }
+    border-color: var(--third);
+  } */
   .label, .data {
     display: flex;
     flex-direction: column;
@@ -153,4 +155,14 @@
     font-weight: bold;
     padding: 10px 0 0;
   }
+  /* .label {
+    flex: 1;
+    font-weight: bold;
+    margin: 0;
+    /* border: 1px solid #cdcdcd; */
+    /* padding: 5px 10px; */
+    /* background-color: var(--dasch-grey-4);
+    color: var(--dasch-text);
+    width: calc(100% - 20px); */
+  /* }  */
 </style>

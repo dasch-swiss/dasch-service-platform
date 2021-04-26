@@ -11,13 +11,13 @@
     border: 1px solid #cdcdcd;
     border-radius: 0.25rem;
     box-shadow: var(--shadow-1);
-    color: #FFFF82;
+    color: #fff;
     background-color: var(--lead);
     padding: 5px 6px;
   }
   button:hover {
     color: var(--lead);
-    background-color: #FFFF82;
+    background-color: #fff;
     border-color: var(--lead);
   }
 </style>

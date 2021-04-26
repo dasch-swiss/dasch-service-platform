@@ -190,8 +190,7 @@
     padding: 0;
     position: relative;
     top: 10px;
-    /* color: var(--lead); */
-    color: deeppink;
+    color: var(--lead);
     z-index: 0;
   }
   .icon {

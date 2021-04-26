@@ -31,7 +31,7 @@
     await tick();
     getDivHeight();
 
-    // console.log(2, projectMetadata, project, tabs)
+    console.log(1, projectMetadata, project, tabs)
   };
 
   const handleData = (val: any) => {
@@ -77,72 +77,98 @@
       </div>
       <!-- TODO: if accepted and reused consder move it to separate component -->
       {#if descriptionLinesNumber >= 6}
-      <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
+        <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
       {/if}
 
       {#if project?.publication && Array.isArray(project?.publication)}
-      <div class="property-row">
-        <span class="label new-subtitle">Publications</span>
-        {#each project?.publication as p, i}
-          {#if i > 1}
-          <span class="{isExpanded ? "data new-text" : "hidden"}">{p}</span>
-          {:else}
-          <span class="data new-text">{p}</span>
-          {/if}
-        {/each}
-      </div>
+        <div class="property-row">
+          <span class="label new-subtitle">Publications</span>
+            {#each project?.publication as p, i}
+              {#if i > 1}
+                <span class="{isExpanded ? "data new-text" : "hidden"}">{p}</span>
+              {:else}
+                <span class="data new-text">{p}</span>
+              {/if}
+            {/each}
+        </div>
 
-      {#if project?.publication.length > 2}
-      <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
-      {/if}
+        {#if project?.publication.length > 2}
+          <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
+        {/if}
 
       {/if}
 
       {#await getProjectMetadata() then go}
-      <div class="tabs">
-        <Tab {tabs} />
-      </div>
+        <div class="tabs">
+          <Tab {tabs} />
+        </div>
       {/await}
+
+      <button on:click={() => {window.scrollTo(0,0)}} class=bottom-button title="go back to the top">
+        <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
 
     </div>
     <div class="column-right">
+      <button on:click={() => {pop()}} class=top-button title="go back to the projects list">
+        <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+        <span class=button-label>Go Back</span>
+      </button>
       <div class=widget>
-        <ProjectWidget {project}/>
+        <ProjectWidget {project} />
       </div>
       <div class=widget>
         <DownloadWidget />
       </div>
     </div>
   </div>
-  <div class=row>
-    <button on:click={() => {window.scrollTo(0,0)}} title="get back to the top">
-      <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-      </svg>
-    </button>
-    <button on:click={() => {pop()}} title="get back to the projects list">
-      <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"></path></svg>
-    </button>
-  </div>
+  <!-- <button on:click={() => {window.scrollTo(0,0)}} class=bottom-button title="go back to the top">
+    <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+    </svg>
+  </button> -->
 </div>
 
 <style>
-    button {
+  button.top-button {
+    border: none;
+    color: var(--lead);
+    font-size: 1rem;
+    font-family: robotobold;
+    text-align: left;
+
+    border: 1px solid #cdcdcd;
+    border-radius: 3px;
+    margin-bottom: 6px;
+    padding: 10px 10px 8px;
+    box-shadow: var(--shadow-1);
+  }
+  button.top-button:hover {
+    color: #fff;
+    background-color: var(--lead);
+  }
+  .button-label {
+    position: relative;
+    bottom: 10px;
+  }
+  button.bottom-button {
     display: inline-block;
     vertical-align: middle;
     border-radius: 0.25rem;
     background-color: var(--dasch-grey-3);
-    /* border: none; */
-    border: 1px solid var(--lead);
-    margin: 0 -10px 20px 20px;
+    /* border: 1px solid var(--lead); */
+    border: 1px solid #cdcdcd;
+    /* margin: 0 -15px 20px 20px; */
     padding: 10px;
-    /* color: deeppink; */
     color: var(--lead);
     box-shadow: var(--shadow-1);
+    width: 3.5rem;
+    height: 3.5rem;
   }
-  button:hover {
+  button.bottom-button:hover {
     color: #fff;
-    /* background-color: deeppink; */
     background-color: var(--lead);
   }
   a {
@@ -167,9 +193,6 @@
     padding: 0 20px;
     /* background-color: deepskyblue; */
   }
-  h4.title {
-    /* font-size: 0.8em; */
-  }
   .column-left, .column-right {
     display: flex;
     flex-direction: column;
@@ -193,7 +216,6 @@
   }
   .label {
     flex: 1;
-    font-weight: bold;
     margin: 10px 0;
   }
   .description {
@@ -215,7 +237,7 @@
     padding: 0 10px 10px;
     box-shadow: var(--shadow-1);
   }
-  .widget:first-child {padding: 10px}
+  /* .widget:first-child {padding: 10px 10px 5px 10px} */
   .expand-button {
     background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
     color: var(--lead);
