@@ -84,21 +84,29 @@
   {#each project?.grant as g}
     {#if findObjectById(g.id)?.number && findObjectById(g.id)?.url}
     <a class=data href={findObjectById(g.id)?.url[0].url} target=_>{findObjectById(g.id)?.number}</a>
+    {:else if findObjectById(g.id)?.number}
+    <span class="data">{findObjectById(g.id)?.number}</span>
     {:else}
-    no details found
+    <span class="data">no details found</span>
     {/if}
   {/each}
 {/if}
 
 {#if project?.contactPoint}
-  <div class=label>Contact Person</div>
-  <div class=data>{findObjectById(project?.contactPoint[0].id)?.givenName.split(";").join(" ")} {findObjectById(project?.contactPoint[0].id)?.familyName}</div>
+  <div class=label>Contact</div>
+  {#if project?.contactPoint[0].id.givenName && project?.contactPoint[0].id.familyName}
+    <div id=contact class=data>{findObjectById(project?.contactPoint[0].id)?.givenName?.split(";").join(" ")} {findObjectById(project?.contactPoint[0].id)?.familyName}</div>
+  {/if}
   {#if findObjectById(project?.contactPoint[0].id)?.email}
-  <div class=data>{findObjectById(project?.contactPoint[0].id)?.email[0]}</div>
+    {#if Array.isArray(findObjectById(project?.contactPoint[0].id)?.email)}
+      <div id=email class=data>{findObjectById(project?.contactPoint[0].id)?.email[0]}</div>
+    {:else}
+      <div id=email class=data>{findObjectById(project?.contactPoint[0].id)?.email}</div>
+    {/if}
   {/if}
   {#if Array.isArray(findObjectById(project?.contactPoint[0].id)?.memberOf)}
     {#each findObjectById(project?.contactPoint[0].id)?.memberOf as o}
-    <span>{findObjectById(o.id).name}</span>
+      <span>{findObjectById(o.id).name[0]}</span>
     {/each}
 {/if}
 {/if}

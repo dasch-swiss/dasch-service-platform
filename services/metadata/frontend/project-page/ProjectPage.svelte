@@ -104,7 +104,7 @@
         </div>
       {/await}
 
-      <button on:click={() => {window.scrollTo(0,0)}} class=bottom-button title="go back to the top">
+      <button on:click={() => {window.scrollTo(0,0)}} id=to-top-desktop class=bottom-button title="Get back to the top">
         <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
@@ -122,13 +122,14 @@
       <div class=widget>
         <DownloadWidget />
       </div>
+
+      <button on:click={() => {window.scrollTo(0,0)}} id=to-top-mobile class=bottom-button title="Get back to the top">
+        <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+        </svg>
+      </button>
     </div>
   </div>
-  <!-- <button on:click={() => {window.scrollTo(0,0)}} class=bottom-button title="go back to the top">
-    <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-    </svg>
-  </button> -->
 </div>
 
 <style>
@@ -162,6 +163,7 @@
     border: 1px solid #cdcdcd;
     /* margin: 0 -15px 20px 20px; */
     padding: 10px;
+    margin-bottom: 20px;
     color: var(--lead);
     box-shadow: var(--shadow-1);
     width: 3.5rem;
@@ -170,6 +172,9 @@
   button.bottom-button:hover {
     color: #fff;
     background-color: var(--lead);
+  }
+  #to-top-desktop {
+    display: none;
   }
   a {
     color: var(--lead);
@@ -198,7 +203,7 @@
     flex-direction: column;
     flex-basis: 100%;
     flex: 2;
-    padding: 20px;
+    padding: 0 20px;
     height: fit-content;
     /* background-color:hotpink; */
   }
@@ -247,8 +252,17 @@
     cursor: pointer;
   }
   @media screen and (min-width: 992px) {
+    .column-left, .column-right{
+      padding: 20px;
+    }
     .row {
       flex-direction: row;
+    }
+    #to-top-mobile {
+      display: none;
+    }
+    #to-top-desktop {
+      display: inline-block;
     }
   }
 </style>

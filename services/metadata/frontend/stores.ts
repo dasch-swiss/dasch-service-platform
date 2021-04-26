@@ -32,7 +32,10 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
   await fetch(`${baseUrl}${route}`)
     .then(r => {
       const totalCount = parseInt(r.headers.get('X-Total-Count'));
-      const totalPages = Math.floor(totalCount/baseResultsRange[1]) + 1;
+      let totalPages = Math.floor(totalCount/baseResultsRange[1]);
+      if (!Number.isInteger(totalCount/baseResultsRange[1])) {
+        totalPages++;
+      };
       // console.log(totalCount, totalPages)
       pagination.set({currentPage: page, currentResultsRange, totalCount, totalPages});
       return r.json();

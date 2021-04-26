@@ -88,6 +88,7 @@
   }
   .header-left {
     padding: 0px;
+    text-decoration: none;
   }
   .header-right {
     padding: 0.5rem 0rem;
