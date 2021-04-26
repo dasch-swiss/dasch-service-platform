@@ -19,11 +19,23 @@
 
 <!-- <h3 class=widget-heading>Project highlights</h3> -->
 
+<div class=label>DSP Internal Shortcode</div>
+<div class=data>{project?.shortcode}</div>
+
+<div class=label>Data Management Plan</div>
+<div class=data>{project?.dataManagementPlan ? "available" : "unavailable"}</div>
+
 <div class=label>Discipline</div>
 {#if Array.isArray(project?.discipline)}
   {#each project?.discipline as d}
     {#if typeof d === "string"}
-    <div class="data">{d}</div>
+      {#if d.split(" ")[0].match(/^[0-9]*$/)}
+        <a href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{d}</a>
+      {:else if d.match("http")}
+        <a href={d} target=_>{d}</a>
+      {:else}
+        <div class="data">{d}</div>
+      {/if}
     {:else}
     <a class=data href={d.url} target=_>{d.name}</a>
     {/if}
@@ -40,7 +52,6 @@
     {/if}
   {/each}
 {/if}
-
 
 <div class=label>Spatial Coverage</div>
 {#if Array.isArray(project?.spatialCoverage)}
@@ -96,33 +107,40 @@
 <!-- <a class=data href={project?.url[0].url} target=_>{project?.url[0].name}</a> -->
 {#if Array.isArray(project?.url)}
   {#each project?.url as url}
-  <a class=data href={url.url} target=_>{url.name}</a>
+    <a class=data href={url.url} target=_>{url.name}</a>
   {/each}
 {/if}
 
 {#if project}
-<div class=label>Keywords</div>
-  {#each project?.keywords as keyword}
-  <span class="keyword">{keyword}</span>
-  <span></span>
-  {/each}
+  <div class=label>Keywords</div>
+    <!-- {#each project?.keywords as keyword}
+    <span class="keyword">{keyword}</span>
+    <span></span>
+    {/each} -->
+  <span class="keyword">{project?.keywords.join(", ")}</span>
 {/if}
 
 <style>
   a {
-    color: var(--dasch-violet);
+    color: var(--lead);
   }
   .keyword {
-    display: inline;
+    padding: 0;
+    /* display: inline;
     border: 1px solid #cdcdcd;
     border-radius: 0.25rem;
     color: #fff;
-    background-color: olivedrab;
-		box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+    background-color: var(--third);
+		box-shadow: var(--shadow-1);
     white-space: pre;
     line-height: 2em;
-    padding: 5px 6px;
+    padding: 4px; */
   }
+  /* .keyword:hover {
+    color: var(--third);
+    background-color: #fff;
+    border-color: var(--third);
+  } */
   .label, .data {
     display: flex;
     flex-direction: column;
@@ -137,4 +155,14 @@
     font-weight: bold;
     padding: 10px 0 0;
   }
+  /* .label {
+    flex: 1;
+    font-weight: bold;
+    margin: 0;
+    /* border: 1px solid #cdcdcd; */
+    /* padding: 5px 10px; */
+    /* background-color: var(--dasch-grey-4);
+    color: var(--dasch-text);
+    width: calc(100% - 20px); */
+  /* }  */
 </style>

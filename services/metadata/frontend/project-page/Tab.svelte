@@ -26,10 +26,11 @@
   .box {
     margin-bottom: 10px;
     padding: 0 10px;
-    /* border: 1px solid #dee2e6; */
+    border: 1px solid #dee2e6;
     border-radius: 0 0 .5rem .5rem;
     border-top: 0;
     overflow-wrap: break-word;
+    box-shadow: var(--shadow-2);
   }
   ul {
     display: flex;
@@ -55,7 +56,7 @@
   }
   li.active > span {
     color: #fff;
-    background-color: var(--dasch-violet);
+    background-color: var(--lead);
     border-color: #dee2e6 #dee2e6 #fff;
   }
 </style>

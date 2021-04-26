@@ -1,8 +1,6 @@
 <script lang="ts">
-  import type { Category, ProjectMetadata } from '../interfaces';
-  import { pagedResults, pagination } from '../stores';
-
-  export let searched: ProjectMetadata[] = [];
+  import type { Category } from '../interfaces';
+  import { getProjectsMetadata } from '../stores';
 
   let categories = [
     { id: 1, isOpen: false, name: 'Discipline', sub: ['Agriculture', 'Antropology', 'Geography', 'History'] },
@@ -19,16 +17,6 @@
     let bool = cat.isOpen;
     categories[cat.id - 1].isOpen = !bool;
   };
-
-  const handleSubCategory = (q: string) => (event: MouseEvent) => {
-    fetch(`http://localhost:3000/projects?q=${q}`)
-      .then(r => r.json())
-      .then(data => {
-        searched = data;
-        pagination.set({totalCount: data.length, totalPages: 1});
-        pagedResults.set(data);
-    });
-  }
 </script>
 
 {#each categories as category }
@@ -39,7 +27,8 @@
     <div class={category.isOpen ? 'visible' : 'hidden'}>
       {#each category.sub as sub, n}
         <label class=subcategory>
-          <input on:click={handleSubCategory(sub)} value={n} type=checkbox name=subcategory />{sub}
+          <input on:click={() => getProjectsMetadata(1, sub)} value={n} type=checkbox name=subcategory />
+          {sub}
         </label>
       {/each}
     </div>
