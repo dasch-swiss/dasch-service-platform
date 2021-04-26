@@ -12,6 +12,6 @@ go_library(
         "//services/resource/backend/entity",
         "//services/resource/backend/usecase/organization",
         "@com_github_gorilla_mux//:go_default_library",
-        "@com_github_urfave_negroni//:go_default_library"
+        "@com_github_urfave_negroni//:go_default_library",
     ],
 )

@@ -30,6 +30,7 @@ import (
 )
 
 func TestNewIdentifier_String(t *testing.T) {
-	identifier, _ := valueobject.NewIdentifier("newid")
-	assert.Equal(t, identifier.String(), "newid")
+	identifier, err := valueobject.NewIdentifier()
+	assert.Nil(t, err)
+	assert.NotEmpty(t, identifier.String())
 }

@@ -3,13 +3,22 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
 go_library(
     name = "valueobject",
     srcs = [
+        "aggregatetype.go",
         "email.go",
+        "familyname.go",
+        "givenname.go",
         "identifier.go",
         "interface.go",
+        "password.go",
+        "timestamp.go",
         "url.go",
+        "username.go",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject",
     visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_gofrs_uuid//:go_default_library",
+    ],
 )
 
 go_test(
@@ -18,6 +27,7 @@ go_test(
     srcs = [
         "email_test.go",
         "identifier_test.go",
+        "timestamp_test.go",
         "url_test.go",
     ],
     embed = [":valueobject"],

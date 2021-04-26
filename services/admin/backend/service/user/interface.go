@@ -21,38 +21,40 @@
  *
  */
 
-package organization
+package user
 
 import (
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
+	"context"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/user"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 )
 
 //Reader interface
 type Reader interface {
-	Get(id entity.ID) (*entity.Organization, error)
+	Load(ctx context.Context, id valueobject.Identifier) (*user.Aggregate, error)
 	// Search(query string) ([]*entity.Organization, error)
 	// List() ([]*entity.Organization, error)
 }
 
 //Writer interface
 type Writer interface {
-	Create(e *entity.Organization) (entity.ID, error)
+	Save(ctx context.Context, e *user.Aggregate) (valueobject.Identifier, error)
 	// Update(e *entity.Organization) error
 	// Delete(e *entity.ID) error
 }
 
-//Repository interface
+//Repository interface which should be implemented by repositories.
 type Repository interface {
 	Reader
 	Writer
 }
 
-//UseCase interface
+//UseCase interface which should be implemented by services.
 type UseCase interface {
-	GetOrganization(id entity.ID) (*entity.Organization, error)
+	GetUser(id valueobject.Identifier) (*user.Aggregate, error)
 	// SearchOrganization(query string) ([]*entity.Organization, error)
 	// ListOrganizations() ([]*entity.Organization, error)
-	CreateOrganization(name string) (entity.ID, error)
+	SignupUser(name string) (valueobject.Identifier, error)
 	// UpdateOrganization(e *entity.Organization) error
 	// DeleteOrganization(id entity.ID) error
 }

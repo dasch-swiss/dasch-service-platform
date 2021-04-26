@@ -25,25 +25,31 @@ package organization
 
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
-	"github.com/stretchr/testify/assert"
-	"testing"
-	"time"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/organization"
 )
 
-func newFixtureOrganization() *entity.Organization {
-	return &entity.Organization{
-		ID:        entity.NewID(),
-		Name:      "TEST Organization",
-		CreatedAt: time.Now(),
+//Service interface
+type Service struct {
+	repo Repository
+}
+
+//NewService create a new organization use case
+func NewService(r Repository) *Service {
+	return &Service{
+		repo: r,
 	}
 }
 
-func Test_Create(t *testing.T) {
-	repo := newInmem()
-	service := NewService(repo)
-	org := newFixtureOrganization()
-	_, err := service.CreateOrganization(org.Name)
-	assert.Nil(t, err)
-	assert.False(t, org.CreatedAt.IsZero())
-	assert.True(t, org.UpdatedAt.IsZero())
+//CreateOrganization creates an organization
+func (s *Service) CreateOrganization(name string) (entity.ID, error) {
+	e, err := organization.NewOrganization(name)
+	if err != nil {
+		return e.ID, err
+	}
+	return s.repo.Create(e)
+}
+
+//GetOrganization gets an Organization
+func (s *Service) GetOrganization(id entity.ID) (*organization.Organization, error) {
+	return s.repo.Get(id)
 }

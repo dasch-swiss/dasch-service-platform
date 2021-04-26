@@ -5,13 +5,16 @@ load("@io_bazel_rules_go//go:def.bzl", "go_binary")
 go_binary(
     name = "cmd",
     srcs = ["main.go"],
+    data = [
+        "//public",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//services/admin/backend/api/handler",
         "//services/admin/backend/api/middleware",
         "//services/admin/backend/config",
         "//services/admin/backend/infrastructure/repository",
-        "//services/admin/backend/usecase/organization",
+        "//services/admin/backend/service/organization",
         "//shared/go/pkg/metric",
         # "@com_github_dgraph_io_badger_v3//:badger",
         "@com_github_gorilla_context//:context",
@@ -19,9 +22,6 @@ go_binary(
         "@com_github_prometheus_client_golang//prometheus/promhttp",
         "@com_github_urfave_negroni//:negroni",
     ],
-    data = [
-        "//public",
-    ]
 )
 
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
@@ -29,13 +29,16 @@ load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 go_image(
     name = "image",
     srcs = ["main.go"],
+    data = [
+        "//public",
+    ],
     visibility = ["//visibility:public"],
     deps = [
         "//services/admin/backend/api/handler",
         "//services/admin/backend/api/middleware",
         "//services/admin/backend/config",
         "//services/admin/backend/infrastructure/repository",
-        "//services/admin/backend/usecase/organization",
+        "//services/admin/backend/service/organization",
         "//shared/go/pkg/metric",
         # "@com_github_dgraph_io_badger_v3//:badger",
         "@com_github_gorilla_context//:context",
@@ -43,7 +46,4 @@ go_image(
         "@com_github_prometheus_client_golang//prometheus/promhttp",
         "@com_github_urfave_negroni//:negroni",
     ],
-    data = [
-        "//public",
-    ]
 )

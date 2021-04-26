@@ -25,31 +25,32 @@ package repository
 
 import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/organization"
 )
 
 //inmem in memory repo
 type inmemdb struct {
-	m map[entity.ID]*entity.Organization
+	m map[entity.ID]*organization.Organization
 }
 
 //NewInmem create a new in memory repository
 func NewInmemDB() *inmemdb {
-	var m = map[entity.ID]*entity.Organization{}
+	var m = map[entity.ID]*organization.Organization{}
 	return &inmemdb{
 		m: m,
 	}
 }
 
 //Create an organization
-func (r *inmemdb) Create(e *entity.Organization) (entity.ID, error) {
+func (r *inmemdb) Create(e *organization.Organization) (entity.ID, error) {
 	r.m[e.ID] = e
 	return e.ID, nil
 }
 
 //Get an organization
-func (r *inmemdb) Get(id entity.ID) (*entity.Organization, error) {
+func (r *inmemdb) Get(id entity.ID) (*organization.Organization, error) {
 	if r.m[id] == nil {
-		return nil, entity.ErrNotFound
+		return nil, organization.ErrNotFound
 	}
 	return r.m[id], nil
 }

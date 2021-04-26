@@ -21,20 +21,24 @@
  *
  */
 
-package repository
+package organization
 
-import (
-	badger "github.com/dgraph-io/badger/v3"
-)
+import "errors"
 
-//UserMySQL mysql repo
-type OrganizationBadgerDB struct {
-	db *badger.DB
-}
+//ErrNotFound not found
+var ErrNotFound = errors.New("not found")
 
-//NewOrganizationBadgerDB create new repository
-func NewOrganizationBadgerDB(db *badger.DB) *OrganizationBadgerDB {
-	return &OrganizationBadgerDB{
-		db: db,
-	}
-}
+//ErrInvalidEntity invalid entity
+var ErrInvalidEntity = errors.New("invalid entity")
+
+//ErrCannotBeDeleted cannot be deleted
+var ErrCannotBeDeleted = errors.New("cannot be deleted")
+
+//ErrNotEnoughBooks cannot borrow
+var ErrNotEnoughBooks = errors.New("not enough books")
+
+//ErrPostalAddressNotSet cannot be deleted
+var ErrPostalAddressNotSet = errors.New("postal address is not set")
+
+//ErrBookNotBorrowed cannot return
+var ErrBookNotBorrowed = errors.New("book not borrowed")

@@ -1,0 +1,37 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "user",
+    srcs = [
+        "user.go",
+    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/infrastructure/repository/user",
+    visibility = ["//services/admin/backend:__subpackages__"],
+    deps = [
+        "//services/admin/backend/entity/user",
+        "//services/admin/backend/event",
+        "//shared/go/pkg/valueobject",
+        "@com_github_eventstore_eventstore_client_go//client",
+        "@com_github_eventstore_eventstore_client_go//direction",
+        "@com_github_eventstore_eventstore_client_go//messages",
+        "@com_github_eventstore_eventstore_client_go//streamrevision",
+        "@com_github_gofrs_uuid//:go_default_library",
+    ],
+)
+
+go_test(
+    name = "user_test",
+    size = "small",
+    srcs = [
+        "container_test.go",
+        "user_test.go",
+    ],
+    embed = [":user"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_eventstore_eventstore_client_go//direction",
+        "@com_github_eventstore_eventstore_client_go//streamrevision",
+        "@com_github_ory_dockertest_v3//:go_default_library",
+        "@com_github_stretchr_testify//assert",
+    ],
+)

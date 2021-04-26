@@ -1,46 +1,64 @@
 /*
- * Copyright © 2021 the contributors.
+ * Copyright 2021 DaSCH - Data and Service Center for the Humanities.
  *
- *  This file is part of the DaSCH Service Platform.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  The DaSCH Service Platform is free software: you can
- *  redistribute it and/or modify it under the terms of the
- *  GNU Affero General Public License as published by the
- *  Free Software Foundation, either version 3 of the License,
- *  or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  The DaSCH Service Platform is distributed in the hope that
- *  it will be useful, but WITHOUT ANY WARRANTY; without even
- *  the implied warranty of MERCHANTABILITY or FITNESS FOR
- *  A PARTICULAR PURPOSE.  See the GNU Affero General Public
- *  License for more details.
- *
- *  You should have received a copy of the GNU Affero General Public
- *  License along with the DaSCH Service Platform.  If not, see
- *  <http://www.gnu.org/licenses/>.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package valueobject
 
+import "github.com/gofrs/uuid"
+
 type Identifier struct {
-	value string
+	value uuid.UUID
 }
 
-//NewIdentifier creates a identifier value object
-func NewIdentifier(value string) (Identifier, error) {
-	var n Identifier
-	n.value = value
-	return n, nil
+//NewIdentifier creates a new identifier value object
+func NewIdentifier() (Identifier, error) {
+	id, err := uuid.NewV4()
+	if err != nil {
+		return Identifier{}, err
+	}
+	return Identifier{value: id}, nil
 }
 
-//String returns the value as string
-func (n Identifier) String() string {
-	return n.value
+//AsUUID returns the UUID of the identifier.
+func (v Identifier) UUID() uuid.UUID {
+	return v.value
+}
+
+// String implements the fmt.Stringer interface.
+func (v Identifier) String() string {
+	return v.value.String()
+}
+
+// MarshalText used to serialize the object
+func (v Identifier) MarshalText() ([]byte, error) {
+	return v.value.MarshalText()
+}
+
+// UnmarshalText used to deserialize the object and returns an error if it's invalid.
+func (v *Identifier) UnmarshalText(b []byte) error {
+	var u uuid.UUID
+	err := u.UnmarshalText(b)
+	if err != nil {
+		return err
+	}
+	*v = Identifier{value: u}
+	return nil
 }
 
 //Equals tests for equality with another value object
-func (n Identifier) Equals(value Value) bool {
+func (v Identifier) Equals(value Value) bool {
 	otherIdentifier, ok := value.(Identifier)
-	return ok && n.value == otherIdentifier.value
+	return ok && v.value == otherIdentifier.value
 }

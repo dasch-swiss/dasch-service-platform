@@ -1,0 +1,14 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "event",
+    srcs = [
+        "event.go",
+        "user.go",
+    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/event",
+    visibility = ["//services/admin:__subpackages__"],
+    deps = [
+        "//shared/go/pkg/valueobject",
+    ],
+)

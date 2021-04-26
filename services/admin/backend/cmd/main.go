@@ -29,7 +29,7 @@ import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/middleware"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/config"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/infrastructure/repository"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/usecase/organization"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/organization"
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
@@ -50,6 +50,7 @@ func main() {
 	}
 	fmt.Println(path)
 
+	// organizationRepository := repository.NewInmemDB()
 	organizationRepository := repository.NewInmemDB()
 	organizationService := organization.NewService(organizationRepository)
 

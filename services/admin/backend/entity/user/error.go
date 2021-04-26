@@ -21,7 +21,7 @@
  *
  */
 
-package entity
+package user
 
 import "errors"
 

@@ -4,6 +4,7 @@ go 1.16
 
 require (
 	github.com/99designs/gqlgen v0.13.0 // indirect
+	github.com/EventStore/EventStore-Client-Go v0.0.0-20210219122213-700926402daf // indirect
 	github.com/dgraph-io/badger/v3 v3.2011.1
 	github.com/google/uuid v1.2.0
 	github.com/gorilla/context v1.1.1
