@@ -19,7 +19,7 @@ package project
 import (
 	"context"
 
-	"github.com/dasch-swiss/dasch-service-platform/bazel-dasch-service-platform-repo/services/admin/backend/service/project"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/project"
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 )
 
