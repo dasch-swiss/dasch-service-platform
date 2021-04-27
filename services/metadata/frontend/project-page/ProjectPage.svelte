@@ -16,7 +16,7 @@
   let descriptionLinesNumber: number;
 
   const getProjectMetadata = async () => {
-    const res = await fetch(`http://localhost:3000/projects/${params.id}`)
+    const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`)
     const projectMetadata = await res.json();
     currentProjectMetadata.set(projectMetadata);
     project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
