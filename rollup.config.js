@@ -42,8 +42,6 @@ export default {
     plugins: [
         replace({
             'process.env.BASE_URL': production ? JSON.stringify('PLACEHOLDER') : JSON.stringify('http://localhost:8080/'),
-            __buildDate__: () => JSON.stringify(new Date()),
-            __buildVersion: 15
         }),
         svelte({
             preprocess: sveltePreprocess({ sourceMap: !production }),
