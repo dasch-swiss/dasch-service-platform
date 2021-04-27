@@ -16,7 +16,10 @@
   let descriptionLinesNumber: number;
 
   const getProjectMetadata = async () => {
-    const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`)
+    const port = '8080';
+    const baseUrl = `${window.location.protocol}//${window.location.hostname}:${port}/`;
+    // const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`);
+    const res = await fetch(`${baseUrl}projects/${params.id}`);
     const projectMetadata = await res.json();
     currentProjectMetadata.set(projectMetadata);
     project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
