@@ -2,6 +2,7 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -9,6 +10,7 @@ import (
 	"regexp"
 	"strconv"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -94,7 +96,7 @@ func loadProject(path string) Project {
 func loadProjectData() []Project {
 	var res []Project
 
-	paths, _ := filepath.Glob("./data/*.json")
+	paths, _ := filepath.Glob("./services/metadata/backend/fake-backend/data/*.json")
 
 	for _, path := range paths {
 		res = append(res, loadProject(path))
@@ -105,6 +107,8 @@ func loadProjectData() []Project {
 
 // Get projects
 func getProjects(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Got a request to %v", r.URL)
+
 	w.Header().Set("Content-Type", "application/json")
 	// TODO: do we need links to previous and next and first an last?
 
@@ -155,8 +159,8 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	a := []int{1}
-	log.Println(a[0:0])
+	port := 8080
+
 	// Init Router
 	router := mux.NewRouter()
 
@@ -164,9 +168,14 @@ func main() {
 	router.HandleFunc("/projects", getProjects).Methods("GET")
 	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
 
+	// CORS header
+	ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:5000"}))
+
 	// Load Data
 	projects = loadProjectData()
+	log.Printf("Loaded Projects: %v", len(projects))
 
 	// Run server
-	log.Fatal(http.ListenAndServe("localhost:3001", router))
+	log.Printf("Serving metadata on port: %v", port)
+	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), ch(router)))
 }
