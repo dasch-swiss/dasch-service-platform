@@ -127,6 +127,7 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 		// reduce projects by search
 		matches = searchProjects(query)
 	}
+	w.Header().Set("X-Total-Count", strconv.Itoa(len(matches)))
 	// paginate
 	if len(matches) > 1 && len(matches) > limit && page > 0 && limit > 0 {
 		max := len(matches) - 1
@@ -169,7 +170,8 @@ func main() {
 	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
 
 	// CORS header
-	ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:5000"}))
+	ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
+	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:5000"}))
 
 	// Load Data
 	projects = loadProjectData()
