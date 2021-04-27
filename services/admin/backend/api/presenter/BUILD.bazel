@@ -4,10 +4,12 @@ go_library(
     name = "presenter",
     srcs = [
         "organization.go",
+        "project.go"
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/presenter",
     visibility = ["//visibility:public"],
     deps = [
         "//services/admin/backend/entity",
+        "//shared/go/pkg/valueobject"
     ],
 )

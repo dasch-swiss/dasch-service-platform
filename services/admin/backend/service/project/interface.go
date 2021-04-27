@@ -52,6 +52,6 @@ type Repository interface {
 
 //UseCase interface which should be implemented by services.
 type UseCase interface {
-	GetProject(id valueobject.Identifier) (*project.Aggregate, error)
-	CreateProject(name string) (valueobject.Identifier, error)
+	GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
+	CreateProject(ctx context.Context, shortCode string, shortname string, longName string, description string) (valueobject.Identifier, error)
 }
