@@ -3,6 +3,10 @@
   import type { ProjectMetadata } from '../interfaces';
   
   export let projectMetadata: ProjectMetadata;
+
+  const getProject = (project: ProjectMetadata): any => {
+    return project.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
+  }
 </script>
 
 <section>
@@ -14,6 +18,15 @@
     <button on:click={() => replace(`#/project/${projectMetadata.id}`)}>Read more</button>
   </div>
 </section>
+<!-- <section>
+  <div class=header>
+    <h5>{ getProject(projectMetadata).name }</h5>
+  </div>
+  <div class=content>{ getProject(projectMetadata).description }</div>
+  <div class=footer>
+    <button on:click={() => replace(`#/project/${ getProject(projectMetadata).shortcode}`) }>Read more</button>
+  </div>
+</section> -->
 
 <style>
   section {

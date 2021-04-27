@@ -64,6 +64,10 @@ metadata-docker-build: build ## publish linux/amd64 platform image locally
 metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
 	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/docker:push
 
+.PHONY: metadata-docker-run
+metadata-docker-run: metadata-docker-build ## run linux/amd64 platform image locally
+	@docker run --rm -p 8080:8080 bazel/services/metadata/backend/cmd:image
+
 .PHONY: metadata-service-run
 metadata-service-run: build ## start the metadata-service
 	@bazel run //services/metadata/backend/cmd
@@ -114,7 +118,19 @@ docs-publish: publish ## publish the DSP API Slate docs to Github Pages
 
 .PHONY: metadata-server
 metadata-server: ## start metadata json-server watching db.json
-	@yarn run json-server --watch services/metadata/backend/data/db.json
+	@yarn run json-server --watch --port 8080 services/metadata/backend/data/db.json
+
+.PHONY: metadata-server-docker-build
+metadata-server-docker-build: build ## build metadata json-server watching db.json docker image
+	@bazel run //services/metadata/backend/data:image -- --norun
+
+.PHONY: metadata-server-docker-publish
+metadata-server-docker-publish: build ## publish metadata json-server watching db.json docker image
+	@bazel run //services/metadata/backend/data:push
+
+.PHONY: metadata-server-docker-run
+metadata-server-docker-run: metadata-server-docker-build ## publish metadata json-server watching db.json docker image
+	@docker run --rm -p 8080:8080 bazel/services/metadata/backend/data:image
 
 .PHONY: help
 help: ## this help

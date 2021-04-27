@@ -4,6 +4,7 @@ go_library(
     name = "handler",
     srcs = [
         "organization.go",
+        "spa.go",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api/handler",
     visibility = ["//visibility:public"],

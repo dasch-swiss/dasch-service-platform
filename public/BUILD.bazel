@@ -2,9 +2,9 @@ package(default_visibility = ["//visibility:public"])
 
 filegroup(
     name = "public",
-    srcs = [
+    srcs = glob(["assets/**/*"]) + glob(["build/**/*"]) + [
         "favicon.png",
         "global.css",
         "index.html",
-    ] + glob(["build/**/*"]),
+    ],
 )

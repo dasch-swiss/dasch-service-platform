@@ -51,18 +51,18 @@ Be sure to have `json-server` installed:
 yarn install -g json-server
 ```
 
-`json-server` watches and serves a single `db.json` file on port 3000.
+`json-server` watches and serves a single `db.json` file on port 8080.
 
 To run `json-server` either navigate to the `db.json` file and run `json-server --watch db.json` or simply run
 ```bash
 make metadata-server
 ```
 
-Currently one route is being served: `http://localhost:3000/projects/`. It returns all projects for which there is metadata available. For now, projects only contain an `id` (i.e. the project shortcode), `name`, `description` and `metadata`.
+Currently one route is being served: `http://localhost:8080/projects/`. It returns all projects for which there is metadata available. For now, projects only contain an `id` (i.e. the project shortcode), `name`, `description` and `metadata`.
 
-Metadata of a specific project can be retrieved by getting `/projects/<id>`. (E.g. `http://localhost:3000/projects/9997` to get the minimal metadata set.)
+Metadata of a specific project can be retrieved by getting `/projects/<id>`. (E.g. `http://localhost:8080/projects/9997` to get the minimal metadata set.)
 
-Full text search can be performed by adding `?q=<search-query>` (e.g. `http://localhost:3000/projects?q=agriculture`).
+Full text search can be performed by adding `?q=<search-query>` (e.g. `http://localhost:8080/projects?q=agriculture`).
 
 `json-server` also supports updating and deleting data. For more capabilities of `json-server`, see the [the docs](https://github.com/typicode/json-server).
 

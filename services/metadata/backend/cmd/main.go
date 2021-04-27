@@ -1,45 +1,27 @@
 /*
- * Copyright © 2021 the contributors.
+ * Copyright 2021 DaSCH - Data and Service Center for the Humanities.
  *
- *  This file is part of the DaSCH Service Platform.
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
  *
- *  The DaSCH Service Platform is free software: you can
- *  redistribute it and/or modify it under the terms of the
- *  GNU Affero General Public License as published by the
- *  Free Software Foundation, either version 3 of the License,
- *  or (at your option) any later version.
+ *     http://www.apache.org/licenses/LICENSE-2.0
  *
- *  The DaSCH Service Platform is distributed in the hope that
- *  it will be useful, but WITHOUT ANY WARRANTY; without even
- *  the implied warranty of MERCHANTABILITY or FITNESS FOR
- *  A PARTICULAR PURPOSE.  See the GNU Affero General Public
- *  License for more details.
- *
- *  You should have received a copy of the GNU Affero General Public
- *  License along with the DaSCH Service Platform.  If not, see
- *  <http://www.gnu.org/licenses/>.
- *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
  */
 
 package main
 
 import (
 	"fmt"
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api/handler"
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api/middleware"
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/config"
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/infrastructure/repository"
-	"github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/usecase/organization"
-	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/urfave/negroni"
 	"log"
 	"net/http"
 	"os"
-	"strconv"
-	"time"
 )
 
 func main() {
@@ -49,7 +31,7 @@ func main() {
 		log.Println(err)
 	}
 	fmt.Println(path)
-
+/*
 	organizationRepository := repository.NewInmemDB()
 	organizationService := organization.NewService(organizationRepository)
 
@@ -57,16 +39,21 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+
 	r := mux.NewRouter()
+
 	//handlers
 	n := negroni.New(
 		negroni.HandlerFunc(middleware.Cors),
-		negroni.HandlerFunc(middleware.Metrics(metricService)),
+		middleware.Metrics(metricService),
 		negroni.NewLogger(),
 	)
 
 	//organization
 	handler.MakeOrganizationHandlers(r, *n, organizationService)
+
+	//spa
+	handler.MakeSpaHandlers(r, *n)
 
 	http.Handle("/", r)
 	http.Handle("/metrics", promhttp.Handler())
@@ -74,6 +61,7 @@ func main() {
 		w.WriteHeader(http.StatusOK)
 	})
 
+	// start HTTP server with all the previous attached handlers
 	logger := log.New(os.Stderr, "logger: ", log.Lshortfile)
 	srv := &http.Server{
 		ReadTimeout:  5 * time.Second,
@@ -87,27 +75,28 @@ func main() {
 	if err != nil {
 		log.Fatal(err.Error())
 	}
+*/
 
-	/*
-		// create file server handler to serve public folder relative to workspace root
-		fs := http.FileServer(http.Dir("./public"))
-		http.Handle("/*", fs)
+	r := mux.NewRouter()
 
-		// add spa handler to serve for calls to root
-		http.HandleFunc("/", spaHandler)
+	// add spa handler to serve for calls to root
+	r.HandleFunc("/", spaHandler)
 
-		// add db route handler to serve db.json
-		http.HandleFunc("/db", dbHandler)
+	// add db route handler to serve db.json
+	r.HandleFunc("/db", dbHandler)
 
-		// add projects route handler to serve projects
-		http.HandleFunc("/projects", projectsHandler)
+	//if a path not found until now, e.g. "/image/tiny.png"
+	//this will look at "./public/image/tiny.png" at filesystem
+	r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
 
-		// start HTTP server with all the previous attached handlers
-		log.Fatal(http.ListenAndServe(":8080", nil))
-	*/
+	// add the router
+	http.Handle("/", r)
+
+	// start HTTP server with all the previous attached handlers
+	log.Fatal(http.ListenAndServe(":8080", nil))
+
 }
 
-/*
 func spaHandler(responseWriter http.ResponseWriter, request *http.Request) {
 	http.ServeFile(responseWriter, request, "./public/index.html")
 }
@@ -115,21 +104,3 @@ func spaHandler(responseWriter http.ResponseWriter, request *http.Request) {
 func dbHandler(responseWriter http.ResponseWriter, request *http.Request) {
 	http.ServeFile(responseWriter, request, "./services/metadata/backend/data/db.json")
 }
-
-func projectsHandler(responseWriter http.ResponseWriter, request *http.Request) {
-
-	resp, err := http.Get("https://api.staging.dasch.swiss/admin/projects")
-	if err != nil {
-		// handle error
-	}
-
-	defer resp.Body.Close()
-
-	body, readErr := ioutil.ReadAll(resp.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
-
-	fmt.Fprintf(responseWriter, string(body))
-}
-*/
