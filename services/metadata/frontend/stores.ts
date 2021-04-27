@@ -10,7 +10,7 @@ export const currentProjectMetadata = writable(undefined);
 let query: string;
 
 export async function getProjectsMetadata(page: number, q?: string): Promise<void> {
-  const baseUrl = 'http://localhost:3000/';
+  const baseUrl = process.env.BASE_URL;
   const baseResultsRange = [1, 9];
   let route: string;
   let currentResultsRange = baseResultsRange.map(v => v + ((page - 1) * baseResultsRange[1]));

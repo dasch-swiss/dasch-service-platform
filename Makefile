@@ -118,7 +118,7 @@ docs-publish: publish ## publish the DSP API Slate docs to Github Pages
 
 .PHONY: metadata-server
 metadata-server: ## start metadata json-server watching db.json
-	@yarn run json-server --watch services/metadata/backend/data/db.json
+	@yarn run json-server --watch --port 8080 services/metadata/backend/data/db.json
 
 .PHONY: metadata-server-docker-build
 metadata-server-docker-build: ## build metadata json-server watching db.json docker image
