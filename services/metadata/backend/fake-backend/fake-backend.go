@@ -110,6 +110,13 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got a request to %v", r.URL)
 
 	w.Header().Set("Content-Type", "application/json")
+	w.Header().Set("Access-Control-Expose-Headers", "X-Total-Count")
+	// TODO: are any of those needed? json-server has them
+	// w.Header().Set("Content-Type", "charset=utf-8")
+	// w.Header().Set("Cache-Control", "no-cache")
+	// w.Header().Set("Expires", "-1")
+	// w.Header().Set("Pragma", "no-cache")
+	// w.Header().Add("X-Total-Count", "10")
 	// TODO: do we need links to previous and next and first an last?
 
 	// Request parameters
@@ -130,7 +137,7 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("X-Total-Count", strconv.Itoa(len(matches)))
 	// paginate
 	if len(matches) > 1 && len(matches) > limit && page > 0 && limit > 0 {
-		max := len(matches) - 1
+		max := len(matches)
 		start := (page - 1) * limit
 		if start > max {
 			start = max
@@ -139,6 +146,7 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 		if end > max {
 			end = max
 		}
+		log.Printf("Start: %v, End: %v", start, end)
 		matches = matches[start:end]
 	}
 	// returns whatever remains
@@ -172,6 +180,7 @@ func main() {
 	// CORS header
 	ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
 	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:5000"}))
+	// TODO: is this a security issue?
 
 	// Load Data
 	projects = loadProjectData()
