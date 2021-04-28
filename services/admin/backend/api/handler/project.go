@@ -31,7 +31,9 @@ import (
 	"time"
 
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/presenter"
+	projectEntity "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/project"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/project"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
@@ -81,10 +83,67 @@ func createProject(service project.UseCase) http.Handler {
 	})
 }
 
+func getProject(service project.UseCase) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		// get variables from request url
+		vars := mux.Vars(r)
+
+		// create empty Identifier
+		uuid := valueobject.Identifier{}
+
+		// create byte array from the provided id string
+		b := []byte(vars["id"])
+
+		// assign the value of the Identifier
+		uuid.UnmarshalText(b)
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+		defer cancel()
+
+		// get the project
+		data, err := service.GetProject(ctx, uuid)
+		w.Header().Set("Content-Type", "application/json")
+
+		if err != nil && err == projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No project found for this uuid"))
+			return
+		}
+
+		if err != nil && err != projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("The server is not responding"))
+			return
+		}
+		if data == nil {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No data was returned"))
+			return
+		}
+
+		toJ := &presenter.Project{
+			ID:          data.ID(),
+			ShortCode:   data.ShortCode().String(),
+			ShortName:   data.ShortName().String(),
+			LongName:    data.LongName().String(),
+			Description: data.Description().String(),
+		}
+		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Failed encoding data to JSON"))
+		}
+	})
+}
+
 //MakeProjectHandlers make url handlers
 func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCase) {
 
 	r.Handle("/v1/project", n.With(
 		negroni.Wrap(createProject(service)),
 	)).Methods("POST", "OPTIONS").Name("createProject")
+
+	r.Handle("/v1/project/{id}", n.With(
+		negroni.Wrap(getProject(service)),
+	)).Methods("GET", "OPTIONS").Name("getProject")
 }

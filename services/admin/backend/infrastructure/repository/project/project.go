@@ -149,7 +149,8 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 	streamID := "Project-" + id.String()
 	recordedEvents, err := r.c.ReadStreamEvents(ctx, direction.Forwards, streamID, streamrevision.StreamRevisionStart, 1, false)
 	if err != nil {
-		log.Fatalf("Unexpected failure %+v", err)
+		log.Printf("Unexpected failure %+v", err)
+		return &project.Aggregate{}, project.ErrNotFound
 	}
 
 	var events []event.Event
