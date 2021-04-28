@@ -38,8 +38,8 @@
     <a href="/" class="header-left">
       <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
       <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
-      <h1 class="title">{$location === '/projects' ? 'Repository Explorer' : `Project ${$location.split('/')[2]}`}</h1>
     </a>
+    <h1 class="title">{$location === '/projects' ? 'Repository Explorer' : `Project ${$location.split('/')[2]}`}</h1>
     <div class="header-right">
       <input on:change={search} bind:value={enteredString} class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />
       <!-- searchbar button -->
@@ -109,9 +109,9 @@
   }
   .title {
     color: var(--dasch-text);
-    padding: 12px 0;
+    padding: 0;
     white-space: nowrap;
-    font-size: 0.8rem;
+    font-size: 1.25rem;
     display: inline-block;
   }
   .searchbar-in-header {
@@ -168,8 +168,8 @@
       right: 0px;
     }
     .title {
-      font-size: 1rem;
-      padding: 12px;
+      /* font-size: 1.5rem; */
+      /* padding: 12px; */
     }
   }
 </style>

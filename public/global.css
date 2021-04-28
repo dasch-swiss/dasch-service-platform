@@ -25,8 +25,7 @@ html, body {
   --shadow-2: 0px 2px 4px -1px rgba(0,0,0,0.3);
 
   --lead: var(--dasch-violet);
-  --second: #236623;
-  /* --second: #A75949; */
+  --second: #00343D;
 
   --lighter-dark: #3F3F40;
   --darker-dark: #282828;
