@@ -106,6 +106,7 @@ func loadProjectData() []Project {
 }
 
 // Get projects
+// Route: /projecs
 func getProjects(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Got a request to %v", r.URL)
 
@@ -154,6 +155,7 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 }
 
 // Get a single project
+// Route /projects/:id
 func getProject(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -167,6 +169,11 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
+func home(w http.ResponseWriter, r *http.Request) {
+	log.Println("GET /")
+	http.ServeFile(w, r, "./public/")
+}
+
 func main() {
 	port := 8080
 
@@ -174,6 +181,7 @@ func main() {
 	router := mux.NewRouter()
 
 	// Set up routes
+	router.HandleFunc("/", home).Methods("GET")
 	router.HandleFunc("/projects", getProjects).Methods("GET")
 	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
 
