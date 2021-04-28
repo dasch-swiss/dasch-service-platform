@@ -120,6 +120,10 @@ docs-publish: publish ## publish the DSP API Slate docs to Github Pages
 metadata-server: ## start metadata json-server watching db.json
 	@yarn run json-server --watch --port 8080 services/metadata/backend/data/db.json
 
+.PHONY: metadata-server-go
+metadata-server-go: ## start metadata json-server watching db.json
+	@go run services/metadata/backend/fake-backend/fake-backend.go
+
 .PHONY: metadata-server-docker-build
 metadata-server-docker-build: build ## build metadata json-server watching db.json docker image
 	@bazel run //services/metadata/backend/data:image -- --norun
