@@ -34,7 +34,7 @@
 
 <header>
   <div class="header-container">
-    <a href="/" class="header-left">
+    <a on:click={() => getProjectsMetadata(1)} href="#/projects?_page=1&_limit=9" class="header-left">
       <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
       <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
       <h1 class="title">Repository Explorer</h1>

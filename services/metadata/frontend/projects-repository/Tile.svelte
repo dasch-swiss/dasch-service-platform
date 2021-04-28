@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { replace } from 'svelte-spa-router';
+  import { push } from 'svelte-spa-router';
   import type { ProjectMetadata } from '../interfaces';
   
   export let projectMetadata: ProjectMetadata;
@@ -15,7 +15,7 @@
   </div>
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <button on:click={() => replace(`#/project/${projectMetadata.id}`)}>Read more</button>
+    <button on:click={() => push(`#/project/${projectMetadata.id}`)}>Read more</button>
   </div>
 </section>
 <!-- <section>

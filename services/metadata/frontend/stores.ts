@@ -3,8 +3,7 @@ import { writable } from 'svelte/store';
 import type { PaginationData } from './interfaces';
 
 export const pagination = writable({} as PaginationData);
-export const resultsState = writable(undefined as string);
-export const pagedResults = writable([]);
+export const pagedResults = writable(undefined as any[]);
 export const currentProjectMetadata = writable(undefined);
 
 let query: string;
@@ -29,7 +28,6 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
   }
 
   // console.log(baseUrl, route);
-  resultsState.set(route);
   push(`/${route}`);
 
   await fetch(`${baseUrl}${route}`)
@@ -43,5 +41,5 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
       pagination.set({currentPage: page, currentResultsRange, totalCount, totalPages});
       return r.json();
     })
-    .then(data => {pagedResults.set(data), console.log(data)})
+    .then(data => {pagedResults.set(data)})
 }
