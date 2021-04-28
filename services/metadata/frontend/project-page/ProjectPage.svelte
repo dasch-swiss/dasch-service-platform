@@ -255,17 +255,15 @@
     cursor: pointer;
   }
   @media screen and (min-width: 992px) {
-    .column-left, .column-right{
-      padding: 20px;
-    }
-    .row {
-      flex-direction: row;
-    }
-    #to-top-mobile {
-      display: none;
-    }
-    #to-top-desktop {
-      display: inline-block;
-    }
+    .column-left, .column-right {padding: 20px;}
+    .column-left {min-width: 53vw;}
+    .column-right {min-width: 30vw;}
+    .row {flex-direction: row;}
+    #to-top-mobile {display: none;}
+    #to-top-desktop {display: inline-block;}
+  }
+  @media screen and (min-width: 1200px) {
+    .column-left {min-width: 688px;}
+    .column-right {min-width: 352px;}
   }
 </style>

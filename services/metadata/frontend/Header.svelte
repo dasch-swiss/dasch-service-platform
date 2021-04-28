@@ -112,7 +112,7 @@
     padding: 0;
     white-space: nowrap;
     font-size: 1.25rem;
-    display: inline-block;
+    flex: 1;
   }
   .searchbar-in-header {
     display: none;
