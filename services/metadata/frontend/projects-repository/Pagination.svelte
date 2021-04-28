@@ -17,6 +17,7 @@
     document.getElementById(($pagination.currentPage).toString()).classList.add('active');
     console.log('curr',$pagination.currentPage);
     getProjectsMetadata($pagination.currentPage);
+    window.scrollTo(0,0);
   }
 </script>
 

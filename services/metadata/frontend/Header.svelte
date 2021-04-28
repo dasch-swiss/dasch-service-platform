@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { location } from "svelte-spa-router";
   import Category from "./projects-repository/Category.svelte";
   import { getProjectsMetadata } from "./stores";
 
@@ -37,7 +38,7 @@
     <a href="/" class="header-left">
       <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
       <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
-      <h1 class="title">Repository Explorer</h1>
+      <h1 class="title">{$location === '/projects' ? 'Repository Explorer' : `Project ${$location.split('/')[2]}`}</h1>
     </a>
     <div class="header-right">
       <input on:change={search} bind:value={enteredString} class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />

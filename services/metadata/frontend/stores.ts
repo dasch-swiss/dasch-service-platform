@@ -13,7 +13,6 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
   // const baseUrl = process.env.BASE_URL;
   const port = '8080';
   const baseUrl = `${window.location.protocol}//${window.location.hostname}:${port}/`;
-  console.log(window.location);
   const baseResultsRange = [1, 9];
   let route: string;
   let currentResultsRange = baseResultsRange.map(v => v + ((page - 1) * baseResultsRange[1]));
