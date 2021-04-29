@@ -170,16 +170,22 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 }
 
 func main() {
-	port := 8080
+	port := 3000
 
 	// Init Router
 	router := mux.NewRouter()
 
 	// Set up routes
+	// redirect root to /metadata/
+	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+		url := fmt.Sprintf("%vmetadata/", r.URL)
+		http.Redirect(w, r, url, 308)
+	}).Methods("GET")
 	// Serve frontend from `/public`
 	dir := "./public"
 	// TODO: ensure only GET requests work here
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
+	router.PathPrefix("/metadata/").Handler(http.StripPrefix("/metadata/", http.FileServer(http.Dir(dir))))
+	// router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
 	// API
 	router.HandleFunc("/projects", getProjects).Methods("GET")
 	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
