@@ -59,19 +59,16 @@ nav, main {
 }
 nav {
   flex: 0 0 20%;
-  /* background-color: hotpink; */
   display: flex;
   justify-content: flex-end;
   padding: 0;
 }
 .category-container {
-  /* background-color: lemonchiffon; */
   padding-top: 45px;
   max-width: 210px;
 }
 main {
   width: 100%;
-  /* background-color: aqua; */
   align-items: center;
   justify-content: center;
 }
@@ -80,7 +77,6 @@ main {
   display: flex;
   flex-flow: row wrap;
   justify-content: center;
-  /* background-color: skyblue; */
   max-width: 1200px;
 }
 @media screen and (min-width: 992px) {

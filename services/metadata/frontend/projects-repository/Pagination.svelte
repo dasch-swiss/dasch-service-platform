@@ -63,9 +63,9 @@
     border: 1px solid #ddd;
   }
   button.active {
-    background-color: var(--lead);
+    background-color: var(--lead-colour);
     color: white;
-    border: 1px solid var(--lead);
+    border: 1px solid var(--lead-colour);
   }
   button:hover:not(.active), button:hover:not:disabled {
     background-color: var(--dasch-light-violet);

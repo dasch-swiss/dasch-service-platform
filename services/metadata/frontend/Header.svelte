@@ -142,14 +142,9 @@
     padding: 0px;
   }
   button:hover {
-    color: var(--lead);
+    color: var(--lead-colour);
     background-color: var(--cl-transparent-dark);
   }
-  /* .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin: 0.25rem;
-  } */
   .menu {
     background-color: var(--cl-background-light);
   }
@@ -166,10 +161,6 @@
       height: 90vh;
       position: absolute;
       right: 0px;
-    }
-    .title {
-      /* font-size: 1.5rem; */
-      /* padding: 12px; */
     }
   }
 </style>
