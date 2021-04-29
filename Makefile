@@ -66,7 +66,7 @@ metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhu
 
 .PHONY: metadata-docker-run
 metadata-docker-run: metadata-docker-build ## run linux/amd64 platform image locally
-	@docker run --rm -p 8080:8080 bazel/services/metadata/backend/cmd:image
+	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/cmd:image
 
 .PHONY: metadata-service-run
 metadata-service-run: build ## start the metadata-service

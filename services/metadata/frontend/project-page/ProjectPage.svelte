@@ -16,7 +16,7 @@
   let descriptionLinesNumber: number;
 
   const getProjectMetadata = async () => {
-    const port = '8080';
+    const port = '3000';
     const baseUrl = `${window.location.protocol}//${window.location.hostname}:${port}/`;
     // const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`);
     const res = await fetch(`${baseUrl}projects/${params.id}`);
