@@ -94,6 +94,32 @@ func (s *Service) UpdateProjectShortCode(ctx context.Context, id valueobject.Ide
 	return p, nil
 }
 
+//UpdateProjectShortName update a projects short name
+func (s *Service) UpdateProjectShortName(ctx context.Context, id valueobject.Identifier, shortName string) (*project.Aggregate, error) {
+
+	// get the project to update
+	p, err := s.repo.Load(ctx, id)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// create a new short name object with the new short name
+	nsn, err := valueobject.NewShortName(shortName)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// update the short name
+	p.ChangeShortName(nsn)
+
+	// save the project
+	if _, err := s.repo.Save(ctx, p); err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	return p, nil
+}
+
 //GetProject get a project
 func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 

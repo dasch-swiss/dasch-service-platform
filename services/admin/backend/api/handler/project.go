@@ -83,11 +83,14 @@ func createProject(service project.UseCase) http.Handler {
 	})
 }
 
-func updateProjectShortCode(service project.UseCase) http.Handler {
+func updateProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		errorMessage := "Error updating project"
 		var input struct {
 			ShortCode string `json:"shortCode"`
+			ShortName string `json:"shortName"`
+			// LongName    string `json:"longName"`
+			// Description string `json:"description"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
@@ -112,23 +115,71 @@ func updateProjectShortCode(service project.UseCase) http.Handler {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 		defer cancel()
 
-		p, err := service.UpdateProjectShortCode(ctx, uuid, input.ShortCode)
-		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
+		// get the project
+		p, err := service.GetProject(ctx, uuid)
+		if err != nil && err == projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No project found for this uuid"))
 			return
 		}
 
+		if err != nil && err != projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("The server is not responding"))
+			return
+		}
+		if p == nil {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No data was returned"))
+			return
+		}
+
+		sc := p.ShortCode()
+		sn := p.ShortName()
+		// ln := p.LongName()
+		// desc := p.Description()
+
+		if input.ShortCode != "" {
+			usc, err := service.UpdateProjectShortCode(ctx, uuid, input.ShortCode)
+			if err != nil {
+				log.Println(err.Error())
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(errorMessage))
+				return
+			}
+
+			sc = usc.ShortCode()
+		}
+
+		if input.ShortName != "" {
+			usn, err := service.UpdateProjectShortName(ctx, uuid, input.ShortName)
+			if err != nil {
+				log.Println(err.Error())
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(errorMessage))
+				return
+			}
+
+			sn = usn.ShortName()
+		}
+
+		// if input.LongName != "" {
+
+		// }
+
+		// if input.Description != "" {
+
+		// }
+
 		toJ := &presenter.Project{
 			ID:          p.ID(),
-			ShortCode:   p.ShortCode().String(),
-			ShortName:   p.ShortName().String(),
+			ShortCode:   sc.String(),
+			ShortName:   sn.String(),
 			LongName:    p.LongName().String(),
 			Description: p.Description().String(),
 		}
 
-		w.WriteHeader(http.StatusCreated)
+		w.WriteHeader(http.StatusOK)
 		if err := json.NewEncoder(w).Encode(toJ); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(errorMessage))
@@ -198,8 +249,8 @@ func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCa
 	)).Methods("POST", "OPTIONS").Name("createProject")
 
 	r.Handle("/v1/project/{id}", n.With(
-		negroni.Wrap(updateProjectShortCode(service)),
-	)).Methods("PUT", "OPTIONS").Name("updateProjectShortCode")
+		negroni.Wrap(updateProject(service)),
+	)).Methods("PUT", "OPTIONS").Name("updateProject")
 
 	r.Handle("/v1/project/{id}", n.With(
 		negroni.Wrap(getProject(service)),

@@ -149,7 +149,8 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 
 func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 	streamID := "Project-" + id.String()
-	recordedEvents, err := r.c.ReadStreamEvents(ctx, direction.Forwards, streamID, streamrevision.StreamRevisionStart, 10, false)
+	// TODO: figure out the correct way to replay all the events
+	recordedEvents, err := r.c.ReadStreamEvents(ctx, direction.Forwards, streamID, streamrevision.StreamRevisionStart, 1000, false)
 	if err != nil {
 		log.Printf("Unexpected failure %+v", err)
 		return &project.Aggregate{}, project.ErrNotFound
@@ -179,6 +180,17 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			}
 			log.Println(">>>>>>>>>>>>>>>")
 			log.Println("PROJECT SHORT CODE CHANGED")
+			log.Print(e)
+			log.Println(">>>>>>>>>>>>>>>")
+			events = append(events, &e)
+		case "ProjectShortNameChanged":
+			var e event.ProjectShortNameChanged
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			log.Println(">>>>>>>>>>>>>>>")
+			log.Println("PROJECT SHORT NAME CHANGED")
 			log.Print(e)
 			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)

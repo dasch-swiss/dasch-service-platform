@@ -31,7 +31,7 @@ import (
 type Project struct {
 	ID          valueobject.Identifier `json:"id"`
 	ShortCode   string                 `json:"shortCode"`
-	ShortName   string                 `json:"shortname"`
+	ShortName   string                 `json:"shortName"`
 	LongName    string                 `json:"longName"`
 	Description string                 `json:"description"`
 }
