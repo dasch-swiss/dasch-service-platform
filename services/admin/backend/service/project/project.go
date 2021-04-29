@@ -68,6 +68,32 @@ func (s *Service) CreateProject(ctx context.Context, shortCode string, shortName
 	return id, nil
 }
 
+//UpdateProjectShortCode update a projects short code
+func (s *Service) UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error) {
+
+	// get the project to update
+	p, err := s.repo.Load(ctx, id)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// create a new short code object with the new short code
+	nsc, err := valueobject.NewShortCode(shortCode)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// update the short code
+	p.ChangeShortCode(nsc)
+
+	// save the project
+	if _, err := s.repo.Save(ctx, p); err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	return p, nil
+}
+
 //GetProject get a project
 func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 

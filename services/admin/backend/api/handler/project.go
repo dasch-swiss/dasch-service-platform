@@ -83,6 +83,60 @@ func createProject(service project.UseCase) http.Handler {
 	})
 }
 
+func updateProjectShortCode(service project.UseCase) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		errorMessage := "Error updating project"
+		var input struct {
+			ShortCode string `json:"shortCode"`
+		}
+		err := json.NewDecoder(r.Body).Decode(&input)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(errorMessage))
+			return
+		}
+
+		// get variables from request url
+		vars := mux.Vars(r)
+
+		// create empty Identifier
+		uuid := valueobject.Identifier{}
+
+		// create byte array from the provided id string
+		b := []byte(vars["id"])
+
+		// assign the value of the Identifier
+		uuid.UnmarshalText(b)
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+		defer cancel()
+
+		p, err := service.UpdateProjectShortCode(ctx, uuid, input.ShortCode)
+		if err != nil {
+			log.Println(err.Error())
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(errorMessage))
+			return
+		}
+
+		toJ := &presenter.Project{
+			ID:          p.ID(),
+			ShortCode:   p.ShortCode().String(),
+			ShortName:   p.ShortName().String(),
+			LongName:    p.LongName().String(),
+			Description: p.Description().String(),
+		}
+
+		w.WriteHeader(http.StatusCreated)
+		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(errorMessage))
+			return
+		}
+	})
+}
+
 func getProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -142,6 +196,10 @@ func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCa
 	r.Handle("/v1/project", n.With(
 		negroni.Wrap(createProject(service)),
 	)).Methods("POST", "OPTIONS").Name("createProject")
+
+	r.Handle("/v1/project/{id}", n.With(
+		negroni.Wrap(updateProjectShortCode(service)),
+	)).Methods("PUT", "OPTIONS").Name("updateProjectShortCode")
 
 	r.Handle("/v1/project/{id}", n.With(
 		negroni.Wrap(getProject(service)),

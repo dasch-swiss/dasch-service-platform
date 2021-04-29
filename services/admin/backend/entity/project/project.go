@@ -132,7 +132,7 @@ func NewAggregate(id valueobject.Identifier, shortCode valueobject.ShortCode, sh
 // ChangeShortCode changes the short code of the project.
 // TODO: check if short code is free (needs to be unique)
 // TODO: add user who initiated the change
-func (p Aggregate) ChangeShortCode(shortCode valueobject.ShortCode) error {
+func (p *Aggregate) ChangeShortCode(shortCode valueobject.ShortCode) error {
 	p.raise(&event.ProjectShortCodeChanged{
 		ID:        p.id,
 		ShortCode: shortCode,
@@ -146,7 +146,7 @@ func (p Aggregate) ChangeShortCode(shortCode valueobject.ShortCode) error {
 // ChangeShortName changes the short name of the project.
 // TODO: check if short name is free (needs to be unique)
 // TODO: add user who initiated the change
-func (p Aggregate) ChangeShortName(shortName valueobject.ShortName) error {
+func (p *Aggregate) ChangeShortName(shortName valueobject.ShortName) error {
 	p.raise(&event.ProjectShortNameChanged{
 		ID:        p.id,
 		ShortName: shortName,
@@ -160,7 +160,7 @@ func (p Aggregate) ChangeShortName(shortName valueobject.ShortName) error {
 // ChangeLongName changes the long name of the project.
 // TODO: check if long name is free (needs to be unique)
 // TODO: add user who initiated the change
-func (p Aggregate) ChangeLongName(longName valueobject.LongName) error {
+func (p *Aggregate) ChangeLongName(longName valueobject.LongName) error {
 	p.raise(&event.ProjectLongNameChanged{
 		ID:        p.id,
 		LongName:  longName,
@@ -173,7 +173,7 @@ func (p Aggregate) ChangeLongName(longName valueobject.LongName) error {
 
 // ChangeDescription changes the description of the project.
 // TODO: add user who initiated the change
-func (p Aggregate) ChangeDescription(description valueobject.Description) error {
+func (p *Aggregate) ChangeDescription(description valueobject.Description) error {
 	p.raise(&event.ProjectDescriptionChanged{
 		ID:          p.id,
 		Description: description,

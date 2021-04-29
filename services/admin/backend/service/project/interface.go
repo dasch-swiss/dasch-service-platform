@@ -40,7 +40,7 @@ type Reader interface {
 //Writer interface
 type Writer interface {
 	Save(ctx context.Context, e *project.Aggregate) (valueobject.Identifier, error)
-	// Update(e *project.Aggregate) error
+	// UpdateShortCode(ctx context.Context, id valueobject.Identifier, shortCode valueobject.ShortCode) error
 	// Delete(e *entity.ID) error
 }
 
@@ -54,4 +54,5 @@ type Repository interface {
 type UseCase interface {
 	GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
 	CreateProject(ctx context.Context, shortCode string, shortname string, longName string, description string) (valueobject.Identifier, error)
+	UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error)
 }

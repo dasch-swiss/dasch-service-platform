@@ -45,6 +45,7 @@ func NewProjectRepository(client *client.Client) *projectRepository {
 
 func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (valueobject.Identifier, error) {
 	var proposedEvents []messages.ProposedEvent
+	streamRevision := streamrevision.StreamRevisionStreamExists
 
 	for _, ev := range p.Events() {
 		switch e := ev.(type) {
@@ -63,6 +64,7 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 			}
 
 			proposedEvents = append(proposedEvents, pe)
+			streamRevision = streamrevision.StreamRevisionNoStream
 
 		case *event.ProjectShortCodeChanged:
 			j, err := json.Marshal(e)
@@ -135,7 +137,7 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
-	_, err := r.c.AppendToStream(ctx, streamID, streamrevision.StreamRevisionNoStream, proposedEvents)
+	_, err := r.c.AppendToStream(ctx, streamID, streamRevision, proposedEvents)
 	if err != nil {
 		log.Fatalf("Unexpected failure %+v", err)
 	}
@@ -147,7 +149,7 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 
 func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 	streamID := "Project-" + id.String()
-	recordedEvents, err := r.c.ReadStreamEvents(ctx, direction.Forwards, streamID, streamrevision.StreamRevisionStart, 1, false)
+	recordedEvents, err := r.c.ReadStreamEvents(ctx, direction.Forwards, streamID, streamrevision.StreamRevisionStart, 10, false)
 	if err != nil {
 		log.Printf("Unexpected failure %+v", err)
 		return &project.Aggregate{}, project.ErrNotFound
@@ -164,6 +166,19 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
 			log.Println(">>>>>>>>>>>>>>>")
+			log.Println("PROJECT CREATED")
+			log.Print(e)
+			log.Println(">>>>>>>>>>>>>>>")
+			events = append(events, &e)
+
+		case "ProjectShortCodeChanged":
+			var e event.ProjectShortCodeChanged
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			log.Println(">>>>>>>>>>>>>>>")
+			log.Println("PROJECT SHORT CODE CHANGED")
 			log.Print(e)
 			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
