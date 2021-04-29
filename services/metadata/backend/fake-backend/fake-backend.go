@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strconv"
+	"time"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -147,7 +148,6 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 		if end > max {
 			end = max
 		}
-		log.Printf("Start: %v, End: %v", start, end)
 		matches = matches[start:end]
 	}
 	// returns whatever remains
@@ -169,11 +169,6 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
-func home(w http.ResponseWriter, r *http.Request) {
-	log.Println("GET /")
-	http.ServeFile(w, r, "./public/")
-}
-
 func main() {
 	port := 8080
 
@@ -181,20 +176,32 @@ func main() {
 	router := mux.NewRouter()
 
 	// Set up routes
-	router.HandleFunc("/", home).Methods("GET")
+	// Serve frontend from `/public`
+	dir := "./public"
+	// TODO: ensure only GET requests work here
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
+	// API
 	router.HandleFunc("/projects", getProjects).Methods("GET")
 	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
 
 	// CORS header
+	// TODO: is this a security issue?
 	ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
 	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:5000"}))
-	// TODO: is this a security issue?
 
 	// Load Data
 	projects = loadProjectData()
 	log.Printf("Loaded Projects: %v", len(projects))
 
+	addr := fmt.Sprintf(":%v", port)
+	srv := &http.Server{
+		Handler:      ch(router),
+		Addr:         addr,
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
 	// Run server
-	log.Printf("Serving metadata on port: %v", port)
-	log.Fatal(http.ListenAndServe(fmt.Sprintf(":%v", port), ch(router)))
+	log.Printf("Serving metadata at %v, on port %v", addr, port)
+	log.Fatal(srv.ListenAndServe())
 }
