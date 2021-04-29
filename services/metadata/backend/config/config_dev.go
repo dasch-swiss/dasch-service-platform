@@ -21,5 +21,5 @@ const (
 	DB_PASSWORD            = "test"
 	DB_DATABASE            = "test"
 	DB_HOST                = "127.0.0.1"
-	API_PORT               = 8080
+	API_PORT               = 3000
 )
