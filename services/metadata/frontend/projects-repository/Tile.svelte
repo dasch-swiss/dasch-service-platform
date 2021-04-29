@@ -30,7 +30,6 @@
 
 <style>
   section {
-    /* border: 1px solid #000; */
     border: 1px solid #cdcdcd;
     border-radius: 5px;
     background-color: #fff;
@@ -40,23 +39,19 @@
     float: left;
     box-shadow: var(--shadow-2);
   }
-
   button {
     display: inline-block;
     vertical-align: middle;
     border-radius: 0.25rem;
     background-color: #fff;
-    /* border: none; */
-    border: 1px solid var(--lead);
-    /* margin: 0 -10px 20px 20px; */
+    border: 1px solid var(--lead-colour);
     padding: 5px 20px;
-    /* color: deeppink; */
-    color: var(--lead);
+    color: var(--lead-colour);
     box-shadow: var(--shadow-1);
   }
   button:hover {
     color: #fff;
-    background-color: var(--lead);
+    background-color: var(--lead-colour);
   }
   .header{
     height: 30px;
@@ -79,14 +74,9 @@
   }
   .footer {
     margin: 10px 0;
-    color: var(--lead);
+    color: var(--lead-colour);
     font-size: 0.8em;
     text-align: center;
-  }
-  .footer a {
-    display: flex;
-    justify-content: center;
-    height: 20px;
   }
   @media screen and (min-width: 768px) {
     section {
@@ -102,8 +92,6 @@
     }
   }
   @media screen and (min-width: 1200px) {
-    section {
-      margin: 5px;
-    }
+    section {margin: 5px;}
   }
 </style>

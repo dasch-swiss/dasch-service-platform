@@ -199,5 +199,5 @@ container_pull(
   registry = "docker.io",
   repository = "daschswiss/json-server",
   # 'tag' is also supported, but digest is encouraged for reproducibility.
-  digest = "sha256:a6d11d42538488187d87ecf7d592ce3b3de7557642d64bd77422310e9ea82562",
+  digest = "sha256:cba2406ac6510e72cd7a0f85becb51b9f8adcb1622c509d2f69392627729b1d8",
 )

@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { location } from "svelte-spa-router";
   import Category from "./projects-repository/Category.svelte";
   import { getProjectsMetadata } from "./stores";
 
@@ -37,8 +38,8 @@
     <a href="/" class="header-left">
       <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
       <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
-      <h1 class="title">Repository Explorer</h1>
     </a>
+    <h1 class="title">{$location === '/projects' ? 'Repository Explorer' : `Project ${$location.split('/')[2]}`}</h1>
     <div class="header-right">
       <input on:change={search} bind:value={enteredString} class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />
       <!-- searchbar button -->
@@ -108,10 +109,10 @@
   }
   .title {
     color: var(--dasch-text);
-    padding: 12px 0;
+    padding: 0;
     white-space: nowrap;
-    font-size: 0.8rem;
-    display: inline-block;
+    font-size: 1.25rem;
+    flex: 1;
   }
   .searchbar-in-header {
     display: none;
@@ -141,14 +142,9 @@
     padding: 0px;
   }
   button:hover {
-    color: var(--lead);
+    color: var(--lead-colour);
     background-color: var(--cl-transparent-dark);
   }
-  /* .icon {
-    width: 1.5rem;
-    height: 1.5rem;
-    margin: 0.25rem;
-  } */
   .menu {
     background-color: var(--cl-background-light);
   }
@@ -165,10 +161,6 @@
       height: 90vh;
       position: absolute;
       right: 0px;
-    }
-    .title {
-      font-size: 1rem;
-      padding: 12px;
     }
   }
 </style>

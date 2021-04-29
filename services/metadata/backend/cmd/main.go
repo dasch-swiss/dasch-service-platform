@@ -93,7 +93,7 @@ func main() {
 	http.Handle("/", r)
 
 	// start HTTP server with all the previous attached handlers
-	log.Fatal(http.ListenAndServe(":8080", nil))
+	log.Fatal(http.ListenAndServe(":3000", nil))
 
 }
 
