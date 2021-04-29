@@ -12,12 +12,12 @@
     border-radius: 0.25rem;
     box-shadow: var(--shadow-1);
     color: #fff;
-    background-color: var(--lead);
+    background-color: var(--lead-colour);
     padding: 5px 6px;
   }
   button:hover {
-    color: var(--lead);
+    color: var(--lead-colour);
     background-color: #fff;
-    border-color: var(--lead);
+    border-color: var(--lead-colour);
   }
 </style>

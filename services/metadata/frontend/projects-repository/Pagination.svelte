@@ -17,6 +17,7 @@
     document.getElementById(($pagination.currentPage).toString()).classList.add('active');
     console.log('curr',$pagination.currentPage);
     getProjectsMetadata($pagination.currentPage);
+    window.scrollTo(0,0);
   }
 </script>
 
@@ -62,9 +63,9 @@
     border: 1px solid #ddd;
   }
   button.active {
-    background-color: var(--lead);
+    background-color: var(--lead-colour);
     color: white;
-    border: 1px solid var(--lead);
+    border: 1px solid var(--lead-colour);
   }
   button:hover:not(.active), button:hover:not:disabled {
     background-color: var(--dasch-light-violet);

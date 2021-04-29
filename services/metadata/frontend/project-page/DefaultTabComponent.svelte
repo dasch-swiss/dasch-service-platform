@@ -162,61 +162,29 @@
 </div>
 
 <style>
-  a {
-    color: var(--lead);
-  }
-  .property-row {
-    display: flex;
-    flex-direction: column;
-    width: 100%;
-  }
-  .label, .data {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    flex: 2;
-    margin-bottom: 10px;
-    word-break: break-word;
-    width: fit-content;
-  }
-  .label {
-    margin: 10px 0;
-    flex: 1;
-    font-weight: bold;
-  }
   button {
     border: none;
     background-color: inherit;
     padding: 0;
     position: relative;
     top: 10px;
-    color: var(--lead);
+    color: var(--lead-colour);
     z-index: 0;
   }
   .icon {
     margin: -1rem 0 0.25rem;
   }
   .role {
-    color: var(--second);
+    color: var(--secondary-colour);
   }
   .abstract-short {
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    /* height: 45x; */
-    /* line-height: 18px; */
   }
   .attributions {
     padding: 0 10px 0 0;
-  }
-  .expand-button {
-    background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
-    color: var(--lead);
-    text-align: center;
-    font-size: 0.8em;
-    padding: 2px 0;
-    cursor: pointer;
   }
   .grid-wrapper {
     display: grid;

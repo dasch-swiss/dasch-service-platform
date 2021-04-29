@@ -16,7 +16,7 @@
   let descriptionLinesNumber: number;
 
   const getProjectMetadata = async () => {
-    const port = '8080';
+    const port = '3000';
     const baseUrl = `${window.location.protocol}//${window.location.hostname}:${port}/`;
     // const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`);
     const res = await fetch(`${baseUrl}projects/${params.id}`);
@@ -67,7 +67,7 @@
     <div class="row">
       <h4 class="title new-title">
         Also known as:&nbsp;
-        <span style="color:var(--second)">{project?.alternateName.join(", ")}</span>
+        <span style="color:var(--secondary-colour)">{project?.alternateName.join(", ")}</span>
       </h4>
     </div>
     {/if}
@@ -126,7 +126,7 @@
         <DownloadWidget />
       </div>
 
-      <button on:click={() => {window.scrollTo(0,0)}} id=to-top-mobile class=bottom-button title="Get back to the top">
+      <button on:click={() => {window.scrollTo(0,0)}} class="bottom-button m-hidden" title="Get back to the top">
         <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
         </svg>
@@ -136,22 +136,18 @@
 </div>
 
 <style>
+  button {
+    color: var(--lead-colour);
+    box-shadow: var(--shadow-1);
+    border: 1px solid #cdcdcd;
+    border-radius: 0.25rem;
+  }
   button.top-button {
-    border: none;
-    color: var(--lead);
     font-size: 1rem;
     font-family: robotobold;
     text-align: left;
-
-    border: 1px solid #cdcdcd;
-    border-radius: 3px;
     margin-bottom: 6px;
     padding: 10px 10px 8px;
-    box-shadow: var(--shadow-1);
-  }
-  button.top-button:hover {
-    color: #fff;
-    background-color: var(--lead);
   }
   .button-label {
     position: relative;
@@ -160,38 +156,23 @@
   button.bottom-button {
     display: inline-block;
     vertical-align: middle;
-    border-radius: 0.25rem;
     background-color: var(--dasch-grey-3);
-    /* border: 1px solid var(--lead); */
-    border: 1px solid #cdcdcd;
-    /* margin: 0 -15px 20px 20px; */
     padding: 10px;
-    margin-bottom: 20px;
-    color: var(--lead);
-    box-shadow: var(--shadow-1);
     width: 3.5rem;
     height: 3.5rem;
   }
-  button.bottom-button:hover {
+  button.bottom-button:hover,
+  button.top-button:hover {
     color: #fff;
-    background-color: var(--lead);
+    background-color: var(--lead-colour);
   }
   #to-top-desktop {
     display: none;
-  }
-  a {
-    color: var(--lead);
   }
   .container {
     padding: 0 40px;
     display: block;
     max-width: 1200px;
-  }
-  .row, .property-row {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 100%;
   }
   .title {
     display: flex;
@@ -199,7 +180,6 @@
     flex-basis: 100%;
     margin-bottom: 0;
     padding: 0 20px;
-    /* background-color: deepskyblue; */
   }
   .column-left, .column-right {
     display: flex;
@@ -208,34 +188,15 @@
     flex: 2;
     padding: 0 20px;
     height: fit-content;
-    /* background-color:hotpink; */
   }
   .column-right {
     flex: 1;
-    /* background-color: gold; */
-  }
-  .label, .data {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    flex: 2;
-    margin-bottom: 10px;
-    word-break: break-word;
-  }
-  .label {
-    flex: 1;
-    margin: 10px 0;
-  }
-  .description {
-    margin-bottom: 10px;
   }
   .description-short {
     display: -webkit-box;
     -webkit-line-clamp: 6;
     -webkit-box-orient: vertical;
     overflow: hidden;
-    /* height: 45x; */
-    /* line-height: 18px; */
   }
   .widget {
     border: 1px solid #cdcdcd;
@@ -245,27 +206,15 @@
     padding: 0 10px 10px;
     box-shadow: var(--shadow-1);
   }
-  /* .widget:first-child {padding: 10px 10px 5px 10px} */
-  .expand-button {
-    background-image: linear-gradient(to right, #fff, var(--dasch-grey-3), #fff);
-    color: var(--lead);
-    text-align: center;
-    font-size: 0.8em;
-    padding: 2px 0;
-    cursor: pointer;
-  }
   @media screen and (min-width: 992px) {
-    .column-left, .column-right{
-      padding: 20px;
-    }
-    .row {
-      flex-direction: row;
-    }
-    #to-top-mobile {
-      display: none;
-    }
-    #to-top-desktop {
-      display: inline-block;
-    }
+    .column-left, .column-right {padding: 20px;}
+    .column-left {min-width: 52vw;}
+    .column-right {min-width: 30vw;}
+    .row {flex-direction: row;}
+    #to-top-desktop {display: inline-block;}
+  }
+  @media screen and (min-width: 1200px) {
+    .column-left {min-width: 688px;}
+    .column-right {min-width: 352px;}
   }
 </style>

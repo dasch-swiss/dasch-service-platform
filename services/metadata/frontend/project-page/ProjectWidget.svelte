@@ -112,7 +112,6 @@
 {/if}
 
 <div class=label>Website</div>
-<!-- <a class=data href={project?.url[0].url} target=_>{project?.url[0].name}</a> -->
 {#if Array.isArray(project?.url)}
   {#each project?.url as url}
     <a class=data href={url.url} target=_>{url.name}</a>
@@ -121,17 +120,10 @@
 
 {#if project}
   <div class=label>Keywords</div>
-    <!-- {#each project?.keywords as keyword}
-    <span class="keyword">{keyword}</span>
-    <span></span>
-    {/each} -->
   <span class="keyword">{project?.keywords.join(", ")}</span>
 {/if}
 
 <style>
-  a {
-    color: var(--lead);
-  }
   .keyword {
     padding: 0;
     /* display: inline;
@@ -150,27 +142,9 @@
     border-color: var(--third);
   } */
   .label, .data {
-    display: flex;
-    flex-direction: column;
-    flex-basis: 100%;
-    flex: 2;
     margin: 5px 0;
-    word-break: break-word;
-    width: fit-content;
   }
   .label {
-    flex: 1;
-    font-weight: bold;
     padding: 10px 0 0;
   }
-  /* .label {
-    flex: 1;
-    font-weight: bold;
-    margin: 0;
-    /* border: 1px solid #cdcdcd; */
-    /* padding: 5px 10px; */
-    /* background-color: var(--dasch-grey-4);
-    color: var(--dasch-text);
-    width: calc(100% - 20px); */
-  /* }  */
 </style>
