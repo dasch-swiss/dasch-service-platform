@@ -146,6 +146,32 @@ func (s *Service) UpdateProjectLongName(ctx context.Context, id valueobject.Iden
 	return p, nil
 }
 
+//UpdateProjectDescription update a projects description
+func (s *Service) UpdateProjectDescription(ctx context.Context, id valueobject.Identifier, description string) (*project.Aggregate, error) {
+
+	// get the project to update
+	p, err := s.repo.Load(ctx, id)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// create a new description object with the new description
+	nd, err := valueobject.NewDescription(description)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// update the description
+	p.ChangeDescription(nd)
+
+	// save the project
+	if _, err := s.repo.Save(ctx, p); err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	return p, nil
+}
+
 //GetProject get a project
 func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 

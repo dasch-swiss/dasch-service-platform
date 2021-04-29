@@ -87,10 +87,10 @@ func updateProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		errorMessage := "Error updating project"
 		var input struct {
-			ShortCode string `json:"shortCode"`
-			ShortName string `json:"shortName"`
-			LongName  string `json:"longName"`
-			// Description string `json:"description"`
+			ShortCode   string `json:"shortCode"`
+			ShortName   string `json:"shortName"`
+			LongName    string `json:"longName"`
+			Description string `json:"description"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
@@ -137,7 +137,7 @@ func updateProject(service project.UseCase) http.Handler {
 		sc := p.ShortCode()
 		sn := p.ShortName()
 		ln := p.LongName()
-		// desc := p.Description()
+		desc := p.Description()
 
 		if input.ShortCode != "" {
 			usc, err := service.UpdateProjectShortCode(ctx, uuid, input.ShortCode)
@@ -175,16 +175,24 @@ func updateProject(service project.UseCase) http.Handler {
 			ln = uln.LongName()
 		}
 
-		// if input.Description != "" {
+		if input.Description != "" {
+			ud, err := service.UpdateProjectDescription(ctx, uuid, input.Description)
+			if err != nil {
+				log.Println(err.Error())
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(errorMessage))
+				return
+			}
 
-		// }
+			desc = ud.Description()
+		}
 
 		toJ := &presenter.Project{
 			ID:          p.ID(),
 			ShortCode:   sc.String(),
 			ShortName:   sn.String(),
 			LongName:    ln.String(),
-			Description: p.Description().String(),
+			Description: desc.String(),
 		}
 
 		w.WriteHeader(http.StatusOK)

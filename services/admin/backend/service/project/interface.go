@@ -57,4 +57,5 @@ type UseCase interface {
 	UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error)
 	UpdateProjectShortName(ctx context.Context, id valueobject.Identifier, shortName string) (*project.Aggregate, error)
 	UpdateProjectLongName(ctx context.Context, id valueobject.Identifier, longName string) (*project.Aggregate, error)
+	UpdateProjectDescription(ctx context.Context, id valueobject.Identifier, description string) (*project.Aggregate, error)
 }

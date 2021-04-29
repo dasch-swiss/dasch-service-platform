@@ -257,3 +257,57 @@ func TestProject_ChangeLongName(t *testing.T) {
 		t.Fatalf("unexpected event type: %T", e)
 	}
 }
+
+func TestProject_ChangeDescription(t *testing.T) {
+
+	expectedId, _ := valueobject.NewIdentifier()
+	expectedAggregateType, _ := valueobject.NewAggregateType("http://ns.dasch.swiss/admin#Project")
+	expectedShortCode, _ := valueobject.NewShortCode("psc")
+	expectedShortName, _ := valueobject.NewShortName("short name")
+	expectedLongName, _ := valueobject.NewLongName("project long name")
+	expectedDescription, _ := valueobject.NewDescription("this is a test project")
+
+	p := project.NewAggregate(expectedId, expectedShortCode, expectedShortName, expectedLongName, expectedDescription)
+	assert.Equal(t, expectedId, p.ID())
+	assert.Equal(t, expectedAggregateType, p.AggregateType())
+	assert.Equal(t, expectedShortCode, p.ShortCode())
+	assert.Equal(t, expectedShortName, p.ShortName())
+	assert.Equal(t, expectedLongName, p.LongName())
+	assert.Equal(t, expectedDescription, p.Description())
+
+	assert.False(t, p.CreatedAt().Time().IsZero())
+	assert.True(t, p.ChangedAt().Time().IsZero())
+
+	projectEvents := p.Events()
+	createdEvent := projectEvents[0]
+
+	switch e := createdEvent.(type) {
+	case *event.ProjectCreated:
+		assert.Equal(t, expectedId, e.ID)
+		assert.Equal(t, expectedShortCode, e.ShortCode)
+		assert.Equal(t, expectedShortName, e.ShortName)
+		assert.Equal(t, expectedLongName, e.LongName)
+		assert.Equal(t, expectedDescription, e.Description)
+	default:
+		t.Fatalf("unexpected event type: %T", e)
+	}
+
+	newDescription, _ := valueobject.NewDescription("new description")
+
+	p.ChangeDescription(newDescription)
+
+	assert.Len(t, p.Events(), 2)
+
+	assert.Equal(t, newDescription, p.Description())
+
+	descriptionChangedEvent := p.Events()[1]
+
+	switch e := descriptionChangedEvent.(type) {
+	case *event.ProjectDescriptionChanged:
+		assert.Equal(t, newDescription, e.Description)
+		assert.False(t, p.ChangedAt().Time().IsZero())
+		assert.IsType(t, p.ChangedBy(), valueobject.Identifier{})
+	default:
+		t.Fatalf("unexpected event type: %T", e)
+	}
+}

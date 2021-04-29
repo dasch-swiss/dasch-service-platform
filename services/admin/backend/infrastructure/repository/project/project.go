@@ -141,9 +141,7 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 	if err != nil {
 		log.Fatalf("Unexpected failure %+v", err)
 	}
-
-	log.Printf("proposed events appended: %+v", proposedEvents)
-
+	
 	return p.ID(), nil
 }
 
@@ -201,13 +199,21 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			log.Println("PROJECT LONG NAME CHANGED")
 			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
+		case "ProjectDescriptionChanged":
+			var e event.ProjectDescriptionChanged
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			log.Println(">>>>>>>>>>>>>>>")
+			log.Println("PROJECT DESCRIPTION CHANGED")
+			log.Println(">>>>>>>>>>>>>>>")
+			events = append(events, &e)
 		default:
 			log.Printf("unexpected event type: %T", eventType)
 		}
 
 	}
-
-	log.Print(events)
 
 	return project.NewAggregateFromEvents(events), nil
 }
