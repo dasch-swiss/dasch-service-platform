@@ -89,7 +89,7 @@ func updateProject(service project.UseCase) http.Handler {
 		var input struct {
 			ShortCode string `json:"shortCode"`
 			ShortName string `json:"shortName"`
-			// LongName    string `json:"longName"`
+			LongName  string `json:"longName"`
 			// Description string `json:"description"`
 		}
 		err := json.NewDecoder(r.Body).Decode(&input)
@@ -136,7 +136,7 @@ func updateProject(service project.UseCase) http.Handler {
 
 		sc := p.ShortCode()
 		sn := p.ShortName()
-		// ln := p.LongName()
+		ln := p.LongName()
 		// desc := p.Description()
 
 		if input.ShortCode != "" {
@@ -163,9 +163,17 @@ func updateProject(service project.UseCase) http.Handler {
 			sn = usn.ShortName()
 		}
 
-		// if input.LongName != "" {
+		if input.LongName != "" {
+			uln, err := service.UpdateProjectLongName(ctx, uuid, input.LongName)
+			if err != nil {
+				log.Println(err.Error())
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte(errorMessage))
+				return
+			}
 
-		// }
+			ln = uln.LongName()
+		}
 
 		// if input.Description != "" {
 
@@ -175,7 +183,7 @@ func updateProject(service project.UseCase) http.Handler {
 			ID:          p.ID(),
 			ShortCode:   sc.String(),
 			ShortName:   sn.String(),
-			LongName:    p.LongName().String(),
+			LongName:    ln.String(),
 			Description: p.Description().String(),
 		}
 

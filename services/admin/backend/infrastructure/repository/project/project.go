@@ -168,7 +168,6 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			}
 			log.Println(">>>>>>>>>>>>>>>")
 			log.Println("PROJECT CREATED")
-			log.Print(e)
 			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 
@@ -180,7 +179,6 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			}
 			log.Println(">>>>>>>>>>>>>>>")
 			log.Println("PROJECT SHORT CODE CHANGED")
-			log.Print(e)
 			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 		case "ProjectShortNameChanged":
@@ -191,7 +189,16 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			}
 			log.Println(">>>>>>>>>>>>>>>")
 			log.Println("PROJECT SHORT NAME CHANGED")
-			log.Print(e)
+			log.Println(">>>>>>>>>>>>>>>")
+			events = append(events, &e)
+		case "ProjectLongNameChanged":
+			var e event.ProjectLongNameChanged
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			log.Println(">>>>>>>>>>>>>>>")
+			log.Println("PROJECT LONG NAME CHANGED")
 			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 		default:

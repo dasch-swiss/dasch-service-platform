@@ -120,6 +120,32 @@ func (s *Service) UpdateProjectShortName(ctx context.Context, id valueobject.Ide
 	return p, nil
 }
 
+//UpdateProjectLongName update a projects long name
+func (s *Service) UpdateProjectLongName(ctx context.Context, id valueobject.Identifier, longName string) (*project.Aggregate, error) {
+
+	// get the project to update
+	p, err := s.repo.Load(ctx, id)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// create a new long name object with the new long name
+	nln, err := valueobject.NewLongName(longName)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// update the long name
+	p.ChangeLongName(nln)
+
+	// save the project
+	if _, err := s.repo.Save(ctx, p); err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	return p, nil
+}
+
 //GetProject get a project
 func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 
