@@ -139,7 +139,7 @@ func updateProject(service project.UseCase) http.Handler {
 		ln := p.LongName()
 		desc := p.Description()
 
-		if input.ShortCode != "" {
+		if input.ShortCode != "" && sc.String() != input.ShortCode {
 			usc, err := service.UpdateProjectShortCode(ctx, uuid, input.ShortCode)
 			if err != nil {
 				log.Println(err.Error())
@@ -151,7 +151,7 @@ func updateProject(service project.UseCase) http.Handler {
 			sc = usc.ShortCode()
 		}
 
-		if input.ShortName != "" {
+		if input.ShortName != "" && sn.String() != input.ShortName {
 			usn, err := service.UpdateProjectShortName(ctx, uuid, input.ShortName)
 			if err != nil {
 				log.Println(err.Error())
@@ -163,7 +163,7 @@ func updateProject(service project.UseCase) http.Handler {
 			sn = usn.ShortName()
 		}
 
-		if input.LongName != "" {
+		if input.LongName != "" && ln.String() != input.LongName {
 			uln, err := service.UpdateProjectLongName(ctx, uuid, input.LongName)
 			if err != nil {
 				log.Println(err.Error())
@@ -175,7 +175,7 @@ func updateProject(service project.UseCase) http.Handler {
 			ln = uln.LongName()
 		}
 
-		if input.Description != "" {
+		if input.Description != "" && desc.String() != input.Description {
 			ud, err := service.UpdateProjectDescription(ctx, uuid, input.Description)
 			if err != nil {
 				log.Println(err.Error())
