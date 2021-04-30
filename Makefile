@@ -121,12 +121,12 @@ metadata-server: ## start metadata json-server watching db.json
 	@yarn run json-server --watch --port 3000 services/metadata/backend/data/db.json
 
 .PHONY: metadata-server-go
-metadata-server-go: ## start metadata json-server watching db.json
+metadata-server-go: ## start go mock backend on port 3000
 	@go run services/metadata/backend/fake-backend/fake-backend.go
 
 .PHONY: metadata-server-docker-build
 metadata-server-docker-build: build ## build metadata json-server watching db.json docker image
-	@bazel run //services/metadata/backend/data:image -- --norun
+	@bazel run //services/metadata/backend/fake-backend:image -- --norun
 
 .PHONY: metadata-server-docker-publish
 metadata-server-docker-publish: build ## publish metadata json-server watching db.json docker image
@@ -134,7 +134,7 @@ metadata-server-docker-publish: build ## publish metadata json-server watching d
 
 .PHONY: metadata-server-docker-run
 metadata-server-docker-run: metadata-server-docker-build ## publish metadata json-server watching db.json docker image
-	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/data:image
+	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/fake-backend:image
 
 .PHONY: help
 help: ## this help

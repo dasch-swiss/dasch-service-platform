@@ -1,2 +1,3 @@
 # build --verbose_failures
 build --workspace_status_command=tools/buildstamp/get_workspace_status --stamp=yes
+run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64
