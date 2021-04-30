@@ -182,7 +182,6 @@ func main() {
 	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
 	// Serve frontend from `/public`
 	dir := "./public"
-	// TODO: ensure only GET requests work here
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
 
 	// CORS header
