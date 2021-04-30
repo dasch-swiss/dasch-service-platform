@@ -9,6 +9,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strconv"
+	"strings"
 	"time"
 
 	"github.com/gorilla/handlers"
@@ -61,6 +62,7 @@ func findProjectNode(list []interface{}) map[string]interface{} {
 // Loads a project from a JSON file.
 // Expects this file to be located in ./data/*.json
 func loadProject(path string) Project {
+	log.Printf("Loading: %v", path)
 	// read json
 	byteValue, err := ioutil.ReadFile(path)
 	if err != nil {
@@ -97,10 +99,14 @@ func loadProject(path string) Project {
 func loadProjectData() []Project {
 	var res []Project
 
-	paths, _ := filepath.Glob("./services/metadata/backend/fake-backend/data/*.json")
+	pathPrefix := "./services/metadata/backend/fake-backend/data/"
+	paths, _ := filepath.Glob(pathPrefix + "*.json")
 
 	for _, path := range paths {
-		res = append(res, loadProject(path))
+		file := filepath.Base(path)
+		if !strings.HasPrefix(file, "_") {
+			res = append(res, loadProject(path))
+		}
 	}
 
 	return res
