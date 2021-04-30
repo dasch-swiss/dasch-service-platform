@@ -179,7 +179,7 @@ func main() {
 	// redirect root to /metadata/
 	router.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
 		url := fmt.Sprintf("%vmetadata/", r.URL)
-		http.Redirect(w, r, url, 308)
+		http.Redirect(w, r, url, http.StatusPermanentRedirect)
 	}).Methods("GET")
 	// Serve frontend from `/public`
 	dir := "./public"
