@@ -8,7 +8,7 @@ package(default_visibility = ["//visibility:public"])
 filegroup(
     name = "data",
     srcs = glob([
-        "data/*.json",
+        "**/fake-backend/data/*.json",
     ]),
 )
 
@@ -40,6 +40,10 @@ container_push(
 go_image(
     name = "image",
     srcs = ["fake-backend.go"],
+    data = [
+        ":db",
+        ":static-app",
+    ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/fake-backend",
     visibility = ["//visibility:public"],
     deps = [
@@ -51,6 +55,7 @@ go_image(
 go_binary(
     name = "cmd",
     srcs = ["fake-backend.go"],
+    data = [":data"],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/fake-backend",
     visibility = ["//visibility:public"],
     deps = [
