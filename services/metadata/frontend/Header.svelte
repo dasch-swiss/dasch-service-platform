@@ -36,8 +36,8 @@
 <header>
   <div class="header-container">
     <a href="/" class="header-left">
-      <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
-      <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
+      <img class="logo s-inline-block" src="assets/logo/DaSCH-Logo-black.svg" alt="DaSCH logo" />
+      <img class="icon-logo s-hidden" src="assets/icon/DaSCH-Icon-black-64.svg" alt="DaSCH logo" />
     </a>
     <h1 class="title">{$location === '/projects' ? 'Repository Explorer' : `Project ${$location.split('/')[2]}`}</h1>
     <div class="header-right">
@@ -96,10 +96,12 @@
     margin-right: 0.25rem;
   }
   .logo {
-    height: 5rem;
+    height: 2.75rem;
+    /* height: 5rem; */
     vertical-align: middle;
     cursor: pointer;
     display: none;
+    padding: 20px;
   }
   .icon-logo {
     height: 3rem;
