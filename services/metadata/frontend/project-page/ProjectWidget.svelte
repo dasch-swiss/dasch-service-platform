@@ -17,8 +17,6 @@
   }
 </script>
 
-<!-- <h3 class=widget-heading>Project highlights</h3> -->
-
 <div class=label>DSP Internal Shortcode</div>
 <div class=data>{project?.shortcode}</div>
 
