@@ -126,11 +126,31 @@ metadata-server-docker-build: build ## build metadata mock-server (watching /dat
 
 .PHONY: metadata-server-docker-publish
 metadata-server-docker-publish: build ## publish metadata mock-server (watching /data/*.json) docker image
-	@bazel run //services/metadata/backend/data:push
+	@bazel run //services/metadata/backend/fake-backend:push
 
 .PHONY: metadata-server-docker-run
 metadata-server-docker-run: metadata-server-docker-build ## build and run metadata mock-server (watching /data/*.json) docker image
 	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/fake-backend:image
+
+#################################
+# Metadata service legacy targets
+#################################
+
+.PHONY: metadata-legacy-server
+metadata-legacy-server: ## start metadata json-server watching db.json -> legacy target, in case Go server fails
+	@yarn run json-server --watch --port 3000 services/metadata/backend/data/db.json
+
+.PHONY: metadata-legacy-server-docker-build
+metadata-legacy-server-docker-build: build ## build metadata json-server watching db.json docker image -> legacy target, in case Go server fails
+	@bazel run //services/metadata/backend/data:image -- --norun
+
+.PHONY: metadata-legacy-server-docker-publish
+metadata-legacy-server-docker-publish: build ## publish metadata json-server watching db.json docker image -> legacy target, in case Go server fails
+	@bazel run //services/metadata/backend/data:push
+
+.PHONY: metadata-legacy-server-docker-run
+metadata-legacy-server-docker-run: metadata-server-docker-build ## publish metadata json-server watching db.json docker image -> legacy target, in case Go server fails
+	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/data:image
 
 #################################
 # Other targets

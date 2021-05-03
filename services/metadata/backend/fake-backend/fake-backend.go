@@ -195,7 +195,8 @@ func main() {
 	// CORS header
 	// TODO: is this a security issue?
 	ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
-	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:5000"}))
+	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:3000"}))
+	// TODO: do I even still need CORS, now that all is on the same port?
 
 	// Load Data
 	projects = loadProjectData()
