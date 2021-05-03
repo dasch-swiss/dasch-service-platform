@@ -53,9 +53,9 @@
   const getDivHeight = () => {
     const el = document.getElementById('description');
     const lineHeight = parseInt(window.getComputedStyle(el).getPropertyValue('line-height'));
-    const divHeight = el.offsetHeight;
+    const divHeight = el.scrollHeight;
     descriptionLinesNumber = divHeight / lineHeight;
-    isDescriptionExpanded = descriptionLinesNumber >= 6 ? false : true;
+    isDescriptionExpanded = descriptionLinesNumber > 6 ? false : true;
   };
 </script>
 
@@ -80,7 +80,7 @@
         <div id=description class="data new-text {isExpanded ? '' : 'description-short'}">{project?.description}</div>
       </div>
       <!-- TODO: if accepted and reused consder move it to separate component -->
-      {#if descriptionLinesNumber >= 6}
+      {#if descriptionLinesNumber > 6}
         <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
       {/if}
 

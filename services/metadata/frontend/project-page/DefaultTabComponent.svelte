@@ -18,9 +18,9 @@
   onMount(() => {
     const el = document.getElementById('abstract');
     const lineHeight = parseInt(window.getComputedStyle(el).getPropertyValue('line-height'));
-    const divHeight = el.offsetHeight;
+    const divHeight = el.scrollHeight;
     abstractLinesNumber = divHeight / lineHeight;
-    isAbstractExpanded = abstractLinesNumber >= 6 ? false : true;
+    isAbstractExpanded = abstractLinesNumber > 6 ? false : true;
   });
 
   const copyToClipboard = () => {
@@ -116,16 +116,16 @@
     <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
       {#each dataset?.content.abstract as a}
         {#if a.url}
-        <a class=data href={a.url} target=_>{a.name}</a>
+        <div><a class=data href={a.url} target=_>{a.name}</a></div>
         {:else}
-        <span>{a}</span>
+        <div>{a}</div>
         {/if}
       {/each}
     </div>
     {/if}
   </div>
 
-  {#if abstractLinesNumber >= 6}
+  {#if abstractLinesNumber > 6}
   <div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
   {/if}
 
