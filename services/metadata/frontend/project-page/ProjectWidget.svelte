@@ -87,7 +87,7 @@
     {:else if findObjectById(g.id)?.number}
     <span class="data">{findObjectById(g.id)?.number}</span>
     {:else}
-    <span class="data">{findObjectById(findObjectById(g.id)?.funder[0].id)?.name}</span>
+    <span class="data">{findObjectById(findObjectById(g.id)?.funder[0].id)?.name.join(', ')}</span>
     {/if}
   {/each}
 {/if}
