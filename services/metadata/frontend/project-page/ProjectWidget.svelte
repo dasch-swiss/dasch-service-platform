@@ -74,7 +74,7 @@
     {#if findObjectById(f.id).type === "http://ns.dasch.swiss/repository#Person"}
     <div class=data>{findObjectById(f.id)?.givenName.split(";").join(" ")} {findObjectById(f.id)?.familyName}</div>
     {:else if findObjectById(f.id).type === "http://ns.dasch.swiss/repository#Organization"}
-    <div class=data>{findObjectById(f.id)?.name}</div>
+    <div class=data>{findObjectById(f.id)?.name.join(", ")}</div>
     {/if}
   {/each}
 {/if}
@@ -87,7 +87,7 @@
     {:else if findObjectById(g.id)?.number}
     <span class="data">{findObjectById(g.id)?.number}</span>
     {:else}
-    <span class="data">no details found</span>
+    <span class="data">{findObjectById(findObjectById(g.id)?.funder[0].id)?.name}</span>
     {/if}
   {/each}
 {/if}
@@ -124,6 +124,7 @@
 {/if}
 
 <style>
+  a {display: block;}
   .keyword {
     padding: 0;
     /* display: inline;

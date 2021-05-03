@@ -123,9 +123,10 @@
       <div class=widget>
         <ProjectWidget {project} />
       </div>
-      <div class=widget>
+      <!-- TODO: temp disabled download widget -->
+      <!-- <div class=widget>
         <DownloadWidget />
-      </div>
+      </div> -->
 
       <button on:click={() => {window.scrollTo(0,0)}} class="bottom-button m-hidden" title="Get back to the top">
         <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
