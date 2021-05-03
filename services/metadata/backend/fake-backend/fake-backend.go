@@ -6,7 +6,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -116,7 +115,7 @@ func loadProjectData() []Project {
 // Get projects
 // Route: /projecs
 func getProjects(w http.ResponseWriter, r *http.Request) {
-	log.Printf("Got a request to %v", r.URL)
+	log.Printf("Request for: %v", r.URL)
 
 	w.Header().Set("Content-Type", "application/json")
 	w.Header().Set("Access-Control-Expose-Headers", "X-Total-Count")
@@ -164,6 +163,8 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 // Get a single project
 // Route /projects/:id
 func getProject(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Request for: %v", r.URL)
+
 	w.Header().Set("Content-Type", "application/json")
 
 	params := mux.Vars(r)
@@ -176,25 +177,7 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
-func walk() {
-	var files []string
-
-	root := "./services"
-	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
-		files = append(files, path)
-		return nil
-	})
-	if err != nil {
-		panic(err)
-	}
-	for _, file := range files {
-		fmt.Println(file)
-	}
-}
-
 func main() {
-	walk()
-
 	port := 3000
 
 	// Init Router
