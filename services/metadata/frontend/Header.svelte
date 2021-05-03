@@ -8,6 +8,14 @@
   let showMenu = false;
   let enteredString = '';
 
+  const getEnv = () => {
+    if (window.location.host.includes('test')) {
+      return 'test.';
+    } else if (window.location.host.includes('staging')) {
+      return 'staging.';
+    } else return '';
+  }
+
   function toggleSearchbar() {
     showSearchbar = !showSearchbar;
     showFilters = false;
@@ -69,9 +77,9 @@
     <Category />
   </div>
   <div class="menu" class:hidden={!showMenu}>
-    <a class="menu-item" href="/">dasch.swiss</a>
-    <a class="menu-item" href="/">app.dasch.swiss</a>
-    <a class="menu-item" href="/">admin.dasch.swiss</a>
+    <a class="menu-item" href="{`https://${getEnv()}dasch.swiss/`}">{`${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="{`https://app.${getEnv()}dasch.swiss/`}">{`app.${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="{`https://admin.${getEnv()}dasch.swiss/`}">{`admin.${getEnv()}dasch.swiss`}</a>
   </div>
 </header>
 
@@ -97,7 +105,6 @@
   }
   .logo {
     height: 2.75rem;
-    /* height: 5rem; */
     vertical-align: middle;
     cursor: pointer;
     display: none;
@@ -153,16 +160,18 @@
   .menu-item {
     display: block;
     padding: 1rem 1.5rem;
+    width: calc(100% - 3rem);
   }
   .menu-item:hover {
     background-color: var(--cl-transparent-light);
   }
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 768px) {
     .menu {
       width: 20rem;
       height: 90vh;
       position: absolute;
       right: 0px;
+      z-index: 0;
     }
   }
 </style>

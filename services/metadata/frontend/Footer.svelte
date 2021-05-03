@@ -13,6 +13,7 @@
     footer {
       position: sticky;
       bottom: 0px;
+      z-index: 1;
     }
   }
 </style>
