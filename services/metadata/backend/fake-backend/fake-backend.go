@@ -179,7 +179,7 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 func walk() {
 	var files []string
 
-	root := "."
+	root := "./services"
 	err := filepath.Walk(root, func(path string, info os.FileInfo, err error) error {
 		files = append(files, path)
 		return nil
