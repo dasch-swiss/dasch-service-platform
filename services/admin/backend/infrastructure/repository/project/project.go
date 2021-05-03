@@ -66,6 +66,22 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 			proposedEvents = append(proposedEvents, pe)
 			streamRevision = streamrevision.StreamRevisionNoStream
 
+		case *event.ProjectDeleted:
+			j, err := json.Marshal(e)
+			if err != nil {
+				return e.ID, fmt.Errorf("problem serializing '%T' event to json", e)
+			}
+
+			eventID, _ := uuid.NewV4()
+			pe := messages.ProposedEvent{
+				EventID:     eventID,
+				EventType:   "ProjectDeleted",
+				ContentType: "application/json",
+				Data:        j,
+			}
+
+			proposedEvents = append(proposedEvents, pe)
+
 		case *event.ProjectShortCodeChanged:
 			j, err := json.Marshal(e)
 			if err != nil {
@@ -141,7 +157,7 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 	if err != nil {
 		log.Fatalf("Unexpected failure %+v", err)
 	}
-	
+
 	return p.ID(), nil
 }
 
@@ -166,6 +182,17 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			}
 			log.Println(">>>>>>>>>>>>>>>")
 			log.Println("PROJECT CREATED")
+			log.Println(">>>>>>>>>>>>>>>")
+			events = append(events, &e)
+
+		case "ProjectDeleted":
+			var e event.ProjectDeleted
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			log.Println(">>>>>>>>>>>>>>>")
+			log.Println("PROJECT DELETED")
 			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 

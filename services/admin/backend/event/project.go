@@ -23,6 +23,7 @@ import (
 // implementation of marker interface to make sure that event structs can only
 // come from this package. Go way of implementing a class hierarchy.
 func (e ProjectCreated) isEvent()            {}
+func (e ProjectDeleted) isEvent()            {}
 func (e ProjectShortCodeChanged) isEvent()   {}
 func (e ProjectShortNameChanged) isEvent()   {}
 func (e ProjectLongNameChanged) isEvent()    {}
@@ -37,6 +38,13 @@ type ProjectCreated struct {
 	Description valueobject.Description `json:"description"`
 	CreatedAt   valueobject.Timestamp   `json:"createdAt"`
 	CreatedBy   valueobject.Identifier  `json:"createdBy"`
+}
+
+//ProjectDeleted event
+type ProjectDeleted struct {
+	ID        valueobject.Identifier `json:"id"`
+	DeletedAt valueobject.Timestamp  `json:"deletedAt"`
+	DeletedBy valueobject.Identifier `json:"deletedBy"`
 }
 
 //ProjectShortCodeChanged event

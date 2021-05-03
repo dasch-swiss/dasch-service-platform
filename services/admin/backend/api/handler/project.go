@@ -123,6 +123,12 @@ func updateProject(service project.UseCase) http.Handler {
 			return
 		}
 
+		if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("Project has been deleted"))
+			return
+		}
+
 		if err != nil && err != projectEntity.ErrNotFound {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("The server is not responding"))
@@ -141,6 +147,11 @@ func updateProject(service project.UseCase) http.Handler {
 
 		if input.ShortCode != "" && sc.String() != input.ShortCode {
 			usc, err := service.UpdateProjectShortCode(ctx, uuid, input.ShortCode)
+			if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
+				w.WriteHeader(http.StatusNotFound)
+				w.Write([]byte("Project has been deleted"))
+				return
+			}
 			if err != nil {
 				log.Println(err.Error())
 				w.WriteHeader(http.StatusInternalServerError)
@@ -153,6 +164,11 @@ func updateProject(service project.UseCase) http.Handler {
 
 		if input.ShortName != "" && sn.String() != input.ShortName {
 			usn, err := service.UpdateProjectShortName(ctx, uuid, input.ShortName)
+			if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
+				w.WriteHeader(http.StatusNotFound)
+				w.Write([]byte("Project has been deleted"))
+				return
+			}
 			if err != nil {
 				log.Println(err.Error())
 				w.WriteHeader(http.StatusInternalServerError)
@@ -165,6 +181,11 @@ func updateProject(service project.UseCase) http.Handler {
 
 		if input.LongName != "" && ln.String() != input.LongName {
 			uln, err := service.UpdateProjectLongName(ctx, uuid, input.LongName)
+			if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
+				w.WriteHeader(http.StatusNotFound)
+				w.Write([]byte("Project has been deleted"))
+				return
+			}
 			if err != nil {
 				log.Println(err.Error())
 				w.WriteHeader(http.StatusInternalServerError)
@@ -177,6 +198,11 @@ func updateProject(service project.UseCase) http.Handler {
 
 		if input.Description != "" && desc.String() != input.Description {
 			ud, err := service.UpdateProjectDescription(ctx, uuid, input.Description)
+			if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
+				w.WriteHeader(http.StatusNotFound)
+				w.Write([]byte("Project has been deleted"))
+				return
+			}
 			if err != nil {
 				log.Println(err.Error())
 				w.WriteHeader(http.StatusInternalServerError)
@@ -257,6 +283,63 @@ func getProject(service project.UseCase) http.Handler {
 	})
 }
 
+func deleteProject(service project.UseCase) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		// get variables from request url
+		vars := mux.Vars(r)
+
+		// create empty Identifier
+		uuid := valueobject.Identifier{}
+
+		// create byte array from the provided id string
+		b := []byte(vars["id"])
+
+		// assign the value of the Identifier
+		uuid.UnmarshalText(b)
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+		defer cancel()
+
+		// delete the project
+		data, err := service.DeleteProject(ctx, uuid)
+		w.Header().Set("Content-Type", "application/json")
+
+		if err != nil && err == projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No project found for this uuid"))
+			return
+		}
+
+		if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("Project has already been deleted"))
+			return
+		}
+
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("The server is not responding"))
+			return
+		}
+		if data == nil {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No data was returned"))
+			return
+		}
+
+		toJ := &presenter.DeleteProject{
+			ID:        data.ID(),
+			DeletedAt: data.ChangedAt().String(),
+			DeletedBy: data.ChangedBy().String(),
+		}
+		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Failed encoding data to JSON"))
+		}
+	})
+}
+
 //MakeProjectHandlers make url handlers
 func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCase) {
 
@@ -271,4 +354,8 @@ func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCa
 	r.Handle("/v1/project/{id}", n.With(
 		negroni.Wrap(getProject(service)),
 	)).Methods("GET", "OPTIONS").Name("getProject")
+
+	r.Handle("/v1/project/{id}", n.With(
+		negroni.Wrap(deleteProject(service)),
+	)).Methods("DELETE", "OPTIONS").Name("deleteProject")
 }

@@ -35,3 +35,10 @@ type Project struct {
 	LongName    string                 `json:"longName"`
 	Description string                 `json:"description"`
 }
+
+//DeleteProject data
+type DeleteProject struct {
+	ID        valueobject.Identifier `json:"id"`
+	DeletedAt string                 `json:"deletedAt"`
+	DeletedBy string                 `json:"deletedBy"`
+}

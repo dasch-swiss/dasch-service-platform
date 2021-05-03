@@ -35,6 +35,8 @@ type Aggregate struct {
 	createdBy     valueobject.Identifier
 	changedAt     valueobject.Timestamp
 	changedBy     valueobject.Identifier
+	deletedAt     valueobject.Timestamp
+	deletedBy     valueobject.Identifier
 
 	changes []event.Event
 	version int
@@ -99,6 +101,16 @@ func (p Aggregate) ChangedBy() valueobject.Identifier {
 	return p.changedBy
 }
 
+// DeletedAt returns the project's deletion time.
+func (p Aggregate) DeletedAt() valueobject.Timestamp {
+	return p.deletedAt
+}
+
+// DeletedBy returns the identifier of the user who deleted the project.
+func (p Aggregate) DeletedBy() valueobject.Identifier {
+	return p.deletedBy
+}
+
 // NewAggregateFromEvents is a helper method that creates a new project
 // from a series of events.
 func NewAggregateFromEvents(events []event.Event) *Aggregate {
@@ -129,10 +141,26 @@ func NewAggregate(id valueobject.Identifier, shortCode valueobject.ShortCode, sh
 	return p
 }
 
+// DeleteProject deletes the project.
+// TODO: add user who deleted the project
+func (p *Aggregate) DeleteProject(id valueobject.Identifier) error {
+	p.raise(&event.ProjectDeleted{
+		ID:        p.id,
+		DeletedAt: valueobject.NewTimestamp(),
+		DeletedBy: valueobject.Identifier{},
+	})
+
+	return nil
+}
+
 // ChangeShortCode changes the short code of the project.
 // TODO: check if short code is free (needs to be unique)
 // TODO: add user who initiated the change
 func (p *Aggregate) ChangeShortCode(shortCode valueobject.ShortCode) error {
+	if !p.deletedAt.Time().IsZero() {
+		return ErrProjectHasBeenDeleted
+	}
+
 	p.raise(&event.ProjectShortCodeChanged{
 		ID:        p.id,
 		ShortCode: shortCode,
@@ -147,6 +175,10 @@ func (p *Aggregate) ChangeShortCode(shortCode valueobject.ShortCode) error {
 // TODO: check if short name is free (needs to be unique)
 // TODO: add user who initiated the change
 func (p *Aggregate) ChangeShortName(shortName valueobject.ShortName) error {
+	if !p.deletedAt.Time().IsZero() {
+		return ErrProjectHasBeenDeleted
+	}
+
 	p.raise(&event.ProjectShortNameChanged{
 		ID:        p.id,
 		ShortName: shortName,
@@ -161,6 +193,10 @@ func (p *Aggregate) ChangeShortName(shortName valueobject.ShortName) error {
 // TODO: check if long name is free (needs to be unique)
 // TODO: add user who initiated the change
 func (p *Aggregate) ChangeLongName(longName valueobject.LongName) error {
+	if !p.deletedAt.Time().IsZero() {
+		return ErrProjectHasBeenDeleted
+	}
+
 	p.raise(&event.ProjectLongNameChanged{
 		ID:        p.id,
 		LongName:  longName,
@@ -174,6 +210,10 @@ func (p *Aggregate) ChangeLongName(longName valueobject.LongName) error {
 // ChangeDescription changes the description of the project.
 // TODO: add user who initiated the change
 func (p *Aggregate) ChangeDescription(description valueobject.Description) error {
+	if !p.deletedAt.Time().IsZero() {
+		return ErrProjectHasBeenDeleted
+	}
+
 	p.raise(&event.ProjectDescriptionChanged{
 		ID:          p.id,
 		Description: description,
@@ -213,6 +253,11 @@ func (p *Aggregate) On(ev event.Event, new bool) {
 		p.description = e.Description
 		p.createdAt = e.CreatedAt
 		p.createdBy = e.CreatedBy
+
+	case *event.ProjectDeleted:
+		p.id = e.ID
+		p.deletedAt = e.DeletedAt
+		p.deletedBy = e.DeletedBy
 
 	case *event.ProjectShortCodeChanged:
 		p.shortCode = e.ShortCode

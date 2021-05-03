@@ -33,3 +33,6 @@ var ErrInvalidEntity = errors.New("invalid entity")
 
 //ErrCannotBeDeleted cannot be deleted
 var ErrCannotBeDeleted = errors.New("cannot be deleted")
+
+//ErrProjectHasBeenDeleted project has been marked as deleted
+var ErrProjectHasBeenDeleted = errors.New("project has been marked as deleted")

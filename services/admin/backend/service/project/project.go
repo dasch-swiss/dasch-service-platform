@@ -68,6 +68,26 @@ func (s *Service) CreateProject(ctx context.Context, shortCode string, shortName
 	return id, nil
 }
 
+//delete project
+func (s *Service) DeleteProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
+
+	// get the project to delete
+	p, err := s.repo.Load(ctx, id)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// delete the project
+	p.DeleteProject(id)
+
+	// save the event
+	if _, err := s.repo.Save(ctx, p); err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	return p, nil
+}
+
 //UpdateProjectShortCode update a projects short code
 func (s *Service) UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error) {
 
@@ -84,7 +104,9 @@ func (s *Service) UpdateProjectShortCode(ctx context.Context, id valueobject.Ide
 	}
 
 	// update the short code
-	p.ChangeShortCode(nsc)
+	if err := p.ChangeShortCode(nsc); err != nil {
+		return &project.Aggregate{}, err
+	}
 
 	// save the project
 	if _, err := s.repo.Save(ctx, p); err != nil {
