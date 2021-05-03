@@ -97,7 +97,7 @@ resource-service-test: ## run all resource-service tests
 	@bazel test //services/resource/backend/...
 
 #################################
-# Other targets
+# Docs targets
 #################################
 
 .PHONY: docs-build
@@ -113,28 +113,28 @@ docs-publish: publish ## publish the DSP API Slate docs to Github Pages
 	docker run --rm --name slate -v $(CURRENT_DIR)/docs:/srv/slate/source slatedocs/slate publish
 
 #################################
-# Other targets
+# Metadata service targets
 #################################
 
 .PHONY: metadata-server
-metadata-server: ## start metadata json-server watching db.json
-	@yarn run json-server --watch --port 3000 services/metadata/backend/data/db.json
-
-.PHONY: metadata-server-go
-metadata-server-go: ## start go mock backend on port 3000
+metadata-server: ## start Go mock backend on port 3000
 	@go run services/metadata/backend/fake-backend/fake-backend.go
 
 .PHONY: metadata-server-docker-build
-metadata-server-docker-build: build ## build metadata json-server watching db.json docker image
+metadata-server-docker-build: build ## build metadata mock-server (watching /data/*.json) docker image
 	@bazel run //services/metadata/backend/fake-backend:image -- --norun
 
 .PHONY: metadata-server-docker-publish
-metadata-server-docker-publish: build ## publish metadata json-server watching db.json docker image
+metadata-server-docker-publish: build ## publish metadata mock-server (watching /data/*.json) docker image
 	@bazel run //services/metadata/backend/data:push
 
 .PHONY: metadata-server-docker-run
-metadata-server-docker-run: metadata-server-docker-build ## publish metadata json-server watching db.json docker image
+metadata-server-docker-run: metadata-server-docker-build ## build and run metadata mock-server (watching /data/*.json) docker image
 	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/fake-backend:image
+
+#################################
+# Other targets
+#################################
 
 .PHONY: help
 help: ## this help
