@@ -1,4 +1,6 @@
-<footer>Footer...</footer>
+<footer>
+  Copyright © 2021 DaSCH
+</footer>
 
 <style>
   footer {
@@ -8,6 +10,7 @@
     width: 100%;
     padding: 1rem;
     box-sizing: border-box;
+    text-align: center;
   }
   @media screen and (min-width: 768px){
     footer {
