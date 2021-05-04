@@ -1310,7 +1310,7 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0838",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0838"
                         }
@@ -1565,12 +1565,12 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "https://dssl.dasch.swiss",
                             "type": "https://schema.org/URL",
                             "url": "https://dssl.dasch.swiss"
                         },
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0824",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0824"
                         }
@@ -1765,7 +1765,7 @@
                     ],
                     "url": [
                         {
-                            "name": "www.unibas.c",
+                            "name": "www.unibas.ch",
                             "type": "https://schema.org/URL",
                             "url": "www.unibas.ch"
                         }
@@ -1892,9 +1892,9 @@
                     ],
                     "url": [
                         {
-                            "name": "ark.dasch.sw",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0826",
                             "type": "https://schema.org/URL",
-                            "url": "ark.dasch.swiss/ark:/72163/1/0826"
+                            "url": "http://ark.dasch.swiss/ark:/72163/1/0826"
                         }
                     ]
                 },
@@ -2236,15 +2236,19 @@
                     ],
                     "description": "La récolte de dessins constitue une technique largement éprouvée pour étudier les représentations imaginaires des enfants. Sur la base d’une collecte de plusieurs centaines de dessins dans diverses régions du monde, notamment au Brésil, en Iran, au Japon, aux Pays-Bas, en Roumanie, en Russie et en Suisse, ce projet prévoit d’étudier l’évolution de la représentation de Dieu ou d’autres êtres surnaturels (dieux, esprits, génies, etc) chez des enfants et des adolescents entre 5 et 18 ans. Il s’intéressera tout spécialement aux stratégies mises en place par les enfants : recours à des représentations religieuses traditionnelles, à des images d’êtres surnaturels véhiculées par des films d’animation ou des bandes dessinées. Au terme du projet, l’objectif est d’avoir pu décrire les stratégies principales utilisées les enfants en ayant pu mettre en évidence comment le choix d’une stratégie plutôt qu’une autre est influencé par l’âge, le sexe, l’éducation religieuse et l’environnement culturel de l’enfant.\nLe contexte de travail est interdisciplinaire. L’analyse du matériel récolté combinera traitement informatique des images et descriptions fournies par des spécialistes du développement de l’enfant, de l’étude des religions et des contextes culturels de provenance des dessins. Ces analyses d’images seront complétées par des analyses textuelles des commentaires fournis par les enfants pour expliquer ce qu’ils ont dessiné.",
                     "discipline": [
-                        "http://skos.um.es/unesco6/630110 ",
-                        "Sociology",
+                        "10201 Sociology",
                         {
                             "name": "SKOS UNESCO Nomenclature",
                             "type": "https://schema.org/URL",
                             "url": "http://skos.um.es/unesco6/61"
                         },
-                        "Psychology",
-                        "Religious studies, Theology"
+                        {
+                            "name": "SKOS UNESCO Nomenclature",
+                            "type": "https://schema.org/URL",
+                            "url": "http://skos.um.es/unesco6/630110"
+                        },
+                        "10105 Psychology",
+                        "10102 Religious studies, Theology"
                     ],
                     "endDate": "2019-02-28",
                     "funder": [
@@ -2346,7 +2350,7 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0105",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0105"
                         }
@@ -2787,7 +2791,7 @@
                     ],
                     "description": "Le CIO est la première organisation sportive internationale installée en Suisse, et la plus importante puisqu’elle prétend réguler le système sportif international. Son fondateur, le baron français Pierre de Coubertin (1863-1937), l’a dotée d’un système de valeurs qui emprunte à la culture chevaleresque des élites européennes traditionnelles, à l’humanisme des Lumières, au pacifisme libéral transatlantique du second XIXe siècle, et au conservatisme hygiéniste et social. Percuté par les diplomaties d’Etat qui ont intégré le sport parmi les outils de leur soft power, le CIO a dû affronter les grands enjeux du XXe siècle. Ce projet prévoit de dépasser l’approche institutionnelle classique en étudiant les trajectoires de ses membres qui, pour la plupart, restent méconnus.\n\nDans un premier temps, ce projet reconstituera les trajectoires familiales, professionnelles, sociales et politiques des 213 membres du CIO cooptés avant 1972. Dans un deuxième temps, il décryptera les mécanismes de cooptation ainsi que les modalités de prise de décision propres au CIO. Enfin, il s’agira d’évaluer « le plus petit dénominateur social, culturel et politique » commun à tous ces leaders qui définit leur vision du monde, et de questionner les concepts d’apolitisme (du sport) et de neutralité diplomatique (du CIO).\nFondé sur une approche prosopographique (croisement et mise en série de micro-biographies), le projet se situe au point d’intersection de l’histoire du sport, de la diplomatie culturelle, des cultures politiques, de la circulation des élites à l’échelle mondiale et du cosmopolitisme. Il contribue ainsi à l’histoire des organisations internationales installées en Suisse et à une meilleure compréhension des concepts de pacifisme et de neutralité.",
                     "discipline": [
-                        "General history (without pre-and early history)",
+                        "10301 General history (without pre-and early history)",
                         {
                             "name": "SKOS UNESCO Nomenclature",
                             "type": "https://schema.org/URL",
@@ -2831,7 +2835,7 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0114",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0114"
                         }
@@ -3351,8 +3355,12 @@
                     ],
                     "description": "Gustave Roud’s work includes several volumes of poetic prose, diary notes, translations, as well as  texts on literature and fine arts. The first critical edition of the poet will be published in two complementary formats: in several volumes, with the publisher Zoé (Carouge-Geneva) and, at the same time, on a digital platform. This platform will constitute the genetic accompaniment of the publication: it will host the digital facsimiles of Gustave Roud’s archive, which includes manuscripts and printed materials.\n\nIn these two formats the publication will enhance the exposure of one of the most important works of the 20th century Swiss literature and it will stimulate studies that respond to contemporary critical orientations: ecocriticism, literary geography and landscape studies, intermediality studies, and queer studies. Furthermore, the digital facsimiles of the archival materials will give the project a strong interdisciplinary dimension: taking into account the diversity of Roud’s practices – diary, poetry, photography, art criticism, literary criticism, translation – it will inspire a renewal of the approach to the work and to its author for the academic as well as the general public.",
                     "discipline": [
-                        "Romance languages and literature",
-                        "http://skos.um.es/unesco6/550613 \r  \r http://skos.um.es/unesco6/550613 \r  \r http://skos.um.es/unesco6/550613",
+                        "10502 Romance languages and literature",
+                        {
+                            "name": "SKOS UNESCO Nomenclature",
+                            "type": "https://schema.org/URL",
+                            "url": "http://skos.um.es/unesco6/550613"
+                        },
                         {
                             "name": "SKOS UNESCO Nomenclature",
                             "type": "https://schema.org/URL",
@@ -3399,9 +3407,9 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0112",
                             "type": "https://schema.org/URL",
-                            "url": "http://ark.dasch.swiss/ark:/72163/1/0112 "
+                            "url": "http://ark.dasch.swiss/ark:/72163/1/0112"
                         }
                     ]
                 },
@@ -3533,7 +3541,7 @@
                         {
                             "type": "http://www.w3.org/ns/prov#Attribution",
                             "role": [
-                                "Data cutrator"
+                                "Data curator"
                             ],
                             "agent": [
                                 {
@@ -3878,8 +3886,8 @@
                     ],
                     "description": "Notre recherche se propose d’enquêter sur les embarras de la parole religieuse telle qu’elle s’énonce dans l’espace public, en Suisse et de France, deux pays sécularisés, mais où les acteurs religieux se montrent actifs. À travers leur prise de parole médiatique, ces acteurs parviennent à susciter des controverses, quand ils n’en font pas l’objet. De portées variables, ces controverses portent notamment sur les régulations entre les genres, l’égalité des sexes et la reconnaissance de la pluralité des sexualités. Cette recrudescence du rôle public des religions dans les sociétés contemporaines a alimenté, en philosophie et en sciences sociales, des perspectives post-séculières, critiques du lien entre modernité et sécularisation, et qui invitent à mieux considérer la place des religions dans les espaces publics des sociétés libérales.Chrétienne, musulmane ou autre, la parole religieuse serait affectée d’une variété d’embarras; elle n’irait plus de soi, spécialement lorsqu’elle acquiert visibilité et prétend énoncer une vérité valant pour tous. Au regard de cette situation, certains acteurs religieux s’efforcent de séculariser l’expression de leurs convictions lorsqu’ils prennent part à une controverse - comme dans l’opposition catholique au mariage homosexuel et aux questions de genre - ou s’appuient sur une rhétorique des droits pour répondre des critiques suscitées par leur pratique - comme dans les «affaires du voile». Si les médias ont largement relayé ces controverses, d’autres affaires, scandales ou problèmes publics relatifs au genre ont fourni matière au délicat engagement public d’acteurs religieux inégalement capables de s’exprimer dans des médias séculiers et globalement en butte à la perte d’autorité de la parole religieuse hors de ses lieux propres.Afin d’appréhender cet embarras en France et en Suisse, notre recherche articule des volets quantitatif et qualitatif, à partir de deux émissions radiophoniques quotidiennes de grande écoute qui empruntent le format du «débat» de société. La radio est un lieu d’observation pertinent, en raison de son importance dans l’économie de la production médiatique. Le volet quantitatif vise à cartographier un corpus de plus de 7000 émissions, sur 10 ans (2006-2016). Le volet qualitatif poursuit l’identification fine des acteurs religieux. Dans un second temps, nous sélectionnerons cinq controverses sur lesquelles nous mènerons une enquête approfondie, historiographique et ethnographique, afin de retracer les tenants et aboutissants de chaque controverse, nationale et transnationale. Cette recherche permettra d’interroger empiriquement la façon dont les mobilisations religieuses sur des questions de genre et de sexualités redéfinissent les règles d’interlocution des espaces publics sécularisés et transforment la parole des acteurs religieux.",
                     "discipline": [
-                        "https://skos.um.es/unesco6/63/ ",
-                        "Sociology"
+                        "https://skos.um.es/unesco6/63/",
+                        "10201 Sociology"
                     ],
                     "endDate": "2019-07-31",
                     "funder": [
@@ -3939,7 +3947,7 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0101",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0101"
                         }
@@ -4240,7 +4248,7 @@
                     ],
                     "description": "This project aims to valorise and better comprehend the various elements surrounding monumental statues of church portals, namely pedestals, canopies, and niches. Their analysis will be integrated within four research axes: cultural transfers, relationships between the central representation and that at the margins, the communication potential of the objects (agency), and their strategic arrangement within the composition (display). Based on a corpus constituted of over a hundred portals located in the Western part of gothic art penetration (Germany, Belgium, England, France, Iberian Peninsula, and Switzerland), the project will aim to determine the conditions within which technological and formal innovations emerged, and to evaluate their local impact and diffusion. Moreover, it will attempt to understand their significance and their function within the visual message developed at the doorstep of sacred buildings.\nThe project will create synergies with research concerned by the communicative function of religious building portals, and will allow for a better understanding of the semiological stakes of sculpted pedestals and microarchitecture canopies.",
                     "discipline": [
-                        "Visual arts and Art history",
+                        "10404 Visual arts and Art history",
                         {
                             "name": "SKOS UNESCO Nomenclature",
                             "type": "https://schema.org/URL",
@@ -4294,12 +4302,12 @@
                     ],
                     "startDate": "2018-12-01",
                     "temporalCoverage": [
-                        "http://chronontology.dainst.org/period/ROL7rN1qOgMe ",
-                        "http://n2t.net/ark:/99152/p0qhb66xnj2 "
+                        "http://chronontology.dainst.org/period/ROL7rN1qOgMe",
+                        "http://n2t.net/ark:/99152/p0qhb66xnj2"
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0116",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0116"
                         }
@@ -4654,7 +4662,7 @@
                             "type": "https://schema.org/URL",
                             "url": "https://skos.um.es/unesco6/620301"
                         },
-                        "Theatre and Cinema"
+                        "10406 Theatre and Cinema"
                     ],
                     "endDate": "2020-08-31",
                     "funder": [
@@ -4704,7 +4712,7 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0107",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0107"
                         }
@@ -5026,7 +5034,7 @@
                     },
                     "sameAs": [
                         {
-                            "name": "unil.ch",
+                            "name": "http://theatresdesociete.unil.ch/",
                             "type": "https://schema.org/URL",
                             "url": "http://theatresdesociete.unil.ch/"
                         }
@@ -5179,8 +5187,8 @@
                     ],
                     "description": "Le théâtre de société se définit comme un théâtre principalement ou totalement amateur, non lucratif, sans programmation régulière et pratiqué chez des particuliers. Notre projet concerne l’étude de cette forme de théâtre entre XVIIIe et XIXe siècle, en France et en Suisse Romande, selon une approche résolument interdisciplinaire, joignant la dramaturgie, l’histoire de l’art et des arts du spectacle, l’histoire culturelle, l’esthétique et la sociologie.\nLa recherche vise à mieux documenter, comprendre et interpréter le phénomène dans sa globalité. \nSes objectifs sont :\n1. Mieux définir et problématiser l’objet d’étude par rapport à d’autres formes théâtrales contemporaines ou successives\n2. Cerner les espaces scéniques et sociaux investis par le théâtre de société\n3. Distinguer les traits propres à son esthétique dramatique, dans le domaine de l’écriture des pièces, du choix des répertoires et de la manière de les jouer\n4. Étudier la nature, l’étendue et les enjeux des réseaux de sociabilité créés et entretenus par cette pratique\n5. Étudier les aspects les plus matériels des représentations de société, liés à la culture visuelle et à la mise en scène des spectacles.\n6. Montrer la permanence de pratiques théâtrales et sociales nées sur les scènes de société dans des formes théâtrales contemporaines\n7. Organiser et structurer les données sur les représentations étudiées dans une base de données de référence.\nNotre ambition est de dépasser la vision partielle et fragmentaire qui a caractérisé jusqu’à présent la recherche sur le sujet pour l’appréhender dans son identité distinctive, par-delà les cloisonnements traditionnels des secteurs disciplinaires et des répartitions séculaires. Le projet pourra ainsi restituer au théâtre de société son ihistoire, les principes de son identité distinctive et la place qu’il mérite dans l’histoire culturelle : carrefour de réseaux de sociabilité, vecteur de questionnements et de redéfinitions esthétiques, catalyseur de passions dramatiques comme de questions morales et identitaires.",
                     "discipline": [
-                        "Romance languages and literature",
-                        "Music, Theatre"
+                        "10502 Romance languages and literature",
+                        "10604 Music, Theatre"
                     ],
                     "endDate": "2021-08-31",
                     "funder": [
@@ -5298,12 +5306,12 @@
                     ],
                     "url": [
                         {
-                            "name": "unil.ch",
+                            "name": "http://theatresdesociete.unil.ch/",
                             "type": "https://schema.org/URL",
                             "url": "http://theatresdesociete.unil.ch/"
                         },
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0103",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0103"
                         }
@@ -5565,10 +5573,10 @@
                     ],
                     "description": "In the context of the 500th anniversary of the Lutheran Reformation (1517), The Archives of the State of Geneva, in collaboration with historians from the University of Geneva and from the University of Lausanne, have created an exhibition that presents the impact of the Reformation on daily life in Geneva. This means demonstrating at the same time how the Genevans were involved in this process of Reformation and how the religious conversion of the city affected their daily lives. The archives are in fact the echo of the activism, resistance or the adaptation of various players – men, women, and children – and underline the real – or mythologized – changes imposed by the practice of the new form of worship. The exhibition approaches this topic in three stages. The first period (1517-1555) charts the introduction of the Reformation in Geneva. Guillaume Farel’s (1489-1565) sermons feed the religious stirrings which sometimes manifest themselves in iconoclasm. The second period (1555-1575), describes the Reformation as it was lived in daily life. The population adjusted to the new liturgies, mixed with students of the Academy, took in the influx of refugees and submitted to disciplinary constraints. Finally, the third period (1575-1617) saw tempers calming down and discipline being relaxed. The people of Geneva slowly found a new equilibrium and the year 1617 provided the opportunity to celebrate the first hundred years of the Reformation. The Archives of the State of Geneva maintain, restore and digitalise the documents that historians use in their work. The presentation of a digitalisation project and the restoration of the archives of the Protestant Church complete this exhibition and highlight the historical work linked to the archives. ",
                     "discipline": [
-                        "Ecclesiastical history",
-                        "Swiss history",
-                        "General history (without pre-and early history)",
-                        "Religious studies, Theology"
+                        "10103 Ecclesiastical history",
+                        "10302 Swiss history",
+                        "10301 General history (without pre-and early history)",
+                        "10102 Religious studies, Theology"
                     ],
                     "endDate": "2018-03-31",
                     "funder": [
@@ -5611,7 +5619,7 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "https://ark.dasch.swiss/ark:/72163/1/0111",
                             "type": "https://schema.org/URL",
                             "url": "https://ark.dasch.swiss/ark:/72163/1/0111"
                         }
@@ -6098,7 +6106,7 @@
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/countries/"
+                                "url": "https://www.geonames.org/6295630/earth.html"
                             }
                         }
                     ],
@@ -6361,7 +6369,7 @@
                     "id": "http://ns.dasch.swiss/repository#dsp-0801-dataset-001",
                     "abstract": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0801/4UDRwNHCQZWhJZdL=JfBSAt.20191028T094815009Z",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0801/4UDRwNHCQZWhJZdL=JfBSAt.20191028T094815009Z"
                         }
@@ -6419,7 +6427,7 @@
                     "id": "http://ns.dasch.swiss/repository#dsp-0801-dataset-000",
                     "abstract": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "http://ark.dasch.swiss/ark:/72163/1/0801/18ngnZB9Sgy2PlOl71OJxgl.20191028T094314789Z",
                             "type": "https://schema.org/URL",
                             "url": "http://ark.dasch.swiss/ark:/72163/1/0801/18ngnZB9Sgy2PlOl71OJxgl.20191028T094314789Z"
                         }
@@ -6479,7 +6487,7 @@
                     "id": "http://ns.dasch.swiss/repository#dsp-0801-dataset-003",
                     "abstract": [
                         {
-                            "name": "unibas.ch",
+                            "name": "https://bez.unibas.ch/de/basler-edition-der-bernoulli-briefwechsel/",
                             "type": "https://schema.org/URL",
                             "url": "https://bez.unibas.ch/de/basler-edition-der-bernoulli-briefwechsel/"
                         }
@@ -6703,43 +6711,43 @@
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/11961320"
+                                "url": "https://www.geonames.org/11961320/european-russia.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/2658434"
+                                "url": "https://www.geonames.org/2658434/switzerland.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/6255148"
+                                "url": "https://www.geonames.org/6255148/europe.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/3017382"
+                                "url": "https://www.geonames.org/3017382/republic-of-france.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/3175395"
+                                "url": "https://www.geonames.org/3175395/italian-republic.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/2635167"
+                                "url": "https://www.geonames.org/2635167/united-kingdom-of-great-britain-and-northern-ireland.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/2921044"
+                                "url": "https://www.geonames.org/2921044/federal-republic-of-germany.html"
                             }
                         }
                     ],
@@ -6749,7 +6757,7 @@
                     ],
                     "url": [
                         {
-                            "name": "dasch.swiss",
+                            "name": "https://beol.dasch.swiss/",
                             "type": "https://schema.org/URL",
                             "url": "https://beol.dasch.swiss/"
                         }
@@ -6946,7 +6954,7 @@
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/2661552"
+                                "url": "https://www.geonames.org/2661552/bern.html"
                             }
                         }
                     ],
@@ -6971,9 +6979,9 @@
                     ],
                     "url": [
                         {
-                            "name": "www.salsah.o",
+                            "name": "https://data.dasch.swiss/hdm/",
                             "type": "https://schema.org/URL",
-                            "url": "www.salsah.org"
+                            "url": "https://data.dasch.swiss/hdm/"
                         }
                     ]
                 },
@@ -7168,19 +7176,19 @@
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/6255147"
+                                "url": "https://www.geonames.org/6255147/asia.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/6255148"
+                                "url": "https://www.geonames.org/6255148/europe.html"
                             }
                         },
                         {
                             "place": {
                                 "name": "Geonames",
-                                "url": "https://www.geonames.org/7729887"
+                                "url": "https://www.geonames.org/7729887/northern-africa.html"
                             }
                         }
                     ],
@@ -8177,6 +8185,204 @@
                             "name": "snf.ch",
                             "type": "https://schema.org/URL",
                             "url": "http://p3.snf.ch/Project-113769"
+                        }
+                    ]
+                }
+            ]
+        },
+        {
+            "id": "0813",
+            "name": "Annotating Media of Bruno Manser", 
+            "description": "Bruno Manser has left a variety of media in which he documented the nomadic life of the Penan. The project aims to show and annotate the everyday life moments of a nomadic lifestyle across media as diary entries, video footage and photographs of Bruno Manser.",
+            "metadata": [
+                {
+                    "type": "http://ns.dasch.swiss/repository#Dataset",
+                    "id": "http://ns.dasch.swiss/repository#dsp-0813-dataset-001",
+                    "abstract": [
+                        "The dataset contains data of digitized diaries, video footage, photographs and other media of Bruno Manser"
+                    ],
+                    "conditionsOfAccess": "Restricted",
+                    "howToCite": "Bruno Manser/Bruno Manser Fonds",
+                    "language": [
+                        "Penan",
+                        "English",
+                        "German"
+                    ],
+                    "license": [
+                        {
+                            "name": "creativecommons.org",
+                            "type": "https://schema.org/URL",
+                            "url": "https://creativecommons.org/licenses/by-nc-sa/4.0/"
+                        }
+                    ],
+                    "qualifiedAttribution": [
+                        {
+                            "type": "http://www.w3.org/ns/prov#Attribution",
+                            "role": [
+                                "Author"
+                            ],
+                        "agent": [
+                            {
+                                "id": "http://ns.dasch.swiss/repository#dsp-0813-person-002"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "http://www.w3.org/ns/prov#Attribution",
+                        "role": [
+                            "Editor"
+                        ],
+                        "agent": [
+                            {
+                                "id": "http://ns.dasch.swiss/repository#dsp-0813-organization-001"
+                            }
+                        ]
+                    },
+                    {
+                        "type": "http://www.w3.org/ns/prov#Attribution",
+                        "role": [
+                            "Projektleiter"
+                        ],
+                        "agent": [
+                            {
+                                "id": "http://ns.dasch.swiss/repository#dsp-0813-person-001"
+                            }
+                        ]
+                    }
+                    ],
+                    "status": "Ongoing",
+                    "title": "Annotating Media of Bruno Manser",
+                    "typeOfData": [
+                        "Image",
+                        "Text",
+                        "Movie"
+                    ],
+                    "project": {
+                    "id": "http://ns.dasch.swiss/repository#dsp-0813-project"
+                    }
+                },
+                {
+                    "type": "http://ns.dasch.swiss/repository#Project",
+                    "id": "http://ns.dasch.swiss/repository#dsp-0813-project",
+                    "alternateName": [
+                        "Annotating Bruno Manser's Diaries"
+                    ],
+                    "description": "Bruno Manser has left a variety of media in which he documented the nomadic life of the Penan. The project aims to show and annotate the everyday life moments of a nomadic lifestyle across media as diary entries, video footage and photographs of Bruno Manser.",
+                    "discipline": [
+                        {
+                            "name": "SKOS UNESCO Nomenclature",
+                            "type": "https://schema.org/URL",
+                            "url": "http://skos.um.es/unesco6/5103"
+                        },
+                        {
+                            "name": "SKOS UNESCO Nomenclature",
+                            "type": "https://schema.org/URL",
+                            "url": "http://skos.um.es/unesco6/5101"
+                        }
+                    ],
+                    "funder": [
+                        {
+                            "id": "http://ns.dasch.swiss/repository#dsp-0813-organization-001"
+                        }
+                    ],
+                    "keywords": [
+                        "nomadic lifestyle",
+                        "Waldnomaden",
+                        "Nomads",
+                        "Bruno Manser Fonds",
+                        "Hunters and Gatherers",
+                        "Rainforest",
+                        "Penan",
+                        "Regenwald",
+                        "Bruno Manser",
+                        "Nomaden"
+                    ],
+                    "name": "Annotating Media of Bruno Manser",
+                    "shortcode": "0813",
+                    "spatialCoverage": [
+                        {
+                            "place": {
+                                "name": "Geonames",
+                                "url": "https://www.geonames.org/1733038/sarawak.html"
+                            }
+                        },
+                        {
+                            "place": {
+                                "name": "Geonames",
+                                "url": "https://www.geonames.org/2658434/switzerland.html"
+                            }
+                        }
+                    ],
+                    "startDate": "2014-05-01",
+                    "temporalCoverage": [
+                        "1984 - 2000"
+                    ],
+                    "url": [
+                        {
+                            "name": "https://data.dasch.swiss/bmf/",
+                            "type": "https://schema.org/URL",
+                            "url": "https://data.dasch.swiss/bmf/"
+                        }
+                    ]
+                },
+                { 
+                    "type": "http://ns.dasch.swiss/repository#Organization",
+                    "id": "http://ns.dasch.swiss/repository#dsp-0813-organization-001",
+                    "address": {
+                        "type": "https://schema.org/PostalAddress",
+                        "addressLocality": "Basel",
+                        "postalCode": "4051",
+                        "streetAddress": "Socinstrasse 37"
+                    },
+                    "email": "info@bmf.ch",
+                    "name": [
+                        "Bruno Manser Fonds"
+                    ],
+                    "url": [
+                        {
+                            "name": "bmf.ch",
+                            "type": "https://schema.org/URL",
+                            "url": "https://www.bmf.ch/"
+                        }
+                    ]
+                },
+                {
+                    "type": "http://ns.dasch.swiss/repository#Person",
+                    "id": "http://ns.dasch.swiss/repository#dsp-0813-person-002",
+                    "familyName": "Manser",
+                    "givenName": "Bruno",
+                    "jobTitle": [
+                        "Creator"
+                    ],
+                    "memberOf": [
+                        {
+                            "id": "http://ns.dasch.swiss/repository#dsp-0813-organization-001"
+                        }
+                    ]
+                },
+                {
+                    "type": "http://ns.dasch.swiss/repository#Person",
+                    "id": "http://ns.dasch.swiss/repository#dsp-0813-person-001",
+                    "email": [
+                        "erwin.zbinden@bmf.ch"
+                    ],
+                    "familyName": "Zbinden",
+                    "givenName": "Erwin",
+                    "jobTitle": [
+                        "Leiter Dokumentationsstelle" 
+                    ],
+                    "memberOf": [
+                        {
+                            "id": "http://ns.dasch.swiss/repository#dsp-0813-organization-001"
+                        }
+                    ]
+                },
+                {
+                    "type": "http://ns.dasch.swiss/repository#Grant",
+                    "id": "http://ns.dasch.swiss/repository#dsp-0813-grant-001",
+                    "funder": [
+                        {
+                            "id": "http://ns.dasch.swiss/repository#dsp-0813-organization-001"
                         }
                     ]
                 }
