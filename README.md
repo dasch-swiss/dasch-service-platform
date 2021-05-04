@@ -54,10 +54,10 @@ The server serves all data found in `./services/metadata/backend/data/*.json`, w
 __Note:__ Files starting with underscore (`_`) are excluded. This provides a simple means to leave out files that are not supposed to be public.  
 The server supports pagination and full text search.
 
-To run the server locally, use the command `make metadata-server`.  
-To run, build and publish a docker image of the server, use the commands `metadata-server-docker-run`, `metadata-server-docker-build` and `metadata-server-docker-publish`respectively. (`...-run` will build first.)
+To run the server locally, use the command `make metadata`.  
+To run, build and publish a docker image of the server, use the commands `metadata-docker-run`, `metadata-docker-build` and `metadata-docker-publish`respectively. (`...-run` will build first.)
 
-To use the legacy metadata json-server, use the make targets `make metadata-legacy-server`, `make metadata-legacy-server-docker-build`, `make metadata-legacy-server-docker-run` and `make metadata-legacy-server-docker-publish`.
+To use the legacy metadata json-server, use the make targets `make metadata-json-server`, `make metadata-json-server-docker-build`, `make metadata-json-server-docker-run` and `make metadata-json-server-docker-publish`.
 
 
 ## Go dependencies
