@@ -53,9 +53,9 @@
   const getDivHeight = () => {
     const el = document.getElementById('description');
     const lineHeight = parseInt(window.getComputedStyle(el).getPropertyValue('line-height'));
-    const divHeight = el.offsetHeight;
+    const divHeight = el.scrollHeight;
     descriptionLinesNumber = divHeight / lineHeight;
-    isDescriptionExpanded = descriptionLinesNumber >= 6 ? false : true;
+    isDescriptionExpanded = descriptionLinesNumber > 6 ? false : true;
   };
 </script>
 
@@ -80,7 +80,7 @@
         <div id=description class="data new-text {isExpanded ? '' : 'description-short'}">{project?.description}</div>
       </div>
       <!-- TODO: if accepted and reused consder move it to separate component -->
-      {#if descriptionLinesNumber >= 6}
+      {#if descriptionLinesNumber > 6}
         <div on:click={toggleExpand} class=expand-button>show {isExpanded ? "less" : "more"}</div>
       {/if}
 
@@ -123,9 +123,10 @@
       <div class=widget>
         <ProjectWidget {project} />
       </div>
-      <div class=widget>
+      <!-- TODO: temp disabled download widget -->
+      <!-- <div class=widget>
         <DownloadWidget />
-      </div>
+      </div> -->
 
       <button on:click={() => {window.scrollTo(0,0)}} class="bottom-button m-hidden" title="Get back to the top">
         <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">

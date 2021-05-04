@@ -8,6 +8,14 @@
   let showMenu = false;
   let enteredString = '';
 
+  const getEnv = () => {
+    if (window.location.host.includes('test')) {
+      return 'test.';
+    } else if (window.location.host.includes('staging')) {
+      return 'staging.';
+    } else return '';
+  }
+
   function toggleSearchbar() {
     showSearchbar = !showSearchbar;
     showFilters = false;
@@ -36,8 +44,8 @@
 <header>
   <div class="header-container">
     <a href="/" class="header-left">
-      <img class="logo s-inline-block" src="assets/logo/DaSCH_Logo_sw.svg" alt="DaSCH logo" />
-      <img class="icon-logo s-hidden" src="assets/icon/dasch-icon-black.svg" alt="DaSCH logo" />
+      <img class="logo s-inline-block" src="assets/logo/DaSCH-Logo-black.svg" alt="DaSCH logo" />
+      <img class="icon-logo s-hidden" src="assets/icon/DaSCH-Icon-black-64.svg" alt="DaSCH logo" />
     </a>
     <h1 class="title">{$location === '/projects' ? 'Repository Explorer' : `Project ${$location.split('/')[2]}`}</h1>
     <div class="header-right">
@@ -49,7 +57,8 @@
         </svg>
       </button>
       <!-- filter button -->
-      <button class="m-hidden" on:click="{toggleFilters}">
+      <!-- TODO: temp hidden faceated search -->
+      <button style="display:none" class="m-hidden" on:click="{toggleFilters}">
         <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
         </svg>
@@ -69,9 +78,9 @@
     <Category />
   </div>
   <div class="menu" class:hidden={!showMenu}>
-    <a class="menu-item" href="/">dasch.swiss</a>
-    <a class="menu-item" href="/">app.dasch.swiss</a>
-    <a class="menu-item" href="/">admin.dasch.swiss</a>
+    <a class="menu-item" href="{`https://${getEnv()}dasch.swiss/`}">{`${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="{`https://app.${getEnv()}dasch.swiss/`}">{`app.${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="{`https://admin.${getEnv()}dasch.swiss/`}">{`admin.${getEnv()}dasch.swiss`}</a>
   </div>
 </header>
 
@@ -96,10 +105,11 @@
     margin-right: 0.25rem;
   }
   .logo {
-    height: 5rem;
+    height: 2.75rem;
     vertical-align: middle;
     cursor: pointer;
     display: none;
+    padding: 20px;
   }
   .icon-logo {
     height: 3rem;
@@ -133,6 +143,8 @@
     background-color: var(--cl-background-light);
     padding: 12px;
   }
+  /* TODO: temp hidden faceated search */
+  .filter-container{display: none}
   button {
     display: inline-block;
     vertical-align: middle;
@@ -151,16 +163,18 @@
   .menu-item {
     display: block;
     padding: 1rem 1.5rem;
+    width: calc(100% - 3rem);
   }
   .menu-item:hover {
     background-color: var(--cl-transparent-light);
   }
-  @media screen and (min-width: 576px) {
+  @media screen and (min-width: 768px) {
     .menu {
       width: 20rem;
       height: 90vh;
       position: absolute;
       right: 0px;
+      z-index: 0;
     }
   }
 </style>
