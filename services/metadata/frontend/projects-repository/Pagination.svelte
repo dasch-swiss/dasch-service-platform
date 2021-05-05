@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { getProjectsMetadata, pagedResults, pagination } from '../stores';
+  import { getProjectsMetadata, pagedResults, pagination, query } from '../stores';
 
   let handlePagination = (event: MouseEvent) => {
     const id = (event.target as HTMLElement).id;
@@ -16,7 +16,7 @@
     document.querySelector('.active').classList.remove('active');
     document.getElementById(($pagination.currentPage).toString()).classList.add('active');
     console.log('curr',$pagination.currentPage);
-    getProjectsMetadata($pagination.currentPage);
+    getProjectsMetadata($pagination.currentPage, $query);
     window.scrollTo(0,0);
   }
 </script>

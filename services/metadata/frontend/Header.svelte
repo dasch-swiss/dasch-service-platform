@@ -43,7 +43,7 @@
 
 <header>
   <div class="header-container">
-    <a href="/" class="header-left">
+    <a on:click={() => {getProjectsMetadata(1)}} href="#/projects?_page=1&_limit=9" class="header-left">
       <img class="logo s-inline-block" src="assets/logo/DaSCH-Logo-black.svg" alt="DaSCH logo" />
       <img class="icon-logo s-hidden" src="assets/icon/DaSCH-Icon-black-64.svg" alt="DaSCH logo" />
     </a>

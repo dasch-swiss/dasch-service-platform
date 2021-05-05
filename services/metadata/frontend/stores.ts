@@ -3,11 +3,10 @@ import { writable } from 'svelte/store';
 import type { PaginationData } from './interfaces';
 
 export const pagination = writable({} as PaginationData);
-export const resultsState = writable(undefined as string);
-export const pagedResults = writable([]);
+export const pagedResults = writable(undefined as any[]);
 export const currentProjectMetadata = writable(undefined);
 
-let query: string;
+export const query = writable('');
 
 export async function getProjectsMetadata(page: number, q?: string): Promise<void> {
   // const baseUrl = process.env.BASE_URL;
@@ -18,18 +17,15 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
   let route: string;
   let currentResultsRange = baseResultsRange.map(v => v + ((page - 1) * baseResultsRange[1]));
   
-  if (q || query) {
-    if (q) {
-      query = q;
-    }
-
-    route = `projects?q=${query}&_page=${page}&_limit=${baseResultsRange[1]}`;
+  if (q) {
+    query.set(q);
+    route = `projects?q=${q}&_page=${page}&_limit=${baseResultsRange[1]}`;
   } else {
+    query.set('');
     route = `projects?_page=${page}&_limit=${baseResultsRange[1]}`;
   }
 
   // console.log(baseUrl, route);
-  resultsState.set(route);
   push(`/${route}`);
 
   await fetch(`${baseUrl}${route}`)

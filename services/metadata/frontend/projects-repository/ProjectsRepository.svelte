@@ -3,8 +3,7 @@
   import Category from './Category.svelte';
   import { onMount } from 'svelte';
   import Pagination from './Pagination.svelte';
-  import { getProjectsMetadata, pagedResults, resultsState } from '../stores';
-  import { push } from 'svelte-spa-router';
+  import { getProjectsMetadata, pagedResults } from '../stores';
 
   const defaultRoute = 'projects?_page=1&_limit=9'
   let message = 'Loading...';
@@ -16,14 +15,8 @@
     }, 3000);
   
   onMount(async () => {
-    if (!$pagedResults.length) {
+    if (!$pagedResults) {
       await getProjectsMetadata(1);
-    }
-    
-    if (!$resultsState) {
-      await push(`/${defaultRoute}`);
-    } else {
-      await push(`/${$resultsState}`);
     }
   });
 </script>

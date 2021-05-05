@@ -56,17 +56,21 @@ admin-service-test: ## run all admin-service tests
 # Metadata service targets
 #################################
 
+.PHONY: metadata
+metadata: ## start Go mock backend on port 3000
+	@go run services/metadata/backend/fake-backend/fake-backend.go
+
 .PHONY: metadata-docker-build
-metadata-docker-build: build ## publish linux/amd64 platform image locally
-	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/cmd:image -- --norun
+metadata-docker-build: build ## publish metadata mock-server linux/amd64 platform docker image locally (watching /data/*.json)
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/fake-backend:image -- --norun
 
 .PHONY: metadata-docker-publish
-metadata-docker-publish: build ## publish linux/amd64 platform image to Dockerhub
-	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/docker:push
+metadata-docker-publish: build ## publish metadata mock-server linux/amd64 platform docker image to Dockerhub (watching /data/*.json)
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/fake-backend:push
 
 .PHONY: metadata-docker-run
-metadata-docker-run: metadata-docker-build ## run linux/amd64 platform image locally
-	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/cmd:image
+metadata-docker-run: metadata-docker-build ## build and run metadata mock-server linux/amd64 platform docker image (watching /data/*.json)
+	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/fake-backend:image
 
 .PHONY: metadata-service-run
 metadata-service-run: build ## start the metadata-service
@@ -75,6 +79,26 @@ metadata-service-run: build ## start the metadata-service
 .PHONY: metadata-service-test
 metadata-service-test: ## run all metadata-service tests
 	@bazel test //services/metadata/backend/...
+
+#################################
+# Metadata service json-server targets
+#################################
+
+.PHONY: metadata-json-server
+metadata-json-server: ## start metadata json-server watching db.json
+	@yarn run json-server --watch --port 3000 services/metadata/backend/data/db.json
+
+.PHONY: metadata-json-server-docker-build
+metadata-json-server-docker-build: build ## build metadata json-server watching db.json docker image
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/data:image -- --norun
+
+.PHONY: metadata-json-server-docker-publish
+metadata-json-server-docker-publish: build ## publish metadata json-server watching db.json docker image
+	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/data:push
+
+.PHONY: metadata-json-server-docker-run
+metadata-json-server-docker-run: metadata-server-docker-build ## publish metadata json-server watching db.json docker image
+	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/data:image
 
 #################################
 # Resource service targets
@@ -97,7 +121,7 @@ resource-service-test: ## run all resource-service tests
 	@bazel test //services/resource/backend/...
 
 #################################
-# Other targets
+# Docs targets
 #################################
 
 .PHONY: docs-build
@@ -115,22 +139,6 @@ docs-publish: publish ## publish the DSP API Slate docs to Github Pages
 #################################
 # Other targets
 #################################
-
-.PHONY: metadata-server
-metadata-server: ## start metadata json-server watching db.json
-	@yarn run json-server --watch --port 3000 services/metadata/backend/data/db.json
-
-.PHONY: metadata-server-docker-build
-metadata-server-docker-build: build ## build metadata json-server watching db.json docker image
-	@bazel run //services/metadata/backend/data:image -- --norun
-
-.PHONY: metadata-server-docker-publish
-metadata-server-docker-publish: build ## publish metadata json-server watching db.json docker image
-	@bazel run //services/metadata/backend/data:push
-
-.PHONY: metadata-server-docker-run
-metadata-server-docker-run: metadata-server-docker-build ## publish metadata json-server watching db.json docker image
-	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/data:image
 
 .PHONY: help
 help: ## this help

@@ -43,28 +43,21 @@ This starts the application on the [localhost:5000](http://localhost:5000).
 
 #### Server
 
-For now, test data is served from a simple `json-server` in order to be able to design the API and quickly start developing the front end.
+For now, metadata is served from a simple server written in Go.
 
-Be sure to have `json-server` installed:
+The server serves the frontend (static file serving on `./public/`) and the metadata on `http://localhost:3000/`.
 
-```bash
-yarn install -g json-server
-```
+The route `/` serves the frontend.
 
-`json-server` watches and serves a single `db.json` file on port 3000.
+The routes `/projects` and `/projects/:id` form a simple metadata API.  
+The server serves all data found in `./services/metadata/backend/data/*.json`, where the JSON file follows the data structure as currently provided by DSP-JS-LIB.  
+__Note:__ Files starting with underscore (`_`) are excluded. This provides a simple means to leave out files that are not supposed to be public.  
+The server supports pagination and full text search.
 
-To run `json-server` either navigate to the `db.json` file and run `json-server --watch db.json` or simply run
-```bash
-make metadata-server
-```
+To run the server locally, use the command `make metadata`.  
+To run, build and publish a docker image of the server, use the commands `metadata-docker-run`, `metadata-docker-build` and `metadata-docker-publish`respectively. (`...-run` will build first.)
 
-Currently one route is being served: `http://localhost:3000/projects/`. It returns all projects for which there is metadata available. For now, projects only contain an `id` (i.e. the project shortcode), `name`, `description` and `metadata`.
-
-Metadata of a specific project can be retrieved by getting `/projects/<id>`. (E.g. `http://localhost:3000/projects/9997` to get the minimal metadata set.)
-
-Full text search can be performed by adding `?q=<search-query>` (e.g. `http://localhost:3000/projects?q=agriculture`).
-
-`json-server` also supports updating and deleting data. For more capabilities of `json-server`, see the [the docs](https://github.com/typicode/json-server).
+To use the legacy metadata json-server, use the make targets `make metadata-json-server`, `make metadata-json-server-docker-build`, `make metadata-json-server-docker-run` and `make metadata-json-server-docker-publish`.
 
 
 ## Go dependencies
