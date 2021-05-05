@@ -296,15 +296,19 @@
       ],
       "description": "La récolte de dessins constitue une technique largement éprouvée pour étudier les représentations imaginaires des enfants. Sur la base d’une collecte de plusieurs centaines de dessins dans diverses régions du monde, notamment au Brésil, en Iran, au Japon, aux Pays-Bas, en Roumanie, en Russie et en Suisse, ce projet prévoit d’étudier l’évolution de la représentation de Dieu ou d’autres êtres surnaturels (dieux, esprits, génies, etc) chez des enfants et des adolescents entre 5 et 18 ans. Il s’intéressera tout spécialement aux stratégies mises en place par les enfants : recours à des représentations religieuses traditionnelles, à des images d’êtres surnaturels véhiculées par des films d’animation ou des bandes dessinées. Au terme du projet, l’objectif est d’avoir pu décrire les stratégies principales utilisées les enfants en ayant pu mettre en évidence comment le choix d’une stratégie plutôt qu’une autre est influencé par l’âge, le sexe, l’éducation religieuse et l’environnement culturel de l’enfant.\nLe contexte de travail est interdisciplinaire. L’analyse du matériel récolté combinera traitement informatique des images et descriptions fournies par des spécialistes du développement de l’enfant, de l’étude des religions et des contextes culturels de provenance des dessins. Ces analyses d’images seront complétées par des analyses textuelles des commentaires fournis par les enfants pour expliquer ce qu’ils ont dessiné.",
       "discipline": [
-        "http://skos.um.es/unesco6/630110 ",
-        "Sociology",
+        "10201 Sociology",
         {
           "name": "SKOS UNESCO Nomenclature",
           "type": "https://schema.org/URL",
           "url": "http://skos.um.es/unesco6/61"
         },
-        "Psychology",
-        "Religious studies, Theology"
+        {
+          "name": "SKOS UNESCO Nomenclature",
+          "type": "https://schema.org/URL",
+          "url": "http://skos.um.es/unesco6/630110"
+        },
+        "10105 Psychology",
+        "10102 Religious studies, Theology"
       ],
       "endDate": "2019-02-28",
       "funder": [
@@ -406,7 +410,7 @@
       ],
       "url": [
         {
-          "name": "dasch.swiss",
+          "name": "http://ark.dasch.swiss/ark:/72163/1/0105",
           "type": "https://schema.org/URL",
           "url": "http://ark.dasch.swiss/ark:/72163/1/0105"
         }

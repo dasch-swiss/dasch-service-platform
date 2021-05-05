@@ -5,7 +5,7 @@
             "id": "http://ns.dasch.swiss/repository#dsp-0801-dataset-001",
             "abstract": [
                 {
-                    "name": "dasch.swiss",
+                    "name": "http://ark.dasch.swiss/ark:/72163/1/0801/4UDRwNHCQZWhJZdL=JfBSAt.20191028T094815009Z",
                     "type": "https://schema.org/URL",
                     "url": "http://ark.dasch.swiss/ark:/72163/1/0801/4UDRwNHCQZWhJZdL=JfBSAt.20191028T094815009Z"
                 }
@@ -63,7 +63,7 @@
             "id": "http://ns.dasch.swiss/repository#dsp-0801-dataset-000",
             "abstract": [
                 {
-                    "name": "dasch.swiss",
+                    "name": "http://ark.dasch.swiss/ark:/72163/1/0801/18ngnZB9Sgy2PlOl71OJxgl.20191028T094314789Z",
                     "type": "https://schema.org/URL",
                     "url": "http://ark.dasch.swiss/ark:/72163/1/0801/18ngnZB9Sgy2PlOl71OJxgl.20191028T094314789Z"
                 }
@@ -123,7 +123,7 @@
             "id": "http://ns.dasch.swiss/repository#dsp-0801-dataset-003",
             "abstract": [
                 {
-                    "name": "unibas.ch",
+                    "name": "https://bez.unibas.ch/de/basler-edition-der-bernoulli-briefwechsel/",
                     "type": "https://schema.org/URL",
                     "url": "https://bez.unibas.ch/de/basler-edition-der-bernoulli-briefwechsel/"
                 }
@@ -347,43 +347,43 @@
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/11961320"
+                        "url": "https://www.geonames.org/11961320/european-russia.html"
                     }
                 },
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/2658434"
+                        "url": "https://www.geonames.org/2658434/switzerland.html"
                     }
                 },
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/6255148"
+                        "url": "https://www.geonames.org/6255148/europe.html"
                     }
                 },
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/3017382"
+                        "url": "https://www.geonames.org/3017382/republic-of-france.html"
                     }
                 },
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/3175395"
+                        "url": "https://www.geonames.org/3175395/italian-republic.html"
                     }
                 },
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/2635167"
+                        "url": "https://www.geonames.org/2635167/united-kingdom-of-great-britain-and-northern-ireland.html"
                     }
                 },
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/2921044"
+                        "url": "https://www.geonames.org/2921044/federal-republic-of-germany.html"
                     }
                 }
             ],
@@ -393,7 +393,7 @@
             ],
             "url": [
                 {
-                    "name": "dasch.swiss",
+                    "name": "https://beol.dasch.swiss/",
                     "type": "https://schema.org/URL",
                     "url": "https://beol.dasch.swiss/"
                 }

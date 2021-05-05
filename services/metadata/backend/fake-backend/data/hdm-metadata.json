@@ -74,7 +74,7 @@
                 {
                     "place": {
                         "name": "Geonames",
-                        "url": "https://www.geonames.org/2661552"
+                        "url": "https://www.geonames.org/2661552/bern.html"
                     }
                 }
             ],
@@ -99,9 +99,9 @@
             ],
             "url": [
                 {
-                    "name": "www.salsah.o",
+                    "name": "https://data.dasch.swiss/hdm/",
                     "type": "https://schema.org/URL",
-                    "url": "www.salsah.org"
+                    "url": "https://data.dasch.swiss/hdm/"
                 }
             ]
         },

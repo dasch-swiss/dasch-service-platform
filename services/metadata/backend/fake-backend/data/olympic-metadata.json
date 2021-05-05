@@ -220,7 +220,7 @@
       ],
       "description": "Le CIO est la première organisation sportive internationale installée en Suisse, et la plus importante puisqu’elle prétend réguler le système sportif international. Son fondateur, le baron français Pierre de Coubertin (1863-1937), l’a dotée d’un système de valeurs qui emprunte à la culture chevaleresque des élites européennes traditionnelles, à l’humanisme des Lumières, au pacifisme libéral transatlantique du second XIXe siècle, et au conservatisme hygiéniste et social. Percuté par les diplomaties d’Etat qui ont intégré le sport parmi les outils de leur soft power, le CIO a dû affronter les grands enjeux du XXe siècle. Ce projet prévoit de dépasser l’approche institutionnelle classique en étudiant les trajectoires de ses membres qui, pour la plupart, restent méconnus.\n\nDans un premier temps, ce projet reconstituera les trajectoires familiales, professionnelles, sociales et politiques des 213 membres du CIO cooptés avant 1972. Dans un deuxième temps, il décryptera les mécanismes de cooptation ainsi que les modalités de prise de décision propres au CIO. Enfin, il s’agira d’évaluer « le plus petit dénominateur social, culturel et politique » commun à tous ces leaders qui définit leur vision du monde, et de questionner les concepts d’apolitisme (du sport) et de neutralité diplomatique (du CIO).\nFondé sur une approche prosopographique (croisement et mise en série de micro-biographies), le projet se situe au point d’intersection de l’histoire du sport, de la diplomatie culturelle, des cultures politiques, de la circulation des élites à l’échelle mondiale et du cosmopolitisme. Il contribue ainsi à l’histoire des organisations internationales installées en Suisse et à une meilleure compréhension des concepts de pacifisme et de neutralité.",
       "discipline": [
-        "General history (without pre-and early history)",
+        "10301 General history (without pre-and early history)",
         {
           "name": "SKOS UNESCO Nomenclature",
           "type": "https://schema.org/URL",
@@ -264,7 +264,7 @@
       ],
       "url": [
         {
-          "name": "dasch.swiss",
+          "name": "http://ark.dasch.swiss/ark:/72163/1/0114",
           "type": "https://schema.org/URL",
           "url": "http://ark.dasch.swiss/ark:/72163/1/0114"
         }

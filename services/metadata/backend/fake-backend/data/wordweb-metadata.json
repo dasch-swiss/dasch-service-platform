@@ -101,7 +101,7 @@
       ],
       "url": [
         {
-          "name": "www.unibas.c",
+          "name": "www.unibas.ch",
           "type": "https://schema.org/URL",
           "url": "www.unibas.ch"
         }
@@ -228,9 +228,9 @@
       ],
       "url": [
         {
-          "name": "ark.dasch.sw",
+          "name": "http://ark.dasch.swiss/ark:/72163/1/0826",
           "type": "https://schema.org/URL",
-          "url": "ark.dasch.swiss/ark:/72163/1/0826"
+          "url": "http://ark.dasch.swiss/ark:/72163/1/0826"
         }
       ]
     },

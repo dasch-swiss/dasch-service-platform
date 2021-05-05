@@ -260,7 +260,7 @@
       ],
       "description": "This project aims to valorise and better comprehend the various elements surrounding monumental statues of church portals, namely pedestals, canopies, and niches. Their analysis will be integrated within four research axes: cultural transfers, relationships between the central representation and that at the margins, the communication potential of the objects (agency), and their strategic arrangement within the composition (display). Based on a corpus constituted of over a hundred portals located in the Western part of gothic art penetration (Germany, Belgium, England, France, Iberian Peninsula, and Switzerland), the project will aim to determine the conditions within which technological and formal innovations emerged, and to evaluate their local impact and diffusion. Moreover, it will attempt to understand their significance and their function within the visual message developed at the doorstep of sacred buildings.\nThe project will create synergies with research concerned by the communicative function of religious building portals, and will allow for a better understanding of the semiological stakes of sculpted pedestals and microarchitecture canopies.",
       "discipline": [
-        "Visual arts and Art history",
+        "10404 Visual arts and Art history",
         {
           "name": "SKOS UNESCO Nomenclature",
           "type": "https://schema.org/URL",
@@ -314,12 +314,12 @@
       ],
       "startDate": "2018-12-01",
       "temporalCoverage": [
-        "http://chronontology.dainst.org/period/ROL7rN1qOgMe ",
-        "http://n2t.net/ark:/99152/p0qhb66xnj2 "
+        "http://chronontology.dainst.org/period/ROL7rN1qOgMe",
+        "http://n2t.net/ark:/99152/p0qhb66xnj2"
       ],
       "url": [
         {
-          "name": "dasch.swiss",
+          "name": "http://ark.dasch.swiss/ark:/72163/1/0116",
           "type": "https://schema.org/URL",
           "url": "http://ark.dasch.swiss/ark:/72163/1/0116"
         }

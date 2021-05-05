@@ -286,7 +286,7 @@
           "type": "https://schema.org/URL",
           "url": "https://skos.um.es/unesco6/620301"
         },
-        "Theatre and Cinema"
+        "10406 Theatre and Cinema"
       ],
       "endDate": "2020-08-31",
       "funder": [
@@ -336,7 +336,7 @@
       ],
       "url": [
         {
-          "name": "dasch.swiss",
+          "name": "http://ark.dasch.swiss/ark:/72163/1/0107",
           "type": "https://schema.org/URL",
           "url": "http://ark.dasch.swiss/ark:/72163/1/0107"
         }
