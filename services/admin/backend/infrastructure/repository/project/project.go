@@ -20,6 +20,7 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
+	"github.com/EventStore/EventStore-Client-Go/position"
 	"log"
 	"time"
 
@@ -243,4 +244,33 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 	}
 
 	return project.NewAggregateFromEvents(events), nil
+}
+
+func (r *projectRepository) GetProjectIds(ctx context.Context) ([]valueobject.Identifier, error) {
+	numberOfEventsToRead := 100
+	numberOfEvents := uint64(numberOfEventsToRead)
+
+	recordedEvents, err := r.c.ReadAllEvents(ctx, direction.Forwards, position.StartPosition, numberOfEvents, true)
+	if err != nil {
+		log.Printf("Unexpected failure %+v", err)
+		return nil, err
+	}
+
+	var projectIds []valueobject.Identifier
+
+	// filter to select only ProjectCreated events
+	for _, record := range recordedEvents {
+		switch eventType := record.EventType; eventType {
+		case "ProjectCreated":
+			var e event.ProjectCreated
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return []valueobject.Identifier{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			projectIds = append(projectIds, e.ID)
+		}
+	}
+
+	log.Print("PROJECT IDs: ", projectIds)
+	return projectIds, nil
 }

@@ -340,6 +340,70 @@ func deleteProject(service project.UseCase) http.Handler {
 	})
 }
 
+func listProjects(service project.UseCase) http.Handler {
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+		defer cancel()
+
+		// get all project ids
+		ids, err := service.ListProjects(ctx)
+		w.Header().Set("Content-Type", "application/json")
+
+		if err != nil && err == projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No project found for this uuid"))
+			return
+		}
+
+		if err != nil && err != projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("The server is not responding"))
+			return
+		}
+		if ids == nil {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No ids was returned"))
+			return
+		}
+
+		var toJ []presenter.Project
+
+		for _, id := range ids {
+			p, err := service.GetProject(ctx, id)
+			if err != nil && err == projectEntity.ErrNotFound {
+				w.WriteHeader(http.StatusNotFound)
+				w.Write([]byte("No project found for this uuid"))
+				return
+			}
+
+			if err != nil && err != projectEntity.ErrNotFound {
+				w.WriteHeader(http.StatusInternalServerError)
+				w.Write([]byte("The server is not responding"))
+				return
+			}
+			if p == nil {
+				w.WriteHeader(http.StatusNotFound)
+				w.Write([]byte("No data was returned"))
+				return
+			}
+
+			toJ = append(toJ, presenter.Project{
+				ID: p.ID(),
+				ShortCode: p.ShortCode().String(),
+				ShortName: p.ShortName().String(),
+				LongName: p.LongName().String(),
+				Description: p.Description().String(),
+			})
+		}
+
+		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Failed encoding ids to JSON"))
+		}
+	})
+}
+
 //MakeProjectHandlers make url handlers
 func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCase) {
 
@@ -358,4 +422,8 @@ func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCa
 	r.Handle("/v1/project/{id}", n.With(
 		negroni.Wrap(deleteProject(service)),
 	)).Methods("DELETE", "OPTIONS").Name("deleteProject")
+
+	r.Handle("/v1/projects/all", n.With(
+		negroni.Wrap(listProjects(service)),
+	)).Methods("GET", "OPTIONS").Name("listProjects")
 }

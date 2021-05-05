@@ -204,3 +204,14 @@ func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*p
 
 	return p, nil
 }
+
+//ListProjects lists the projects
+func (s *Service) ListProjects(ctx context.Context) ([]valueobject.Identifier, error) {
+
+	ids, err := s.repo.GetProjectIds(ctx)
+	if err != nil {
+		return []valueobject.Identifier{}, err
+	}
+
+	return ids, nil
+}

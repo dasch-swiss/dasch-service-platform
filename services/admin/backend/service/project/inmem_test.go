@@ -63,3 +63,7 @@ func (r *inMemRepo) Load(ctx context.Context, id valueobject.Identifier) (*proje
 	}
 	return project.NewAggregateFromEvents(r.m[id.UUID()]), nil
 }
+
+func (r *inMemRepo) GetProjectIds(ctx context.Context) ([]valueobject.Identifier, error) {
+	return []valueobject.Identifier{}, nil
+}
