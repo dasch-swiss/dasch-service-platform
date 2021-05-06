@@ -164,7 +164,8 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 
 func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 	streamID := "Project-" + id.String()
-	// TODO: figure out the correct way to replay all the events
+
+	// TODO: figure out the correct way to replay all the events, currently hardcoded to replay the last 1000 events
 	recordedEvents, err := r.c.ReadStreamEvents(ctx, direction.Forwards, streamID, streamrevision.StreamRevisionStart, 1000, false)
 	if err != nil {
 		log.Printf("Unexpected failure %+v", err)
@@ -181,31 +182,20 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			if err != nil {
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
-			log.Println(">>>>>>>>>>>>>>>")
-			log.Println("PROJECT CREATED")
-			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
-
 		case "ProjectDeleted":
 			var e event.ProjectDeleted
 			err := json.Unmarshal(record.Data, &e)
 			if err != nil {
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
-			log.Println(">>>>>>>>>>>>>>>")
-			log.Println("PROJECT DELETED")
-			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
-
 		case "ProjectShortCodeChanged":
 			var e event.ProjectShortCodeChanged
 			err := json.Unmarshal(record.Data, &e)
 			if err != nil {
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
-			log.Println(">>>>>>>>>>>>>>>")
-			log.Println("PROJECT SHORT CODE CHANGED")
-			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 		case "ProjectShortNameChanged":
 			var e event.ProjectShortNameChanged
@@ -213,9 +203,6 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			if err != nil {
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
-			log.Println(">>>>>>>>>>>>>>>")
-			log.Println("PROJECT SHORT NAME CHANGED")
-			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 		case "ProjectLongNameChanged":
 			var e event.ProjectLongNameChanged
@@ -223,9 +210,6 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			if err != nil {
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
-			log.Println(">>>>>>>>>>>>>>>")
-			log.Println("PROJECT LONG NAME CHANGED")
-			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 		case "ProjectDescriptionChanged":
 			var e event.ProjectDescriptionChanged
@@ -233,9 +217,6 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 			if err != nil {
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
-			log.Println(">>>>>>>>>>>>>>>")
-			log.Println("PROJECT DESCRIPTION CHANGED")
-			log.Println(">>>>>>>>>>>>>>>")
 			events = append(events, &e)
 		default:
 			log.Printf("unexpected event type: %T", eventType)
@@ -271,6 +252,5 @@ func (r *projectRepository) GetProjectIds(ctx context.Context) ([]valueobject.Id
 		}
 	}
 
-	log.Print("PROJECT IDs: ", projectIds)
 	return projectIds, nil
 }

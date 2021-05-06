@@ -65,5 +65,22 @@ func (r *inMemRepo) Load(ctx context.Context, id valueobject.Identifier) (*proje
 }
 
 func (r *inMemRepo) GetProjectIds(ctx context.Context) ([]valueobject.Identifier, error) {
-	return []valueobject.Identifier{}, nil
+
+	i := 0
+	projectIds := make([]valueobject.Identifier, len(r.m))
+	for k := range r.m {
+		// create empty Identifier
+		uuid := valueobject.Identifier{}
+
+		// create byte array from the provided id string
+		b := []byte(k.String())
+
+		// assign the value of the Identifier
+		uuid.UnmarshalText(b)
+
+		projectIds[i] = uuid
+		i++
+	}
+
+	return projectIds, nil
 }

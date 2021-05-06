@@ -78,4 +78,11 @@ func TestProject_Save(t *testing.T) {
 	assert.Equal(t, expectedProject.Description(), projectFromEvents.Description())
 	assert.Equal(t, expectedProject.CreatedAt().Unix(), projectFromEvents.CreatedAt().Unix())
 	assert.Equal(t, expectedProject.CreatedBy(), projectFromEvents.CreatedBy())
+
+	projectCreationEvents, err := r.GetProjectIds(ctx)
+	if err != nil {
+		t.Fatalf("Unexpected failure %+v", err)
+	}
+
+	assert.Len(t, projectCreationEvents, 1)
 }

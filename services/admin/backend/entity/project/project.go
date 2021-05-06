@@ -42,15 +42,6 @@ type Aggregate struct {
 	version int
 }
 
-// TODO:
-// figure out if this should be a part of the Project entity instead meaning that projects would
-// never actually be removed from the db, just marked as deleted
-//DeletedProject
-// type DeletedProject struct {
-// 	ID        valueobject.Identifier
-// 	DeletedAt valueobject.Timestamp
-// }
-
 // ID returns the project's id.
 func (p Aggregate) ID() valueobject.Identifier {
 	return p.id
