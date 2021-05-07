@@ -92,21 +92,21 @@
 
 {#if project?.contactPoint}
   <div class=label>Contact</div>
-  {#if project?.contactPoint[0].id.givenName && project?.contactPoint[0].id.familyName}
+  {#if findObjectById(project?.contactPoint[0].id)?.givenName && findObjectById(project?.contactPoint[0].id)?.familyName}
     <div id=contact class=data>{findObjectById(project?.contactPoint[0].id)?.givenName?.split(";").join(" ")} {findObjectById(project?.contactPoint[0].id)?.familyName}</div>
   {/if}
   {#if findObjectById(project?.contactPoint[0].id)?.email}
     {#if Array.isArray(findObjectById(project?.contactPoint[0].id)?.email)}
-      <div id=email class=data>{findObjectById(project?.contactPoint[0].id)?.email[0]}</div>
+      <a id=email class=data href="mailto:{findObjectById(project?.contactPoint[0].id)?.email[0]}">{findObjectById(project?.contactPoint[0].id)?.email[0]}</a>
     {:else}
-      <div id=email class=data>{findObjectById(project?.contactPoint[0].id)?.email}</div>
+      <a id=email class=data href="mailto:{findObjectById(project?.contactPoint[0].id)?.email}">{findObjectById(project?.contactPoint[0].id)?.email}</a>
     {/if}
   {/if}
   {#if Array.isArray(findObjectById(project?.contactPoint[0].id)?.memberOf)}
     {#each findObjectById(project?.contactPoint[0].id)?.memberOf as o}
       <span>{findObjectById(o.id).name[0]}</span>
     {/each}
-{/if}
+  {/if}
 {/if}
 
 <div class=label>Website</div>
@@ -122,7 +122,10 @@
 {/if}
 
 <style>
-  a {display: block;}
+  a {
+    display: block;
+    color: var(--lead-colour);
+  }
   .keyword {
     padding: 0;
     /* display: inline;

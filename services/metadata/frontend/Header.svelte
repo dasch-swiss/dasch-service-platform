@@ -81,6 +81,8 @@
     <a class="menu-item" href="{`https://${getEnv()}dasch.swiss/`}">{`${getEnv()}dasch.swiss`}</a>
     <a class="menu-item" href="{`https://app.${getEnv()}dasch.swiss/`}">{`app.${getEnv()}dasch.swiss`}</a>
     <a class="menu-item" href="{`https://admin.${getEnv()}dasch.swiss/`}">{`admin.${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="{`https://docs.${getEnv()}dasch.swiss/`}">{`docs.${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="{`https://docs-api.${getEnv()}dasch.swiss/`}">{`docs-api.${getEnv()}dasch.swiss`}</a>
   </div>
 </header>
 
@@ -160,10 +162,13 @@
   .menu {
     background-color: var(--cl-background-light);
   }
-  .menu-item {
+  a.menu-item {
     display: block;
     padding: 1rem 1.5rem;
     width: calc(100% - 3rem);
+    font-family: robotobold;
+    color: var(--dasch-text);
+    text-decoration: none;
   }
   .menu-item:hover {
     background-color: var(--cl-transparent-light);

@@ -44,7 +44,7 @@ body {
 }
 a {
   /* text-decoration: none; */
-  color: var(--lead-colour) !important;
+  color: var(--lead-colour);
   width: fit-content;
 }
 a:visited {

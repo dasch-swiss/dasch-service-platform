@@ -162,6 +162,7 @@
 </div>
 
 <style>
+    a {color: var(--lead-colour);}
   button {
     border: none;
     background-color: inherit;
