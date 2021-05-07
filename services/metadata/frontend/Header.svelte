@@ -47,7 +47,7 @@
       <img class="logo s-inline-block" src="assets/logo/DaSCH-Logo-black.svg" alt="DaSCH logo" />
       <img class="icon-logo s-hidden" src="assets/icon/DaSCH-Icon-black-64.svg" alt="DaSCH logo" />
     </a>
-    <h1 class="title">{$location === '/projects' ? 'Repository Explorer' : `Project ${$location.split('/')[2]}`}</h1>
+    <h1 class="title">DaSCH Metadata Browser</h1>
     <div class="header-right">
       <input on:change={search} bind:value={enteredString} class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />
       <!-- searchbar button -->
@@ -78,11 +78,11 @@
     <Category />
   </div>
   <div class="menu" class:hidden={!showMenu}>
-    <a class="menu-item" href="{`https://${getEnv()}dasch.swiss/`}">{`${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="https://dasch.swiss/">dasch.swiss</a>
     <a class="menu-item" href="{`https://app.${getEnv()}dasch.swiss/`}">{`app.${getEnv()}dasch.swiss`}</a>
     <a class="menu-item" href="{`https://admin.${getEnv()}dasch.swiss/`}">{`admin.${getEnv()}dasch.swiss`}</a>
-    <a class="menu-item" href="{`https://docs.${getEnv()}dasch.swiss/`}">{`docs.${getEnv()}dasch.swiss`}</a>
-    <a class="menu-item" href="{`https://docs-api.${getEnv()}dasch.swiss/`}">{`docs-api.${getEnv()}dasch.swiss`}</a>
+    <a class="menu-item" href="https://docs.dasch.swiss/">docs.dasch.swiss</a>
+    <a class="menu-item" href="https://docs-api.dasch.swiss/">docs-api.dasch.swiss</a>
   </div>
 </header>
 

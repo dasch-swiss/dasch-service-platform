@@ -150,8 +150,10 @@
           {:else}
             <div>{findObjectById(a.agent[0].id)?.name}</div>
           {/if}
-          {#if findObjectById(a.agent[0].id)?.email}
+          {#if findObjectById(a.agent[0].id)?.email && Array.isArray(findObjectById(a.agent[0].id)?.email)}
             <a class=email href="mailto:{findObjectById(a.agent[0].id)?.email[0]}">{findObjectById(a.agent[0].id)?.email[0]}</a>
+          {:else}
+            <a class=email href="mailto:{findObjectById(a.agent[0].id)?.email}">{findObjectById(a.agent[0].id)?.email}</a>
           {/if}
         </div>
       {/each}
