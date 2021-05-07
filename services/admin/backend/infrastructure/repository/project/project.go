@@ -229,7 +229,7 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 }
 
 func (r *projectRepository) GetProjectIds(ctx context.Context) ([]valueobject.Identifier, error) {
-	numberOfEventsToRead := 1
+	numberOfEventsToRead := 1000
 	numberOfEvents := uint64(numberOfEventsToRead)
 
 	recordedEvents, err := r.c.ReadAllEvents(ctx, direction.Forwards, position.StartPosition, numberOfEvents, true)
