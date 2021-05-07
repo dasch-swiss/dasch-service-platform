@@ -170,9 +170,11 @@
     color: var(--dasch-text);
     text-decoration: none;
   }
-  .menu-item:hover {
+  a.menu-item:hover {
     background-color: var(--cl-transparent-light);
   }
+  /* resetting links animation for header */
+  a::before, a::after { background: none;}
   @media screen and (min-width: 768px) {
     .menu {
       width: 20rem;

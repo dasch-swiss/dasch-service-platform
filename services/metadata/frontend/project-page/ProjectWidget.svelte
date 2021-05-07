@@ -28,9 +28,9 @@
   {#each project?.discipline as d}
     {#if typeof d === "string"}
       {#if d.split(" ")[0].match(/^[0-9]*$/)}
-        <a href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{d}</a>
+        <a class=data href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{d}</a>
       {:else if d.match("http")}
-        <a href={d} target=_>{d}</a>
+        <a class=data href={d} target=_>{d}</a>
       {:else}
         <div class="data">{d}</div>
       {/if}
@@ -95,17 +95,17 @@
   {#if findObjectById(project?.contactPoint[0].id)?.givenName && findObjectById(project?.contactPoint[0].id)?.familyName}
     <div id=contact class=data>{findObjectById(project?.contactPoint[0].id)?.givenName?.split(";").join(" ")} {findObjectById(project?.contactPoint[0].id)?.familyName}</div>
   {/if}
-  {#if findObjectById(project?.contactPoint[0].id)?.email}
-    {#if Array.isArray(findObjectById(project?.contactPoint[0].id)?.email)}
-      <a id=email class=data href="mailto:{findObjectById(project?.contactPoint[0].id)?.email[0]}">{findObjectById(project?.contactPoint[0].id)?.email[0]}</a>
-    {:else}
-      <a id=email class=data href="mailto:{findObjectById(project?.contactPoint[0].id)?.email}">{findObjectById(project?.contactPoint[0].id)?.email}</a>
-    {/if}
-  {/if}
   {#if Array.isArray(findObjectById(project?.contactPoint[0].id)?.memberOf)}
     {#each findObjectById(project?.contactPoint[0].id)?.memberOf as o}
       <span>{findObjectById(o.id).name[0]}</span>
     {/each}
+  {/if}
+  {#if findObjectById(project?.contactPoint[0].id)?.email}
+    {#if Array.isArray(findObjectById(project?.contactPoint[0].id)?.email)}
+      <a class="data email" href="mailto:{findObjectById(project?.contactPoint[0].id)?.email[0]}">{findObjectById(project?.contactPoint[0].id)?.email[0]}</a>
+    {:else}
+      <a class="data email" href="mailto:{findObjectById(project?.contactPoint[0].id)?.email}">{findObjectById(project?.contactPoint[0].id)?.email}</a>
+    {/if}
   {/if}
 {/if}
 

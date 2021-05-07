@@ -133,27 +133,27 @@
   <div class="grid-wrapper">
     {#if Array.isArray(dataset?.content.qualifiedAttribution)}
       {#each dataset?.content.qualifiedAttribution as a}
-      <div class="attributions data">
-        <div class=role>{a.role}</div>
-        {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
-        <div>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</div>
-        {#if findObjectById(a.agent[0].id)?.sameAs}
-        <a href={findObjectById(a.agent[0].id)?.sameAs[0].url} target=_>{findObjectById(a.agent[0].id)?.sameAs[0].name}</a>
-        {/if}
-        {#if findObjectById(a.agent[0].id)?.email}
-        <div>{findObjectById(a.agent[0].id)?.email[0]}</div>
-        {/if}
-        {#if Array.isArray(findObjectById(a.agent[0].id)?.memberOf)}
-          {#each findObjectById(a.agent[0].id)?.memberOf as o}
-          <div>{findObjectById(o.id).name}</div>
-          {/each}
-        {/if}
-        <div>{findObjectById(a.agent[0].id)?.jobTitle[0]}</div>
-        {:else}
-        <div>{findObjectById(a.agent[0].id)?.name}</div>
-        {/if}
-        <br />
-      </div>
+        <div class="attributions data">
+          <div class=role>{a.role}</div>
+          {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
+            {#if findObjectById(a.agent[0].id)?.sameAs}
+              <a href={findObjectById(a.agent[0].id)?.sameAs[0].url} target=_>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</a>
+            {:else}
+              <div>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</div>
+            {/if}
+            {#if Array.isArray(findObjectById(a.agent[0].id)?.memberOf)}
+              {#each findObjectById(a.agent[0].id)?.memberOf as o}
+                <div>{findObjectById(o.id).name}</div>
+              {/each}
+            {/if}
+            <div>{findObjectById(a.agent[0].id)?.jobTitle[0]}</div>
+          {:else}
+            <div>{findObjectById(a.agent[0].id)?.name}</div>
+          {/if}
+          {#if findObjectById(a.agent[0].id)?.email}
+            <a class=email href="mailto:{findObjectById(a.agent[0].id)?.email[0]}">{findObjectById(a.agent[0].id)?.email[0]}</a>
+          {/if}
+        </div>
       {/each}
     {/if}
   </div>
@@ -162,7 +162,7 @@
 </div>
 
 <style>
-    a {color: var(--lead-colour);}
+  a {color: var(--lead-colour);}
   button {
     border: none;
     background-color: inherit;
@@ -185,7 +185,8 @@
     overflow: hidden;
   }
   .attributions {
-    padding: 0 10px 0 0;
+    padding: 10px 10px 0 0;
+    line-height: 1.5;
   }
   .grid-wrapper {
     display: grid;
