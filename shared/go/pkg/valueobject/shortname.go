@@ -22,7 +22,7 @@ type ShortName struct {
 	value string
 }
 
-// NewGivenName creates a new valid given name object.
+// NewShortName creates a new valid short name object.
 func NewShortName(value string) (ShortName, error) {
 	if len(value) > 15 || value == "" {
 		return ShortName{}, fmt.Errorf("invalid short name, must be within 15 characters and non-empty")

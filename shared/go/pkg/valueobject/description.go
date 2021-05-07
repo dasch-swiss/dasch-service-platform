@@ -22,7 +22,7 @@ type Description struct {
 	value string
 }
 
-// NewGivenName creates a new valid given name object.
+// NewDescription creates a new valid description object.
 func NewDescription(value string) (Description, error) {
 	if len(value) > 300 || value == "" {
 		return Description{}, fmt.Errorf("invalid description, must be within 300 characters and non-empty")

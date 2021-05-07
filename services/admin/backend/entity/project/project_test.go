@@ -68,7 +68,7 @@ func TestProject_NewAggregateFromEvents(t *testing.T) {
 	expectedShortName, _ := valueobject.NewShortName("short name")
 	expectedLongName, _ := valueobject.NewLongName("project long name")
 	expectedDescription, _ := valueobject.NewDescription("this is a test project")
-	expextedCreatedAt := valueobject.NewTimestamp()
+	expectedCreatedAt := valueobject.NewTimestamp()
 	expectedCreatedBy, _ := valueobject.NewIdentifier()
 
 	createEvent := &event.ProjectCreated{
@@ -77,7 +77,7 @@ func TestProject_NewAggregateFromEvents(t *testing.T) {
 		ShortName:   expectedShortName,
 		LongName:    expectedLongName,
 		Description: expectedDescription,
-		CreatedAt:   expextedCreatedAt,
+		CreatedAt:   expectedCreatedAt,
 		CreatedBy:   expectedCreatedBy,
 	}
 

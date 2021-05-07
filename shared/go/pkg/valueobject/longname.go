@@ -22,7 +22,7 @@ type LongName struct {
 	value string
 }
 
-// NewGivenName creates a new valid given name object.
+// NewLongName creates a new valid long name object.
 func NewLongName(value string) (LongName, error) {
 	if len(value) > 50 || value == "" {
 		return LongName{}, fmt.Errorf("invalid long name, must be within 50 characters and non-empty")

@@ -22,7 +22,7 @@ type ShortCode struct {
 	value string
 }
 
-// NewGivenName creates a new valid given name object.
+// NewShortCode creates a new valid short code object.
 func NewShortCode(value string) (ShortCode, error) {
 	if len(value) > 5 || value == "" {
 		return ShortCode{}, fmt.Errorf("invalid short code, must be within 5 characters and non-empty")
