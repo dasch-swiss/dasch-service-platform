@@ -32,39 +32,48 @@
     window.getSelection().removeAllRanges();
   };
 
+  const truncateString = (s) => {
+    const browserWidth = window.innerWidth;
+    if (browserWidth < 992 && s.length > ((browserWidth - 100) / 8)) {
+      return `${s.substring(0, (browserWidth - 100) / 8)}...`;
+    } else if (browserWidth >= 992 && s.length > (browserWidth / 17)) {
+      return `${s.substring(0, (browserWidth / 17))}...`;
+    } else return s;
+  };
+
   console.log(2, dataset)
 </script>
 
-<div class=properties>
+<div id=dataset>
   {#if dataset}
     {#if dataset?.content.alternativeTitle}
-    <div class="property-row">
+    <div>
       <span class=label>Alternative Title</span>
       <span class=data>{dataset?.content.alternativeTitle}</span>
     </div>
     {/if}
   <div class="grid-wrapper">
-    <div class="property-row">
+    <div>
       <span class=label>Access</span>
       <span class=data>{dataset?.content.conditionsOfAccess}</span>
     </div>
-    <div class="property-row">
+    <div>
       <span class=label>Status</span>
       <span class=data>{dataset?.content.status}</span>
     </div>
     {#if dataset.content.dateCreated}
-    <div class="property-row">
+    <div>
       <span class=label>Date Created</span>
       <span class=data>{dataset?.content.dateCreated}</span>
     </div>
     {/if}
     {#if dataset.content.dateModified}
-    <div class="property-row">
+    <div>
       <span class=label>Date Modified</span>
       <span class=data>{dataset?.content.dateModified}</span>
     </div>
     {/if}
-    <div class="property-row">
+    <div>
       <span class=label>License</span>
       {#if Array.isArray(dataset?.content.license)}
         {#each dataset?.content.license as l}
@@ -72,19 +81,19 @@
         {/each}
       {/if}
     </div>
-    <div class="property-row">
+    <div>
       <span class=label>Type of Data</span>
       <span class=data>{dataset?.content.typeOfData.join(', ')}</span>
     </div>
     {#if dataset?.content.documentation}
-    <div class="property-row">
+    <div style="grid-column-start: 1;grid-column-end: 3;">
       <span class=label>Additional documentation</span>
       {#if Array.isArray(dataset?.content.documentation)}
         {#each dataset?.content.documentation as d}
           {#if d.url}
-          <a class=data href={d.url} target=_>{d.name}</a>
+          <a class=data href={d.url} target=_>{truncateString(d.name)}</a>
           {:else if d.match("http")}
-          <a class=data href={d} target=_>{d}</a>
+          <a class=data href={d} target=_>{truncateString(d)}</a>
           {:else}
           <span class=data>{d}</span>
           {/if}
@@ -94,7 +103,7 @@
     {/if}
   </div>
   <div class="grid-wrapper" style="grid-template-columns: repeat(1, 1fr)">
-    <div class="property-row">
+    <div>
       <span class=label>Languages</span>
       <span class=data>{dataset?.content.language.join(', ')}</span>
     </div>
@@ -110,13 +119,13 @@
     <span id=how-to-cite class=data>{dataset?.content.howToCite}</span>
   </div>
 
-  <div class="property-row">
+  <div>
     <span class=label>Abstract</span>
     {#if Array.isArray(dataset?.content.abstract)}
     <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
       {#each dataset?.content.abstract as a}
         {#if a.url}
-        <div><a class=data href={a.url} target=_>{a.name}</a></div>
+        <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
         {:else}
         <div>{a}</div>
         {/if}

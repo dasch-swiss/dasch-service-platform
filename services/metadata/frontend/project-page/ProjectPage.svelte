@@ -214,6 +214,9 @@
     padding: 0 10px 10px;
     box-shadow: var(--shadow-1);
   }
+  @supports (-moz-appearance:none) {
+    button.bottom-button {margin-bottom: 40px;} 
+  }
   @media screen and (min-width: 992px) {
     .container {padding: 0 40px}
     .column-left, .column-right {padding: 20px;}

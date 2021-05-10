@@ -15,6 +15,12 @@
     return s.substr(s.lastIndexOf('/') + 1).split('.')[0].split("-").join(' ');
     // return s.match(regex)[0].split('.')[0].split("-").join(' ');
   }
+
+  const truncateString = (s) => {
+    if (s.length > 35) {
+      return `${s.slice(0, 35)}...`;
+    } else return s;
+  };
 </script>
 
 <div class=label>DSP Internal Shortcode</div>
@@ -28,9 +34,9 @@
   {#each project?.discipline as d}
     {#if typeof d === "string"}
       {#if d.split(" ")[0].match(/^[0-9]*$/)}
-        <a class=data href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{d}</a>
+        <a class=data href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{truncateString(d)}</a>
       {:else if d.match("http")}
-        <a class=data href={d} target=_>{d}</a>
+        <a class=data href={d} target=_>{truncateString(d)}</a>
       {:else}
         <div class="data">{d}</div>
       {/if}
@@ -46,7 +52,7 @@
     {#if typeof t === "string"}
     <div class="data">{t}</div>
     {:else}
-    <a class=data href={t.url} target=_>{t.name}</a>
+    <a class=data href={t.url} target=_>{truncateString(t.name)}</a>
     {/if}
   {/each}
 {/if}
@@ -54,7 +60,7 @@
 <div class=label>Spatial Coverage</div>
 {#if Array.isArray(project?.spatialCoverage)}
   {#each project?.spatialCoverage as s}
-  <a class=data style="text-transform: capitalize" href={s.place.url} target=_>{handleSpatialCoverageName(s.place.url)}</a>
+  <a class=data style="text-transform: capitalize" href={s.place.url} target=_>{truncateString(handleSpatialCoverageName(s.place.url))}</a>
   {/each}
 {/if}
 
@@ -112,7 +118,7 @@
 <div class=label>Website</div>
 {#if Array.isArray(project?.url)}
   {#each project?.url as url}
-    <a class=data href={url.url} target=_>{url.name}</a>
+    <a class=data href={url.url} target=_>{truncateString(url.name)}</a>
   {/each}
 {/if}
 

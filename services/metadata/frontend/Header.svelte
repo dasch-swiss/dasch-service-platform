@@ -123,7 +123,7 @@
     color: var(--dasch-text);
     padding: 0;
     white-space: nowrap;
-    font-size: 1.25rem;
+    font-size: 1rem;
     flex: 1;
   }
   .searchbar-in-header {
@@ -183,5 +183,6 @@
       right: 0px;
       z-index: 0;
     }
+    .title {font-size: 1.25rem;}
   }
 </style>

@@ -135,6 +135,7 @@ button:disabled {
   .xs-hidden {
     display: none !important;
   }
+  .top-heading {font-size: 2.5rem;}
 }
 @media screen and (min-width: 768px) {
   .s-inline-block {
@@ -170,7 +171,7 @@ button:disabled {
 }
 /* new typography styles */
 .top-heading {
-  font-size: 2.5rem;
+  font-size: 1.5rem;
   line-height: 1.2;
   padding: 0 16px;
 }
