@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { location } from "svelte-spa-router";
   import Category from "./projects-repository/Category.svelte";
   import { getProjectsMetadata } from "./stores";
 

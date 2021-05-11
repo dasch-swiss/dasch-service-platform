@@ -1,5 +1,6 @@
 <script>
   import { onMount } from "svelte";
+  import { fade } from "svelte/transition";
   import { currentProjectMetadata } from "../stores";
 
   export let dataset;
@@ -44,7 +45,7 @@
   console.log(2, dataset)
 </script>
 
-<div id=dataset>
+<div id=dataset in:fade="{{duration: 200}}">
   {#if dataset}
     {#if dataset?.content.alternativeTitle}
     <div>
