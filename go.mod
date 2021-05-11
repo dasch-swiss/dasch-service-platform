@@ -5,6 +5,7 @@ go 1.16
 require (
 	github.com/99designs/gqlgen v0.13.0 // indirect
 	github.com/EventStore/EventStore-Client-Go v0.0.0-20210219122213-700926402daf // indirect
+	github.com/bazelbuild/buildtools v0.0.0-20210408102303-2b0a1af1a898 // indirect
 	github.com/dgraph-io/badger/v3 v3.2011.1
 	github.com/gofrs/uuid v3.3.0+incompatible // indirect
 	github.com/google/uuid v1.2.0

@@ -25,21 +25,24 @@ package main
 
 import (
 	"fmt"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/handler"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/middleware"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/config"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/infrastructure/repository"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/organization"
-	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/gorilla/context"
-	"github.com/gorilla/mux"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/urfave/negroni"
 	"log"
 	"net/http"
 	"os"
 	"strconv"
 	"time"
+
+	"github.com/EventStore/EventStore-Client-Go/client"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/handler"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/middleware"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/infrastructure/repository"
+	projectRepository "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/infrastructure/repository/project"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/organization"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/project"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
+	"github.com/gorilla/context"
+	"github.com/gorilla/mux"
+	"github.com/prometheus/client_golang/prometheus/promhttp"
+	"github.com/urfave/negroni"
 )
 
 func main() {
@@ -53,6 +56,24 @@ func main() {
 	// organizationRepository := repository.NewInmemDB()
 	organizationRepository := repository.NewInmemDB()
 	organizationService := organization.NewService(organizationRepository)
+
+	config, err := client.ParseConnectionString("esdb://localhost:2113?tls=false")
+	if err != nil {
+		log.Fatal("Unexpected configuration error: ", err.Error())
+	}
+
+	client, err := client.NewClient(config)
+	if err != nil {
+		log.Fatal("Unexpected failure setting up test connection: ", err.Error())
+	}
+	err = client.Connect()
+	if err != nil {
+		log.Fatal("Unexpected failure connecting: ", err.Error())
+	}
+
+	projectRepository := projectRepository.NewProjectRepository(client)
+
+	projectService := project.NewService(projectRepository)
 
 	metricService, err := metric.NewPrometheusService()
 	if err != nil {
@@ -69,6 +90,9 @@ func main() {
 	//organization
 	handler.MakeOrganizationHandlers(r, *n, organizationService)
 
+	//project
+	handler.MakeProjectHandlers(r, *n, projectService)
+
 	http.Handle("/", r)
 	http.Handle("/metrics", promhttp.Handler())
 	r.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
@@ -79,7 +103,7 @@ func main() {
 	srv := &http.Server{
 		ReadTimeout:  5 * time.Second,
 		WriteTimeout: 10 * time.Second,
-		Addr:         ":" + strconv.Itoa(config.API_PORT),
+		Addr:         ":" + strconv.Itoa(8080),
 		// FIXME: get rid of deprecated github.com/gorilla/context library
 		Handler:  context.ClearHandler(http.DefaultServeMux),
 		ErrorLog: logger,
