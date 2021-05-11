@@ -73,7 +73,7 @@ main {
   justify-content: center;
 }
 .tile-container {
-  padding: 40px 5px;
+  padding: 10px 5px;
   display: flex;
   flex-flow: row wrap;
   justify-content: center;

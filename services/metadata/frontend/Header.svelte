@@ -122,7 +122,7 @@
     color: var(--dasch-text);
     padding: 0;
     white-space: nowrap;
-    font-size: 1rem;
+    font-size: 0.85rem;
     flex: 1;
   }
   .searchbar-in-header {
