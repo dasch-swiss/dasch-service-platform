@@ -90,7 +90,7 @@ func TestProject_CreateProject(t *testing.T) {
 	assert.Equal(t, expectedUpdatedDescription, ud.Description().String())
 
 	// get a list of project ids
-	projectsList, err := service.ListProjects(ctx)
+	projectsList, err := service.ListProjects(ctx, false)
 	assert.Nil(t, err)
 	assert.Len(t, projectsList, 1)
 	assert.Equal(t, projectsList[0], projectId)

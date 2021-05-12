@@ -228,7 +228,7 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 	return project.NewAggregateFromEvents(events), nil
 }
 
-func (r *projectRepository) GetProjectIds(ctx context.Context) ([]valueobject.Identifier, error) {
+func (r *projectRepository) GetProjectIds(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error) {
 	numberOfEventsToRead := 1000
 	numberOfEvents := uint64(numberOfEventsToRead)
 
@@ -250,6 +250,19 @@ func (r *projectRepository) GetProjectIds(ctx context.Context) ([]valueobject.Id
 				return []valueobject.Identifier{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
 			projectIds = append(projectIds, e.ID)
+		case "ProjectDeleted":
+			var e event.ProjectDeleted
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return []valueobject.Identifier{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			if !returnDeletedProjects { // if deleted project should not be returned
+				for i := range projectIds { // loop through the project ids
+					if projectIds[i] == e.ID { // if a deleted project is found among the project ids
+						projectIds = append(projectIds[:i], projectIds[i+1:]...) // remove it
+					}
+				}
+			}
 		}
 	}
 
