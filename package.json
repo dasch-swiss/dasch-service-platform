@@ -30,7 +30,7 @@
   "scripts": {
     "build": "rollup -c",
     "dev": "rollup -c -w",
-    "start": "sirv public",
+    "start": "sirv public -s",
     "validate": "svelte-check",
     "node-start-dev": "ibazel run //services/metadata/backend:bin",
     "node-start-prod": "bazel run //services/metadata/backend:bin",
@@ -43,6 +43,6 @@
     "cors": "^2.8.5",
     "express": "4.17.1",
     "sirv-cli": "^1.0.0",
-    "svelte-spa-router": "^3.1.0"
+    "svelte-routing": "^1.6.0"
   }
 }

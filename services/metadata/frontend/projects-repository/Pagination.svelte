@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { navigate } from 'svelte-routing';
   import { getProjectsMetadata, pagedResults, pagination, query } from '../stores';
 
   let handlePagination = (event: MouseEvent) => {
@@ -16,6 +17,7 @@
     document.querySelector('.active').classList.remove('active');
     document.getElementById(($pagination.currentPage).toString()).classList.add('active');
     console.log('curr',$pagination.currentPage);
+    navigate(`projects?_page=${$pagination.currentPage}&_limit=9`);
     getProjectsMetadata($pagination.currentPage, $query);
     window.scrollTo(0,0);
   }

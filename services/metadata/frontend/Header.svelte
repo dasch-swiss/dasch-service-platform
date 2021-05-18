@@ -1,4 +1,5 @@
 <script lang="ts">
+  import { Router, Link } from "svelte-routing";
   import Category from "./projects-repository/Category.svelte";
   import { getProjectsMetadata } from "./stores";
 
@@ -42,10 +43,15 @@
 
 <header>
   <div class="header-container">
-    <a on:click={() => {getProjectsMetadata(1)}} href="#/projects?_page=1&_limit=9" class="header-left">
-      <img class="logo s-inline-block" src="assets/logo/DaSCH-Logo-black.svg" alt="DaSCH logo" />
-      <img class="icon-logo s-hidden" src="assets/icon/DaSCH-Icon-black-64.svg" alt="DaSCH logo" />
-    </a>
+    <!-- <a on:click={() => {getProjectsMetadata(1)}} href="#/projects?_page=1&_limit=9" class="header-left"> -->
+    <!-- <a href="/" class="header-left"> -->
+    <Router>
+      <Link to="/" class="header-left">
+        <img class="logo s-inline-block" src="assets/logo/DaSCH-Logo-black.svg" alt="DaSCH logo" />
+        <img class="icon-logo s-hidden" src="assets/icon/DaSCH-Icon-black-64.svg" alt="DaSCH logo" />
+      </Link>
+    </Router>
+    <!-- </a> -->
     <h1 class="title">DaSCH Metadata Browser</h1>
     <div class="header-right">
       <input on:change={search} bind:value={enteredString} class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />

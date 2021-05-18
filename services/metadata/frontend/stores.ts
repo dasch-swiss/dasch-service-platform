@@ -1,4 +1,4 @@
-import {push} from 'svelte-spa-router';
+import { navigate } from 'svelte-routing';
 import { writable } from 'svelte/store';
 import type { PaginationData } from './interfaces';
 
@@ -25,10 +25,10 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
     route = `projects?_page=${page}&_limit=${baseResultsRange[1]}`;
   }
 
-  // console.log(baseUrl, route);
-  push(`/${route}`);
+  console.log(baseUrl, route);
+  navigate(`/${route}`);
 
-  await fetch(`${baseUrl}${route}`)
+  await fetch(`${baseUrl}api/v1/${route}`)
     .then(r => {
       const totalCount = parseInt(r.headers.get('X-Total-Count'));
       let totalPages = Math.floor(totalCount/baseResultsRange[1]);
