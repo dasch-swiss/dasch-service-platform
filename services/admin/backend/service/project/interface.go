@@ -27,7 +27,7 @@ import (
 //Reader interface
 type Reader interface {
 	Load(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
-	GetProjectIds(ctx context.Context) ([]valueobject.Identifier, error)
+	GetProjectIds(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error)
 	// Search(query string) ([]*project.Aggregate, error)
 	// List() ([]*project.Aggregate, error)
 }
@@ -48,7 +48,7 @@ type Repository interface {
 //UseCase interface which should be implemented by services.
 type UseCase interface {
 	GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
-	ListProjects(ctx context.Context) ([]valueobject.Identifier, error)
+	ListProjects(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error)
 	CreateProject(ctx context.Context, shortCode string, shortname string, longName string, description string) (valueobject.Identifier, error)
 	DeleteProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
 	UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error)

@@ -336,12 +336,19 @@ func deleteProject(service project.UseCase) http.Handler {
 
 func listProjects(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		var input struct {
+			ReturnDeletedProjects bool `json:"returnDeletedProjects"`
+		}
+		err := json.NewDecoder(r.Body).Decode(&input)
+		if err != nil {
+			input.ReturnDeletedProjects = false // default to false if decoding fails (likely because it wasn't provided)
+		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 		defer cancel()
 
 		// get all project ids
-		ids, err := service.ListProjects(ctx)
+		ids, err := service.ListProjects(ctx, input.ReturnDeletedProjects)
 		w.Header().Set("Content-Type", "application/json")
 
 		if err != nil && err == projectEntity.ErrNotFound {
@@ -383,10 +390,10 @@ func listProjects(service project.UseCase) http.Handler {
 			}
 
 			toJ = append(toJ, presenter.Project{
-				ID: p.ID(),
-				ShortCode: p.ShortCode().String(),
-				ShortName: p.ShortName().String(),
-				LongName: p.LongName().String(),
+				ID:          p.ID(),
+				ShortCode:   p.ShortCode().String(),
+				ShortName:   p.ShortName().String(),
+				LongName:    p.LongName().String(),
 				Description: p.Description().String(),
 			})
 		}

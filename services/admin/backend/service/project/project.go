@@ -206,9 +206,9 @@ func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*p
 }
 
 //ListProjects lists the projects
-func (s *Service) ListProjects(ctx context.Context) ([]valueobject.Identifier, error) {
+func (s *Service) ListProjects(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error) {
 
-	ids, err := s.repo.GetProjectIds(ctx)
+	ids, err := s.repo.GetProjectIds(ctx, returnDeletedProjects)
 	if err != nil {
 		return []valueobject.Identifier{}, err
 	}
