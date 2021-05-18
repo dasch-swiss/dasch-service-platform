@@ -161,7 +161,7 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 }
 
 // Get a single project
-// Route /projects/:id
+// Route /project/:id
 func getProject(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Request for: %v", r.URL)
 
@@ -187,7 +187,7 @@ func main() {
 	// -------------
 	// API
 	router.HandleFunc("/projects", getProjects).Methods("GET")
-	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
+	router.HandleFunc("/project/{id}", getProject).Methods("GET")
 	// Serve frontend from `/public`
 	dir := "./public"
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
