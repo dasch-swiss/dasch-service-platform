@@ -186,8 +186,8 @@ func main() {
 	// Set up routes
 	// -------------
 	// API
-	router.HandleFunc("/projects", getProjects).Methods("GET")
-	router.HandleFunc("/project/{id}", getProject).Methods("GET")
+	router.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
+	router.HandleFunc("/api/v1/project/{id}", getProject).Methods("GET")
 	// Serve frontend from `/public`
 	dir := "./public"
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
