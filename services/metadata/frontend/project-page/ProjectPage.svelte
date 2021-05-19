@@ -19,7 +19,7 @@
     const baseUrl = `${protocol}//${window.location.hostname}${port}/`;
     const projectID = window.location.pathname.split("/")[2];
     // const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`);
-    const res = await fetch(`${baseUrl}api/v1/project/${projectID}`);
+    const res = await fetch(`${baseUrl}api/v1/projects/${projectID}`);
     const projectMetadata = await res.json();
     currentProjectMetadata.set(projectMetadata);
     project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');

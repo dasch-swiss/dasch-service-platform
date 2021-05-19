@@ -13,7 +13,7 @@
   <div class=wrapper>
     <div class=content-container>
       <Router url="{url}">        
-        <Route path="/project/:id"><ProjectPage /></Route>
+        <Route path="/projects/:id"><ProjectPage /></Route>
         <Route path="/projects"><ProjectsRepository /></Route>
         <Route path="/">
           <Redirect to="/projects?_page=1&_limit=9" />

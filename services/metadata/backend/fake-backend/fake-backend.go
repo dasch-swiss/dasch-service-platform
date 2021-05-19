@@ -160,7 +160,7 @@ func getProjects(w http.ResponseWriter, r *http.Request) {
 }
 
 // Get a single project
-// Route /project/:id
+// Route /projects/:id
 func getProject(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Request for: %v", r.URL)
 
@@ -193,7 +193,7 @@ func main() {
 	// -------------
 	// API
 	router.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
-	router.HandleFunc("/api/v1/project/{id}", getProject).Methods("GET")
+	router.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
 	// Serve frontend from `/public`
 	dir := "./public"
 
@@ -213,8 +213,8 @@ func main() {
 
 	// in theory below line should do the job too: https://stackoverflow.com/a/26563418/9338572
 	// not sure if because our implementation should goes with http either router? both not working o.0
-	// http.Handle("/project/", http.StripPrefix("/project/", http.FileServer(http.Dir("./public"))))
-	router.Handle("/project/", http.StripPrefix("/project/", http.FileServer(http.Dir("./public"))))
+	// http.Handle("/projects/", http.StripPrefix("/projects/", http.FileServer(http.Dir("./public"))))
+	router.Handle("/projects/", http.StripPrefix("/projects/", http.FileServer(http.Dir("./public"))))
 
 	// srv := &http.Server{
 	// 	Handler:      ch(router),

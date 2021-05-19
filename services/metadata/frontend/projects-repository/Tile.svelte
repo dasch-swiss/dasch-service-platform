@@ -15,7 +15,7 @@
   </div>
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <button on:click={() => navigate(`/project/${projectMetadata.id}`)}>Read more</button>
+    <button on:click={() => navigate(`/projects/${projectMetadata.id}`)}>Read more</button>
   </div>
 </section>
 <!-- <section>
@@ -24,7 +24,7 @@
   </div>
   <div class=content>{ getProject(projectMetadata).description }</div>
   <div class=footer>
-    <button on:click={() => replace(`#/project/${ getProject(projectMetadata).shortcode}`) }>Read more</button>
+    <button on:click={() => replace(`#/projects/${ getProject(projectMetadata).shortcode}`) }>Read more</button>
   </div>
 </section> -->
 
