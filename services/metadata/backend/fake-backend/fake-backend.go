@@ -10,7 +10,6 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
-	"time"
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
@@ -177,6 +176,11 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
+func spaHandler(responseWriter http.ResponseWriter, request *http.Request) {
+	log.Printf("spaHandler: %v", request.URL)
+	http.ServeFile(responseWriter, request, "./public/index.html")
+}
+
 func main() {
 	port := 3000
 
@@ -190,27 +194,30 @@ func main() {
 	router.HandleFunc("/api/v1/project/{id}", getProject).Methods("GET")
 	// Serve frontend from `/public`
 	dir := "./public"
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
 
 	// CORS header
-	// TODO: is this a security issue?
 	ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
-	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:3000"}))
-	// TODO: do I even still need CORS, now that all is on the same port?
 
 	// Load Data
 	projects = loadProjectData()
 	log.Printf("Loaded Projects: %v", len(projects))
-
 	addr := fmt.Sprintf(":%v", port)
-	srv := &http.Server{
-		Handler:      ch(router),
-		Addr:         addr,
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
+
+	router.HandleFunc("/", spaHandler)
+
+	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
+
+	// http.Handle("/", router)
+
+	// srv := &http.Server{
+	// 	Handler:      ch(router),
+	// 	Addr:         addr,
+	// 	WriteTimeout: 15 * time.Second,
+	// 	ReadTimeout:  15 * time.Second,
+	// }
 
 	// Run server
 	log.Printf("Serving metadata at %v, on port %v", addr, port)
-	log.Fatal(srv.ListenAndServe())
+	// log.Fatal(srv.ListenAndServe())
+	log.Fatal(http.ListenAndServe(":3000", ch(router)))
 }
