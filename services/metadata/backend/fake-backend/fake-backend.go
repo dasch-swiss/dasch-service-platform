@@ -176,6 +176,8 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
+// SPA handler approach
+// https://medium.com/swlh/write-a-lightweight-api-and-static-file-server-in-go-5e5b208ccdaf
 func spaHandler(responseWriter http.ResponseWriter, request *http.Request) {
 	log.Printf("spaHandler: %v", request.URL)
 	http.ServeFile(responseWriter, request, "./public/index.html")
@@ -203,11 +205,16 @@ func main() {
 	log.Printf("Loaded Projects: %v", len(projects))
 	addr := fmt.Sprintf(":%v", port)
 
-	router.HandleFunc("/", spaHandler)
+	// router.HandleFunc("/", spaHandler)
 
 	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
 
-	// http.Handle("/", router)
+	http.Handle("/", router)
+
+	// in theory below line should do the job too: https://stackoverflow.com/a/26563418/9338572
+	// not sure if because our implementation should goes with http either router? both not working o.0
+	// http.Handle("/project/", http.StripPrefix("/project/", http.FileServer(http.Dir("./public"))))
+	router.Handle("/project/", http.StripPrefix("/project/", http.FileServer(http.Dir("./public"))))
 
 	// srv := &http.Server{
 	// 	Handler:      ch(router),
