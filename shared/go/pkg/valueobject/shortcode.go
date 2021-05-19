@@ -16,7 +16,10 @@
 
 package valueobject
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type ShortCode struct {
 	value string
@@ -24,7 +27,7 @@ type ShortCode struct {
 
 // NewShortCode creates a new valid short code object.
 func NewShortCode(value string) (ShortCode, error) {
-	if len(value) > 5 || value == "" {
+	if len(value) > 5 || strings.TrimSpace(value) == "" {
 		return ShortCode{}, fmt.Errorf("invalid short code, must be within 5 characters and non-empty")
 	}
 
