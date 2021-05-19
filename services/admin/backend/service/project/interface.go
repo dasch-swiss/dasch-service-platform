@@ -50,9 +50,6 @@ type UseCase interface {
 	GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
 	ListProjects(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error)
 	CreateProject(ctx context.Context, shortCode string, shortname string, longName string, description string) (valueobject.Identifier, error)
+	UpdateProject(ctx context.Context, id valueobject.Identifier, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (*project.Aggregate, error)
 	DeleteProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
-	UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error)
-	UpdateProjectShortName(ctx context.Context, id valueobject.Identifier, shortName string) (*project.Aggregate, error)
-	UpdateProjectLongName(ctx context.Context, id valueobject.Identifier, longName string) (*project.Aggregate, error)
-	UpdateProjectDescription(ctx context.Context, id valueobject.Identifier, description string) (*project.Aggregate, error)
 }

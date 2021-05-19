@@ -25,6 +25,9 @@ var ErrNotFound = errors.New("not found")
 //ErrInvalidEntity invalid entity
 var ErrInvalidEntity = errors.New("invalid entity")
 
+//ErrInvalidEntity invalid entity
+var ErrNoPropertiesChanged = errors.New("no new value for any property provided")
+
 //ErrCannotBeDeleted cannot be deleted
 var ErrCannotBeDeleted = errors.New("cannot be deleted")
 
