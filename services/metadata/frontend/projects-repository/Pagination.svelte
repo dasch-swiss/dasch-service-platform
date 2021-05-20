@@ -1,6 +1,6 @@
 <script lang="ts">
   import { navigate } from 'svelte-routing';
-  import { getProjectsMetadata, pagedResults, pagination, query } from '../stores';
+  import { getProjectsMetadata, pagedResults, pagination, query } from '../store';
 
   let handlePagination = (event: MouseEvent) => {
     const id = (event.target as HTMLElement).id;

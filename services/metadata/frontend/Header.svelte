@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Router, Link } from "svelte-routing";
   import Category from "./projects-repository/Category.svelte";
-  import { getProjectsMetadata } from "./stores";
+  import { getProjectsMetadata } from "./store";
 
   let showSearchbar = false;
   let showFilters = false;

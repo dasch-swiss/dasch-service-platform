@@ -1,6 +1,6 @@
 <script lang="ts">
   import type { Category } from '../interfaces';
-  import { getProjectsMetadata } from '../stores';
+  import { getProjectsMetadata } from '../store';
 
   let categories = [
     { id: 1, isOpen: false, name: 'Discipline', sub: ['Agriculture', 'Antropology', 'Geography', 'History'] },

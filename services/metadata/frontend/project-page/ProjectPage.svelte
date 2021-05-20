@@ -1,6 +1,6 @@
 <script lang='ts'>
   import { tick } from 'svelte';
-  import { currentProjectMetadata, previousRoute } from '../stores';
+  import { currentProjectMetadata, previousRoute } from '../store';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import Tab from './Tab.svelte';

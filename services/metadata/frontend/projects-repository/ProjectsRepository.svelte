@@ -3,7 +3,7 @@
   import Category from './Category.svelte';
   import { onMount } from 'svelte';
   import Pagination from './Pagination.svelte';
-  import { getProjectsMetadata, pagedResults } from '../stores';
+  import { getProjectsMetadata, pagedResults } from '../store';
   import { fade } from 'svelte/transition';
 
   let message = 'Loading...';
