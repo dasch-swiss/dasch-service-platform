@@ -142,10 +142,10 @@ func (s *Service) ListProjects(ctx context.Context, returnDeletedProjects bool) 
 }
 
 func isIdentical(p project.Aggregate, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) bool {
-	if p.ShortCode() == shortCode &&
-		p.ShortName() == shortName &&
-		p.LongName() == longName &&
-		p.Description() == description {
+	if p.ShortCode().Equals(shortCode) &&
+		p.ShortName().Equals(shortName) &&
+		p.LongName().Equals(longName) &&
+		p.Description().Equals(description) {
 		return true
 	}
 
