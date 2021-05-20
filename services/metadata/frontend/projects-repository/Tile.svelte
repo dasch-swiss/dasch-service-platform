@@ -1,12 +1,8 @@
 <script lang="ts">
-  import { push } from 'svelte-spa-router';
+  import { Router, Link } from 'svelte-routing';
   import type { ProjectMetadata } from '../interfaces';
 
   export let projectMetadata: ProjectMetadata;
-
-  const getProject = (project: ProjectMetadata): any => {
-    return project.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
-  }
 </script>
 
 <section>
@@ -15,18 +11,15 @@
   </div>
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <button on:click={() => push(`#/project/${projectMetadata.id}`)}>Read more</button>
+    <button>
+      <Router>
+        <Link to={`/projects/${projectMetadata.id}`} class=regular-link>
+          Read more
+        </Link>
+      </Router>
+    </button>
   </div>
 </section>
-<!-- <section>
-  <div class=header>
-    <h5>{ getProject(projectMetadata).name }</h5>
-  </div>
-  <div class=content>{ getProject(projectMetadata).description }</div>
-  <div class=footer>
-    <button on:click={() => replace(`#/project/${ getProject(projectMetadata).shortcode}`) }>Read more</button>
-  </div>
-</section> -->
 
 <style>
   section {

@@ -2,10 +2,10 @@ package main
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"os"
 	"path/filepath"
 	"regexp"
 	"strconv"
@@ -22,6 +22,11 @@ type Project struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
 	Metadata    interface{} `json:"metadata"`
+}
+
+type spaHandler struct {
+	staticPath string
+	indexPath  string
 }
 
 // All projects that are being served
@@ -177,40 +182,81 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
+// handle SPA to serve always from right place, no matter of route
+func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	log.Printf("SPA Handler: %v", r.URL)
+
+	// get the absolute path to prevent directory traversal
+	path, err := filepath.Abs(r.URL.Path)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// prepend the path with the path to the static directory
+	path = filepath.Join(h.staticPath, path)
+
+	// check whether a file exists at the given path
+	_, err2 := os.Stat(path)
+	if err2 == nil {
+		// file exists -> serve file
+		// log.Printf("Serving from File Server: %v", path)
+		http.FileServer(http.Dir(h.staticPath)).ServeHTTP(w, r)
+		return
+	} else {
+		// file does not exist, see where to go from here
+		pattern := "/projects/?([0-9A-F]{4})?"
+		match, _ := regexp.MatchString(pattern, path)
+		if match {
+			// file matches "/project/shortcode" pattern -> remove this section of the path
+			re := regexp.MustCompile(pattern)
+			s := re.ReplaceAllString(path, "/")
+			_, err3 := os.Stat(s)
+			if err3 == nil {
+				// file exists after removing the section -> serve this file
+				// log.Printf("Existis after changing: %v", s)
+				http.ServeFile(w, r, s)
+				return
+			}
+		}
+
+		// file still not found, serve index.html
+		http.ServeFile(w, r, filepath.Join(h.staticPath, h.indexPath))
+	}
+}
+
 func main() {
-	port := 3000
-
-	// Init Router
-	router := mux.NewRouter()
-
-	// Set up routes
-	// -------------
-	// API
-	router.HandleFunc("/projects", getProjects).Methods("GET")
-	router.HandleFunc("/projects/{id}", getProject).Methods("GET")
-	// Serve frontend from `/public`
-	dir := "./public"
-	router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
-
 	// CORS header
-	// TODO: is this a security issue?
 	ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
-	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"http://localhost:3000"}))
-	// TODO: do I even still need CORS, now that all is on the same port?
 
-	// Load Data
+	// load Data
 	projects = loadProjectData()
 	log.Printf("Loaded Projects: %v", len(projects))
 
-	addr := fmt.Sprintf(":%v", port)
+	// init Router
+	router := mux.NewRouter()
+
+	// set up routes
+	router.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
+	router.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
+
+	// init SPA handler
+	spa := spaHandler{
+		staticPath: "public",
+		indexPath:  "index.html",
+	}
+
+	// apply SPA handler
+	router.PathPrefix("/").Handler(spa)
+
+	// init server
 	srv := &http.Server{
 		Handler:      ch(router),
-		Addr:         addr,
+		Addr:         ":3000",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
 
-	// Run server
-	log.Printf("Serving metadata at %v, on port %v", addr, port)
+	// run server
 	log.Fatal(srv.ListenAndServe())
 }

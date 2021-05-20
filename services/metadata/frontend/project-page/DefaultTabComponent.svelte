@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import { currentProjectMetadata } from "../stores";
+  import { currentProjectMetadata } from "../store";
 
   export let dataset;
 

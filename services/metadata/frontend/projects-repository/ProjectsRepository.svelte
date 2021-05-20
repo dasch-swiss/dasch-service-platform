@@ -3,11 +3,9 @@
   import Category from './Category.svelte';
   import { onMount } from 'svelte';
   import Pagination from './Pagination.svelte';
-  import { getProjectsMetadata, pagedResults } from '../stores';
+  import { getProjectsMetadata, pagedResults } from '../store';
   import { fade } from 'svelte/transition';
-  import {createEventDispatcher} from 'svelte'
 
-  const dispatch = createEventDispatcher();
   let message = 'Loading...';
 
   setTimeout(() => {
@@ -17,11 +15,22 @@
     }, 3000);
   
   onMount(async () => {
-    // preventing go back button to get back out of domain
-    dispatch('routeEvent');
-    
-    if (!$pagedResults) {
+    // TODO: add preventing go back button to get back out of domain
+
+    // get searchUri and 
+    const searchUri = window.location.search;
+    const params = new URLSearchParams(searchUri);
+    const page = Number(params.get('_page'));
+    const query = params.get('q');
+    console.log(searchUri, query, page, params.get('_limit'),);
+
+    // load projects
+    if (!$pagedResults && !searchUri) {
+      // first page on main page arrival
       await getProjectsMetadata(1);
+    } else {
+      // preserved on rehresh or manually entered query
+      await getProjectsMetadata(page, query);
     }
   });
 </script>
