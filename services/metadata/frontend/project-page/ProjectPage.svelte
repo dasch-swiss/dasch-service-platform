@@ -1,13 +1,10 @@
 <script lang='ts'>
   import { tick } from 'svelte';
-  import { pop } from "svelte-spa-router";
-  import { currentProjectMetadata, previousRoute } from '../stores';
+  import { currentProjectMetadata, previousRoute } from '../store';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import Tab from './Tab.svelte';
   import { fade } from 'svelte/transition';
-
-  export let params = {} as any;
 
   let project: any;
   let datasets: any[] = [];
@@ -20,8 +17,9 @@
     const protocol = window.location.protocol;
     const port = protocol === 'https:' ? '' : ':3000';
     const baseUrl = `${protocol}//${window.location.hostname}${port}/`;
+    const projectID = window.location.pathname.split("/")[2];
     // const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`);
-    const res = await fetch(`${baseUrl}projects/${params.id}`);
+    const res = await fetch(`${baseUrl}api/v1/projects/${projectID}`);
     const projectMetadata = await res.json();
     currentProjectMetadata.set(projectMetadata);
     project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
@@ -123,7 +121,8 @@
 
     </div>
     <div class="column-right">
-      <button on:click={() => pop()} class=top-button title="go back to the projects list" disabled={!$previousRoute && window.history.length <= 2}>
+      <!-- <button on:click={() => pop()} class=top-button title="go back to the projects list" disabled={!$previousRoute && window.history.length <= 2}> -->
+        <button on:click={() => history.back()} class=top-button title="go back to the projects list" disabled={!$previousRoute && window.history.length <= 2}>
         <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
         <span class=button-label>Go Back</span>
       </button>

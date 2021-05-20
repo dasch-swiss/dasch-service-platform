@@ -1,5 +1,5 @@
 <script>
-  import { currentProjectMetadata } from "../stores";
+  import { currentProjectMetadata } from "../store";
 
   export let project;
   let grant;
