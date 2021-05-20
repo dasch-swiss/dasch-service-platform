@@ -75,6 +75,10 @@ a.email {
 a:visited {
   color: inherit;
 }
+/* disable fancy animation for certain links */
+.regular-link::before {
+  background: none;
+}
 button {
   cursor: pointer;
 }

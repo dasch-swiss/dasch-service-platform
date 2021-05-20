@@ -35,7 +35,6 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
       if (!Number.isInteger(totalCount/baseResultsRange[1])) {
         totalPages++;
       };
-      // console.log(totalCount, totalPages)
       pagination.set({currentPage: page, currentResultsRange, totalCount, totalPages});
       return r.json();
     })
