@@ -252,7 +252,7 @@ func main() {
 	// init server
 	srv := &http.Server{
 		Handler:      ch(router),
-		Addr:         "127.0.0.1:3000",
+		Addr:         ":3000",
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
 	}
