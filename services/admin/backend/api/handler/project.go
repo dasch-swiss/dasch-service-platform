@@ -52,7 +52,36 @@ func createProject(service project.UseCase) http.Handler {
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 		defer cancel()
 
-		id, err := service.CreateProject(ctx, input.ShortCode, input.ShortName, input.LongName, input.Description)
+		// convert input strings to value objects
+		sc, err := valueobject.NewShortCode(input.ShortCode)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+
+		sn, err := valueobject.NewShortName(input.ShortName)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+
+		ln, err := valueobject.NewLongName(input.LongName)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+
+		desc, err := valueobject.NewDescription(input.Description)
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte(err.Error()))
+			return
+		}
+
+		id, err := service.CreateProject(ctx, sc, sn, ln, desc)
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
@@ -60,6 +89,7 @@ func createProject(service project.UseCase) http.Handler {
 			return
 		}
 
+		// TODO: return all fields once PR #48 is merged
 		toJ := &presenter.Project{
 			ID:          id,
 			ShortCode:   input.ShortCode,

@@ -19,6 +19,7 @@ package project_test
 
 import (
 	"context"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 	"testing"
 	"time"
 
@@ -39,7 +40,23 @@ func TestProject_CreateProject(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
-	projectId, err := service.CreateProject(ctx, expectedShortCode, expectedShortName, expectedLongName, expectedDescription)
+	// create short code value object
+	sc, err := valueobject.NewShortCode(expectedShortCode)
+	assert.Nil(t, err)
+
+	// create short name value object
+	sn, err := valueobject.NewShortName(expectedShortName)
+	assert.Nil(t, err)
+
+	// create long name value object
+	ln, err := valueobject.NewLongName(expectedLongName)
+	assert.Nil(t, err)
+
+	// create short code value object
+	desc, err := valueobject.NewDescription(expectedDescription)
+	assert.Nil(t, err)
+
+	projectId, err := service.CreateProject(ctx, sc, sn, ln, desc)
 	assert.Nil(t, err)
 
 	foundProject, err := service.GetProject(ctx, projectId)

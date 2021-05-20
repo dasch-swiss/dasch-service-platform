@@ -49,7 +49,7 @@ type Repository interface {
 type UseCase interface {
 	GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
 	ListProjects(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error)
-	CreateProject(ctx context.Context, shortCode string, shortname string, longName string, description string) (valueobject.Identifier, error)
+	CreateProject(ctx context.Context, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (valueobject.Identifier, error)
 	DeleteProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error)
 	UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error)
 	UpdateProjectShortName(ctx context.Context, id valueobject.Identifier, shortName string) (*project.Aggregate, error)
