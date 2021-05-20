@@ -12,6 +12,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
@@ -21,6 +22,11 @@ type Project struct {
 	Name        string      `json:"name"`
 	Description string      `json:"description"`
 	Metadata    interface{} `json:"metadata"`
+}
+
+type spaHandler struct {
+	staticPath string
+	indexPath  string
 }
 
 // All projects that are being served
@@ -176,95 +182,7 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
-// SPA handler approach
-// https://medium.com/swlh/write-a-lightweight-api-and-static-file-server-in-go-5e5b208ccdaf
-// func spaHandler(responseWriter http.ResponseWriter, request *http.Request) {
-// 	log.Printf("spaHandler: %v", request.URL)
-// 	http.ServeFile(responseWriter, request, "./public/index.html")
-// }
-
-func main() {
-	// port := 3000
-
-	// // Init Router
-	// router := mux.NewRouter()
-
-	// // Set up routes
-	// // -------------
-	// // API
-	// router.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
-	// router.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
-	// // Serve frontend from `/public`
-	// dir := "./public"
-
-	// // CORS header
-	// ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
-
-	// Load Data
-	projects = loadProjectData()
-	log.Printf("Loaded Projects: %v", len(projects))
-	// addr := fmt.Sprintf(":%v", port)
-
-	// // router.HandleFunc("/", spaHandler)
-
-	// router.PathPrefix("/").Handler(http.FileServer(http.Dir(dir)))
-
-	// http.Handle("/", router)
-
-	// // in theory below line should do the job too: https://stackoverflow.com/a/26563418/9338572
-	// // not sure if because our implementation should goes with http either router? both not working o.0
-	// // http.Handle("/projects/", http.StripPrefix("/projects/", http.FileServer(http.Dir("./public"))))
-	// router.Handle("/projects/", http.StripPrefix("/projects/", http.FileServer(http.Dir("./public"))))
-
-	// // srv := &http.Server{
-	// // 	Handler:      ch(router),
-	// // 	Addr:         addr,
-	// // 	WriteTimeout: 15 * time.Second,
-	// // 	ReadTimeout:  15 * time.Second,
-	// // }
-
-	// // Run server
-	// log.Printf("Serving metadata at %v, on port %v", addr, port)
-	// // log.Fatal(srv.ListenAndServe())
-	// log.Fatal(http.ListenAndServe(":3000", ch(router)))
-	// r := mux.NewRouter()
-	// // r.HandleFunc("/", spaHandler)
-	// r.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
-	// r.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
-	// r.PathPrefix("/").Handler(http.FileServer(http.Dir("./public/")))
-	// // rSPA := mux.NewRouter()
-	// // rSPA.HandleFunc("/projects/", spaSubHandler)
-	// // rSPA.HandleFunc("/projects/{id}", spaSubHandler)
-	// // http.Handle("/projects/", rSPA)
-	// // http.Handle("/projects/", http.StripPrefix("/projects/", rSPA))
-	// http.Handle("/projects/", http.StripPrefix("/projects/", http.FileServer(http.Dir("./public/"))))
-	// http.Handle("/", r)
-	// log.Println("Serving on :3000")
-	// log.Fatal(http.ListenAndServe(":3000", nil))
-	router := mux.NewRouter()
-	router.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
-	router.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
-	spa := spaHandler{
-		staticPath: "public",
-		indexPath:  "index.html",
-	}
-	router.PathPrefix("/").Handler(spa)
-
-	srv := &http.Server{
-		Handler:      router,
-		Addr:         "127.0.0.1:3000",
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
-	}
-
-	log.Fatal(srv.ListenAndServe())
-}
-
-type spaHandler struct {
-	staticPath string
-	indexPath  string
-}
-
+// handle SPA to serve always from right place, no matter of route
 func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Printf("SPA Handler: %v", r.URL)
 
@@ -307,12 +225,38 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// func spaHandler(w http.ResponseWriter, r *http.Request) {
-// 	log.Printf("SPA Handler: %v", r.URL.Path)
-// 	http.ServeFile(w, r, "./public/index.html")
-// }
+func main() {
+	// CORS header
+	ch := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))
 
-// func spaSubHandler(w http.ResponseWriter, r *http.Request) {
-// 	log.Printf("SPA Sub-Handler: %v", r.URL.Path)
-// 	http.Handle(r.URL.Path, http.StripPrefix(r.URL.Path, http.FileServer(http.Dir("./public/"))))
-// }
+	// load Data
+	projects = loadProjectData()
+	log.Printf("Loaded Projects: %v", len(projects))
+
+	// init Router
+	router := mux.NewRouter()
+
+	// set up routes
+	router.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
+	router.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
+
+	// init SPA handler
+	spa := spaHandler{
+		staticPath: "public",
+		indexPath:  "index.html",
+	}
+
+	// apply SPA handler
+	router.PathPrefix("/").Handler(spa)
+
+	// init server
+	srv := &http.Server{
+		Handler:      ch(router),
+		Addr:         "127.0.0.1:3000",
+		WriteTimeout: 15 * time.Second,
+		ReadTimeout:  15 * time.Second,
+	}
+
+	// run server
+	log.Fatal(srv.ListenAndServe())
+}
