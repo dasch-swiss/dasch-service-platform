@@ -1,10 +1,11 @@
 <script lang='ts'>
   import { tick } from 'svelte';
-  import { currentProjectMetadata, previousRoute } from '../store';
+  import { currentProjectMetadata, isSnackbar, previousRoute } from '../store';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import Tab from './Tab.svelte';
   import { fade } from 'svelte/transition';
+  import Snackbar from '../Snackbar.svelte';
 
   let project: any;
   let datasets: any[] = [];
@@ -64,7 +65,13 @@
   };
 </script>
 
-<div class="container" in:fade="{{duration: 200}}">
+{#if $isSnackbar}
+  <div>
+    <svelte:component this={Snackbar} />
+  </div>
+{/if}
+
+<div class="container" in:fade={{duration: 200}}>
   <div class="row" style="flex-wrap: wrap;">
     <h1 class="title top-heading">
       {project?.name}

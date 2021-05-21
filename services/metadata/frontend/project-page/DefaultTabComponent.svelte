@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import { currentProjectMetadata } from "../store";
+  import { currentProjectMetadata, isSnackbar } from "../store";
 
   export let dataset;
 
@@ -31,6 +31,7 @@
     window.getSelection().addRange(text);
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
+    isSnackbar.set(true);
   };
 
   const truncateString = (s) => {
@@ -61,7 +62,7 @@
   console.log('loaded dataset', dataset)
 </script>
 
-<div id=dataset in:fade="{{duration: 200}}">
+<div id=dataset in:fade={{duration: 200}}>
   {#if dataset}
     {#if dataset?.content.alternativeTitle}
     <div>
@@ -129,7 +130,7 @@
   <div class="property-row">
     <span class=label style="display:inline">
       How To Cite
-      <button on:click={copyToClipboard} title="copy text to clpboard">
+      <button on:click={copyToClipboard} title="copy citation to the clipboard">
          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
       </button>
     </span>
@@ -200,6 +201,9 @@
   }
   .icon {
     margin: -1rem 0 0.25rem;
+  }
+  .icon:hover {
+    color: var(--dasch-light-violet);
   }
   .role {
     color: var(--secondary-colour);

@@ -21,7 +21,7 @@
 {#each tabs as tab}
 	{#if activeTabValue === tab.value}
   <div class=box>
-    <svelte:component this={DefaultTabComponent} dataset={tab}/>
+    <svelte:component this={DefaultTabComponent} dataset={tab} />
   </div>
 	{/if}
 {/each}
