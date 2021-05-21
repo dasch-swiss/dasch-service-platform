@@ -16,7 +16,10 @@
 
 package valueobject
 
-import "fmt"
+import (
+	"fmt"
+	"strconv"
+)
 
 type ShortCode struct {
 	value string
@@ -24,8 +27,9 @@ type ShortCode struct {
 
 // NewShortCode creates a new valid short code object.
 func NewShortCode(value string) (ShortCode, error) {
-	if len(value) > 5 || value == "" {
-		return ShortCode{}, fmt.Errorf("invalid short code, must be within 5 characters and non-empty")
+	_, err := strconv.ParseUint(value, 16, 64)
+	if err != nil {
+		return ShortCode{}, fmt.Errorf("invalid short code, must be two hexadecimal digits and non-empty")
 	}
 
 	return ShortCode{value: value}, nil

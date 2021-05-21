@@ -132,6 +132,22 @@ func NewAggregate(id valueobject.Identifier, shortCode valueobject.ShortCode, sh
 	return p
 }
 
+// UpdateProject updates the project.
+// TODO: add user who updated the project
+func (p *Aggregate) UpdateProject(id valueobject.Identifier, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) error {
+	p.raise(&event.ProjectChanged{
+		ID:          id,
+		ShortCode:   shortCode,
+		ShortName:   shortName,
+		LongName:    longName,
+		Description: description,
+		ChangedAt:   valueobject.NewTimestamp(),
+		ChangedBy:   valueobject.Identifier{},
+	})
+
+	return nil
+}
+
 // DeleteProject deletes the project.
 // TODO: add user who deleted the project
 func (p *Aggregate) DeleteProject(id valueobject.Identifier) error {
@@ -244,6 +260,15 @@ func (p *Aggregate) On(ev event.Event, new bool) {
 		p.description = e.Description
 		p.createdAt = e.CreatedAt
 		p.createdBy = e.CreatedBy
+
+	case *event.ProjectChanged:
+		p.id = e.ID
+		p.shortCode = e.ShortCode
+		p.shortName = e.ShortName
+		p.longName = e.LongName
+		p.description = e.Description
+		p.changedAt = e.ChangedAt
+		p.changedBy = e.ChangedBy
 
 	case *event.ProjectDeleted:
 		p.id = e.ID

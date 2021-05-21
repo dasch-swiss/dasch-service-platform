@@ -68,6 +68,22 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 			proposedEvents = append(proposedEvents, pe)
 			streamRevision = streamrevision.StreamRevisionNoStream
 
+		case *event.ProjectChanged:
+			j, err := json.Marshal(e)
+			if err != nil {
+				return e.ID, fmt.Errorf("problem serializing '%T' event to json", e)
+			}
+
+			eventID, _ := uuid.NewV4()
+			pe := messages.ProposedEvent{
+				EventID:     eventID,
+				EventType:   "ProjectChanged",
+				ContentType: "application/json",
+				Data:        j,
+			}
+
+			proposedEvents = append(proposedEvents, pe)
+
 		case *event.ProjectDeleted:
 			j, err := json.Marshal(e)
 			if err != nil {
@@ -78,70 +94,6 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 			pe := messages.ProposedEvent{
 				EventID:     eventID,
 				EventType:   "ProjectDeleted",
-				ContentType: "application/json",
-				Data:        j,
-			}
-
-			proposedEvents = append(proposedEvents, pe)
-
-		case *event.ProjectShortCodeChanged:
-			j, err := json.Marshal(e)
-			if err != nil {
-				return e.ID, fmt.Errorf("problem serializing '%T' event to json", e)
-			}
-
-			eventID, _ := uuid.NewV4()
-			pe := messages.ProposedEvent{
-				EventID:     eventID,
-				EventType:   "ProjectShortCodeChanged",
-				ContentType: "application/json",
-				Data:        j,
-			}
-
-			proposedEvents = append(proposedEvents, pe)
-
-		case *event.ProjectShortNameChanged:
-			j, err := json.Marshal(e)
-			if err != nil {
-				return e.ID, fmt.Errorf("problem serializing '%T' event to json", e)
-			}
-
-			eventID, _ := uuid.NewV4()
-			pe := messages.ProposedEvent{
-				EventID:     eventID,
-				EventType:   "ProjectShortNameChanged",
-				ContentType: "application/json",
-				Data:        j,
-			}
-
-			proposedEvents = append(proposedEvents, pe)
-
-		case *event.ProjectLongNameChanged:
-			j, err := json.Marshal(e)
-			if err != nil {
-				return e.ID, fmt.Errorf("problem serializing '%T' event to json", e)
-			}
-
-			eventID, _ := uuid.NewV4()
-			pe := messages.ProposedEvent{
-				EventID:     eventID,
-				EventType:   "ProjectLongNameChanged",
-				ContentType: "application/json",
-				Data:        j,
-			}
-
-			proposedEvents = append(proposedEvents, pe)
-
-		case *event.ProjectDescriptionChanged:
-			j, err := json.Marshal(e)
-			if err != nil {
-				return e.ID, fmt.Errorf("problem serializing '%T' event to json", e)
-			}
-
-			eventID, _ := uuid.NewV4()
-			pe := messages.ProposedEvent{
-				EventID:     eventID,
-				EventType:   "ProjectDescriptionChanged",
 				ContentType: "application/json",
 				Data:        j,
 			}
@@ -184,36 +136,15 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
 			}
 			events = append(events, &e)
+		case "ProjectChanged":
+			var e event.ProjectChanged
+			err := json.Unmarshal(record.Data, &e)
+			if err != nil {
+				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
+			}
+			events = append(events, &e)
 		case "ProjectDeleted":
 			var e event.ProjectDeleted
-			err := json.Unmarshal(record.Data, &e)
-			if err != nil {
-				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
-			}
-			events = append(events, &e)
-		case "ProjectShortCodeChanged":
-			var e event.ProjectShortCodeChanged
-			err := json.Unmarshal(record.Data, &e)
-			if err != nil {
-				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
-			}
-			events = append(events, &e)
-		case "ProjectShortNameChanged":
-			var e event.ProjectShortNameChanged
-			err := json.Unmarshal(record.Data, &e)
-			if err != nil {
-				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
-			}
-			events = append(events, &e)
-		case "ProjectLongNameChanged":
-			var e event.ProjectLongNameChanged
-			err := json.Unmarshal(record.Data, &e)
-			if err != nil {
-				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
-			}
-			events = append(events, &e)
-		case "ProjectDescriptionChanged":
-			var e event.ProjectDescriptionChanged
 			err := json.Unmarshal(record.Data, &e)
 			if err != nil {
 				return &project.Aggregate{}, fmt.Errorf("problem deserializing '%s' event from json", record.EventType)
