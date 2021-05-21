@@ -131,14 +131,25 @@ func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*p
 }
 
 //ListProjects lists the projects
-func (s *Service) ListProjects(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error) {
+func (s *Service) ListProjects(ctx context.Context, returnDeletedProjects bool) ([]project.Aggregate, error) {
+
+	var projectsList []project.Aggregate
 
 	ids, err := s.repo.GetProjectIds(ctx, returnDeletedProjects)
 	if err != nil {
-		return []valueobject.Identifier{}, err
+		return []project.Aggregate{}, err
 	}
 
-	return ids, nil
+	for _, id := range ids {
+		p, err := s.GetProject(ctx, id)
+		if err != nil {
+			return []project.Aggregate{}, err
+		}
+
+		projectsList = append(projectsList, *p)
+	}
+
+	return projectsList, nil
 }
 
 func isIdentical(p project.Aggregate, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) bool {

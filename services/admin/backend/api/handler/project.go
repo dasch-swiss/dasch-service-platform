@@ -333,7 +333,7 @@ func listProjects(service project.UseCase) http.Handler {
 		defer cancel()
 
 		// get all project ids
-		ids, err := service.ListProjects(ctx, input.ReturnDeletedProjects)
+		projects, err := service.ListProjects(ctx, input.ReturnDeletedProjects)
 		w.Header().Set("Content-Type", "application/json")
 
 		if err != nil && err == projectEntity.ErrNotFound {
@@ -347,32 +347,15 @@ func listProjects(service project.UseCase) http.Handler {
 			w.Write([]byte("The server is not responding"))
 			return
 		}
-		if ids == nil {
+		if projects == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No ids was returned"))
+			w.Write([]byte("No projects were returned"))
 			return
 		}
 
 		var toJ []presenter.Project
 
-		for _, id := range ids {
-			p, err := service.GetProject(ctx, id)
-			if err != nil && err == projectEntity.ErrNotFound {
-				w.WriteHeader(http.StatusNotFound)
-				w.Write([]byte("No project found for this uuid"))
-				return
-			}
-
-			if err != nil && err != projectEntity.ErrNotFound {
-				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte("The server is not responding"))
-				return
-			}
-			if p == nil {
-				w.WriteHeader(http.StatusNotFound)
-				w.Write([]byte("No data was returned"))
-				return
-			}
+		for _, p := range projects {
 
 			toJ = append(toJ, presenter.Project{
 				ID:          p.ID(),
