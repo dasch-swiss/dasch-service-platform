@@ -5,7 +5,7 @@
 
 <footer>
   <div>Copyright © 2021 DaSCH</div>
-  <div style="font-size: 0.75rem">{`dasch-service-platform v.${version}`}</div>  
+  <div class=version>{`dasch-service-platform v.${version}`}</div>  
 </footer>
 
 <style>
@@ -17,6 +17,10 @@
     padding: 0.75rem;
     box-sizing: border-box;
     text-align: center;
+  }
+  .version {
+    font-size: 0.75rem;
+    color: var(--dasch-violet);
   }
   @media screen and (min-width: 768px){
     footer {
