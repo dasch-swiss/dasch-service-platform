@@ -56,7 +56,7 @@ func createProject(service project.UseCase) http.Handler {
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
+			w.Write([]byte(err.Error()))
 			return
 		}
 
