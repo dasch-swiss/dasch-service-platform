@@ -89,7 +89,7 @@ func createProject(service project.UseCase) http.Handler {
 			return
 		}
 
-		// TODO: return all fields once PR #48 is merged
+		// TODO: should this return a Project with all the fields or a different struct for a CreateProject?
 		toJ := &presenter.Project{
 			ID:          id,
 			ShortCode:   input.ShortCode,
