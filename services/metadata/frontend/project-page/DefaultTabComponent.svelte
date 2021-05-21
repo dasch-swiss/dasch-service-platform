@@ -65,10 +65,10 @@
 <div id=dataset in:fade={{duration: 200}}>
   {#if dataset}
     {#if dataset?.content.alternativeTitle}
-    <div>
-      <span class=label>Alternative Title</span>
-      <span class=data>{dataset?.content.alternativeTitle}</span>
-    </div>
+      <div>
+        <span class=label>Alternative Title</span>
+        <span class=data>{dataset?.content.alternativeTitle}</span>
+      </div>
     {/if}
   <div class="grid-wrapper">
     <div>
@@ -80,22 +80,22 @@
       <span class=data>{dataset?.content.status}</span>
     </div>
     {#if dataset.content.dateCreated}
-    <div>
-      <span class=label>Date Created</span>
-      <span class=data>{dataset?.content.dateCreated}</span>
-    </div>
+      <div>
+        <span class=label>Date Created</span>
+        <span class=data>{dataset?.content.dateCreated}</span>
+      </div>
     {/if}
     {#if dataset.content.dateModified}
-    <div>
-      <span class=label>Date Modified</span>
-      <span class=data>{dataset?.content.dateModified}</span>
-    </div>
+      <div>
+        <span class=label>Date Modified</span>
+        <span class=data>{dataset?.content.dateModified}</span>
+      </div>
     {/if}
     <div>
       <span class=label>License</span>
       {#if Array.isArray(dataset?.content.license)}
         {#each dataset?.content.license as l}
-        <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
+          <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
         {/each}
       {/if}
     </div>
@@ -104,28 +104,44 @@
       <span class=data>{dataset?.content.typeOfData.join(', ')}</span>
     </div>
     {#if dataset?.content.documentation}
-    <div style="grid-column-start: 1;grid-column-end: 3;">
-      <span class=label>Additional documentation</span>
-      {#if Array.isArray(dataset?.content.documentation)}
-        {#each dataset?.content.documentation as d}
-          {#if d.url}
-          <a class=data href={d.url} target=_>{truncateString(d.name)}</a>
-          {:else if d.match("http")}
-          <a class=data href={d} target=_>{truncateString(d)}</a>
-          {:else}
-          <span class=data>{d}</span>
-          {/if}
-        {/each}
-      {/if}
-    </div>
+      <div style="grid-column-start: 1;grid-column-end: 3;">
+        <span class=label>Additional documentation</span>
+        {#if Array.isArray(dataset?.content.documentation)}
+          {#each dataset?.content.documentation as d}
+            {#if d.url}
+              <a class=data href={d.url} target=_>{truncateString(d.name)}</a>
+            {:else if d.match("http")}
+              <a class=data href={d} target=_>{truncateString(d)}</a>
+            {:else}
+              <span class=data>{d}</span>
+            {/if}
+          {/each}
+        {/if}
+      </div>
     {/if}
   </div>
+
   <div class="grid-wrapper" style="grid-template-columns: repeat(1, 1fr)">
     <div>
       <span class=label>Languages</span>
       <span class=data>{dataset?.content.language.join(', ')}</span>
     </div>
   </div>
+
+  {#if dataset?.content.sameAs}
+    <div class="grid-wrapper" style="grid-template-columns: repeat(1, 1fr)">
+      <div>
+        <span class=label>Dataset Website</span>
+        {#each dataset?.content.sameAs as a}
+          {#if a.url}
+            <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
+          {:else}
+            <div>{a}</div>
+          {/if}
+        {/each}
+      </div>
+    </div>
+  {/if}
 
   <div class="property-row">
     <span class=label style="display:inline">
@@ -140,20 +156,20 @@
   <div>
     <span class=label>Abstract</span>
     {#if Array.isArray(dataset?.content.abstract)}
-    <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
-      {#each dataset?.content.abstract as a}
-        {#if a.url}
-        <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
-        {:else}
-        <div>{a}</div>
-        {/if}
-      {/each}
-    </div>
+      <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
+        {#each dataset?.content.abstract as a}
+          {#if a.url}
+            <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
+          {:else}
+            <div>{a}</div>
+          {/if}
+        {/each}
+      </div>
     {/if}
   </div>
 
   {#if abstractLinesNumber > 6}
-  <div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
+    <div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
   {/if}
 
   <span class=label>Attributions</span>
