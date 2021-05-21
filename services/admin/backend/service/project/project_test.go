@@ -31,7 +31,7 @@ import (
 func TestProject_CreateProject(t *testing.T) {
 
 	expectedAggregateType := "http://ns.dasch.swiss/admin#Project"
-	expectedShortCode := "psc"
+	expectedShortCode := "00FF"
 	expectedShortName := "short name"
 	expectedLongName := "project long name"
 	expectedDescription := "project description"
@@ -54,13 +54,13 @@ func TestProject_CreateProject(t *testing.T) {
 	assert.Equal(t, expectedLongName, foundProject.LongName().String())
 	assert.Equal(t, expectedDescription, foundProject.Description().String())
 
-	expectedUpdatedShortCode := "nsc"
+	expectedUpdatedShortCode := "11AA"
 	expectedUpdatedShortName := "new short name"
 	expectedUpdatedLongName := "new project long name"
 	expectedUpdatedDescription := "new project description"
 
 	// create new short code value object
-	nsc, err := valueobject.NewShortCode("nsc")
+	nsc, err := valueobject.NewShortCode("11AA")
 	assert.Nil(t, err)
 
 	// update short code
