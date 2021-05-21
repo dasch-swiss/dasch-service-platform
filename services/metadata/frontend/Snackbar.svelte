@@ -1,26 +1,24 @@
 <script lang="ts">
   import { onDestroy, onMount } from "svelte";
   import { fade } from 'svelte/transition';
-  import { isSnackbar } from "./store";
-
-  let message = 'Citation copied succesfully!';
+  import { handleSnackbar } from "./store";
 
   onMount(() => {
     setTimeout(() => {
-      isSnackbar.set(false);
+      $handleSnackbar.isSnackbar = false;
     }, 5000);
   });
 
   onDestroy(() => {
-    if ($isSnackbar) {
-      isSnackbar.set(false);
+    if ($handleSnackbar.isSnackbar) {
+      $handleSnackbar.isSnackbar = false;
     }
   })
 </script>
 
-  <div transition:fade={{duration: 250}}>
-    {message}
-  </div>
+<div transition:fade={{duration: 250}}>
+  {$handleSnackbar.message}
+</div>
 
 <style>
   div {

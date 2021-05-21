@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import { currentProjectMetadata, isSnackbar } from "../store";
+  import { currentProjectMetadata, handleSnackbar } from "../store";
 
   export let dataset;
 
@@ -31,7 +31,7 @@
     window.getSelection().addRange(text);
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
-    isSnackbar.set(true);
+    handleSnackbar.set({isSnackbar: true, message: 'Citation copied succesfully!'});
   };
 
   const truncateString = (s) => {
