@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { onMount } from "svelte";
+  import { onDestroy, onMount } from "svelte";
   import { fade } from 'svelte/transition';
   import { isSnackbar } from "./store";
 
@@ -7,9 +7,15 @@
 
   onMount(() => {
     setTimeout(() => {
-      $isSnackbar = !$isSnackbar;
+      isSnackbar.set(false);
     }, 5000);
   });
+
+  onDestroy(() => {
+    if ($isSnackbar) {
+      isSnackbar.set(false);
+    }
+  })
 </script>
 
   <div transition:fade={{duration: 250}}>
