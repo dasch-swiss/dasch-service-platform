@@ -16,7 +16,10 @@
 
 package valueobject
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type LongName struct {
 	value string
@@ -24,7 +27,7 @@ type LongName struct {
 
 // NewLongName creates a new valid long name object.
 func NewLongName(value string) (LongName, error) {
-	if len(value) > 50 || value == "" {
+	if len(value) > 50 || strings.TrimSpace(value) == "" {
 		return LongName{}, fmt.Errorf("invalid long name, must be within 50 characters and non-empty")
 	}
 

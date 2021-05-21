@@ -42,7 +42,7 @@ func TestProject_Save(t *testing.T) {
 	defer cancel()
 
 	expectedId, err := valueobject.NewIdentifier()
-	expectedShortCode, _ := valueobject.NewShortCode("psc")
+	expectedShortCode, _ := valueobject.NewShortCode("00FF")
 	expectedShortName, _ := valueobject.NewShortName("short name")
 	expectedLongName, _ := valueobject.NewLongName("project long name")
 	expectedDescription, _ := valueobject.NewDescription("project description")

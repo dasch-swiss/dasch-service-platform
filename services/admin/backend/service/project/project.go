@@ -18,7 +18,6 @@ package project
 
 import (
 	"context"
-
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/project"
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 )
@@ -68,6 +67,38 @@ func (s *Service) CreateProject(ctx context.Context, shortCode string, shortName
 	return id, nil
 }
 
+// update project info
+func (s *Service) UpdateProject(ctx context.Context, id valueobject.Identifier, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (*project.Aggregate, error) {
+
+	// get the project to update
+	p, err := s.repo.Load(ctx, id)
+	if err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// throw error if project has been deleted
+	if !p.DeletedAt().Time().IsZero() {
+		return &project.Aggregate{}, project.ErrProjectHasBeenDeleted
+	}
+
+	// throw error is none of the fields actually differ from their current values
+	if isIdentical(*p, shortCode, shortName, longName, description) {
+		return &project.Aggregate{}, project.ErrNoPropertiesChanged
+	}
+
+	// update the project
+	if err := p.UpdateProject(id, shortCode, shortName, longName, description); err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	// save the project
+	if _, err := s.repo.Save(ctx, p); err != nil {
+		return &project.Aggregate{}, err
+	}
+
+	return p, nil
+}
+
 //delete project
 func (s *Service) DeleteProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 
@@ -81,112 +112,6 @@ func (s *Service) DeleteProject(ctx context.Context, id valueobject.Identifier) 
 	p.DeleteProject(id)
 
 	// save the event
-	if _, err := s.repo.Save(ctx, p); err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	return p, nil
-}
-
-//UpdateProjectShortCode update a projects short code
-func (s *Service) UpdateProjectShortCode(ctx context.Context, id valueobject.Identifier, shortCode string) (*project.Aggregate, error) {
-
-	// get the project to update
-	p, err := s.repo.Load(ctx, id)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// create a new short code object with the new short code
-	nsc, err := valueobject.NewShortCode(shortCode)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// update the short code
-	if err := p.ChangeShortCode(nsc); err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// save the project
-	if _, err := s.repo.Save(ctx, p); err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	return p, nil
-}
-
-//UpdateProjectShortName update a projects short name
-func (s *Service) UpdateProjectShortName(ctx context.Context, id valueobject.Identifier, shortName string) (*project.Aggregate, error) {
-
-	// get the project to update
-	p, err := s.repo.Load(ctx, id)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// create a new short name object with the new short name
-	nsn, err := valueobject.NewShortName(shortName)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// update the short name
-	p.ChangeShortName(nsn)
-
-	// save the project
-	if _, err := s.repo.Save(ctx, p); err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	return p, nil
-}
-
-//UpdateProjectLongName update a projects long name
-func (s *Service) UpdateProjectLongName(ctx context.Context, id valueobject.Identifier, longName string) (*project.Aggregate, error) {
-
-	// get the project to update
-	p, err := s.repo.Load(ctx, id)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// create a new long name object with the new long name
-	nln, err := valueobject.NewLongName(longName)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// update the long name
-	p.ChangeLongName(nln)
-
-	// save the project
-	if _, err := s.repo.Save(ctx, p); err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	return p, nil
-}
-
-//UpdateProjectDescription update a projects description
-func (s *Service) UpdateProjectDescription(ctx context.Context, id valueobject.Identifier, description string) (*project.Aggregate, error) {
-
-	// get the project to update
-	p, err := s.repo.Load(ctx, id)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// create a new description object with the new description
-	nd, err := valueobject.NewDescription(description)
-	if err != nil {
-		return &project.Aggregate{}, err
-	}
-
-	// update the description
-	p.ChangeDescription(nd)
-
-	// save the project
 	if _, err := s.repo.Save(ctx, p); err != nil {
 		return &project.Aggregate{}, err
 	}
@@ -214,4 +139,15 @@ func (s *Service) ListProjects(ctx context.Context, returnDeletedProjects bool) 
 	}
 
 	return ids, nil
+}
+
+func isIdentical(p project.Aggregate, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) bool {
+	if p.ShortCode().Equals(shortCode) &&
+		p.ShortName().Equals(shortName) &&
+		p.LongName().Equals(longName) &&
+		p.Description().Equals(description) {
+		return true
+	}
+
+	return false
 }

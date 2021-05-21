@@ -19,6 +19,7 @@ package project_test
 
 import (
 	"context"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 	"testing"
 	"time"
 
@@ -26,10 +27,11 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
+// TODO: split this into different methods and use a mock project
 func TestProject_CreateProject(t *testing.T) {
 
 	expectedAggregateType := "http://ns.dasch.swiss/admin#Project"
-	expectedShortCode := "psc"
+	expectedShortCode := "00FF"
 	expectedShortName := "short name"
 	expectedLongName := "project long name"
 	expectedDescription := "project description"
@@ -39,9 +41,11 @@ func TestProject_CreateProject(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
+	// create project
 	projectId, err := service.CreateProject(ctx, expectedShortCode, expectedShortName, expectedLongName, expectedDescription)
 	assert.Nil(t, err)
 
+	// get project
 	foundProject, err := service.GetProject(ctx, projectId)
 	assert.Nil(t, err)
 	assert.Equal(t, expectedAggregateType, foundProject.AggregateType().String())
@@ -50,43 +54,85 @@ func TestProject_CreateProject(t *testing.T) {
 	assert.Equal(t, expectedLongName, foundProject.LongName().String())
 	assert.Equal(t, expectedDescription, foundProject.Description().String())
 
-	expectedUpdatedShortCode := "nsc"
+	expectedUpdatedShortCode := "11AA"
 	expectedUpdatedShortName := "new short name"
 	expectedUpdatedLongName := "new project long name"
 	expectedUpdatedDescription := "new project description"
 
-	// update short code
-	usc, err := service.UpdateProjectShortCode(ctx, foundProject.ID(), "nsc")
+	// create new short code value object
+	nsc, err := valueobject.NewShortCode("11AA")
 	assert.Nil(t, err)
+
+	// update short code
+	usc, err := service.UpdateProject(ctx, foundProject.ID(), nsc, foundProject.ShortName(), foundProject.LongName(), foundProject.Description())
+	assert.Nil(t, err)
+
+	// assert short code was updated
 	assert.Equal(t, expectedUpdatedShortCode, usc.ShortCode().String())
+
+	// the remaining fields should remain unchanged
 	assert.Equal(t, expectedShortName, usc.ShortName().String())
 	assert.Equal(t, expectedLongName, usc.LongName().String())
 	assert.Equal(t, expectedDescription, usc.Description().String())
 	assert.NotZero(t, usc.ChangedAt())
 	// TODO: assert ChangedBy is not an empty UUID
 
-	// update short name
-	usn, err := service.UpdateProjectShortName(ctx, foundProject.ID(), "new short name")
+	// create new short name value object
+	nsn, err := valueobject.NewShortName("new short name")
 	assert.Nil(t, err)
+
+	// update short name
+	usn, err := service.UpdateProject(ctx, foundProject.ID(), nsc, nsn, foundProject.LongName(), foundProject.Description())
+	assert.Nil(t, err)
+
+	// short code should remain the updated short code
 	assert.Equal(t, expectedUpdatedShortCode, usn.ShortCode().String())
+
+	// assert short code was updated
 	assert.Equal(t, expectedUpdatedShortName, usn.ShortName().String())
+
+	// the remaining fields should remain unchanged
 	assert.Equal(t, expectedLongName, usn.LongName().String())
 	assert.Equal(t, expectedDescription, usn.Description().String())
 
-	// update long name
-	uln, err := service.UpdateProjectLongName(ctx, foundProject.ID(), "new project long name")
+	// create new long name value object
+	nln, err := valueobject.NewLongName("new project long name")
 	assert.Nil(t, err)
+
+	// update long name
+	uln, err := service.UpdateProject(ctx, foundProject.ID(), nsc, nsn, nln, foundProject.Description())
+	assert.Nil(t, err)
+
+	// short code should remain the updated short code
 	assert.Equal(t, expectedUpdatedShortCode, uln.ShortCode().String())
+
+	// short name should remain the updated short name
 	assert.Equal(t, expectedUpdatedShortName, uln.ShortName().String())
+
+	// assert long name was updated
 	assert.Equal(t, expectedUpdatedLongName, uln.LongName().String())
+
+	// description should remain the expectedDescription
 	assert.Equal(t, expectedDescription, uln.Description().String())
 
-	// update description
-	ud, err := service.UpdateProjectDescription(ctx, foundProject.ID(), "new project description")
+	// create new description value object
+	nd, err := valueobject.NewDescription("new project description")
 	assert.Nil(t, err)
+
+	// update description
+	ud, err := service.UpdateProject(ctx, foundProject.ID(), nsc, nsn, nln, nd)
+	assert.Nil(t, err)
+
+	// short code should remain the updated short code
 	assert.Equal(t, expectedUpdatedShortCode, ud.ShortCode().String())
+
+	// short name should remain the updated short name
 	assert.Equal(t, expectedUpdatedShortName, ud.ShortName().String())
+
+	// long name should remain the updated long name
 	assert.Equal(t, expectedUpdatedLongName, ud.LongName().String())
+
+	// assert description was updated
 	assert.Equal(t, expectedUpdatedDescription, ud.Description().String())
 
 	// get a list of project ids

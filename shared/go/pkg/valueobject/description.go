@@ -16,7 +16,10 @@
 
 package valueobject
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Description struct {
 	value string
@@ -24,7 +27,7 @@ type Description struct {
 
 // NewDescription creates a new valid description object.
 func NewDescription(value string) (Description, error) {
-	if len(value) > 300 || value == "" {
+	if len(value) > 300 || strings.TrimSpace(value) == "" {
 		return Description{}, fmt.Errorf("invalid description, must be within 300 characters and non-empty")
 	}
 
