@@ -11,13 +11,11 @@
   </div>
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
-    <button>
-      <Router>
-        <Link to={`/projects/${projectMetadata.id}`} class=regular-link>
-          Read more
-        </Link>
-      </Router>
-    </button>
+    <Router>
+      <Link to={`/projects/${projectMetadata.id}`} class="read-more regular-link">
+        Read more
+      </Link>
+    </Router>
   </div>
 </section>
 
@@ -31,20 +29,6 @@
     width: 75vw;
     float: left;
     box-shadow: var(--shadow-2);
-  }
-  button {
-    display: inline-block;
-    vertical-align: middle;
-    border-radius: 0.25rem;
-    background-color: #fff;
-    border: 1px solid var(--lead-colour);
-    padding: 5px 20px;
-    color: var(--lead-colour);
-    box-shadow: var(--shadow-1);
-  }
-  button:hover {
-    color: #fff;
-    background-color: var(--lead-colour);
   }
   .header{
     height: 30px;
