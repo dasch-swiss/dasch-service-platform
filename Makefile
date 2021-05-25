@@ -32,6 +32,9 @@ buildifier: ## format Bazel WORKSPACE and BUILD.bazel files
 gen-go-deps: ## regenerate dependencies file (deps.bzl)
 	@bazel run //:gazelle -- update-repos -from_file=go.mod -to_macro=deps.bzl%go_dependencies
 
+.PHONY: docker-publish
+docker-publish: metadata-docker-publish ## publish all docker images
+
 #################################
 # Admin service targets
 #################################
