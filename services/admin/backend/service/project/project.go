@@ -100,6 +100,20 @@ func (s *Service) DeleteProject(ctx context.Context, id valueobject.Identifier) 
 	return p, nil
 }
 
+//migrate a project
+func (s *Service) MigrateProject(ctx context.Context, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (valueobject.Identifier, error) {
+
+	id, _ := valueobject.NewIdentifier()
+
+	e := project.NewAggregate(id, shortCode, shortName, longName, description)
+
+	if _, err := s.repo.Save(ctx, e); err != nil {
+		return valueobject.Identifier{}, err
+	}
+
+	return id, nil
+}
+
 //GetProject get a project
 func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 

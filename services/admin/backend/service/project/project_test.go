@@ -162,3 +162,46 @@ func TestProject_CreateProject(t *testing.T) {
 	assert.NotZero(t, deletedProject.DeletedAt())
 	// TODO: assert DeletedBy is not an empty UUID
 }
+
+func TestProject_MigrateProject(t *testing.T) {
+
+	expectedAggregateType := "http://ns.dasch.swiss/admin#Project"
+	expectedShortCode := "00FF"
+	expectedShortName := "short name"
+	expectedLongName := "project long name"
+	expectedDescription := "project description"
+
+	repo := NewInMemRepo()
+	service := project.NewService(repo)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	defer cancel()
+
+	// create short code value object
+	sc, err := valueobject.NewShortCode(expectedShortCode)
+	assert.Nil(t, err)
+
+	// create short name value object
+	sn, err := valueobject.NewShortName(expectedShortName)
+	assert.Nil(t, err)
+
+	// create long name value object
+	ln, err := valueobject.NewLongName(expectedLongName)
+	assert.Nil(t, err)
+
+	// create short code value object
+	desc, err := valueobject.NewDescription(expectedDescription)
+	assert.Nil(t, err)
+
+	// migrate (create) project
+	projectId, err := service.CreateProject(ctx, sc, sn, ln, desc)
+	assert.Nil(t, err)
+
+	// get migrated project
+	migratedProject, err := service.GetProject(ctx, projectId)
+	assert.Nil(t, err)
+	assert.Equal(t, expectedAggregateType, migratedProject.AggregateType().String())
+	assert.Equal(t, expectedShortCode, migratedProject.ShortCode().String())
+	assert.Equal(t, expectedShortName, migratedProject.ShortName().String())
+	assert.Equal(t, expectedLongName, migratedProject.LongName().String())
+	assert.Equal(t, expectedDescription, migratedProject.Description().String())
+}
