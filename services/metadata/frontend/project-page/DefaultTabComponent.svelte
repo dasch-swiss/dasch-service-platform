@@ -1,7 +1,7 @@
 <script>
   import { onMount } from "svelte";
   import { fade } from "svelte/transition";
-  import { currentProjectMetadata } from "../store";
+  import { currentProjectMetadata, handleSnackbar } from "../store";
 
   export let dataset;
 
@@ -31,6 +31,7 @@
     window.getSelection().addRange(text);
     document.execCommand('copy');
     window.getSelection().removeAllRanges();
+    handleSnackbar.set({isSnackbar: true, message: 'Citation copied succesfully!'});
   };
 
   const truncateString = (s) => {
@@ -61,13 +62,13 @@
   console.log('loaded dataset', dataset)
 </script>
 
-<div id=dataset in:fade="{{duration: 200}}">
+<div id=dataset in:fade={{duration: 200}}>
   {#if dataset}
     {#if dataset?.content.alternativeTitle}
-    <div>
-      <span class=label>Alternative Title</span>
-      <span class=data>{dataset?.content.alternativeTitle}</span>
-    </div>
+      <div>
+        <span class=label>Alternative Title</span>
+        <span class=data>{dataset?.content.alternativeTitle}</span>
+      </div>
     {/if}
   <div class="grid-wrapper">
     <div>
@@ -79,22 +80,22 @@
       <span class=data>{dataset?.content.status}</span>
     </div>
     {#if dataset.content.dateCreated}
-    <div>
-      <span class=label>Date Created</span>
-      <span class=data>{dataset?.content.dateCreated}</span>
-    </div>
+      <div>
+        <span class=label>Date Created</span>
+        <span class=data>{dataset?.content.dateCreated}</span>
+      </div>
     {/if}
     {#if dataset.content.dateModified}
-    <div>
-      <span class=label>Date Modified</span>
-      <span class=data>{dataset?.content.dateModified}</span>
-    </div>
+      <div>
+        <span class=label>Date Modified</span>
+        <span class=data>{dataset?.content.dateModified}</span>
+      </div>
     {/if}
     <div>
       <span class=label>License</span>
       {#if Array.isArray(dataset?.content.license)}
         {#each dataset?.content.license as l}
-        <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
+          <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
         {/each}
       {/if}
     </div>
@@ -103,22 +104,23 @@
       <span class=data>{dataset?.content.typeOfData.join(', ')}</span>
     </div>
     {#if dataset?.content.documentation}
-    <div style="grid-column-start: 1;grid-column-end: 3;">
-      <span class=label>Additional documentation</span>
-      {#if Array.isArray(dataset?.content.documentation)}
-        {#each dataset?.content.documentation as d}
-          {#if d.url}
-          <a class=data href={d.url} target=_>{truncateString(d.name)}</a>
-          {:else if d.match("http")}
-          <a class=data href={d} target=_>{truncateString(d)}</a>
-          {:else}
-          <span class=data>{d}</span>
-          {/if}
-        {/each}
-      {/if}
-    </div>
+      <div style="grid-column-start: 1;grid-column-end: 3;">
+        <span class=label>Additional documentation</span>
+        {#if Array.isArray(dataset?.content.documentation)}
+          {#each dataset?.content.documentation as d}
+            {#if d.url}
+              <a class=data href={d.url} target=_>{truncateString(d.name)}</a>
+            {:else if d.match("http")}
+              <a class=data href={d} target=_>{truncateString(d)}</a>
+            {:else}
+              <span class=data>{d}</span>
+            {/if}
+          {/each}
+        {/if}
+      </div>
     {/if}
   </div>
+
   <div class="grid-wrapper" style="grid-template-columns: repeat(1, 1fr)">
     <div>
       <span class=label>Languages</span>
@@ -126,10 +128,25 @@
     </div>
   </div>
 
+  {#if dataset?.content.sameAs}
+    <div class="grid-wrapper" style="grid-template-columns: repeat(1, 1fr)">
+      <div>
+        <span class=label>Dataset Website</span>
+        {#each dataset?.content.sameAs as a}
+          {#if a.url}
+            <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
+          {:else}
+            <div>{a}</div>
+          {/if}
+        {/each}
+      </div>
+    </div>
+  {/if}
+
   <div class="property-row">
     <span class=label style="display:inline">
       How To Cite
-      <button on:click={copyToClipboard} title="copy text to clpboard">
+      <button on:click={copyToClipboard} title="copy citation to the clipboard">
          <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
       </button>
     </span>
@@ -139,20 +156,20 @@
   <div>
     <span class=label>Abstract</span>
     {#if Array.isArray(dataset?.content.abstract)}
-    <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
-      {#each dataset?.content.abstract as a}
-        {#if a.url}
-        <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
-        {:else}
-        <div>{a}</div>
-        {/if}
-      {/each}
-    </div>
+      <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
+        {#each dataset?.content.abstract as a}
+          {#if a.url}
+            <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
+          {:else}
+            <div>{a}</div>
+          {/if}
+        {/each}
+      </div>
     {/if}
   </div>
 
   {#if abstractLinesNumber > 6}
-  <div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
+    <div on:click={toggleExpand} class=expand-button>show {isAbstractExpanded ? "less" : "more"}</div>
   {/if}
 
   <span class=label>Attributions</span>
@@ -200,6 +217,9 @@
   }
   .icon {
     margin: -1rem 0 0.25rem;
+  }
+  .icon:hover {
+    color: var(--dasch-light-violet);
   }
   .role {
     color: var(--secondary-colour);

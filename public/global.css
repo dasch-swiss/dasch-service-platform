@@ -79,6 +79,21 @@ a:visited {
 .regular-link::before {
   background: none;
 }
+/* read-more styles are here due to encapsulation & router Link component transformed to a taf */
+.read-more.regular-link {
+  display: inline-block;
+  vertical-align: middle;
+  border-radius: 0.25rem;
+  background-color: #fff;
+  border: 1px solid var(--lead-colour);
+  padding: 5px 20px;
+  color: var(--lead-colour);
+  box-shadow: var(--shadow-1);
+}
+.read-more.regular-link:hover {
+  color: #fff;
+  background-color: var(--lead-colour);
+}
 button {
   cursor: pointer;
 }
