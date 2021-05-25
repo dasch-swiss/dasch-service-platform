@@ -89,13 +89,41 @@ func createProject(service project.UseCase) http.Handler {
 			return
 		}
 
-		// TODO: should this return a Project with all the fields or a different struct for a CreateProject?
+		// get the project
+		p, err := service.GetProject(ctx, id)
+		if err != nil && err == projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(err.Error()))
+			return
+		}
+		if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte(err.Error()))
+			return
+		}
+		if err != nil && err != projectEntity.ErrNotFound {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("The server is not responding"))
+			return
+		}
+		if p == nil {
+			w.WriteHeader(http.StatusNotFound)
+			w.Write([]byte("No data was returned"))
+			return
+		}
+
 		toJ := &presenter.Project{
 			ID:          id,
-			ShortCode:   input.ShortCode,
-			ShortName:   input.ShortName,
-			LongName:    input.LongName,
-			Description: input.Description,
+			ShortCode:   p.ShortCode().String(),
+			ShortName:   p.ShortName().String(),
+			LongName:    p.LongName().String(),
+			Description: p.Description().String(),
+			CreatedAt:   p.CreatedAt().String(),
+			CreatedBy:   p.CreatedBy().String(),
+			ChangedAt:   p.ChangedAt().String(),
+			ChangedBy:   p.ChangedBy().String(),
+			DeletedAt:   p.DeletedAt().String(),
+			DeletedBy:   p.DeletedBy().String(),
 		}
 
 		w.WriteHeader(http.StatusCreated)
