@@ -5,8 +5,6 @@
   import ProjectsRepository from "./projects-repository/ProjectsRepository.svelte";
   import ProjectPage from "./project-page/ProjectPage.svelte";
   import Redirect from "./Redirect.svelte";
-  import { handleSnackbar } from "./store";
-  import Snackbar from "./Snackbar.svelte";
 
   export let url = "";
 </script>
@@ -14,11 +12,6 @@
 <Header />
   <div class=wrapper>
     <div class=content-container>
-      {#if $handleSnackbar.isSnackbar}
-        <div>
-          <svelte:component this={Snackbar} />
-        </div>
-      {/if}
       <Router url="{url}">        
         <Route path="/projects/:id"><ProjectPage /></Route>
         <Route path="/projects"><ProjectsRepository /></Route>
@@ -32,6 +25,7 @@
 <Footer />
 
 <style>
+  .wrapper {flex: 1 0 auto;}
   .content-container {
     flex-direction: row;
   }
@@ -40,7 +34,7 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    flex: 1 0 auto;
+    /* flex: 1 0 auto; */
   }
   .content-container {
     display: flex;

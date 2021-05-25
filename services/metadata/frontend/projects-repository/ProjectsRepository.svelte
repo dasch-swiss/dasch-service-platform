@@ -3,8 +3,9 @@
   import Category from './Category.svelte';
   import { onMount } from 'svelte';
   import Pagination from './Pagination.svelte';
-  import { getProjectsMetadata, pagedResults } from '../store';
+  import { getProjectsMetadata, handleSnackbar, pagedResults } from '../store';
   import { fade } from 'svelte/transition';
+  import Snackbar from '../Snackbar.svelte';
 
   let message = 'Loading...';
 
@@ -40,6 +41,13 @@
     <Category />
   </div>
 </nav>
+
+{#if $handleSnackbar.isSnackbar}
+  <div>
+    <svelte:component this={Snackbar} />
+  </div>
+{/if}
+
 <main in:fade="{{duration: 200}}">
   <div class=tile-container>
     {#if $pagedResults && $pagedResults.length}
