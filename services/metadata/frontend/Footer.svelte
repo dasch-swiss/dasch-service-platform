@@ -5,7 +5,7 @@
 
 <footer>
   <div>Copyright © 2021 DaSCH</div>
-  <div class=version>{`dasch-service-platform v.${version}`}</div>  
+  <!-- <div class=version>{`dasch-service-platform v.${version}`}</div> -->
 </footer>
 
 <style>
