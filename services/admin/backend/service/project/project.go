@@ -35,30 +35,11 @@ func NewService(r Repository) *Service {
 }
 
 //create new project
-func (s *Service) CreateProject(ctx context.Context, shortCode string, shortName string, longName string, description string) (valueobject.Identifier, error) {
+func (s *Service) CreateProject(ctx context.Context, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (valueobject.Identifier, error) {
 
 	id, _ := valueobject.NewIdentifier()
-	sc, err := valueobject.NewShortCode(shortCode)
-	if err != nil {
-		return valueobject.Identifier{}, err
-	}
 
-	sn, err := valueobject.NewShortName(shortName)
-	if err != nil {
-		return valueobject.Identifier{}, err
-	}
-
-	ln, err := valueobject.NewLongName(longName)
-	if err != nil {
-		return valueobject.Identifier{}, err
-	}
-
-	desc, err := valueobject.NewDescription(description)
-	if err != nil {
-		return valueobject.Identifier{}, err
-	}
-
-	e := project.NewAggregate(id, sc, sn, ln, desc)
+	e := project.NewAggregate(id, shortCode, shortName, longName, description)
 
 	if _, err := s.repo.Save(ctx, e); err != nil {
 		return valueobject.Identifier{}, err
