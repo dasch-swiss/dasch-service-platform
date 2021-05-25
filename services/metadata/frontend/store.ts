@@ -7,6 +7,7 @@ export const pagedResults = writable(undefined as any[]);
 export const currentProjectMetadata = writable(undefined);
 export const query = writable('');
 export const previousRoute = writable('');
+export const handleSnackbar = writable({isSnackbar: false, message: ''});
 
 export async function getProjectsMetadata(page: number, q?: string): Promise<void> {
   // const baseUrl = process.env.BASE_URL;
@@ -20,9 +21,11 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
   if (q) {
     query.set(q);
     route = `projects?q=${q}&_page=${page}&_limit=${baseResultsRange[1]}`;
+    handleSnackbar.set({isSnackbar: true, message: `Displaying search results for query: ${q}`});
   } else {
     query.set('');
     route = `projects?_page=${page}&_limit=${baseResultsRange[1]}`;
+    handleSnackbar.set({isSnackbar: false, message: ''})
   }
 
   console.log(baseUrl, route);

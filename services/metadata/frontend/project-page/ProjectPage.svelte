@@ -64,7 +64,7 @@
   };
 </script>
 
-<div class="container" in:fade="{{duration: 200}}">
+<div class="container" in:fade={{duration: 200}}>
   <div class="row" style="flex-wrap: wrap;">
     <h1 class="title top-heading">
       {project?.name}

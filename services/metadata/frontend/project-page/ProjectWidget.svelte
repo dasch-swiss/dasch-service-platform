@@ -120,7 +120,7 @@
   {/if}
 {/if}
 
-<div class=label>Website</div>
+<div class=label>Project Website</div>
 {#if Array.isArray(project?.url)}
   {#each project?.url as url}
     <a class=data href={url.url} target=_>{truncateString(url.name)}</a>

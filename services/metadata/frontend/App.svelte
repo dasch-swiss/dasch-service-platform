@@ -5,6 +5,8 @@
   import ProjectsRepository from "./projects-repository/ProjectsRepository.svelte";
   import ProjectPage from "./project-page/ProjectPage.svelte";
   import Redirect from "./Redirect.svelte";
+  import { handleSnackbar } from "./store";
+  import Snackbar from "./Snackbar.svelte";
 
   export let url = "";
 </script>
@@ -12,6 +14,11 @@
 <Header />
   <div class=wrapper>
     <div class=content-container>
+      {#if $handleSnackbar.isSnackbar}
+        <div>
+          <svelte:component this={Snackbar} />
+        </div>
+      {/if}
       <Router url="{url}">        
         <Route path="/projects/:id"><ProjectPage /></Route>
         <Route path="/projects"><ProjectsRepository /></Route>
