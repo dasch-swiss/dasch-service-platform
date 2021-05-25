@@ -25,7 +25,6 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
   } else {
     query.set('');
     route = `projects?_page=${page}&_limit=${baseResultsRange[1]}`;
-    handleSnackbar.set({isSnackbar: false, message: ''})
   }
 
   console.log(baseUrl, route);
