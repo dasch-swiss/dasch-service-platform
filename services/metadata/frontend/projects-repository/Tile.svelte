@@ -60,7 +60,7 @@
       width: 240px;
       height: 208px;
       padding: 10px 30px;
-      margin: 10px;
+      margin: 5px;
     }
     .content {
       -webkit-line-clamp: 7;
@@ -69,6 +69,6 @@
     }
   }
   @media screen and (min-width: 1200px) {
-    section {margin: 5px;}
+    /* section {margin: 10px;} */
   }
 </style>

@@ -62,7 +62,7 @@
 nav, main {
   width: 100%;
   min-height: auto;
-  padding: 10px;
+  padding: 10px 24px;
 }
 nav {
   flex: 0 0 20%;
@@ -90,7 +90,7 @@ main {
 }
 @media screen and (min-width: 992px) {
   nav, main {
-    min-height: 950px;
+    /* min-height: 950px; */
   }
   nav {
     padding: 10px;

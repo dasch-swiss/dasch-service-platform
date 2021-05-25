@@ -178,7 +178,7 @@
                 {
                     "name": "www.cache.ch",
                     "type": "https://schema.org/URL",
-                    "url": "www.cache.ch/gegenwissen"
+                    "url": "https://cache.ch/gegenwissen"
                 }
             ]
         },
@@ -236,7 +236,7 @@
                 {
                     "name": "www.cache.ch",
                     "type": "https://schema.org/URL",
-                    "url": "www.cache.ch"
+                    "url": "https://www.cache.ch"
                 }
             ]
         },
@@ -364,12 +364,12 @@
                 }
             ],
             "name": "Digital Lives SNF",
-            "number": "http://p3.snf.ch/Project-183057",
+            "number": "183057",
             "url": [
                 {
                     "name": "183057",
                     "type": "https://schema.org/URL",
-                    "url": "183057"
+                    "url": "http://p3.snf.ch/Project-183057"
                 }
             ]
         },
