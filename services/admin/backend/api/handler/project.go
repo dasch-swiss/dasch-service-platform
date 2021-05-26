@@ -495,7 +495,7 @@ func listProjects(service project.UseCase) http.Handler {
 		defer cancel()
 
 		// get all project ids
-		ids, err := service.ListProjects(ctx, input.ReturnDeletedProjects)
+		projects, err := service.ListProjects(ctx, input.ReturnDeletedProjects)
 		w.Header().Set("Content-Type", "application/json")
 
 		if err != nil && err == projectEntity.ErrNotFound {
@@ -509,32 +509,15 @@ func listProjects(service project.UseCase) http.Handler {
 			w.Write([]byte("The server is not responding"))
 			return
 		}
-		if ids == nil {
+		if projects == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No ids was returned"))
+			w.Write([]byte("No projects were returned"))
 			return
 		}
 
 		var toJ []presenter.Project
 
-		for _, id := range ids {
-			p, err := service.GetProject(ctx, id)
-			if err != nil && err == projectEntity.ErrNotFound {
-				w.WriteHeader(http.StatusNotFound)
-				w.Write([]byte("No project found for this uuid"))
-				return
-			}
-
-			if err != nil && err != projectEntity.ErrNotFound {
-				w.WriteHeader(http.StatusInternalServerError)
-				w.Write([]byte("The server is not responding"))
-				return
-			}
-			if p == nil {
-				w.WriteHeader(http.StatusNotFound)
-				w.Write([]byte("No data was returned"))
-				return
-			}
+		for _, p := range projects {
 
 			toJ = append(toJ, presenter.Project{
 				ID:          p.ID(),
@@ -561,23 +544,23 @@ func listProjects(service project.UseCase) http.Handler {
 //MakeProjectHandlers make url handlers
 func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCase) {
 
-	r.Handle("/v1/project", n.With(
+	r.Handle("/v1/projects", n.With(
 		negroni.Wrap(createProject(service)),
 	)).Methods("POST", "OPTIONS").Name("createProject")
 
-	r.Handle("/v1/project/{id}", n.With(
+	r.Handle("/v1/projects/{id}", n.With(
 		negroni.Wrap(updateProject(service)),
 	)).Methods("PUT", "OPTIONS").Name("updateProject")
 
-	r.Handle("/v1/project/{id}", n.With(
+	r.Handle("/v1/projects/{id}", n.With(
 		negroni.Wrap(getProject(service)),
 	)).Methods("GET", "OPTIONS").Name("getProject")
 
-	r.Handle("/v1/project/{id}", n.With(
+	r.Handle("/v1/projects/{id}", n.With(
 		negroni.Wrap(deleteProject(service)),
 	)).Methods("DELETE", "OPTIONS").Name("deleteProject")
 
-	r.Handle("/v1/projects/all", n.With(
+	r.Handle("/v1/projects", n.With(
 		negroni.Wrap(listProjects(service)),
 	)).Methods("GET", "OPTIONS").Name("listProjects")
 

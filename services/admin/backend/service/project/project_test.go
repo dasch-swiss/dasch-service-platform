@@ -150,11 +150,11 @@ func TestProject_CreateProject(t *testing.T) {
 	// assert description was updated
 	assert.Equal(t, expectedUpdatedDescription, ud.Description().String())
 
-	// get a list of project ids
+	// get a list of projects
 	projectsList, err := service.ListProjects(ctx, false)
 	assert.Nil(t, err)
 	assert.Len(t, projectsList, 1)
-	assert.Equal(t, projectsList[0], projectId)
+	assert.Equal(t, projectsList[0].ID(), projectId)
 
 	// delete a project
 	deletedProject, err := service.DeleteProject(ctx, projectId)
