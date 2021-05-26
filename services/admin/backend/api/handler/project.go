@@ -32,15 +32,18 @@ import (
 	"github.com/urfave/negroni"
 )
 
+type RequestBody struct {
+	ShortCode   string `json:"shortCode"`
+	ShortName   string `json:"shortName"`
+	LongName    string `json:"longName"`
+	Description string `json:"description"`
+}
+
 func createProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		errorMessage := "Error creating project"
-		var input struct {
-			ShortCode   string `json:"shortCode"`
-			ShortName   string `json:"shortName"`
-			LongName    string `json:"longName"`
-			Description string `json:"description"`
-		}
+
+		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
 			log.Println(err.Error())
@@ -138,12 +141,8 @@ func createProject(service project.UseCase) http.Handler {
 func updateProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		errorMessage := "Error updating project"
-		var input struct {
-			ShortCode   string `json:"shortCode"`
-			ShortName   string `json:"shortName"`
-			LongName    string `json:"longName"`
-			Description string `json:"description"`
-		}
+
+		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
 			log.Println(err.Error())
@@ -380,12 +379,8 @@ func deleteProject(service project.UseCase) http.Handler {
 func migrateProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		errorMessage := "Error creating project"
-		var input struct {
-			ShortCode   string `json:"shortCode"`
-			ShortName   string `json:"shortName"`
-			LongName    string `json:"longName"`
-			Description string `json:"description"`
-		}
+
+		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
 			log.Println(err.Error())
