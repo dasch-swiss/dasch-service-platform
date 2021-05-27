@@ -3,7 +3,7 @@
   import Category from './Category.svelte';
   import { onMount } from 'svelte';
   import Pagination from './Pagination.svelte';
-  import { getProjectsMetadata, handleSnackbar, pagedResults } from '../store';
+  import { getProjectsMetadata, handleSnackbar, pagedResults, query } from '../store';
   import { fade } from 'svelte/transition';
   import Snackbar from '../Snackbar.svelte';
 
