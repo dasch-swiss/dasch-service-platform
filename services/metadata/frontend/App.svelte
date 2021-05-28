@@ -5,19 +5,14 @@
   import ProjectsRepository from "./projects-repository/ProjectsRepository.svelte";
   import ProjectPage from "./project-page/ProjectPage.svelte";
   import Redirect from "./Redirect.svelte";
-import { pageTitle } from "./store";
 
   export let url = "";
 </script>
 
-<svelte:head>
-  <title>{$pageTitle}</title>
-</svelte:head>
-
 <Header />
   <div class=wrapper>
     <div class=content-container>
-      <Router url="{url}">        
+      <Router url="{url}">
         <Route path="/projects/:id"><ProjectPage /></Route>
         <Route path="/projects"><ProjectsRepository /></Route>
         <Route path="/">

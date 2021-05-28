@@ -4,49 +4,11 @@
   <meta charset='utf-8'>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
 
-  <!-- <title>DaSCH Metadata Browser</title> -->
-
   <link rel='icon' type='image/png' href='favicon.png'>
   <link rel='stylesheet' href='global.css'>
   <link rel='stylesheet' href='build/bundle.css'>
 
   <script defer src='build/bundle.js'></script>
-
-  <!-- matomo -->
-  <script>
-    var _paq = window._paq = window._paq || [];
-    /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
-
-    var currentUrl = location.href;
-    console.log('INDEX', currentUrl);
-    window.addEventListener('hashchange', function() {
-      _paq.push(['setReferrerUrl', currentUrl]);
-      // currentUrl = '/' + window.location.hash.substr(1);
-      _paq.push(['setCustomUrl', currentUrl]);
-      _paq.push(['setDocumentTitle', 'My New Title']);
-
-      // remove all previously assigned custom variables, requires Matomo (formerly Piwik) 3.0.2
-      _paq.push(['deleteCustomVariables', 'page']); 
-      _paq.push(['trackPageView']);
-
-      // make Matomo aware of newly added content
-      var content = document.getElementById('content');
-      _paq.push(['MediaAnalytics::scanForMedia', content]);
-      _paq.push(['FormAnalytics::scanForForms', content]);
-      _paq.push(['trackContentImpressionsWithinNode', content]);
-      _paq.push(['enableLinkTracking']);
-    });
-
-    _paq.push(['trackPageView']);
-    _paq.push(['enableLinkTracking']);
-    (function() {
-      var u="https://dasch.matomo.cloud/";
-      _paq.push(['setTrackerUrl', u+'matomo.php']);
-      _paq.push(['setSiteId', '2']);
-      var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
-      g.type='text/javascript'; g.async=true; g.src='//cdn.matomo.cloud/dasch.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
-    })();
-  </script>
 </head>
 
 <body>
