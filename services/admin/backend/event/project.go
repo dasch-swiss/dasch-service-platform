@@ -30,7 +30,7 @@ func (e ProjectShortNameChanged) isEvent()   {}
 func (e ProjectLongNameChanged) isEvent()    {}
 func (e ProjectDescriptionChanged) isEvent() {}
 
-//ProjectCreated event
+// ProjectCreated event
 type ProjectCreated struct {
 	ID          valueobject.Identifier  `json:"id"`
 	ShortCode   valueobject.ShortCode   `json:"shortCode"`
@@ -41,7 +41,7 @@ type ProjectCreated struct {
 	CreatedBy   valueobject.Identifier  `json:"createdBy"`
 }
 
-//ProjectChanged event
+// ProjectChanged event
 type ProjectChanged struct {
 	ID          valueobject.Identifier  `json:"id"`
 	ShortCode   valueobject.ShortCode   `json:"shortCode"`
@@ -52,14 +52,14 @@ type ProjectChanged struct {
 	ChangedBy   valueobject.Identifier  `json:"changedBy"`
 }
 
-//ProjectDeleted event
+// ProjectDeleted event
 type ProjectDeleted struct {
 	ID        valueobject.Identifier `json:"id"`
 	DeletedAt valueobject.Timestamp  `json:"deletedAt"`
 	DeletedBy valueobject.Identifier `json:"deletedBy"`
 }
 
-//ProjectShortCodeChanged event
+// ProjectShortCodeChanged event
 type ProjectShortCodeChanged struct {
 	ID        valueobject.Identifier `json:"id"`
 	ShortCode valueobject.ShortCode  `json:"shortCode"`
@@ -67,7 +67,7 @@ type ProjectShortCodeChanged struct {
 	ChangedBy valueobject.Identifier `json:"changedBy"`
 }
 
-//ProjectShortNameChanged event
+// ProjectShortNameChanged event
 type ProjectShortNameChanged struct {
 	ID        valueobject.Identifier `json:"id"`
 	ShortName valueobject.ShortName  `json:"shortName"`
@@ -75,7 +75,7 @@ type ProjectShortNameChanged struct {
 	ChangedBy valueobject.Identifier `json:"changedBy"`
 }
 
-//ProjectLongNameChanged event
+// ProjectLongNameChanged event
 type ProjectLongNameChanged struct {
 	ID        valueobject.Identifier `json:"id"`
 	LongName  valueobject.LongName   `json:"longName"`
@@ -83,7 +83,7 @@ type ProjectLongNameChanged struct {
 	ChangedBy valueobject.Identifier `json:"changedBy"`
 }
 
-//ProjectDescriptionChanged event
+// ProjectDescriptionChanged event
 type ProjectDescriptionChanged struct {
 	ID          valueobject.Identifier  `json:"id"`
 	Description valueobject.Description `json:"description"`

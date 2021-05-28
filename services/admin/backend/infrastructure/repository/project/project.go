@@ -35,16 +35,19 @@ import (
 	"github.com/gofrs/uuid"
 )
 
+// projectRepository contains a pointer to the client.
 type projectRepository struct {
 	c *client.Client
 }
 
+// NewProjectRepository creates a new repository to store project events in.
 func NewProjectRepository(client *client.Client) *projectRepository {
 	return &projectRepository{
 		c: client,
 	}
 }
 
+// Save stores the project events in the projectRepository.
 func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (valueobject.Identifier, error) {
 	var proposedEvents []messages.ProposedEvent
 	streamRevision := streamrevision.StreamRevisionStreamExists
@@ -115,6 +118,7 @@ func (r *projectRepository) Save(ctv context.Context, p *project.Aggregate) (val
 	return p.ID(), nil
 }
 
+// Load reads the events from the event store and recreates a project aggregate.
 func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 	streamID := "Project-" + id.String()
 
@@ -159,6 +163,8 @@ func (r *projectRepository) Load(ctx context.Context, id valueobject.Identifier)
 	return project.NewAggregateFromEvents(events), nil
 }
 
+// GetProjectIds returns a list of all active project ids.
+// returnDeletedProjects can be used to also return projects marked as deleted in the list.
 func (r *projectRepository) GetProjectIds(ctx context.Context, returnDeletedProjects bool) ([]valueobject.Identifier, error) {
 	numberOfEventsToRead := 1000
 	numberOfEvents := uint64(numberOfEventsToRead)
