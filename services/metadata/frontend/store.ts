@@ -8,6 +8,7 @@ export const currentProjectMetadata = writable(undefined);
 export const query = writable('');
 export const previousRoute = writable('');
 export const handleSnackbar = writable({isSnackbar: false, message: ''});
+export const pageTitle = writable('DaSCH Metadata Browser');
 
 export async function getProjectsMetadata(page: number, q?: string): Promise<void> {
   // const baseUrl = process.env.BASE_URL;

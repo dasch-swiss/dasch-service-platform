@@ -5,9 +5,14 @@
   import ProjectsRepository from "./projects-repository/ProjectsRepository.svelte";
   import ProjectPage from "./project-page/ProjectPage.svelte";
   import Redirect from "./Redirect.svelte";
+import { pageTitle } from "./store";
 
   export let url = "";
 </script>
+
+<svelte:head>
+  <title>{$pageTitle}</title>
+</svelte:head>
 
 <Header />
   <div class=wrapper>

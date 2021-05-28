@@ -1,6 +1,6 @@
 <script lang='ts'>
   import { tick } from 'svelte';
-  import { currentProjectMetadata, handleSnackbar, previousRoute } from '../store';
+  import { currentProjectMetadata, handleSnackbar, pageTitle, previousRoute } from '../store';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import Tab from './Tab.svelte';
@@ -25,6 +25,8 @@
     currentProjectMetadata.set(projectMetadata);
     project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
     datasets = $currentProjectMetadata.metadata.filter((p: any) => p.type === 'http://ns.dasch.swiss/repository#Dataset');
+
+    pageTitle.set(`${project.name}`);
 
     datasets.forEach(d => tabs.push({
       label: d.title,
