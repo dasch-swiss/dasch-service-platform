@@ -4,10 +4,11 @@
 <script>
   const url = window.location;
   const productionHostname = 'meta.dasch.swiss';
+  const testHostname = 'meta.test.dasch.swiss';
   // TODO: find better solution for loading title and page instead of undefined
   setTimeout(() => {
     // enable tracking only on production
-    if (url.hostname === productionHostname) {
+    if (url.hostname === testHostname) {
       let _paq = window._paq = window._paq || [];
 
       _paq.push(['setCustomUrl', url.href]);
