@@ -21,7 +21,7 @@ import (
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 )
 
-//Project data
+// Project data used as the result for any project operation.
 type Project struct {
 	ID          valueobject.Identifier `json:"id"`
 	ShortCode   string                 `json:"shortCode"`

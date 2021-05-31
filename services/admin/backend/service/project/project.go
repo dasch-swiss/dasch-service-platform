@@ -52,6 +52,7 @@ func (s *Service) CreateProject(ctx context.Context, shortCode valueobject.Short
 		existingShortCodes = append(existingShortCodes, proj.ShortCode())
 	}
 
+	// ensure the short code isn't used by any existing projects
 	if len(existingShortCodes) > 0 {
 		for _, esc := range existingShortCodes {
 			if shortCode.String() == esc.String() {
