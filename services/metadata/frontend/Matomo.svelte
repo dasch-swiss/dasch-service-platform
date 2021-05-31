@@ -3,16 +3,17 @@
 <!-- full guide: https://developer.matomo.org/guides/tracking-javascript-guide -->
 <script>
   const url = window.location;
-  console.log('hostname', url.hostname);
-  if (url.hostname !== 'localhost') {
+  const productionHostname = 'meta.dasch.swiss';
+  // enable tracking only on production
+  if (url.hostname === productionHostname) {
     let _paq = window._paq = window._paq || [];
     _paq.push(['setCustomUrl', url.href]);
     _paq.push(['setDocumentTitle', document.title]);
     _paq.push(['trackPageView']);
     // Enable Download & Outlink tracking but doesn't track outlinks when opened in new tab
-    // to track json, ttl, etc use setDownloadExtensions
+    // to track json, ttl, etc define setDownloadExtensions
     _paq.push(['enableLinkTracking']);
-    // adding a class to external links should make them trackable even if opened in separate tab
+    // adding a class to external links should enable tracking links even if opened in separate tab
     // if not this class can be removed across the app
     _paq.push(['setLinkClasses', 'external-link']);
     // Make Matomo aware of newly added content
