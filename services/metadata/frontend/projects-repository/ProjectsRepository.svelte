@@ -10,8 +10,8 @@
 
   let message = 'Loading...';
 
-  $: document.title = 'DaSCH Metadata Browser';
-  $: currentUrl.set(location.href);
+  document.title = 'DaSCH Metadata Browser';
+  currentUrl.set(location.href);
 
   setTimeout(() => {
     const noData = 'No data retrived. Please check the connection and retry.';

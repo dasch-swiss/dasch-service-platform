@@ -1,24 +1,20 @@
 <script lang='ts'>
   import { tick } from 'svelte';
-  import { currentProjectMetadata, currentUrl, handleSnackbar, previousRoute } from '../store';
+  import { currentProject, currentProjectMetadata, currentUrl, handleSnackbar, previousRoute } from '../store';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import Tab from './Tab.svelte';
   import { fade } from 'svelte/transition';
   import Snackbar from '../Snackbar.svelte';
   import Matomo from '../Matomo.svelte';
-
-  let project: any;
+  
   let datasets: any[] = [];
   let tabs = [] as any[];
   let isDescriptionExpanded: boolean;
   let descriptionLinesNumber: number;
   let arePublicationsExpanded: boolean;
-
-
-  $: project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
-  $: document.title = project.name;
-  $: currentUrl.set(window.location.href);
+  
+  currentUrl.set(window.location.href);
 
   // TODO: consider remove below function and inject project in line 16 of Tile.svelte
   const getProjectMetadata = async () => {
@@ -31,7 +27,10 @@
     const res = await fetch(`${baseUrl}api/v1/projects/${projectID}`);
     const projectMetadata = await res.json();
     currentProjectMetadata.set(projectMetadata);
-    project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
+    const project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
+    currentProject.set(project);
+    document.title = project.name;
+
     datasets = $currentProjectMetadata.metadata.filter((p: any) => p.type === 'http://ns.dasch.swiss/repository#Dataset');
 
     datasets.forEach(d => tabs.push({
@@ -43,7 +42,7 @@
     await tick();
     getDivHeight();
 
-    console.log('metadata', projectMetadata, 'project', project)
+    console.log('metadata', projectMetadata, 'project', $currentProject)
   };
 
   const handleData = (val: any) => {
@@ -84,13 +83,13 @@
 <div class="container" in:fade={{duration: 200}}>
   <div class="row" style="flex-wrap: wrap;">
     <h1 class="title top-heading">
-      {project?.name}
+      {$currentProject?.name}
     </h1>
-    {#if project?.alternateName}
+    {#if $currentProject?.alternateName}
     <div class="row">
       <h4 class="title new-title">
         Also known as:&nbsp;
-        <span style="color:var(--secondary-colour)">{project?.alternateName.join(", ")}</span>
+        <span style="color:var(--secondary-colour)">{$currentProject?.alternateName.join(", ")}</span>
       </h4>
     </div>
     {/if}
@@ -99,17 +98,17 @@
     <div class="column-left">
       <div class="property-row">
         <span class="label new-subtitle">Description</span>
-        <div id=description class="data new-text {isDescriptionExpanded ? '' : 'description-short'}">{project?.description}</div>
+        <div id=description class="data new-text {isDescriptionExpanded ? '' : 'description-short'}">{$currentProject?.description}</div>
       </div>
       <!-- TODO: if accepted and reused consder move it to separate component -->
       {#if descriptionLinesNumber > 6}
         <div on:click={toggleDescriptionExpand} class=expand-button>show {isDescriptionExpanded ? "less" : "more"}</div>
       {/if}
 
-      {#if project?.publication && Array.isArray(project?.publication)}
+      {#if $currentProject?.publication && Array.isArray($currentProject?.publication)}
         <div class="property-row">
           <span class="label new-subtitle">Publications</span>
-            {#each project?.publication as p, i}
+            {#each $currentProject?.publication as p, i}
               {#if i > 1}
                 <span class="{arePublicationsExpanded ? "data new-text" : "hidden"}">{p}</span>
               {:else}
@@ -118,7 +117,7 @@
             {/each}
         </div>
 
-        {#if project?.publication.length > 2}
+        {#if $currentProject?.publication.length > 2}
           <div on:click={togglePublicationExpand} class=expand-button>show {arePublicationsExpanded ? "less" : "more"}</div>
         {/if}
 
@@ -144,7 +143,7 @@
         <span class=button-label>Go Back</span>
       </button>
       <div class=widget>
-        <ProjectWidget {project} />
+        <ProjectWidget />
       </div>
       <!-- TODO: temp disabled download widget -->
       <!-- <div class=widget>
