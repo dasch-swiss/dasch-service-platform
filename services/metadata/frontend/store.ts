@@ -5,6 +5,7 @@ import type { PaginationData } from './interfaces';
 export const pagination = writable({} as PaginationData);
 export const pagedResults = writable(undefined as any[]);
 export const currentProjectMetadata = writable(undefined);
+export const currentProject = writable(undefined);
 export const query = writable('');
 export const previousRoute = writable('');
 export const handleSnackbar = writable({isSnackbar: false, message: ''});
