@@ -115,7 +115,7 @@ func createProject(service project.UseCase) http.Handler {
 			return
 		}
 
-		toJ := &presenter.Project{
+		res := &presenter.Project{
 			ID:          id,
 			ShortCode:   p.ShortCode().String(),
 			ShortName:   p.ShortName().String(),
@@ -130,7 +130,7 @@ func createProject(service project.UseCase) http.Handler {
 		}
 
 		w.WriteHeader(http.StatusCreated)
-		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(errorMessage))
 			return
@@ -237,7 +237,7 @@ func updateProject(service project.UseCase) http.Handler {
 			return
 		}
 
-		toJ := &presenter.Project{
+		res := &presenter.Project{
 			ID:          up.ID(),
 			ShortCode:   up.ShortCode().String(),
 			ShortName:   up.ShortName().String(),
@@ -252,7 +252,7 @@ func updateProject(service project.UseCase) http.Handler {
 		}
 
 		w.WriteHeader(http.StatusOK)
-		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(errorMessage))
 			return
@@ -299,7 +299,7 @@ func getProject(service project.UseCase) http.Handler {
 			return
 		}
 
-		toJ := &presenter.Project{
+		res := &presenter.Project{
 			ID:          p.ID(),
 			ShortCode:   p.ShortCode().String(),
 			ShortName:   p.ShortName().String(),
@@ -312,7 +312,7 @@ func getProject(service project.UseCase) http.Handler {
 			DeletedAt:   p.DeletedAt().String(),
 			DeletedBy:   p.DeletedBy().String(),
 		}
-		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("Failed encoding p to JSON"))
 		}
@@ -338,7 +338,7 @@ func deleteProject(service project.UseCase) http.Handler {
 		defer cancel()
 
 		// delete the project
-		data, err := service.DeleteProject(ctx, uuid)
+		p, err := service.DeleteProject(ctx, uuid)
 		w.Header().Set("Content-Type", "application/json")
 
 		if err != nil && err == projectEntity.ErrNotFound {
@@ -358,18 +358,26 @@ func deleteProject(service project.UseCase) http.Handler {
 			w.Write([]byte("The server is not responding"))
 			return
 		}
-		if data == nil {
+		if p == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No data was returned"))
+			w.Write([]byte("No project data returned"))
 			return
 		}
 
-		toJ := &presenter.DeleteProject{
-			ID:        data.ID(),
-			DeletedAt: data.ChangedAt().String(),
-			DeletedBy: data.ChangedBy().String(),
+		res := &presenter.Project{
+			ID:          p.ID(),
+			ShortCode:   p.ShortCode().String(),
+			ShortName:   p.ShortName().String(),
+			LongName:    p.LongName().String(),
+			Description: p.Description().String(),
+			CreatedAt:   p.CreatedAt().String(),
+			CreatedBy:   p.CreatedBy().String(),
+			ChangedAt:   p.ChangedAt().String(),
+			ChangedBy:   p.ChangedBy().String(),
+			DeletedAt:   p.DeletedAt().String(),
+			DeletedBy:   p.DeletedBy().String(),
 		}
-		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("Failed encoding data to JSON"))
 		}
@@ -410,11 +418,11 @@ func listProjects(service project.UseCase) http.Handler {
 			return
 		}
 
-		var toJ []presenter.Project
+		var res []presenter.Project
 
 		for _, p := range projects {
 
-			toJ = append(toJ, presenter.Project{
+			res = append(res, presenter.Project{
 				ID:          p.ID(),
 				ShortCode:   p.ShortCode().String(),
 				ShortName:   p.ShortName().String(),
@@ -429,7 +437,7 @@ func listProjects(service project.UseCase) http.Handler {
 			})
 		}
 
-		if err := json.NewEncoder(w).Encode(toJ); err != nil {
+		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("Failed encoding ids to JSON"))
 		}
