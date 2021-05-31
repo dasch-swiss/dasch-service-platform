@@ -95,7 +95,7 @@
       <span class=label>License</span>
       {#if Array.isArray(dataset?.content.license)}
         {#each dataset?.content.license as l}
-          <a href={l.url} class=data target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
+          <a href={l.url} class="data external-link" target=_>CC {(`${l.url.split("/")[4]} ${l.url.split("/")[5]}`).toUpperCase()}</a>
         {/each}
       {/if}
     </div>
@@ -109,9 +109,9 @@
         {#if Array.isArray(dataset?.content.documentation)}
           {#each dataset?.content.documentation as d}
             {#if d.url}
-              <a class=data href={d.url} target=_>{truncateString(d.name)}</a>
+              <a class="data external-link" href={d.url} target=_>{truncateString(d.name)}</a>
             {:else if d.match("http")}
-              <a class=data href={d} target=_>{truncateString(d)}</a>
+              <a class="data external-link" href={d} target=_>{truncateString(d)}</a>
             {:else}
               <span class=data>{d}</span>
             {/if}
@@ -134,7 +134,7 @@
         <span class=label>Dataset Website</span>
         {#each dataset?.content.sameAs as a}
           {#if a.url}
-            <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
+            <div><a class="data external-link" href={a.url} target=_>{truncateString(a.name)}</a></div>
           {:else}
             <div>{a}</div>
           {/if}
@@ -159,7 +159,7 @@
       <div id=abstract class="data {isAbstractExpanded ? '' : 'abstract-short'}">
         {#each dataset?.content.abstract as a}
           {#if a.url}
-            <div><a class=data href={a.url} target=_>{truncateString(a.name)}</a></div>
+            <div><a class="data external-link" href={a.url} target=_>{truncateString(a.name)}</a></div>
           {:else}
             <div>{a}</div>
           {/if}
@@ -180,7 +180,7 @@
           <div class=role>{a.role.join(", ")}</div>
           {#if findObjectById(a.agent[0].id).type === "http://ns.dasch.swiss/repository#Person"}
             {#if findObjectById(a.agent[0].id)?.sameAs}
-              <a href={findObjectById(a.agent[0].id)?.sameAs[0].url} target=_>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</a>
+              <a href={findObjectById(a.agent[0].id)?.sameAs[0].url} target=_ class="external-link">{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</a>
             {:else}
               <div>{findObjectById(a.agent[0].id)?.givenName.split(";").join(" ")} {findObjectById(a.agent[0].id)?.familyName.split(";").join(" ")}</div>
             {/if}

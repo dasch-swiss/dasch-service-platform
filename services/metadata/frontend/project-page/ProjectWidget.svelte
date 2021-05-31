@@ -34,14 +34,14 @@
   {#each project?.discipline as d}
     {#if typeof d === "string"}
       {#if d.split(" ")[0].match(/^[0-9]*$/)}
-        <a class=data href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{truncateString(d)}</a>
+        <a class="data external-link" href=http://www.snf.ch/SiteCollectionDocuments/allg_disziplinenliste.pdf target=_>{truncateString(d)}</a>
       {:else if d.match("http")}
-        <a class=data href={d} target=_>{truncateString(d)}</a>
+        <a class="data external-link" href={d} target=_>{truncateString(d)}</a>
       {:else}
         <div class="data">{d}</div>
       {/if}
     {:else}
-      <a class=data href={d.url} target=_>{d.name}</a>
+      <a class="data external-link" href={d.url} target=_>{d.name}</a>
     {/if}
   {/each}
 {/if}
@@ -52,7 +52,7 @@
     {#if typeof t === "string"}
       <div class="data">{t}</div>
     {:else}
-      <a class=data href={t.url} target=_>{truncateString(t.name)}</a>
+      <a class="data external-link" href={t.url} target=_>{truncateString(t.name)}</a>
     {/if}
   {/each}
 {/if}
@@ -62,9 +62,9 @@
   {#each project?.spatialCoverage as s}
   <!-- temp solution: some of the names were fixed manually, another are paserd from URLs -->
     {#if s.place.name !== "Geonames"}
-      <a class=data style="text-transform: capitalize" href={s.place.url} target=_>{truncateString(s.place.name)}</a>
+      <a class="data external-link" style="text-transform: capitalize" href={s.place.url} target=_>{truncateString(s.place.name)}</a>
     {:else}
-      <a class=data style="text-transform: capitalize" href={s.place.url} target=_>{truncateString(handleSpatialCoverageName(s.place.url))}</a>
+      <a class="data external-link" style="text-transform: capitalize" href={s.place.url} target=_>{truncateString(handleSpatialCoverageName(s.place.url))}</a>
     {/if}    
   {/each}
 {/if}
@@ -92,7 +92,7 @@
 <div class=label>Grant</div>
   {#each project?.grant as g}
     {#if findObjectById(g.id)?.number && findObjectById(g.id)?.url}
-      <a class=data href={findObjectById(g.id)?.url[0].url} target=_>{findObjectById(g.id)?.number}</a>
+      <a class="data external-link" href={findObjectById(g.id)?.url[0].url} target=_>{findObjectById(g.id)?.number}</a>
     {:else if findObjectById(g.id)?.number}
       <span class="data">{findObjectById(g.id)?.number}</span>
     {:else}
@@ -123,7 +123,7 @@
 <div class=label>Project Website</div>
 {#if Array.isArray(project?.url)}
   {#each project?.url as url}
-    <a class=data href={url.url} target=_>{truncateString(url.name)}</a>
+    <a class="data external-link" href={url.url} target=_>{truncateString(url.name)}</a>
   {/each}
 {/if}
 
