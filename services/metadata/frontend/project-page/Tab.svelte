@@ -4,25 +4,25 @@
   export let tabs = [] as any[];
   export let activeTabValue = 0;
 
-  const handleClick = (tabValue: number) => () => (activeTabValue = tabValue);
+  const handleTabsBrowsing = (tabValue: number) => () => (activeTabValue = tabValue);
 </script>
 
 <ul>
-{#each tabs as tab}
-  <li class={activeTabValue === tab.value ? 'active' : ''}>
-    {#if tabs.length > 1 && activeTabValue !== tab.value}
-      <span on:click={handleClick(tab.value)} title={tab.label}>{`${tab.label.substring(0,5)}...`}</span>
-    {:else}
-      <span on:click={handleClick(tab.value)}>{tab.label}</span>
-    {/if}
-  </li>
-{/each}
+  {#each tabs as tab}
+    <li class={activeTabValue === tab.value ? 'active' : ''}>
+      {#if tabs.length > 1 && activeTabValue !== tab.value}
+        <span on:click={handleTabsBrowsing(tab.value)} title={tab.label}>{`${tab.label.substring(0,5)}...`}</span>
+      {:else}
+        <span on:click={handleTabsBrowsing(tab.value)}>{tab.label}</span>
+      {/if}
+    </li>
+  {/each}
 </ul>
 {#each tabs as tab}
 	{#if activeTabValue === tab.value}
-  <div class=box>
-    <svelte:component this={DefaultTabComponent} dataset={tab} />
-  </div>
+    <div class=box>
+      <svelte:component this={DefaultTabComponent} dataset={tab} />
+    </div>
 	{/if}
 {/each}
 

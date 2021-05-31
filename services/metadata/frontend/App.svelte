@@ -12,12 +12,11 @@
 <Header />
   <div class=wrapper>
     <div class=content-container>
-      <Router url="{url}">        
+      <Router url="{url}">
         <Route path="/projects/:id"><ProjectPage /></Route>
         <Route path="/projects"><ProjectsRepository /></Route>
         <Route path="/">
           <Redirect to="/projects?_page=1&_limit=9" />
-          <!-- <ProjectsRepository /> -->
         </Route>
       </Router>
     </div>

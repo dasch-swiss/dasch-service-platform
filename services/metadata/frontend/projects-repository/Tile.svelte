@@ -1,6 +1,7 @@
 <script lang="ts">
   import { Router, Link } from 'svelte-routing';
   import type { ProjectMetadata } from '../interfaces';
+  import { currentProjectMetadata } from '../store';
 
   export let projectMetadata: ProjectMetadata;
 </script>
@@ -12,7 +13,7 @@
   <div class=content>{ projectMetadata.description }</div>
   <div class=footer>
     <Router>
-      <Link to={`/projects/${projectMetadata.id}`} class="read-more regular-link">
+      <Link to={`/projects/${projectMetadata.id}`} on:click={() => currentProjectMetadata.set(projectMetadata)} class="read-more regular-link">
         Read more
       </Link>
     </Router>

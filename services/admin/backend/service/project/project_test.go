@@ -163,45 +163,47 @@ func TestProject_CreateProject(t *testing.T) {
 	// TODO: assert DeletedBy is not an empty UUID
 }
 
-func TestProject_MigrateProject(t *testing.T) {
-
-	expectedAggregateType := "http://ns.dasch.swiss/admin#Project"
-	expectedShortCode := "00FF"
-	expectedShortName := "short name"
-	expectedLongName := "project long name"
-	expectedDescription := "project description"
-
+func TestProject_CreateProject_ExistingShortCodeError(t *testing.T) {
 	repo := NewInMemRepo()
 	service := project.NewService(repo)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
 	// create short code value object
-	sc, err := valueobject.NewShortCode(expectedShortCode)
+	sc, err := valueobject.NewShortCode("ffff")
 	assert.Nil(t, err)
 
 	// create short name value object
-	sn, err := valueobject.NewShortName(expectedShortName)
+	sn, err := valueobject.NewShortName("short name")
 	assert.Nil(t, err)
 
 	// create long name value object
-	ln, err := valueobject.NewLongName(expectedLongName)
+	ln, err := valueobject.NewLongName("long name")
 	assert.Nil(t, err)
 
 	// create short code value object
-	desc, err := valueobject.NewDescription(expectedDescription)
+	desc, err := valueobject.NewDescription("description")
 	assert.Nil(t, err)
 
-	// migrate (create) project
-	projectId, err := service.CreateProject(ctx, sc, sn, ln, desc)
+	_, err2 := service.CreateProject(ctx, sc, sn, ln, desc)
+	assert.Nil(t, err2)
+
+	// create short INVALID code value object (already exists)
+	sc2, err := valueobject.NewShortCode("ffff")
 	assert.Nil(t, err)
 
-	// get migrated project
-	migratedProject, err := service.GetProject(ctx, projectId)
+	// create short name value object
+	sn2, err := valueobject.NewShortName("short name 2")
 	assert.Nil(t, err)
-	assert.Equal(t, expectedAggregateType, migratedProject.AggregateType().String())
-	assert.Equal(t, expectedShortCode, migratedProject.ShortCode().String())
-	assert.Equal(t, expectedShortName, migratedProject.ShortName().String())
-	assert.Equal(t, expectedLongName, migratedProject.LongName().String())
-	assert.Equal(t, expectedDescription, migratedProject.Description().String())
+
+	// create long name value object
+	ln2, err := valueobject.NewLongName("long name 2")
+	assert.Nil(t, err)
+
+	// create short code value object
+	desc2, err := valueobject.NewDescription("description 2")
+	assert.Nil(t, err)
+
+	_, err3 := service.CreateProject(ctx, sc2, sn2, ln2, desc2)
+	assert.NotNil(t, err3)
 }

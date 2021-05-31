@@ -1,11 +1,12 @@
 <script lang='ts'>
   import { tick } from 'svelte';
-  import { currentProjectMetadata, handleSnackbar, previousRoute } from '../store';
+  import { currentProjectMetadata, currentUrl, handleSnackbar, previousRoute } from '../store';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import Tab from './Tab.svelte';
   import { fade } from 'svelte/transition';
   import Snackbar from '../Snackbar.svelte';
+  import Matomo from '../Matomo.svelte';
 
   let project: any;
   let datasets: any[] = [];
@@ -14,11 +15,18 @@
   let descriptionLinesNumber: number;
   let arePublicationsExpanded: boolean;
 
+
+  $: project = $currentProjectMetadata.metadata.find((p: any) => p.type === 'http://ns.dasch.swiss/repository#Project');
+  $: document.title = project.name;
+  $: currentUrl.set(window.location.href);
+
+  // TODO: consider remove below function and inject project in line 16 of Tile.svelte
   const getProjectMetadata = async () => {
     const protocol = window.location.protocol;
     const port = protocol === 'https:' ? '' : ':3000';
     const baseUrl = `${protocol}//${window.location.hostname}${port}/`;
     const projectID = window.location.pathname.split("/")[2];
+    
     // const res = await fetch(`${process.env.BASE_URL}projects/${params.id}`);
     const res = await fetch(`${baseUrl}api/v1/projects/${projectID}`);
     const projectMetadata = await res.json();
@@ -64,6 +72,8 @@
     isDescriptionExpanded = descriptionLinesNumber > 6 ? false : true;
   };
 </script>
+
+<Matomo />
 
 {#if $handleSnackbar.isSnackbar}
   <div>

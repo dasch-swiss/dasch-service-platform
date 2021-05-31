@@ -49,7 +49,6 @@
         <img class="icon-logo s-hidden" src="assets/icon/DaSCH-Icon-black-64.svg" alt="DaSCH logo" />
       </Link>
     </Router>
-    <!-- </a> -->
     <h1 class="title">DaSCH Metadata Browser</h1>
     <div class="header-right">
       <input on:change={search} bind:value={enteredString} class="searchbar-in-header xs-inline-block" type="text" name="searchbar" placeholder="search..." />
