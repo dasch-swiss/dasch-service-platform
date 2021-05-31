@@ -77,14 +77,15 @@ export default {
         !production && livereload('public'),
 
         // For production builds minify, remove comments and logs
-        production && terser({
-            format: {
-                comments: false
-            },
-            compress: {
-                drop_console: true
-            }
-        }),
+        // TODO: temp disabled code cleaning
+        // production && terser({
+        //     format: {
+        //         comments: false
+        //     },
+        //     compress: {
+        //         drop_console: true
+        //     }
+        // }),
     ],
     watch: {
         clearScreen: false

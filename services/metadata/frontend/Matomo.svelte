@@ -3,6 +3,7 @@
 <!-- full guide: https://developer.matomo.org/guides/tracking-javascript-guide -->
 <script>
   const url = window.location;
+  console.log('hostname', url.hostname);
   if (url.hostname !== 'localhost') {
     let _paq = window._paq = window._paq || [];
     _paq.push(['setCustomUrl', url.href]);
