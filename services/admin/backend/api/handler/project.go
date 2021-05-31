@@ -376,106 +376,6 @@ func deleteProject(service project.UseCase) http.Handler {
 	})
 }
 
-func migrateProject(service project.UseCase) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		errorMessage := "Error creating project"
-
-		var input RequestBody
-		err := json.NewDecoder(r.Body).Decode(&input)
-		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
-			return
-		}
-
-		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
-		defer cancel()
-
-		// convert input strings to value objects
-		sc, err := valueobject.NewShortCode(input.ShortCode)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
-			return
-		}
-
-		sn, err := valueobject.NewShortName(input.ShortName)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
-			return
-		}
-
-		ln, err := valueobject.NewLongName(input.LongName)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
-			return
-		}
-
-		desc, err := valueobject.NewDescription(input.Description)
-		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
-			return
-		}
-
-		// create the project
-		id, err := service.CreateProject(ctx, sc, sn, ln, desc)
-		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(err.Error()))
-			return
-		}
-
-		// get the project
-		p, err := service.GetProject(ctx, id)
-		if err != nil && err == projectEntity.ErrNotFound {
-			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(err.Error()))
-			return
-		}
-		if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
-			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte(err.Error()))
-			return
-		}
-		if err != nil && err != projectEntity.ErrNotFound {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("The server is not responding"))
-			return
-		}
-		if p == nil {
-			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No data was returned"))
-			return
-		}
-
-		toJ := &presenter.Project{
-			ID:          id,
-			ShortCode:   p.ShortCode().String(),
-			ShortName:   p.ShortName().String(),
-			LongName:    p.LongName().String(),
-			Description: p.Description().String(),
-			CreatedAt:   p.CreatedAt().String(),
-			CreatedBy:   p.CreatedBy().String(),
-			ChangedAt:   p.ChangedAt().String(),
-			ChangedBy:   p.ChangedBy().String(),
-			DeletedAt:   p.DeletedAt().String(),
-			DeletedBy:   p.DeletedBy().String(),
-		}
-
-		w.WriteHeader(http.StatusCreated)
-		if err := json.NewEncoder(w).Encode(toJ); err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
-			return
-		}
-	})
-}
-
 func listProjects(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var input struct {
@@ -559,7 +459,4 @@ func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCa
 		negroni.Wrap(listProjects(service)),
 	)).Methods("GET", "OPTIONS").Name("listProjects")
 
-	r.Handle("/v1/project/migration", n.With(
-		negroni.Wrap(migrateProject(service)),
-	)).Methods("POST", "OPTIONS").Name("migrateProject")
 }
