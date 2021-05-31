@@ -68,13 +68,18 @@ This service depends on a running event store.
 For testing, you can create a local event store by running:
 
 ```docker run --name esdb-node -it -p 2113:2113 -p 1113:1113 eventstore/eventstore:latest --insecure --run-projections=All --enable-atom-pub-over-http=true```
+
 You can view the event store on http://localhost:2113/
+
 Then run:
 ```make admin-service-run```
+
 The terminal will hang on:
 ```/private/var/tmp/_bazel_username/6ae9f9aa2327923c1b3eb247cfa2ec4b/execroot/swiss_dasch_dsp_repository/bazel-out/darwin-fastbuild/bin/services/admin/backend/cmd/cmd_/cmd.runfiles/swiss_dasch_dsp_repository```
+
 This is because of Negroni, which will log out the results of your API requests.
 Now you can send requests to the API via Postman or your preferred application/method.
+
 Example create project request:
 URL:
 ```POST http://localhost:8080/v1/projects```
