@@ -35,10 +35,3 @@ type Project struct {
 	DeletedAt   string                 `json:"deletedAt"`
 	DeletedBy   string                 `json:"deletedBy"`
 }
-
-//DeleteProject data
-type DeleteProject struct {
-	ID        valueobject.Identifier `json:"id"`
-	DeletedAt string                 `json:"deletedAt"`
-	DeletedBy string                 `json:"deletedBy"`
-}
