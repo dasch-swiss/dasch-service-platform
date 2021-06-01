@@ -9,7 +9,6 @@ go_binary(
     srcs = ["main.go"],
     data = [
         "//public",
-        "//services/metadata/backend/data",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api",
     visibility = ["//visibility:public"],
@@ -41,7 +40,6 @@ go_image(
     srcs = ["main.go"],
     data = [
         ":static-app",
-        "//services/metadata/backend/data",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/api",
     visibility = ["//visibility:public"],
