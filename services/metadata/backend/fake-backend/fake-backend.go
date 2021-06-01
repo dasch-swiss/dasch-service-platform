@@ -191,6 +191,10 @@ func getSitemap(w http.ResponseWriter, r *http.Request) {
 	log.Printf("Request for: %v", r.URL)
 
 	sm := sitemap.New()
+	sm.Add(&sitemap.URL{
+		Loc:        "https://meta.dasch.swiss/",
+		ChangeFreq: sitemap.Weekly,
+	})
 
 	for _, item := range projects {
 		projectUrl := fmt.Sprintf("https://meta.dasch.swiss/projects/%s/", item.ID)
