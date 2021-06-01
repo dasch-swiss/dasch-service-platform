@@ -1,5 +1,28 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.0.0...v1.1.0) (2021-06-01)
+
+
+### Bug Fixes
+
+* **metadata-service:** fix Matomo config ([#66](https://www.github.com/dasch-swiss/dasch-service-platform/issues/66)) ([733d882](https://www.github.com/dasch-swiss/dasch-service-platform/commit/733d882b2cbe8953254050210f9cad639f2f3335))
+* **metadata-service:** fix Matomo configuration (DSP-1671) ([#65](https://www.github.com/dasch-swiss/dasch-service-platform/issues/65)) ([d95ffec](https://www.github.com/dasch-swiss/dasch-service-platform/commit/d95ffec98e34d270497e1412930f5ab588465a36))
+* **metadata-service:** snackbar handling + responsiveness ([#55](https://www.github.com/dasch-swiss/dasch-service-platform/issues/55)) ([77762ee](https://www.github.com/dasch-swiss/dasch-service-platform/commit/77762eef47588950b2e29191b08ac40a2b2b831c))
+
+
+### Maintenance
+
+* **metadata-service:** enable Matomo on PROD only ([#68](https://www.github.com/dasch-swiss/dasch-service-platform/issues/68)) ([64b1de3](https://www.github.com/dasch-swiss/dasch-service-platform/commit/64b1de3967f0e4b3b85b06f6eb76ede4f57b5bb9))
+* **project:** add more descriptive method comments (DSP-1680) ([#61](https://www.github.com/dasch-swiss/dasch-service-platform/issues/61)) ([45ac2d1](https://www.github.com/dasch-swiss/dasch-service-platform/commit/45ac2d1177b347428e9eeb6a574e020da06e3647))
+
+
+### Enhancements
+
+* **metadata-service:** add Mamoto tracker (DSP-1671) ([#62](https://www.github.com/dasch-swiss/dasch-service-platform/issues/62)) ([4096b92](https://www.github.com/dasch-swiss/dasch-service-platform/commit/4096b928176fc7cbdac1d306daa925dde4ddaa2d))
+* **metadata-service:** add sitemap generation ([#67](https://www.github.com/dasch-swiss/dasch-service-platform/issues/67)) ([3ee4449](https://www.github.com/dasch-swiss/dasch-service-platform/commit/3ee4449cf86f771081556468f238b37c63f12e2a))
+* **project:** add migration endpoint (DSP-1666) ([#58](https://www.github.com/dasch-swiss/dasch-service-platform/issues/58)) ([58a4544](https://www.github.com/dasch-swiss/dasch-service-platform/commit/58a4544b168b814ec47078daadcf51a1a8156477))
+* **project:** unique and valid short codes (DSP-1685) ([#63](https://www.github.com/dasch-swiss/dasch-service-platform/issues/63)) ([6742a6f](https://www.github.com/dasch-swiss/dasch-service-platform/commit/6742a6f6795e4b29f06a77d691133732485d2398))
+
 ## [1.0.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v0.0.3...v1.0.0) (2021-05-25)
 
 
