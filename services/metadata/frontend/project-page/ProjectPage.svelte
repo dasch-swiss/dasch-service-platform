@@ -1,6 +1,6 @@
 <script lang='ts'>
   import { tick } from 'svelte';
-  import { currentProject, currentProjectMetadata, currentUrl, handleSnackbar, previousRoute } from '../store';
+  import { currentProject, currentProjectMetadata, handleSnackbar, previousRoute } from '../store';
   import ProjectWidget from './ProjectWidget.svelte';
   import DownloadWidget from './DownloadWidget.svelte';
   import Tab from './Tab.svelte';
@@ -13,10 +13,7 @@
   let isDescriptionExpanded: boolean;
   let descriptionLinesNumber: number;
   let arePublicationsExpanded: boolean;
-  
-  currentUrl.set(window.location.href);
 
-  // TODO: consider remove below function and inject project in line 16 of Tile.svelte
   const getProjectMetadata = async () => {
     const protocol = window.location.protocol;
     const port = protocol === 'https:' ? '' : ':3000';
@@ -72,8 +69,6 @@
   };
 </script>
 
-<Matomo />
-
 {#if $handleSnackbar.isSnackbar}
   <div>
     <svelte:component this={Snackbar} />
@@ -124,6 +119,9 @@
       {/if}
 
       {#await getProjectMetadata() then go}
+        <!-- to wait for all project data to be fetched and passed to MAtomo  -->
+        <Matomo />
+
         <div class="tabs">
           <Tab {tabs} />
         </div>

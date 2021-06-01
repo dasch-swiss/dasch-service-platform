@@ -2,14 +2,18 @@
 <!-- TODO: doesn't work on pagination browse -->
 <!-- full guide: https://developer.matomo.org/guides/tracking-javascript-guide -->
 <script>
+
   const url = window.location;
   const productionHostname = 'meta.dasch.swiss';
   const testHostname = 'meta.test.dasch.swiss';
   // TODO: find better solution for loading title and page instead of undefined
-  setTimeout(() => {
+  // setTimeout(() => {
     // enable tracking only on production
     if (url.hostname === testHostname) {
+
       let _paq = window._paq = window._paq || [];
+
+      console.log('TITLE', document.title);
 
       _paq.push(['setCustomUrl', url.href]);
       _paq.push(['setDocumentTitle', document.title]);
@@ -37,5 +41,5 @@
         g.type='text/javascript'; g.async=true; g.src='//cdn.matomo.cloud/dasch.matomo.cloud/matomo.js'; s.parentNode.insertBefore(g,s);
       })();
     }
-  }, 100);
+  // }, 1000);
 </script>
