@@ -31,6 +31,20 @@ func NewIdentifier() (Identifier, error) {
 	return Identifier{value: id}, nil
 }
 
+//IdentifierFromBytes creates an identifier value object from the provided byte array
+func IdentifierFromBytes(input []byte) (Identifier, error) {
+	// create empty Identifier
+	id := Identifier{}
+
+	// assign the value of the Identifier
+	err := id.UnmarshalText(input)
+	if err != nil {
+		return Identifier{}, err
+	}
+
+	return id, nil
+}
+
 //AsUUID returns the UUID of the identifier.
 func (v Identifier) UUID() uuid.UUID {
 	return v.value

@@ -274,14 +274,12 @@ func getProject(service project.UseCase) http.Handler {
 		// get variables from request url
 		vars := mux.Vars(r)
 
-		// create empty Identifier
-		uuid := valueobject.Identifier{}
-
-		// create byte array from the provided id string
-		b := []byte(vars["id"])
-
-		// assign the value of the Identifier
-		uuid.UnmarshalText(b)
+		uuid, err := valueobject.IdentifierFromBytes([]byte(vars["id"]))
+		if err != nil {
+			w.WriteHeader(http.StatusInternalServerError)
+			w.Write([]byte("Invalid uuid provided"))
+			return
+		}
 
 		ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 		defer cancel()
@@ -303,7 +301,7 @@ func getProject(service project.UseCase) http.Handler {
 		}
 		if p == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No p was returned"))
+			w.Write([]byte("No project data was returned"))
 			return
 		}
 
@@ -322,7 +320,7 @@ func getProject(service project.UseCase) http.Handler {
 		}
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Failed encoding p to JSON"))
+			w.Write([]byte("Failed encoding res to JSON"))
 		}
 	})
 }
