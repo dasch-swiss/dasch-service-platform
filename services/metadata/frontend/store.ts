@@ -9,7 +9,6 @@ export const currentProject = writable(undefined);
 export const query = writable('');
 export const previousRoute = writable('');
 export const handleSnackbar = writable({isSnackbar: false, message: ''});
-export const currentUrl = writable('');
 
 export async function getProjectsMetadata(page: number, q?: string): Promise<void> {
   // const baseUrl = process.env.BASE_URL;
@@ -30,9 +29,6 @@ export async function getProjectsMetadata(page: number, q?: string): Promise<voi
   }
 
   console.log(baseUrl, route);
-
-  // currentUrl.set(window.location.href);
-
   navigate(`/${route}`);
 
   await fetch(`${baseUrl}api/v1/${route}`)

@@ -14,8 +14,8 @@ go_library(
         "@com_github_eventstore_eventstore_client_go//client",
         "@com_github_eventstore_eventstore_client_go//direction",
         "@com_github_eventstore_eventstore_client_go//messages",
-        "@com_github_eventstore_eventstore_client_go//streamrevision",
         "@com_github_eventstore_eventstore_client_go//position",
+        "@com_github_eventstore_eventstore_client_go//streamrevision",
         "@com_github_gofrs_uuid//:go_default_library",
     ],
 )

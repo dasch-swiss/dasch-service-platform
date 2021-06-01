@@ -84,26 +84,6 @@ metadata-service-test: ## run all metadata-service tests
 	@bazel test //services/metadata/backend/...
 
 #################################
-# Metadata service json-server targets
-#################################
-
-.PHONY: metadata-json-server
-metadata-json-server: ## start metadata json-server watching db.json
-	@yarn run json-server --watch --port 3000 services/metadata/backend/data/db.json
-
-.PHONY: metadata-json-server-docker-build
-metadata-json-server-docker-build: build ## build metadata json-server watching db.json docker image
-	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/data:image -- --norun
-
-.PHONY: metadata-json-server-docker-publish
-metadata-json-server-docker-publish: build ## publish metadata json-server watching db.json docker image
-	@bazel run --platforms=@io_bazel_rules_go//go/toolchain:linux_amd64 //services/metadata/backend/data:push
-
-.PHONY: metadata-json-server-docker-run
-metadata-json-server-docker-run: metadata-server-docker-build ## publish metadata json-server watching db.json docker image
-	@docker run --rm -p 3000:3000 bazel/services/metadata/backend/data:image
-
-#################################
 # Resource service targets
 #################################
 

@@ -14,6 +14,7 @@ require (
 	github.com/gorilla/mux v1.8.0
 	github.com/ory/dockertest/v3 v3.6.3 // indirect
 	github.com/prometheus/client_golang v1.9.0
+	github.com/snabb/sitemap v1.0.0 // indirect
 	github.com/stretchr/testify v1.7.0
 	github.com/urfave/negroni v1.0.0
 	github.com/vektah/gqlparser/v2 v2.1.0 // indirect

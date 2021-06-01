@@ -57,8 +57,6 @@ The server supports pagination and full text search.
 To run the server locally, use the command `make metadata`.  
 To run, build and publish a docker image of the server, use the commands `metadata-docker-run`, `metadata-docker-build` and `metadata-docker-publish`respectively. (`...-run` will build first.)
 
-To use the legacy metadata json-server, use the make targets `make metadata-json-server`, `make metadata-json-server-docker-build`, `make metadata-json-server-docker-run` and `make metadata-json-server-docker-publish`.
-
 ### Admin
 
 #### Server

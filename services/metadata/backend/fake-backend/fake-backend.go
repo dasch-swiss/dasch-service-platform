@@ -2,6 +2,8 @@ package main
 
 import (
 	"encoding/json"
+	"fmt"
+	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -14,6 +16,7 @@ import (
 
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/snabb/sitemap"
 )
 
 // Representation of a project
@@ -182,6 +185,35 @@ func getProject(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&Project{})
 }
 
+// getSitemap returns the sitemap.xml containing routes to all project pages.
+// Route /sitemap.xml
+func getSitemap(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Request for: %v", r.URL)
+
+	sm := sitemap.New()
+	sm.Add(&sitemap.URL{
+		Loc:        "https://meta.dasch.swiss/",
+		ChangeFreq: sitemap.Weekly,
+	})
+
+	for _, item := range projects {
+		projectUrl := fmt.Sprintf("https://meta.dasch.swiss/projects/%s/", item.ID)
+		sm.Add(&sitemap.URL{
+			Loc:        projectUrl,
+			ChangeFreq: sitemap.Weekly,
+		})
+	}
+	sm.WriteTo(w)
+}
+
+// getRobotsFile returns the robots.txt file containing the reference to the sitemap
+// Route /robots.txt
+func getRobotsFile(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Request for: %v", r.URL)
+	rf := "Sitemap: https://meta.dasch.swiss/sitemap.xml\nUser-agent: *\nDisallow:"
+	io.WriteString(w, rf)
+}
+
 // handle SPA to serve always from right place, no matter of route
 func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Printf("SPA Handler: %v", r.URL)
@@ -239,6 +271,8 @@ func main() {
 	// set up routes
 	router.HandleFunc("/api/v1/projects", getProjects).Methods("GET")
 	router.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
+	router.HandleFunc("/robots.txt", getRobotsFile).Methods("GET")
+	router.HandleFunc("/sitemap.xml", getSitemap).Methods("GET")
 
 	// init SPA handler
 	spa := spaHandler{
