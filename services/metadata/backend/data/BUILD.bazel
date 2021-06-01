@@ -1,6 +1,6 @@
 package(default_visibility = ["//visibility:public"])
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_push", "container_image")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image", "container_push")
 load("@rules_pkg//:pkg.bzl", "pkg_tar")
 
 filegroup(
@@ -25,29 +25,28 @@ pkg_tar(
     package_dir = "/data/db",
 )
 
-
 # build the json-server based image
 container_image(
     name = "image",
     base = "@json_server//image",
-    tars = [
-        ":static-app",
-        ":db"
-    ],
     labels = {
         "MAINTAINER": "400790+subotic@users.noreply.github.com",
     },
     ports = [
         "8080/tcp",
     ],
+    tars = [
+        ":static-app",
+        ":db",
+    ],
 )
 
 # push to dockerhub
 container_push(
-   name = "push",
-   image = ":image",
-   format = "Docker",
-   registry = "index.docker.io",
-   repository = "daschswiss/dsp-metadata-service",
-   tag = "{BUILD_SCM_TAG}"
+    name = "push",
+    format = "Docker",
+    image = ":image",
+    registry = "index.docker.io",
+    repository = "daschswiss/dsp-metadata-service",
+    tag = "{BUILD_SCM_TAG}",
 )
