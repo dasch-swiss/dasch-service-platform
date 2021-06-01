@@ -23,19 +23,19 @@ import (
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 )
 
-//Service interface
+// Service interface which contains the repository.
 type Service struct {
 	repo Repository
 }
 
-//NewService create a new project use case
+// NewService creates a new project use case.
 func NewService(r Repository) *Service {
 	return &Service{
 		repo: r,
 	}
 }
 
-//create new project
+// CreateProject creates new project with the provided values.
 func (s *Service) CreateProject(ctx context.Context, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (valueobject.Identifier, error) {
 
 	// generate new uuid
@@ -52,6 +52,7 @@ func (s *Service) CreateProject(ctx context.Context, shortCode valueobject.Short
 		existingShortCodes = append(existingShortCodes, proj.ShortCode())
 	}
 
+	// ensure the short code isn't used by any existing projects
 	if len(existingShortCodes) > 0 {
 		for _, esc := range existingShortCodes {
 			if shortCode.String() == esc.String() {
@@ -71,7 +72,7 @@ func (s *Service) CreateProject(ctx context.Context, shortCode valueobject.Short
 	return id, nil
 }
 
-// update project info
+// UpdateProject updates the current project info with the provided values.
 func (s *Service) UpdateProject(ctx context.Context, id valueobject.Identifier, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (*project.Aggregate, error) {
 
 	// get the project to update
@@ -103,17 +104,17 @@ func (s *Service) UpdateProject(ctx context.Context, id valueobject.Identifier, 
 	return p, nil
 }
 
-//delete project
-func (s *Service) DeleteProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
+// DeleteProject deletes a project corresponding to the provided uuid.
+func (s *Service) DeleteProject(ctx context.Context, uuid valueobject.Identifier) (*project.Aggregate, error) {
 
 	// get the project to delete
-	p, err := s.repo.Load(ctx, id)
+	p, err := s.repo.Load(ctx, uuid)
 	if err != nil {
 		return &project.Aggregate{}, err
 	}
 
 	// delete the project
-	p.DeleteProject(id)
+	p.DeleteProject(uuid)
 
 	// save the event
 	if _, err := s.repo.Save(ctx, p); err != nil {
@@ -123,7 +124,7 @@ func (s *Service) DeleteProject(ctx context.Context, id valueobject.Identifier) 
 	return p, nil
 }
 
-//migrate a project
+// MigrateProject creates a project with a specified short code.
 func (s *Service) MigrateProject(ctx context.Context, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (valueobject.Identifier, error) {
 
 	id, _ := valueobject.NewIdentifier()
@@ -137,10 +138,10 @@ func (s *Service) MigrateProject(ctx context.Context, shortCode valueobject.Shor
 	return id, nil
 }
 
-//GetProject get a project
-func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
+// GetProject gets a project with the corresponding uuid.
+func (s *Service) GetProject(ctx context.Context, uuid valueobject.Identifier) (*project.Aggregate, error) {
 
-	p, err := s.repo.Load(ctx, id)
+	p, err := s.repo.Load(ctx, uuid)
 	if err != nil {
 		return &project.Aggregate{}, err
 	}
@@ -148,7 +149,8 @@ func (s *Service) GetProject(ctx context.Context, id valueobject.Identifier) (*p
 	return p, nil
 }
 
-//ListProjects lists the projects
+// ListProjects lists all the active projects found in the event store.
+// returnDeletedProjects can be used to also return projects that have been marked as deleted.
 func (s *Service) ListProjects(ctx context.Context, returnDeletedProjects bool) ([]project.Aggregate, error) {
 
 	var projectsList []project.Aggregate
@@ -170,6 +172,7 @@ func (s *Service) ListProjects(ctx context.Context, returnDeletedProjects bool) 
 	return projectsList, nil
 }
 
+// isIdentical returns true if all the values of the fields of the provided aggregate are the same as the provided values.
 func isIdentical(p project.Aggregate, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) bool {
 	if p.ShortCode().Equals(shortCode) &&
 		p.ShortName().Equals(shortName) &&

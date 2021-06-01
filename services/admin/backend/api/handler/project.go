@@ -32,6 +32,7 @@ import (
 	"github.com/urfave/negroni"
 )
 
+// RequestBody provides a reusable struct to use for decoding the JSON request body.
 type RequestBody struct {
 	ShortCode   string `json:"shortCode"`
 	ShortName   string `json:"shortName"`
@@ -39,6 +40,7 @@ type RequestBody struct {
 	Description string `json:"description"`
 }
 
+// createProject creates a project with the provided RequestBody.
 func createProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		errorMessage := "Error creating project"
@@ -138,6 +140,11 @@ func createProject(service project.UseCase) http.Handler {
 	})
 }
 
+// updateProject updates a project with the provided RequestBody.
+// Updating a project that has been marked as deleted is not possible.
+// All fields of the RequestBody must be provided.
+// At least one of the values of the provided RequestBody must differ from the current value of the corresponding project field.
+// If a value of a field is identical to what it already is, the update will not be performed for that field.
 func updateProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		errorMessage := "Error updating project"
@@ -260,6 +267,7 @@ func updateProject(service project.UseCase) http.Handler {
 	})
 }
 
+// getProject gets a project with the provided UUID.
 func getProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -319,6 +327,7 @@ func getProject(service project.UseCase) http.Handler {
 	})
 }
 
+// deleteProject deletes a project with the provided UUID.
 func deleteProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 
@@ -384,6 +393,9 @@ func deleteProject(service project.UseCase) http.Handler {
 	})
 }
 
+// listProjects gets a list of all projects.
+// By default, this only returns active projects.
+// ReturnDeletedProjects can be provided in the request body to also return projects marked as deleted.
 func listProjects(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		var input struct {
@@ -444,7 +456,7 @@ func listProjects(service project.UseCase) http.Handler {
 	})
 }
 
-//MakeProjectHandlers make url handlers
+//MakeProjectHandlers make url handlers for creating, updating, deleting, and getting projects
 func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCase) {
 
 	r.Handle("/v1/projects", n.With(
