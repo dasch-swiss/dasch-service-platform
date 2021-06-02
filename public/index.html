@@ -13,8 +13,9 @@
   <!-- Global site tag (gtag.js) - Google Analytics -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9MD8RKZJHE"></script>
   <script>
-    // enable GA for TEST env only
-    const hostname = 'meta.test.dasch.swiss';
+    // enable GA for PROD env only
+    const hostname = 'meta.dasch.swiss';
+    
     if(window.location.hostname === hostname) {
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
