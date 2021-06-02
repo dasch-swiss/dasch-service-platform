@@ -35,3 +35,23 @@ type Project struct {
 	DeletedAt   string                 `json:"deletedAt"`
 	DeletedBy   string                 `json:"deletedBy"`
 }
+
+func (p *Project) NullifyJsonProps() Project {
+	if p.ChangedAt == "0001-01-01 00:00:00 +0000 UTC" {
+		p.ChangedAt = "null"
+	}
+
+	if p.ChangedBy == "00000000-0000-0000-0000-000000000000" {
+		p.ChangedBy = "null"
+	}
+
+	if p.DeletedAt == "0001-01-01 00:00:00 +0000 UTC" {
+		p.DeletedAt = "null"
+	}
+
+	if p.DeletedBy == "00000000-0000-0000-0000-000000000000" {
+		p.DeletedBy = "null"
+	}
+
+	return *p
+}
