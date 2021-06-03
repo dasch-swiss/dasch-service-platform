@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.1.0...v1.2.0) (2021-06-02)
+
+
+### Enhancements
+
+* **valueobject:** adds method to identifier value object to create a valid uuid from a provided byte array ([#69](https://www.github.com/dasch-swiss/dasch-service-platform/issues/69)) ([6cfe24d](https://www.github.com/dasch-swiss/dasch-service-platform/commit/6cfe24d36fdf4ec790f1e280837fc3a8a702ac4e))
+
+
+### Maintenance
+
+* **metadata-service:** add Google Analytics ([#71](https://www.github.com/dasch-swiss/dasch-service-platform/issues/71)) ([4b6916c](https://www.github.com/dasch-swiss/dasch-service-platform/commit/4b6916ce3e0b9ee5ebfb27fde3f9291ca47f8f5c))
+* **metadata-service:** enable GA on PROD only ([#72](https://www.github.com/dasch-swiss/dasch-service-platform/issues/72)) ([e341dd5](https://www.github.com/dasch-swiss/dasch-service-platform/commit/e341dd539815f2258c417b8ad92055aa838691a0))
+* **metadata-service:** enable GA on PROD only ([#72](https://www.github.com/dasch-swiss/dasch-service-platform/issues/72)) ([42fb5aa](https://www.github.com/dasch-swiss/dasch-service-platform/commit/42fb5aa942e11094fbb1fe4479d1a9c998495ad4))
+
 ## [1.1.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.0.0...v1.1.0) (2021-06-01)
 
 
