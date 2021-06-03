@@ -6,6 +6,7 @@
   import ProjectPage from "./project-page/ProjectPage.svelte";
   import Redirect from "./Redirect.svelte";
   import GTag from "./GTag.svelte";
+  import CookiesModal from "./CookiesModal.svelte";
 
   export let url = "";
 </script>
@@ -13,6 +14,8 @@
 <svelte:head>
   <GTag />
 </svelte:head>
+
+<CookiesModal />
 
 <Header />
   <div class=wrapper>
