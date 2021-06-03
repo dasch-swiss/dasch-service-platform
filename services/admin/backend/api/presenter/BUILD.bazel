@@ -13,3 +13,14 @@ go_library(
         "//shared/go/pkg/valueobject",
     ],
 )
+
+go_test(
+    name = "project_test",
+    size = "small",
+    srcs = [
+        "project_test.go",
+    ],
+    embed = [":presenter"],
+    visibility = ["//visibility:public"],
+    deps = ["@com_github_stretchr_testify//assert"],
+)
