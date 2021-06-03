@@ -1,7 +1,7 @@
 <script lang="ts">
   import { Router, Link } from 'svelte-routing';
   import type { ProjectMetadata } from '../interfaces';
-import { currentProject } from '../store';
+  import { currentProject } from '../store';
 
   export let projectMetadata: ProjectMetadata;
 
