@@ -27,6 +27,8 @@
             We use cookies to personalize content and analyze access to our websites. Please choose whether you 
             accept only cookies that are necessary for the functioning of the website or whether you accept also
             analytical cookies. For more information, please refer to our
+            <a href="https://dasch.swiss/cookie-policy/" target=_blank>cookie policy</a>,
+            <a href="https://dasch.swiss/eula/" target=_blank>EULA</a> and
             <a href="https://dasch.swiss/privacy-policy/" target=_blank>privacy policy</a>.
           </div>
           <div class="modal-footer">
