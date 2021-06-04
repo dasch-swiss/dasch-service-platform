@@ -1,13 +1,16 @@
 <script>
-  let agreement = false;
-  let modalOn = true
+  import { cookiesAgreement } from "./store";
+
+  let modalOn = true;
 
   const handleModal = () => {
     modalOn = !modalOn;
-  }
+    cookiesAgreement.set(true);
+    window.gtag.update();
+  };
 </script>
 
-{#if !agreement && modalOn}
+{#if !$cookiesAgreement && modalOn}
   <div id="cookieConsent">
     <div class="cookie-consent-modal">
       <div class="modal-content-wrapper">
@@ -20,7 +23,7 @@
             websites. Please choose whether you accept only cookies that are
             necessary for the functioning of the website or whether you accept
             allow analytical cookies. For more information, please refer to our
-            <a href="https://dasch.swiss/privacy-policy/">privacy policy</a>.
+            <a href="https://dasch.swiss/privacy-policy/" target=_blank>privacy policy</a>.
           </div>
           <div class="modal-footer">
             <div class="buttons">
@@ -41,8 +44,6 @@ a {color: var(--dasch-violet)}
   position: fixed;
   background-color: rgba(0, 0, 0, 0.5);
   padding-top: 0;
-  /* left: 0;
-  top: 0; */
   width: 100%;
   height: 100%;
 }
