@@ -131,6 +131,9 @@ func createProject(service project.UseCase) http.Handler {
 			DeletedBy:   p.DeletedBy().String(),
 		}
 
+		// replace null-values with "null"
+		*res = res.NullifyJsonProps()
+
 		w.WriteHeader(http.StatusCreated)
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -258,6 +261,9 @@ func updateProject(service project.UseCase) http.Handler {
 			DeletedBy:   up.DeletedBy().String(),
 		}
 
+		// replace null-values with "null"
+		*res = res.NullifyJsonProps()
+
 		w.WriteHeader(http.StatusOK)
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
@@ -318,6 +324,10 @@ func getProject(service project.UseCase) http.Handler {
 			DeletedAt:   p.DeletedAt().String(),
 			DeletedBy:   p.DeletedBy().String(),
 		}
+
+		// replace null-values with "null"
+		*res = res.NullifyJsonProps()
+
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("Failed encoding res to JSON"))
@@ -384,6 +394,10 @@ func deleteProject(service project.UseCase) http.Handler {
 			DeletedAt:   p.DeletedAt().String(),
 			DeletedBy:   p.DeletedBy().String(),
 		}
+
+		// replace null-values with "null"
+		*res = res.NullifyJsonProps()
+
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte("Failed encoding data to JSON"))
@@ -432,7 +446,7 @@ func listProjects(service project.UseCase) http.Handler {
 
 		for _, p := range projects {
 
-			res = append(res, presenter.Project{
+			projToAppend := presenter.Project{
 				ID:          p.ID(),
 				ShortCode:   p.ShortCode().String(),
 				ShortName:   p.ShortName().String(),
@@ -444,7 +458,13 @@ func listProjects(service project.UseCase) http.Handler {
 				ChangedBy:   p.ChangedBy().String(),
 				DeletedAt:   p.DeletedAt().String(),
 				DeletedBy:   p.DeletedBy().String(),
-			})
+			}
+
+			// replace null-values with "null"
+			projToAppend = projToAppend.NullifyJsonProps()
+
+			res = append(res, projToAppend)
+
 		}
 
 		if err := json.NewEncoder(w).Encode(res); err != nil {
