@@ -1,17 +1,21 @@
 <script lang="ts">
-  import { cookiesAgreement, setCookie } from "./cookies-service";
+  import { cookiesAgreement, getCookie, setCookie } from "./cookies-service";
 
-  let modalOn = true;
+  let modalOn = getCookie('cookiesAgreement') ? false : true;
 
-  const handleModal = () => {
+  const handleModal = (all?: boolean) => {
     modalOn = !modalOn;
-    cookiesAgreement.set(true);
-    window.gtag.update();
-    setCookie('cookiesAgreement', 'true');
+    if(all) {
+      cookiesAgreement.set(true);
+      window.gtag.update();
+      setCookie('cookiesAgreement', 'true');
+    } else {
+      setCookie('cookiesAgreement', 'false');
+    }
   };
 </script>
 
-{#if !$cookiesAgreement && modalOn}
+{#if modalOn}
   <div id="cookieConsent">
     <div class="cookie-consent-modal">
       <div class="modal-content-wrapper">
@@ -27,8 +31,8 @@
           </div>
           <div class="modal-footer">
             <div class="buttons">
-              <button on:click={handleModal} class="btn-accept-necessary">Accept only necessary cookies</button>
-              <button on:click={handleModal} class="btn-accept-all">Accept all cookies</button>
+              <button on:click={() => handleModal()} class="btn-accept-necessary">Accept only necessary cookies</button>
+              <button on:click={() => handleModal(true)} class="btn-accept-all">Accept all cookies</button>
             </div>
           </div>
         </div>
