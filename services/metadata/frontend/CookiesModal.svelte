@@ -1,5 +1,5 @@
-<script>
-  import { cookiesAgreement } from "./store";
+<script lang="ts">
+  import { cookiesAgreement, setCookie } from "./cookies-service";
 
   let modalOn = true;
 
@@ -7,6 +7,7 @@
     modalOn = !modalOn;
     cookiesAgreement.set(true);
     window.gtag.update();
+    setCookie('cookiesAgreement', 'true');
   };
 </script>
 

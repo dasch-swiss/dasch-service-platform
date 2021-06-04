@@ -1,20 +1,25 @@
 <script>
-  import { cookiesAgreement } from "./store";
+  import { cookiesAgreement } from "./cookies-service";
 
-  // creating window property which triggers the post-render update
-  window.gtag = {};
   // enable GA for PROD env only
   // const hostname = 'meta.dasch.swiss';
-  const hostname = 'localhost';
+  const hostname = 'meta.test.dasch.swiss';
 
+  // creates window property which triggers post-render component update
+  window.gtag = {};
   window.gtag.update = function () {
+    gTag();
+  };
+
+  const gTag = () => {
     if(window.location.hostname === hostname && $cookiesAgreement) {
-      console.log('YESSSSSSS')
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
 
       gtag('config', 'G-9MD8RKZJHE');
-    }
-  }
+    };
+  };
+
+  gTag();
 </script>
