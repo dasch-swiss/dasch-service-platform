@@ -27,8 +27,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-// TODO: split this into different methods and use a mock project
-func TestProject_CreateProject(t *testing.T) {
+func TestService_CreateProject(t *testing.T) {
 
 	expectedAggregateType := "http://ns.dasch.swiss/admin#Project"
 	expectedShortCode := "00FF"
@@ -63,11 +62,78 @@ func TestProject_CreateProject(t *testing.T) {
 	// get project
 	foundProject, err := service.GetProject(ctx, projectId)
 	assert.Nil(t, err)
+
 	assert.Equal(t, expectedAggregateType, foundProject.AggregateType().String())
 	assert.Equal(t, expectedShortCode, foundProject.ShortCode().String())
 	assert.Equal(t, expectedShortName, foundProject.ShortName().String())
 	assert.Equal(t, expectedLongName, foundProject.LongName().String())
 	assert.Equal(t, expectedDescription, foundProject.Description().String())
+}
+
+func TestService_CreateProject_ExistingShortCodeError(t *testing.T) {
+	repo := NewInMemRepo()
+	service := project.NewService(repo)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	defer cancel()
+
+	// create value objects
+	sc, _ := valueobject.NewShortCode("ffff")
+	sn, _ := valueobject.NewShortName("short name")
+	ln, _ := valueobject.NewLongName("project long name")
+	desc, _ := valueobject.NewDescription("project description")
+
+	// create project
+	service.CreateProject(ctx, sc, sn, ln, desc)
+
+	// create INVALID short code (already exists)
+	sc2, _ := valueobject.NewShortCode("ffff")
+	sn2, _ := valueobject.NewShortName("short name 2")
+	ln2, _ := valueobject.NewLongName("long name 2")
+	desc2, _ := valueobject.NewDescription("description 2")
+
+	_, err2 := service.CreateProject(ctx, sc2, sn2, ln2, desc2)
+	assert.NotNil(t, err2)
+}
+
+func TestService_ListProjects(t *testing.T) {
+	repo := NewInMemRepo()
+	service := project.NewService(repo)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	defer cancel()
+
+	// create value objects
+	sc, _ := valueobject.NewShortCode("00FF")
+	sn, _ := valueobject.NewShortName("short name")
+	ln, _ := valueobject.NewLongName("project long name")
+	desc, _ := valueobject.NewDescription("project description")
+
+	// create project
+	projectId, _ := service.CreateProject(ctx, sc, sn, ln, desc)
+
+	// get a list of projects
+	projectsList, err := service.ListProjects(ctx, false)
+	assert.Nil(t, err)
+	assert.Len(t, projectsList, 1)
+	assert.Equal(t, projectsList[0].ID(), projectId)
+}
+
+func TestService_UpdateProject(t *testing.T) {
+	repo := NewInMemRepo()
+	service := project.NewService(repo)
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	defer cancel()
+
+	// create value objects
+	sc, _ := valueobject.NewShortCode("00FF")
+	sn, _ := valueobject.NewShortName("short name")
+	ln, _ := valueobject.NewLongName("project long name")
+	desc, _ := valueobject.NewDescription("project description")
+
+	// create project
+	projectId, _ := service.CreateProject(ctx, sc, sn, ln, desc)
+
+	// get project
+	foundProject, err := service.GetProject(ctx, projectId)
 
 	expectedUpdatedShortCode := "11AA"
 	expectedUpdatedShortName := "new short name"
@@ -86,9 +152,9 @@ func TestProject_CreateProject(t *testing.T) {
 	assert.Equal(t, expectedUpdatedShortCode, usc.ShortCode().String())
 
 	// the remaining fields should remain unchanged
-	assert.Equal(t, expectedShortName, usc.ShortName().String())
-	assert.Equal(t, expectedLongName, usc.LongName().String())
-	assert.Equal(t, expectedDescription, usc.Description().String())
+	assert.Equal(t, foundProject.ShortName(), usc.ShortName())
+	assert.Equal(t, foundProject.LongName(), usc.LongName())
+	assert.Equal(t, foundProject.Description(), usc.Description())
 	assert.NotZero(t, usc.ChangedAt())
 	// TODO: assert ChangedBy is not an empty UUID
 
@@ -107,8 +173,8 @@ func TestProject_CreateProject(t *testing.T) {
 	assert.Equal(t, expectedUpdatedShortName, usn.ShortName().String())
 
 	// the remaining fields should remain unchanged
-	assert.Equal(t, expectedLongName, usn.LongName().String())
-	assert.Equal(t, expectedDescription, usn.Description().String())
+	assert.Equal(t, foundProject.LongName(), usn.LongName())
+	assert.Equal(t, foundProject.Description(), usn.Description())
 
 	// create new long name value object
 	nln, err := valueobject.NewLongName("new project long name")
@@ -128,7 +194,7 @@ func TestProject_CreateProject(t *testing.T) {
 	assert.Equal(t, expectedUpdatedLongName, uln.LongName().String())
 
 	// description should remain the expectedDescription
-	assert.Equal(t, expectedDescription, uln.Description().String())
+	assert.Equal(t, foundProject.Description(), uln.Description())
 
 	// create new description value object
 	nd, err := valueobject.NewDescription("new project description")
@@ -149,61 +215,26 @@ func TestProject_CreateProject(t *testing.T) {
 
 	// assert description was updated
 	assert.Equal(t, expectedUpdatedDescription, ud.Description().String())
-
-	// get a list of projects
-	projectsList, err := service.ListProjects(ctx, false)
-	assert.Nil(t, err)
-	assert.Len(t, projectsList, 1)
-	assert.Equal(t, projectsList[0].ID(), projectId)
-
-	// delete a project
-	deletedProject, err := service.DeleteProject(ctx, projectId)
-	assert.Nil(t, err)
-	assert.NotZero(t, deletedProject.DeletedAt())
-	// TODO: assert DeletedBy is not an empty UUID
 }
 
-func TestProject_CreateProject_ExistingShortCodeError(t *testing.T) {
+func TestService_DeleteProject(t *testing.T) {
 	repo := NewInMemRepo()
 	service := project.NewService(repo)
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
-	// create short code value object
-	sc, err := valueobject.NewShortCode("ffff")
+	// create value objects
+	sc, _ := valueobject.NewShortCode("00FF")
+	sn, _ := valueobject.NewShortName("short name")
+	ln, _ := valueobject.NewLongName("project long name")
+	desc, _ := valueobject.NewDescription("project description")
+
+	// create project
+	projectId, _ := service.CreateProject(ctx, sc, sn, ln, desc)
+
+	// delete project
+	deletedProject, err := service.DeleteProject(ctx, projectId)
 	assert.Nil(t, err)
-
-	// create short name value object
-	sn, err := valueobject.NewShortName("short name")
-	assert.Nil(t, err)
-
-	// create long name value object
-	ln, err := valueobject.NewLongName("long name")
-	assert.Nil(t, err)
-
-	// create short code value object
-	desc, err := valueobject.NewDescription("description")
-	assert.Nil(t, err)
-
-	_, err2 := service.CreateProject(ctx, sc, sn, ln, desc)
-	assert.Nil(t, err2)
-
-	// create short INVALID code value object (already exists)
-	sc2, err := valueobject.NewShortCode("ffff")
-	assert.Nil(t, err)
-
-	// create short name value object
-	sn2, err := valueobject.NewShortName("short name 2")
-	assert.Nil(t, err)
-
-	// create long name value object
-	ln2, err := valueobject.NewLongName("long name 2")
-	assert.Nil(t, err)
-
-	// create short code value object
-	desc2, err := valueobject.NewDescription("description 2")
-	assert.Nil(t, err)
-
-	_, err3 := service.CreateProject(ctx, sc2, sn2, ln2, desc2)
-	assert.NotNil(t, err3)
+	assert.NotZero(t, deletedProject.DeletedAt())
+	// TODO: assert DeletedBy is not an empty UUID
 }

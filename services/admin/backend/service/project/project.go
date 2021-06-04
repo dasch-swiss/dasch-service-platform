@@ -124,20 +124,6 @@ func (s *Service) DeleteProject(ctx context.Context, uuid valueobject.Identifier
 	return p, nil
 }
 
-// MigrateProject creates a project with a specified short code.
-func (s *Service) MigrateProject(ctx context.Context, shortCode valueobject.ShortCode, shortName valueobject.ShortName, longName valueobject.LongName, description valueobject.Description) (valueobject.Identifier, error) {
-
-	id, _ := valueobject.NewIdentifier()
-
-	e := project.NewAggregate(id, shortCode, shortName, longName, description)
-
-	if _, err := s.repo.Save(ctx, e); err != nil {
-		return valueobject.Identifier{}, err
-	}
-
-	return id, nil
-}
-
 // GetProject gets a project with the corresponding uuid.
 func (s *Service) GetProject(ctx context.Context, uuid valueobject.Identifier) (*project.Aggregate, error) {
 
