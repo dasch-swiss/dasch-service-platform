@@ -29,7 +29,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestProject_Save(t *testing.T) {
+func TestProjectRepository_Save(t *testing.T) {
 	container := GetEmptyDatabase()
 	defer container.Close()
 
@@ -41,21 +41,21 @@ func TestProject_Save(t *testing.T) {
 	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
 	defer cancel()
 
-	expectedId, err := valueobject.NewIdentifier()
-	expectedShortCode, _ := valueobject.NewShortCode("00FF")
-	expectedShortName, _ := valueobject.NewShortName("short name")
-	expectedLongName, _ := valueobject.NewLongName("project long name")
-	expectedDescription, _ := valueobject.NewDescription("project description")
+	id, err := valueobject.NewIdentifier()
+	shortCode, _ := valueobject.NewShortCode("00FF")
+	shortName, _ := valueobject.NewShortName("short name")
+	longName, _ := valueobject.NewLongName("project long name")
+	description, _ := valueobject.NewDescription("project description")
 
 	// create new project
-	expectedProject := projectEntity.NewAggregate(expectedId, expectedShortCode, expectedShortName, expectedLongName, expectedDescription)
+	expectedProject := projectEntity.NewAggregate(id, shortCode, shortName, longName, description)
 
 	// save event to event store
 	_, err = r.Save(ctx, expectedProject)
 	assert.Nil(t, err)
 
 	// retrieve events from event store
-	streamID := "Project-" + expectedId.String()
+	streamID := "Project-" + id.String()
 	recordedEvents, err := c.ReadStreamEvents(ctx, direction.Forwards, streamID, streamrevision.StreamRevisionStart, 1, false)
 	if err != nil {
 		t.Fatalf("Unexpected failure %+v", err)
@@ -63,26 +63,78 @@ func TestProject_Save(t *testing.T) {
 
 	// see if the recorded event is of the type we expect to have
 	assert.Equal(t, "ProjectCreated", recordedEvents[0].EventType)
+}
 
-	projectFromEvents, err := r.Load(ctx, expectedId)
+func TestProjectRepository_Load(t *testing.T) {
+	container := GetEmptyDatabase()
+	defer container.Close()
+
+	c := CreateTestClient(container, t)
+	defer c.Close()
+
+	r := project.NewProjectRepository(c)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	defer cancel()
+
+	id, _ := valueobject.NewIdentifier()
+	shortCode, _ := valueobject.NewShortCode("00FF")
+	shortName, _ := valueobject.NewShortName("short name")
+	longName, _ := valueobject.NewLongName("project long name")
+	description, _ := valueobject.NewDescription("project description")
+
+	// create new project
+	project := projectEntity.NewAggregate(id, shortCode, shortName, longName, description)
+
+	// save event to event store
+	r.Save(ctx, project)
+
+	// load project from event store events
+	projectFromEvents, err := r.Load(ctx, id)
 	if err != nil {
 		t.Fatalf("Unexpected failure %+v", err)
 	}
 
 	// check if our initially created project is the same as the project created from events
-	assert.Equal(t, expectedProject.ID(), projectFromEvents.ID())
-	assert.Equal(t, expectedProject.AggregateType(), projectFromEvents.AggregateType())
-	assert.Equal(t, expectedProject.ShortCode(), projectFromEvents.ShortCode())
-	assert.Equal(t, expectedProject.ShortName(), projectFromEvents.ShortName())
-	assert.Equal(t, expectedProject.LongName(), projectFromEvents.LongName())
-	assert.Equal(t, expectedProject.Description(), projectFromEvents.Description())
-	assert.Equal(t, expectedProject.CreatedAt().Unix(), projectFromEvents.CreatedAt().Unix())
-	assert.Equal(t, expectedProject.CreatedBy(), projectFromEvents.CreatedBy())
+	assert.Equal(t, project.ID(), projectFromEvents.ID())
+	assert.Equal(t, project.AggregateType(), projectFromEvents.AggregateType())
+	assert.Equal(t, project.ShortCode(), projectFromEvents.ShortCode())
+	assert.Equal(t, project.ShortName(), projectFromEvents.ShortName())
+	assert.Equal(t, project.LongName(), projectFromEvents.LongName())
+	assert.Equal(t, project.Description(), projectFromEvents.Description())
+	assert.Equal(t, project.CreatedAt().Unix(), projectFromEvents.CreatedAt().Unix())
+	assert.Equal(t, project.CreatedBy(), projectFromEvents.CreatedBy())
+}
 
-	projectCreationEvents, err := r.GetProjectIds(ctx, false)
+func TestProjectRepository_GetProjectIds(t *testing.T) {
+	container := GetEmptyDatabase()
+	defer container.Close()
+
+	c := CreateTestClient(container, t)
+	defer c.Close()
+
+	r := project.NewProjectRepository(c)
+
+	ctx, cancel := context.WithTimeout(context.Background(), time.Duration(5)*time.Second)
+	defer cancel()
+
+	id, _ := valueobject.NewIdentifier()
+	shortCode, _ := valueobject.NewShortCode("00FF")
+	shortName, _ := valueobject.NewShortName("short name")
+	longName, _ := valueobject.NewLongName("project long name")
+	description, _ := valueobject.NewDescription("project description")
+
+	// create new project
+	project := projectEntity.NewAggregate(id, shortCode, shortName, longName, description)
+
+	// save event to event store
+	r.Save(ctx, project)
+
+	// get list of project ids
+	projectIds, err := r.GetProjectIds(ctx, false)
 	if err != nil {
 		t.Fatalf("Unexpected failure %+v", err)
 	}
 
-	assert.Len(t, projectCreationEvents, 1)
+	assert.Len(t, projectIds, 1)
 }
