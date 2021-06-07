@@ -1,6 +1,8 @@
 <script lang="ts">
   import { cookiesAgreement, getCookie, setCookie } from "./cookies-service";
 
+  // prevents display modal locally
+  const noLocalhost = window.location.hostname !== 'localhost';
   let modalOn = getCookie('cookiesAgreement') ? false : true;
 
   const handleModal = (all?: boolean) => {
@@ -15,7 +17,7 @@
   };
 </script>
 
-{#if modalOn}
+{#if modalOn && noLocalhost}
   <div id="cookieConsent">
     <div class="cookie-consent-modal">
       <div class="modal-content-wrapper">
