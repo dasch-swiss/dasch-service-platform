@@ -5,9 +5,17 @@
   import ProjectsRepository from "./projects-repository/ProjectsRepository.svelte";
   import ProjectPage from "./project-page/ProjectPage.svelte";
   import Redirect from "./Redirect.svelte";
+  import GTag from "./GTag.svelte";
+  import CookiesModal from "./CookiesModal.svelte";
 
   export let url = "";
 </script>
+
+<svelte:head>
+  <GTag />
+</svelte:head>
+
+<CookiesModal />
 
 <Header />
   <div class=wrapper>
@@ -33,7 +41,6 @@
     display: flex;
     flex-direction: row;
     justify-content: center;
-    /* flex: 1 0 auto; */
   }
   .content-container {
     display: flex;

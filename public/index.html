@@ -11,19 +11,8 @@
   <script defer src='build/bundle.js'></script>
 
   <!-- Global site tag (gtag.js) - Google Analytics -->
+  <!-- second script moved to separate file -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-9MD8RKZJHE"></script>
-  <script>
-    // enable GA for PROD env only
-    const hostname = 'meta.dasch.swiss';
-    
-    if(window.location.hostname === hostname) {
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-9MD8RKZJHE');
-    }
-  </script>
 </head>
 
 <body>
