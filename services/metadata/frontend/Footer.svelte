@@ -1,11 +1,20 @@
-<script>
-  // TODO: once releae-please-action is configured to change version in package.json take it from there
-  const version = '1.0.0';
+<script lang="ts">
+  import { onMount } from "svelte"
+
+  let version: string
+
+  onMount(async () => {
+    await fetch(`${window.location.origin}/version.txt`)
+      .then(response => response.text())
+      .then((data) => {
+        version = data
+      })
+  })
 </script>
 
 <footer>
-  <div>Copyright © 2021 DaSCH</div>
-  <!-- <div class=version>{`dasch-service-platform v.${version}`}</div> -->
+  <div class=version>{`Version: v${version}`}</div>
+  <div class=copyright>© 2021 DaSCH</div>
 </footer>
 
 <style>
@@ -19,8 +28,9 @@
     text-align: center;
   }
   .version {
+    position: absolute;
     font-size: 0.75rem;
-    color: var(--dasch-violet);
+    line-height: 1.75;
   }
   @media screen and (min-width: 768px){
     footer {
