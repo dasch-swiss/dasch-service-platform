@@ -19,13 +19,22 @@ package project
 
 import "errors"
 
-//ErrNotFound not found
-var ErrNotFound = errors.New("not found")
+//ErrProjectNotFound project not found
+var ErrProjectNotFound = errors.New("no project found with the provided uuid")
+
+//ErrNoProjectDataReturned no project data returned
+var ErrNoProjectDataReturned = errors.New("no project data was returned")
+
+//ErrServerNotResponding server not responding
+var ErrServerNotResponding = errors.New("the server is not responding")
 
 //ErrInvalidEntity invalid entity
 var ErrInvalidEntity = errors.New("invalid entity")
 
-//ErrInvalidEntity invalid entity
+//ErrInvalidUUID invalid UUID
+var ErrInvalidUUID = errors.New("invalid uuid provided")
+
+//ErrNoPropertiesChanged invalid update values
 var ErrNoPropertiesChanged = errors.New("no new value for any property provided")
 
 //ErrCannotBeDeleted cannot be deleted
@@ -33,3 +42,6 @@ var ErrCannotBeDeleted = errors.New("cannot be deleted")
 
 //ErrProjectHasBeenDeleted project has been marked as deleted
 var ErrProjectHasBeenDeleted = errors.New("project has been marked as deleted")
+
+//ErrShortCodeAlreadyExists provided short code already exists
+var ErrShortCodeAlreadyExists = errors.New("provided short code already exists")

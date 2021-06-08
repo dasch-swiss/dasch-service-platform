@@ -59,7 +59,7 @@ func (r *inMemRepo) Save(ctx context.Context, e *project.Aggregate) (valueobject
 //Load a project
 func (r *inMemRepo) Load(ctx context.Context, id valueobject.Identifier) (*project.Aggregate, error) {
 	if r.m[id.UUID()] == nil {
-		return nil, project.ErrNotFound
+		return nil, project.ErrProjectNotFound
 	}
 	return project.NewAggregateFromEvents(r.m[id.UUID()]), nil
 }

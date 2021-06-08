@@ -18,7 +18,6 @@ package project
 
 import (
 	"context"
-	"fmt"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/entity/project"
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 )
@@ -56,7 +55,7 @@ func (s *Service) CreateProject(ctx context.Context, shortCode valueobject.Short
 	if len(existingShortCodes) > 0 {
 		for _, esc := range existingShortCodes {
 			if shortCode.String() == esc.String() {
-				return valueobject.Identifier{}, fmt.Errorf("provided short code already exists")
+				return valueobject.Identifier{}, project.ErrShortCodeAlreadyExists
 			}
 		}
 	}

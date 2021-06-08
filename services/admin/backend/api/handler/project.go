@@ -32,7 +32,7 @@ import (
 	"github.com/urfave/negroni"
 )
 
-// RequestBody provides a reusable struct to use for decoding the JSON request body.
+// RequestBody provides a reusable struct to use when decoding the JSON request body.
 type RequestBody struct {
 	ShortCode   string `json:"shortCode"`
 	ShortName   string `json:"shortName"`
@@ -43,14 +43,13 @@ type RequestBody struct {
 // createProject creates a project with the provided RequestBody.
 func createProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		errorMessage := "Error creating project"
 
 		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
 			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(err.Error()))
 			return
 		}
 
@@ -60,43 +59,42 @@ func createProject(service project.UseCase) http.Handler {
 		// convert input strings to value objects
 		sc, err := valueobject.NewShortCode(input.ShortCode)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		sn, err := valueobject.NewShortName(input.ShortName)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		ln, err := valueobject.NewLongName(input.LongName)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		desc, err := valueobject.NewDescription(input.Description)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		id, err := service.CreateProject(ctx, sc, sn, ln, desc)
 		if err != nil {
-			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		// get the project
 		p, err := service.GetProject(ctx, id)
-		if err != nil && err == projectEntity.ErrNotFound {
+		if err != nil && err == projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusNotFound)
 			w.Write([]byte(err.Error()))
 			return
@@ -106,14 +104,14 @@ func createProject(service project.UseCase) http.Handler {
 			w.Write([]byte(err.Error()))
 			return
 		}
-		if err != nil && err != projectEntity.ErrNotFound {
+		if err != nil && err != projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("The server is not responding"))
+			w.Write([]byte(projectEntity.ErrServerNotResponding.Error()))
 			return
 		}
 		if p == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No data was returned"))
+			w.Write([]byte(projectEntity.ErrNoProjectDataReturned.Error()))
 			return
 		}
 
@@ -137,7 +135,7 @@ func createProject(service project.UseCase) http.Handler {
 		w.WriteHeader(http.StatusCreated)
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
+			w.Write([]byte(err.Error()))
 			return
 		}
 	})
@@ -150,14 +148,13 @@ func createProject(service project.UseCase) http.Handler {
 // If a value of a field is identical to what it already is, the update will not be performed for that field.
 func updateProject(service project.UseCase) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		errorMessage := "Error updating project"
 
 		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
 			log.Println(err.Error())
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(err.Error()))
 			return
 		}
 
@@ -178,7 +175,7 @@ func updateProject(service project.UseCase) http.Handler {
 
 		// get the project
 		p, err := service.GetProject(ctx, uuid)
-		if err != nil && err == projectEntity.ErrNotFound {
+		if err != nil && err == projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusNotFound)
 			w.Write([]byte(err.Error()))
 			return
@@ -188,42 +185,42 @@ func updateProject(service project.UseCase) http.Handler {
 			w.Write([]byte(err.Error()))
 			return
 		}
-		if err != nil && err != projectEntity.ErrNotFound {
+		if err != nil && err != projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("The server is not responding"))
+			w.Write([]byte(projectEntity.ErrServerNotResponding.Error()))
 			return
 		}
 		if p == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No data was returned"))
+			w.Write([]byte(projectEntity.ErrNoProjectDataReturned.Error()))
 			return
 		}
 
 		// convert input strings to value objects
 		sc, err := valueobject.NewShortCode(input.ShortCode)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		sn, err := valueobject.NewShortName(input.ShortName)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		ln, err := valueobject.NewLongName(input.LongName)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
 
 		desc, err := valueobject.NewDescription(input.Description)
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
+			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
 		}
@@ -243,7 +240,7 @@ func updateProject(service project.UseCase) http.Handler {
 		if err != nil {
 			log.Println(err.Error())
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
+			w.Write([]byte(projectEntity.ErrServerNotResponding.Error()))
 			return
 		}
 
@@ -267,7 +264,7 @@ func updateProject(service project.UseCase) http.Handler {
 		w.WriteHeader(http.StatusOK)
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte(errorMessage))
+			w.Write([]byte(err.Error()))
 			return
 		}
 	})
@@ -282,8 +279,8 @@ func getProject(service project.UseCase) http.Handler {
 
 		uuid, err := valueobject.IdentifierFromBytes([]byte(vars["id"]))
 		if err != nil {
-			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Invalid uuid provided"))
+			w.WriteHeader(http.StatusBadRequest)
+			w.Write([]byte(err.Error()))
 			return
 		}
 
@@ -294,20 +291,20 @@ func getProject(service project.UseCase) http.Handler {
 		p, err := service.GetProject(ctx, uuid)
 		w.Header().Set("Content-Type", "application/json")
 
-		if err != nil && err == projectEntity.ErrNotFound {
+		if err != nil && err == projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No project found for this uuid"))
+			w.Write([]byte(err.Error()))
 			return
 		}
 
-		if err != nil && err != projectEntity.ErrNotFound {
+		if err != nil && err != projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("The server is not responding"))
+			w.Write([]byte(err.Error()))
 			return
 		}
 		if p == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No project data was returned"))
+			w.Write([]byte(projectEntity.ErrNoProjectDataReturned.Error()))
 			return
 		}
 
@@ -330,7 +327,7 @@ func getProject(service project.UseCase) http.Handler {
 
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Failed encoding res to JSON"))
+			w.Write([]byte(err.Error()))
 		}
 	})
 }
@@ -358,26 +355,26 @@ func deleteProject(service project.UseCase) http.Handler {
 		p, err := service.DeleteProject(ctx, uuid)
 		w.Header().Set("Content-Type", "application/json")
 
-		if err != nil && err == projectEntity.ErrNotFound {
+		if err != nil && err == projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No project found for this uuid"))
+			w.Write([]byte(err.Error()))
 			return
 		}
 
 		if err != nil && err == projectEntity.ErrProjectHasBeenDeleted {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("Project has already been deleted"))
+			w.Write([]byte(err.Error()))
 			return
 		}
 
 		if err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("The server is not responding"))
+			w.Write([]byte(projectEntity.ErrServerNotResponding.Error()))
 			return
 		}
 		if p == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No project data returned"))
+			w.Write([]byte(projectEntity.ErrNoProjectDataReturned.Error()))
 			return
 		}
 
@@ -400,7 +397,7 @@ func deleteProject(service project.UseCase) http.Handler {
 
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Failed encoding data to JSON"))
+			w.Write([]byte(err.Error()))
 		}
 	})
 }
@@ -425,20 +422,20 @@ func listProjects(service project.UseCase) http.Handler {
 		projects, err := service.ListProjects(ctx, input.ReturnDeletedProjects)
 		w.Header().Set("Content-Type", "application/json")
 
-		if err != nil && err == projectEntity.ErrNotFound {
+		if err != nil && err == projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No project found for this uuid"))
+			w.Write([]byte(err.Error()))
 			return
 		}
 
-		if err != nil && err != projectEntity.ErrNotFound {
+		if err != nil && err != projectEntity.ErrProjectNotFound {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("The server is not responding"))
+			w.Write([]byte(projectEntity.ErrServerNotResponding.Error()))
 			return
 		}
 		if projects == nil {
 			w.WriteHeader(http.StatusNotFound)
-			w.Write([]byte("No projects were returned"))
+			w.Write([]byte(projectEntity.ErrNoProjectDataReturned.Error()))
 			return
 		}
 
@@ -469,7 +466,7 @@ func listProjects(service project.UseCase) http.Handler {
 
 		if err := json.NewEncoder(w).Encode(res); err != nil {
 			w.WriteHeader(http.StatusInternalServerError)
-			w.Write([]byte("Failed encoding ids to JSON"))
+			w.Write([]byte(err.Error()))
 		}
 	})
 }
