@@ -214,6 +214,19 @@ func getRobotsFile(w http.ResponseWriter, r *http.Request) {
 	io.WriteString(w, rf)
 }
 
+// servers the contnet version.txt file
+// Route /version.txt
+func getVersionFile(w http.ResponseWriter, r *http.Request) {
+	log.Printf("Request for: %v", r.URL)
+	vf, err := ioutil.ReadFile("./version.txt")
+	if err != nil {
+		fmt.Println("Error creating", "version.txt")
+		fmt.Println(err)
+		return
+	}
+	io.WriteString(w, string(vf))
+}
+
 // handle SPA to serve always from right place, no matter of route
 func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	log.Printf("SPA Handler: %v", r.URL)
@@ -273,6 +286,7 @@ func main() {
 	router.HandleFunc("/api/v1/projects/{id}", getProject).Methods("GET")
 	router.HandleFunc("/robots.txt", getRobotsFile).Methods("GET")
 	router.HandleFunc("/sitemap.xml", getSitemap).Methods("GET")
+	router.HandleFunc("/version.txt", getVersionFile).Methods("GET")
 
 	// init SPA handler
 	spa := spaHandler{
