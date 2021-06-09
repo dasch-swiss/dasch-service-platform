@@ -6,7 +6,6 @@
   import { getProjectsMetadata, handleSnackbar, pagedResults } from '../store';
   import { fade } from 'svelte/transition';
   import Snackbar from '../Snackbar.svelte';
-  import Matomo from '../Matomo.svelte';
 
   let message = 'Loading...';
 
@@ -38,8 +37,6 @@
     }
   });
 </script>
-
-<Matomo />
 
 <nav>
   <div class="category-container hidden m-inline-block">
