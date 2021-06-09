@@ -47,7 +47,6 @@ func createProject(service project.UseCase) http.Handler {
 		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
 		if err != nil {
-			log.Println(err.Error())
 			w.WriteHeader(http.StatusBadRequest)
 			w.Write([]byte(err.Error()))
 			return
