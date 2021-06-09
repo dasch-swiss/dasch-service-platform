@@ -2,8 +2,8 @@
   import { cookiesAgreement } from "./cookies-service";
 
   // enable GA for PROD env only
-  // const hostname = 'meta.dasch.swiss';
-  const hostname = 'meta.test.dasch.swiss';
+  const hostname = 'meta.dasch.swiss';
+  // const hostname = 'meta.test.dasch.swiss';
 
   // creates window property which triggers post-render component update
   window.gtag = {};

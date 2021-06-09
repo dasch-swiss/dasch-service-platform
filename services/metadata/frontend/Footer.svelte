@@ -13,7 +13,9 @@
 </script>
 
 <footer>
-  <div class=version>{`Version: v${version}`}</div>
+  {#if version}
+    <div class=version>{`Version: v${version}`}</div>
+  {/if}
   <div class=copyright>© 2021 DaSCH</div>
 </footer>
 
