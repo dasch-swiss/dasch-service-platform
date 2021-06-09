@@ -19,7 +19,7 @@ go_image(
     srcs = ["fake-backend.go"],
     data = [
         "//public",
-        "//version",
+        "//:version",
         "//services/metadata/backend/fake-backend/data",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/fake-backend",
@@ -35,7 +35,7 @@ go_binary(
     name = "cmd",
     srcs = ["fake-backend.go"],
     data = [
-        "//version",
+        "//:version",
         "//services/metadata/backend/fake-backend/data"
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/metadata/backend/fake-backend",
