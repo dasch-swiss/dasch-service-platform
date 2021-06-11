@@ -6,6 +6,8 @@
   import Tab from './Tab.svelte';
   import { fade } from 'svelte/transition';
   import Snackbar from '../Snackbar.svelte';
+
+  const mobileResolution = window.innerWidth < 992;
   
   let datasets: any[] = [];
   let tabs = [] as any[];
@@ -41,14 +43,6 @@
     console.log('metadata', projectMetadata, 'project', $currentProject)
   };
 
-  const handleData = (val: any) => {
-    if (Array.isArray(val) && val.length > 1) {
-      return val.join(', ')
-    } else {
-      return val
-    }
-  };
-
   const toggleDescriptionExpand = () => {
     isDescriptionExpanded = !isDescriptionExpanded;
     !isDescriptionExpanded ? window.scrollTo(0,0) : null;
@@ -75,6 +69,14 @@
 {/if}
 
 <div class="container" in:fade={{duration: 200}}>
+  {#if mobileResolution}
+    <button on:click={() => history.back()} class=goback-button title="go back to the projects list" disabled={!$previousRoute && window.history.length <= 2}>
+      <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+      </svg>
+      <span class=button-label>Go Back</span>
+    </button>
+  {/if}
   <div class="row" style="flex-wrap: wrap;">
     <h1 class="title top-heading">
       {$currentProject?.name}
@@ -123,32 +125,41 @@
         </div>
       {/await}
 
-      <button on:click={() => window.scrollTo({top: 0, left: 0, behavior: 'smooth'})} id=to-top-desktop class=bottom-button title="Get back to the top">
-        <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
+      {#if !mobileResolution}
+        <button on:click={() => window.scrollTo({top: 0, left: 0, behavior: 'smooth'})} class=gototop-button title="Get back to the top">
+          <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      {/if}
 
     </div>
     <div class="column-right">
-      <!-- <button on:click={() => pop()} class=top-button title="go back to the projects list" disabled={!$previousRoute && window.history.length <= 2}> -->
-        <button on:click={() => history.back()} class=top-button title="go back to the projects list" disabled={!$previousRoute && window.history.length <= 2}>
-        <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-        <span class=button-label>Go Back</span>
-      </button>
+      {#if !mobileResolution}
+        <button on:click={() => history.back()} class=goback-button title="go back to the projects list" disabled={!$previousRoute && window.history.length <= 2}>
+          <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          <span class=button-label>Go Back</span>
+        </button>
+      {/if}
+
       <div class=widget>
         <ProjectWidget />
       </div>
+
       <!-- TODO: temp disabled download widget -->
       <!-- <div class=widget>
         <DownloadWidget />
       </div> -->
 
-      <button on:click={() => {window.scrollTo(0,0)}} class="bottom-button m-hidden" title="Get back to the top">
-        <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
-        </svg>
-      </button>
+      {#if mobileResolution}
+        <button on:click={() => {window.scrollTo({top: 0, left: 0, behavior: 'smooth'})}} class="gototop-button m-hidden" title="Get back to the top">
+          <svg class=icon fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18" />
+          </svg>
+        </button>
+      {/if}
     </div>
   </div>
 </div>
@@ -160,7 +171,9 @@
     border: 1px solid #cdcdcd;
     border-radius: 0.25rem;
   }
-  button.top-button {
+  button.goback-button {
+    margin-top: 10px;
+    width: 100%;
     font-size: 1rem;
     font-family: robotobold;
     text-align: left;
@@ -171,7 +184,7 @@
     position: relative;
     bottom: 10px;
   }
-  button.bottom-button {
+  button.gototop-button {
     display: inline-block;
     vertical-align: middle;
     background-color: var(--dasch-grey-3);
@@ -179,13 +192,10 @@
     width: 3.5rem;
     height: 3.5rem;
   }
-  button.bottom-button:hover,
-  button.top-button:hover {
+  button.gototop-button:hover,
+  button.goback-button:hover {
     color: #fff;
     background-color: var(--lead-colour);
-  }
-  #to-top-desktop {
-    display: none;
   }
   .container {
     padding: 0 10px;
@@ -225,7 +235,7 @@
     box-shadow: var(--shadow-1);
   }
   @supports (-moz-appearance:none) {
-    button.bottom-button {margin-bottom: 40px;} 
+    button.gototop-button {margin-bottom: 40px;} 
   }
   @media screen and (min-width: 992px) {
     .container {padding: 0 40px}
@@ -233,7 +243,6 @@
     .column-left {min-width: 52vw;}
     .column-right {min-width: 30vw;}
     .row {flex-direction: row;}
-    #to-top-desktop {display: inline-block;}
   }
   @media screen and (min-width: 1200px) {
     .column-left {min-width: 688px;}
