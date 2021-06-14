@@ -13,10 +13,12 @@
 </script>
 
 <footer>
-  {#if version}
-    <div class=version>{`Version: v${version}`}</div>
-  {/if}
-  <div class=copyright>© 2021 DaSCH</div>
+  <div class="footer-container">
+    {#if version}
+      <div class=version>{`Version: v${version}`}</div>
+    {/if}
+    <div class=copyright>© 2021 DaSCH</div>
+  </div>
 </footer>
 
 <style>
@@ -41,4 +43,10 @@
       z-index: 1;
     }
   }
+  @media screen and (min-width: 1200px) {
+  .footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
 </style>

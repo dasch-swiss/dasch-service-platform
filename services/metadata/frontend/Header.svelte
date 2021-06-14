@@ -187,4 +187,10 @@
     }
     .title {font-size: 1.25rem;}
   }
+@media screen and (min-width: 1200px) {
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
 </style>
