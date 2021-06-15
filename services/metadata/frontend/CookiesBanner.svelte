@@ -9,7 +9,6 @@
     modalOn = !modalOn;
     if(all) {
       cookiesAgreement.set(true);
-      window.gtag.update();
       setCookie('cookiesAgreement', 'true');
     } else {
       setCookie('cookiesAgreement', 'false');
