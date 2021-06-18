@@ -1,19 +1,13 @@
 <script lang="ts">
-  import { cookiesAgreement, getCookie, setCookie } from "./cookies-service";
+  import { getCookie, setCookie } from "./cookies-service";
 
   // prevents display modal locally
   const noLocalhost = window.location.hostname !== 'localhost';
-  let modalOn = getCookie('cookiesAgreement') ? false : true;
+  let modalOn = getCookie('cookiesAccepted') ? false : true;
 
-  const handleModal = (all?: boolean) => {
+  const handleModal = () => {
     modalOn = !modalOn;
-    if(all) {
-      cookiesAgreement.set(true);
-      window.gtag.update();
-      setCookie('cookiesAgreement', 'true');
-    } else {
-      setCookie('cookiesAgreement', 'false');
-    }
+    setCookie('cookiesAccepted', 'true');
   };
 </script>
 
@@ -21,14 +15,13 @@
   <div id="cookieConsent">
     <div class="modal-wrapper">
       <div class="modal-text">
-        DaSCH uses cookies to personalize content and analyze access to its websites. Find more information on
+        DaSCH uses cookies to provide greater user experience. By using our applications you accept
         <a href="https://dasch.swiss/cookie-policy/" target=_blank>cookie policy</a>,
         <a href="https://dasch.swiss/eula/" target=_blank>EULA</a> and
         <a href="https://dasch.swiss/privacy-policy/" target=_blank>privacy policy</a>.
       </div>
       <div class="modal-buttons">
-        <button on:click={() => handleModal()} class="btn-accept-necessary">Accept only essential cookies</button>
-        <button on:click={() => handleModal(true)} class="btn-accept-all">Accept all cookies</button>
+        <button on:click={() => handleModal()} class="btn-accept-all">OK</button>
       </div>
     </div>
   </div>
@@ -68,13 +61,11 @@ button {
   border-radius: 0.2rem;
   margin: 0 0.5rem 0.5rem;
 }
-.btn-accept-necessary,
 .btn-accept-all:hover {
   border: 1px solid var(--dasch-violet);
   background-color: #fff;
   color: var(--dasch-violet);
 }
-.btn-accept-necessary:hover,
 .btn-accept-all {
   border: 1px solid transparent;
   background-color: var(--dasch-violet);
@@ -84,13 +75,14 @@ button {
   .modal-wrapper {flex-direction: row;}
   .modal-text {
     padding: 1rem 1.5rem;
-    width: 50%;
+    width: 80%;
   }
   .modal-buttons {
     margin-top: 0.5rem;
     padding: 1rem;
     flex-direction: row;
-    width: 50%;
+    flex-flow: column-reverse;
+    width: 20%;
   }
   button {width: auto;}
 }

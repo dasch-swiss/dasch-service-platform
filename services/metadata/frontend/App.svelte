@@ -5,15 +5,10 @@
   import ProjectsRepository from "./projects-repository/ProjectsRepository.svelte";
   import ProjectPage from "./project-page/ProjectPage.svelte";
   import Redirect from "./Redirect.svelte";
-  import GTag from "./GTag.svelte";
   import CookiesBanner from "./CookiesBanner.svelte";
 
   export let url = "";
 </script>
-
-<svelte:head>
-  <GTag />
-</svelte:head>
 
 <Header />
   <div class=wrapper>

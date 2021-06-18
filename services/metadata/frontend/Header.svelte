@@ -84,7 +84,6 @@
     <a class="menu-item" href="{`https://app.${getEnv()}dasch.swiss/`}">{`app.${getEnv()}dasch.swiss`}</a>
     <a class="menu-item" href="{`https://admin.${getEnv()}dasch.swiss/`}">{`admin.${getEnv()}dasch.swiss`}</a>
     <a class="menu-item" href="https://docs.dasch.swiss/">docs.dasch.swiss</a>
-    <a class="menu-item" href="https://docs-api.dasch.swiss/">docs-api.dasch.swiss</a>
   </div>
 </header>
 
@@ -187,4 +186,10 @@
     }
     .title {font-size: 1.25rem;}
   }
+@media screen and (min-width: 1200px) {
+  .header-container {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+}
 </style>

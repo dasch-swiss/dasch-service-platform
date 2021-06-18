@@ -1,5 +1,36 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.2.0...v1.3.0) (2021-06-15)
+
+
+### Bug Fixes
+
+* **metadata-service:** fix cookie domain ([#80](https://www.github.com/dasch-swiss/dasch-service-platform/issues/80)) ([5a09ee7](https://www.github.com/dasch-swiss/dasch-service-platform/commit/5a09ee783bdab95fac8a584acfda40565f228a78))
+* **metadata:** improve header and footer display on desktop ([#88](https://www.github.com/dasch-swiss/dasch-service-platform/issues/88)) ([3d9ec6e](https://www.github.com/dasch-swiss/dasch-service-platform/commit/3d9ec6eea617aed1a1072456aa3bc53059d4175f))
+* **metadata:** relocate go-back-button for mobile ([#86](https://www.github.com/dasch-swiss/dasch-service-platform/issues/86)) ([58306f3](https://www.github.com/dasch-swiss/dasch-service-platform/commit/58306f3be2643cdcd882c8ea43ceefe7975775e7))
+
+
+### Documentation
+
+* **project:** updates slate docs for the project service ([#85](https://www.github.com/dasch-swiss/dasch-service-platform/issues/85)) ([42834c7](https://www.github.com/dasch-swiss/dasch-service-platform/commit/42834c7d9970dd7ddf436432cd98e12dec2c35fa))
+
+
+### Maintenance
+
+* **build:** add version.txt filegroup ([#84](https://www.github.com/dasch-swiss/dasch-service-platform/issues/84)) ([c119a22](https://www.github.com/dasch-swiss/dasch-service-platform/commit/c119a223a04e6c9acbc2ac5b5763310f809a71bb))
+* **metadata:** add Fathom analytics ([#89](https://www.github.com/dasch-swiss/dasch-service-platform/issues/89)) ([d72d402](https://www.github.com/dasch-swiss/dasch-service-platform/commit/d72d402f01a839e49fa673baf4f15343abc20fb0))
+* **metadata:** remove Matomo tracker ([#83](https://www.github.com/dasch-swiss/dasch-service-platform/issues/83)) ([3d04ea3](https://www.github.com/dasch-swiss/dasch-service-platform/commit/3d04ea35084ea2ff773e8a277374cb9d383925af))
+* **project:** clean up error handling ([#81](https://www.github.com/dasch-swiss/dasch-service-platform/issues/81)) ([a73229c](https://www.github.com/dasch-swiss/dasch-service-platform/commit/a73229ccf8819e5254db098dd945137bc9be8c66))
+
+
+### Enhancements
+
+* **metadata-service:** add consent form (DSP-1704) ([#75](https://www.github.com/dasch-swiss/dasch-service-platform/issues/75)) ([cf05f58](https://www.github.com/dasch-swiss/dasch-service-platform/commit/cf05f585e90112c2773638c85f4dd8849d79ff17))
+* **metadata-service:** add version number display ([#78](https://www.github.com/dasch-swiss/dasch-service-platform/issues/78)) ([f34e922](https://www.github.com/dasch-swiss/dasch-service-platform/commit/f34e9223091e5bd51d1d3b4af93d5a14a10b7d57))
+* **metadata-service:** set domain cookie ([#79](https://www.github.com/dasch-swiss/dasch-service-platform/issues/79)) ([dee3f56](https://www.github.com/dasch-swiss/dasch-service-platform/commit/dee3f5640e0eafcc6105e0982c3701b499c65478))
+* **metadata:** cookies banner restyled ([#82](https://www.github.com/dasch-swiss/dasch-service-platform/issues/82)) ([2ba6315](https://www.github.com/dasch-swiss/dasch-service-platform/commit/2ba63158eda751ad2948dd6b148560ca62f776bf))
+* **metadata:** remove GA + update consent form (DSP-1742) ([#90](https://www.github.com/dasch-swiss/dasch-service-platform/issues/90)) ([3a13122](https://www.github.com/dasch-swiss/dasch-service-platform/commit/3a131223c92e0dc7e09c1394bd0582d02380878e))
+
 ## [1.2.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.1.0...v1.2.0) (2021-06-02)
 
 
