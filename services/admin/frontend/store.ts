@@ -18,7 +18,7 @@ import { writable } from 'svelte/store'
 import type { Project } from './interfaces';
 
 export const projectsList = writable([] as Project[]);
-export const currectProject = writable({} as Project);
+export const currentProject = writable({} as Project);
 
 export async function getProjects(returnDeletedProjects?: boolean): Promise<void> {
   const protocol = window.location.protocol;
@@ -40,6 +40,6 @@ export async function getProject(uuid: string): Promise<void> {
   const response = await fetch(`${baseUrl}v1/projects/${uuid}`);
   
   response.json().then(res => {
-      currectProject.set(res);
+      currentProject.set(res);
   });
 }

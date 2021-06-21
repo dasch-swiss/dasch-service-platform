@@ -1,29 +1,31 @@
 <script lang="ts">
-  import { getProject, currectProject } from "./store";
+  import { getProject, currentProject } from "./store";
   import { onMount } from 'svelte';
 
+  const projectID = window.location.pathname.split("/")[2];
+
   onMount(async () => {
-      await getProject('8204c48c-be0c-43ae-bb7c-76ff64eb1882');
+      await getProject(projectID);
   });
 
-
 </script>
+
 <div class="projects">
   <div>
       <h1>Projects</h1>
   </div>
   <div class="list">
       <li>
-        {$currectProject.shortCode}
+        {$currentProject.shortCode}
       </li>
       <li>
-        {$currectProject.shortName}
+        {$currentProject.shortName}
       </li>
       <li>
-        {$currectProject.longName}
+        {$currentProject.longName}
       </li>
       <li>
-        {$currectProject.description}
+        {$currentProject.description}
       </li>
   </div>
 </div>

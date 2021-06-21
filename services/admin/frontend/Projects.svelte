@@ -1,6 +1,7 @@
 <script lang="ts">
     import { getProjects, projectsList } from "./store";
     import { onMount } from 'svelte';
+    import { Router, Link } from "svelte-routing";
 
     onMount(async () => {
         await getProjects();
@@ -15,7 +16,11 @@
     <div class="list">
         {#each $projectsList as p}
            <li>
-               {p.longName}
+               <Router>
+                   <Link to={`/projects/${p.id}`}>
+                       {p.longName}
+                   </Link>
+               </Router>
            </li>
         {/each}
     </div>
