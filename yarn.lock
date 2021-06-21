@@ -2150,6 +2150,11 @@ svelte-routing@^1.6.0:
   dependencies:
     svelte2tsx "^0.1.157"
 
+svelte-simple-modal@^0.10.3:
+  version "0.10.3"
+  resolved "https://registry.npmjs.org/svelte-simple-modal/-/svelte-simple-modal-0.10.3.tgz"
+  integrity sha512-qup4QnfrGeD3XEsMYXJgb/nld/TKC5TsHlEsceRZrHP6us3uNlppKgqHKOkIsNyCeOsaCyDnUBGYP54BRn5xog==
+
 svelte2tsx@^0.1.157:
   version "0.1.191"
   resolved "https://registry.npmjs.org/svelte2tsx/-/svelte2tsx-0.1.191.tgz"

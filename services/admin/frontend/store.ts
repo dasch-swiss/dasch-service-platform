@@ -15,15 +15,16 @@
  *
  */
 import { writable } from 'svelte/store'
-import type { Project } from './interfaces';
+import type { Project} from './interfaces';
 
 export const projectsList = writable([] as Project[]);
 export const currentProject = writable({} as Project);
 
+const protocol = window.location.protocol;
+const port = protocol === 'https:' ? '' : ':8080';
+const baseUrl = `${protocol}//${window.location.hostname}${port}/`;
+
 export async function getProjects(returnDeletedProjects?: boolean): Promise<void> {
-  const protocol = window.location.protocol;
-  const port = protocol === 'https:' ? '' : ':8080';
-  const baseUrl = `${protocol}//${window.location.hostname}${port}/`;
 
   const response = await fetch(`${baseUrl}v1/projects`);
   
@@ -33,13 +34,29 @@ export async function getProjects(returnDeletedProjects?: boolean): Promise<void
 }
 
 export async function getProject(uuid: string): Promise<void> {
-  const protocol = window.location.protocol;
-  const port = protocol === 'https:' ? '' : ':8080';
-  const baseUrl = `${protocol}//${window.location.hostname}${port}/`;
 
   const response = await fetch(`${baseUrl}v1/projects/${uuid}`);
   
   response.json().then(res => {
       currentProject.set(res);
   });
+}
+
+export async function createProject(sc: string, sn: string, ln: string, desc: string): Promise<void> {
+
+  const p = {
+    shortCode: sc,
+    shortName: sn,
+    longName: ln,
+    description: desc
+  }
+
+  const response = await fetch(`${baseUrl}v1/projects`, {
+    method: 'POST',
+    body: JSON.stringify(p)
+  });
+
+  response.json().then(() => {
+    getProjects();
+  })
 }

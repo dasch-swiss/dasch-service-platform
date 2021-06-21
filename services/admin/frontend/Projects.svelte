@@ -1,7 +1,9 @@
 <script lang="ts">
-    import { getProjects, projectsList } from "./store";
-    import { onMount } from 'svelte';
-    import { Router, Link } from "svelte-routing";
+    import {getProjects, projectsList} from "./store";
+    import {onMount} from 'svelte';
+    import {Router, Link} from "svelte-routing";
+    import Content from "./Modal/Content.svelte";
+    import Modal from 'svelte-simple-modal';
 
     onMount(async () => {
         await getProjects();
@@ -23,6 +25,10 @@
                </Router>
            </li>
         {/each}
+        <!--    Modal for creating a new project-->
+        <Modal>
+            <Content/>
+        </Modal>
     </div>
 </div>
 
