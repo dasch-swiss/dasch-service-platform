@@ -60,3 +60,14 @@ export async function createProject(sc: string, sn: string, ln: string, desc: st
     getProjects();
   })
 }
+
+export async function deleteProject(uuid: string): Promise<void> {
+
+  const response = await fetch(`${baseUrl}v1/projects/${uuid}`, {
+    method: 'DELETE'
+  });
+
+  response.json().then(res => {
+    getProjects();
+  });
+}

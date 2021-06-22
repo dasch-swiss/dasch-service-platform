@@ -1,5 +1,5 @@
 <script lang="ts">
-    import {getProjects, projectsList} from "./store";
+    import {getProjects, deleteProject, projectsList} from "./store";
     import {onMount} from 'svelte';
     import {Router, Link} from "svelte-routing";
     import Content from "./Modal/Content.svelte";
@@ -18,11 +18,16 @@
     <div class="list">
         {#each $projectsList as p}
            <li>
-               <Router>
-                   <Link to={`/projects/${p.id}`}>
-                       {p.longName}
-                   </Link>
-               </Router>
+               <div class="name">
+                   <Router>
+                       <Link to={`/projects/${p.id}`}>
+                           {p.longName}
+                       </Link>
+                   </Router>
+               </div>
+               <div class="delete">
+                   <button on:click={deleteProject(p.id)}>X</button>
+               </div>
            </li>
         {/each}
         <!--    Modal for creating a new project-->
@@ -33,7 +38,7 @@
 </div>
 
 
-<style>
+<style lang="scss">
     .projects {
         width: 100%;
         padding-left: 2%;
@@ -54,6 +59,19 @@
         list-style: none;
     }
 
+    .list li:nth-child(odd) {
+        background-color: #ebebeb;
+    }
+
+    .list li:hover {
+        background-color: #cecece;
+        cursor: pointer;
+
+        .delete {
+            display: inline;
+        }
+    }
+
     .list li:first-child {
         -webkit-border-radius: 10px 10px 0px 0px;
         -moz-border-radius: 10px 10px 0px 0px;
@@ -68,13 +86,18 @@
         border-radius: 0px 0px 10px 10px;
     }
 
-    .list li:nth-child(odd) {
-        background-color: #ebebeb;
+    .list li .name {
+        display: inline;
     }
 
-    .list li:hover {
-        background-color: #cecece;
-        cursor: pointer;
+    .list li .delete {
+        float: right;
+        display: none;
+    }
+
+    .list li .delete button {
+        border: none;
+        background: none;
     }
     
 </style>
