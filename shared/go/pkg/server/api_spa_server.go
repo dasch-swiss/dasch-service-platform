@@ -3,6 +3,9 @@ package server
 import (
 	"log"
 	"net/http"
+	"os"
+	"path/filepath"
+	"regexp"
 	"time"
 
 	"github.com/gorilla/handlers"
@@ -30,8 +33,6 @@ func NewAPISPAServer(port string) *APISPAServer {
 //
 // Finally, the server can be started:
 //  log.Fatal(server.ListenAndServe())
-//
-// TODO: needs spa stuff
 type APISPAServer struct {
 	port   string
 	Router mux.Router
@@ -39,6 +40,16 @@ type APISPAServer struct {
 
 func (server *APISPAServer) ListenAndServe() error {
 	h := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(&server.Router)
+
+	// init SPA handler
+	spa := spaHandler{
+		staticPath: "public",     // TODO: make dynamic
+		indexPath:  "index.html", // TODO: make dynamic
+	}
+
+	// apply SPA handler
+	server.Router.PathPrefix("/").Handler(spa)
+
 	srv := &http.Server{
 		Handler:      h,
 		Addr:         ":" + server.port,
@@ -48,6 +59,54 @@ func (server *APISPAServer) ListenAndServe() error {
 	log.Println("Serving on port:", srv.Addr)
 	err := srv.ListenAndServe()
 	return err
+}
+
+type spaHandler struct {
+	staticPath string
+	indexPath  string
+}
+
+// handle SPA to serve always from right place, no matter of route
+func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // TODO: make dynamic
+	log.Printf("SPA Handler: %v", r.URL)
+
+	// get the absolute path to prevent directory traversal
+	path, err := filepath.Abs(r.URL.Path)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	// prepend the path with the path to the static directory
+	path = filepath.Join(h.staticPath, path)
+
+	// check whether a file exists at the given path
+	_, err2 := os.Stat(path)
+	if err2 == nil {
+		// file exists -> serve file
+		// log.Printf("Serving from File Server: %v", path)
+		http.FileServer(http.Dir(h.staticPath)).ServeHTTP(w, r)
+		return
+	} else {
+		// file does not exist, see where to go from here
+		pattern := "/projects/?([0-9A-F]{4})?"
+		match, _ := regexp.MatchString(pattern, path)
+		if match {
+			// file matches "/project/shortcode" pattern -> remove this section of the path
+			re := regexp.MustCompile(pattern)
+			s := re.ReplaceAllString(path, "/")
+			_, err3 := os.Stat(s)
+			if err3 == nil {
+				// file exists after removing the section -> serve this file
+				// log.Printf("Existis after changing: %v", s)
+				http.ServeFile(w, r, s)
+				return
+			}
+		}
+
+		// file still not found, serve index.html
+		http.ServeFile(w, r, filepath.Join(h.staticPath, h.indexPath))
+	}
 }
 
 // ----------------
