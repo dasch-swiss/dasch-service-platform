@@ -13,11 +13,20 @@ import (
 )
 
 // NewAPISPAServer returns a new server instance.
+//
+// By default it will serve:
+//  `./public/index.html`
+// for the single page application.
 func NewAPISPAServer(port string) *APISPAServer {
 	r := mux.NewRouter()
+	defaultSPAHandler := spaHandler{
+		staticPath: "public",
+		indexPath:  "index.html",
+	}
 	return &APISPAServer{
 		port:   port,
 		Router: *r,
+		spa:    defaultSPAHandler,
 	}
 }
 
@@ -31,24 +40,34 @@ func NewAPISPAServer(port string) *APISPAServer {
 //  r := &server.Router
 //  r.HandleFunc("/api/v1/status", getStatus).Methods("GET")
 //
+// By default, the SPA is served from:
+//  `./public/index.html`
+//
+// The SPA directory can be changed by calling:
+//  server.SetSPA("public/service-xy")
+// This will then serve:
+//  `./public/service-xy/index.html`
+//
 // Finally, the server can be started:
 //  log.Fatal(server.ListenAndServe())
 type APISPAServer struct {
 	port   string
 	Router mux.Router
+	spa    spaHandler
+}
+
+func (server *APISPAServer) SetSPA(path string) {
+	server.spa = spaHandler{
+		staticPath: path,
+		indexPath:  "index.html",
+	}
 }
 
 func (server *APISPAServer) ListenAndServe() error {
 	h := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(&server.Router)
 
-	// init SPA handler
-	spa := spaHandler{
-		staticPath: "public",     // TODO: make dynamic
-		indexPath:  "index.html", // TODO: make dynamic
-	}
-
 	// apply SPA handler
-	server.Router.PathPrefix("/").Handler(spa)
+	server.Router.PathPrefix("/").Handler(server.spa)
 
 	srv := &http.Server{
 		Handler:      h,
@@ -179,28 +198,4 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // TODO:
 // 		log.Fatal(err.Error())
 // 	}
 
-// }
-
-// -----------------
-
-// func main() {
-
-// 	// init SPA handler
-// 	spa := spaHandler{
-// 		staticPath: "public",
-// 		indexPath:  "index.html",
-// 	}
-
-// 	// apply SPA handler
-// 	router.PathPrefix("/").Handler(spa)
-
-// 	srv := &http.Server{
-// 		Handler:      ch(router),
-// 		Addr:         ":3000",
-// 		WriteTimeout: 15 * time.Second,
-// 		ReadTimeout:  15 * time.Second,
-// 	}
-
-// 	// run server
-// 	log.Fatal(srv.ListenAndServe())
 // }
