@@ -132,34 +132,6 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // TODO:
 
 // func main() {
 
-// 	path, err := os.Getwd()
-// 	if err != nil {
-// 		log.Println(err)
-// 	}
-// 	fmt.Println(path)
-
-// 	// organizationRepository := repository.NewInmemDB()
-// 	organizationRepository := repository.NewInmemDB()
-// 	organizationService := organization.NewService(organizationRepository)
-
-// 	config, err := client.ParseConnectionString("esdb://localhost:2113?tls=false")
-// 	if err != nil {
-// 		log.Fatal("Unexpected configuration error: ", err.Error())
-// 	}
-
-// 	client, err := client.NewClient(config)
-// 	if err != nil {
-// 		log.Fatal("Unexpected failure setting up test connection: ", err.Error())
-// 	}
-// 	err = client.Connect()
-// 	if err != nil {
-// 		log.Fatal("Unexpected failure connecting: ", err.Error())
-// 	}
-
-// 	projectRepository := projectRepository.NewProjectRepository(client)
-
-// 	projectService := project.NewService(projectRepository)
-
 // 	metricService, err := metric.NewPrometheusService()
 // 	if err != nil {
 // 		log.Fatal(err.Error())
@@ -192,10 +164,6 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) { // TODO:
 // 		// FIXME: get rid of deprecated github.com/gorilla/context library
 // 		Handler:  context.ClearHandler(http.DefaultServeMux),
 // 		ErrorLog: logger,
-// 	}
-// 	err = srv.ListenAndServe()
-// 	if err != nil {
-// 		log.Fatal(err.Error())
 // 	}
 
 // }
