@@ -1,7 +1,6 @@
-<script>
+<script lang="ts">
     import { getContext } from 'svelte';
     import Dialog from './Dialog.svelte';
-    import { currentProject } from "../store";
 
     const { open } = getContext('simple-modal');
 
@@ -20,10 +19,11 @@
         status = 1;
     }
 
-    const openCreateProjectDialog = () => {
+    const openDialog = () => {
         open(
             Dialog,
             {
+                editMode: modalType == 'edit',
                 onCancel,
                 onOkay
             },
@@ -35,35 +35,16 @@
         );
     };
 
-    const openEditProjectDialog = () => {
-        open(
-            Dialog,
-            {
-                editMode: true,
-                shortCode: $currentProject.shortCode,
-                shortName: $currentProject.shortName,
-                longName: $currentProject.longName,
-                description: $currentProject.description,
-                onCancel,
-                onOkay
-            },
-            {
-                closeButton: false,
-                closeOnEsc: false,
-                closeOnOuterClick: false,
-            }
-        );
-    };
 </script>
 <section>
     {#if modalType == 'create'}
     <div class="create-project">
-        <button on:click={openCreateProjectDialog}>+</button>
+        <button on:click={openDialog}>+</button>
     </div>
     {/if}
     {#if modalType == 'edit'}
         <div class="edit-project">
-            <button on:click={openEditProjectDialog}>Edit</button>
+            <button on:click={openDialog}>Edit</button>
         </div>
     {/if}
 </section>

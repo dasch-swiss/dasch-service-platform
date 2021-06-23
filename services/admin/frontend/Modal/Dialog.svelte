@@ -1,6 +1,6 @@
 <script>
-    import { getContext } from 'svelte';
-    import {createProject, editProject} from "../store";
+    import {getContext, onMount} from 'svelte';
+    import {createProject, editProject, currentProject} from "../store";
 
     export let onCancel = () => {};
     export let onOkay = () => {};
@@ -10,10 +10,10 @@
     const { close } = getContext('simple-modal');
 
     const projectID = window.location.pathname.split("/")[2];
-    export let shortCode;
-    export let shortName;
-    export let longName;
-    export let description;
+    let shortCode;
+    let shortName;
+    let longName;
+    let description;
 
     let onChange = () => {};
 
@@ -35,6 +35,15 @@
     $: onChange(shortName);
     $: onChange(longName);
     $: onChange(description);
+
+    onMount(() => {
+        if (editMode) {
+            shortCode = $currentProject.shortCode;
+            shortName = $currentProject.shortName;
+            longName = $currentProject.longName;
+            description = $currentProject.description;
+        }
+    });
 </script>
 
 <style>
@@ -55,7 +64,11 @@
 
 
 <div>
-    <h2>Create a new project</h2>
+    {#if editMode}
+        <h2>Edit project info</h2>
+    {:else}
+        <h2>Create a new project</h2>
+    {/if}
 </div>
 <div>
     <p>Short Code:</p>

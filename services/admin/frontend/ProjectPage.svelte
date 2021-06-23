@@ -14,7 +14,7 @@
 
 <div class="projects">
     <div>
-        <h1>Projects</h1>
+        <h1>Project Info</h1>
     </div>
     <div class="info">
         <p>Short Code: {$currentProject.shortCode}</p>
@@ -24,6 +24,6 @@
     </div>
     <!--    Modal for editing a project-->
     <Modal>
-        <Content modalType="edit" currentProject={$currentProject}/>
+        <Content modalType="edit"/>
     </Modal>
 </div>
