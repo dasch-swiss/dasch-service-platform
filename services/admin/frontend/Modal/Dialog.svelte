@@ -1,16 +1,20 @@
 <script>
     import { getContext } from 'svelte';
-    import {createProject} from "../store";
+    import {createProject, editProject} from "../store";
 
     export let onCancel = () => {};
     export let onOkay = () => {};
 
+    export let editMode;
+
     const { close } = getContext('simple-modal');
 
-    let shortCode;
-    let shortName;
-    let longName;
-    let description;
+    const projectID = window.location.pathname.split("/")[2];
+    export let shortCode;
+    export let shortName;
+    export let longName;
+    export let description;
+
     let onChange = () => {};
 
     function _onCancel() {
@@ -19,7 +23,11 @@
     }
 
     async function _onOkay(){
-        await createProject(shortCode, shortName, longName, description);
+        if (editMode) {
+            await editProject(projectID, shortCode, shortName, longName, description);
+        } else {
+            await createProject(shortCode, shortName, longName, description);
+        }
         close();
     }
 

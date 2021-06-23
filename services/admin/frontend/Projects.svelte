@@ -32,7 +32,7 @@
         {/each}
         <!--    Modal for creating a new project-->
         <Modal>
-            <Content/>
+            <Content modalType="create"/>
         </Modal>
     </div>
 </div>

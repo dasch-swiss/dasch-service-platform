@@ -1,6 +1,8 @@
 <script lang="ts">
   import { getProject, currentProject } from "./store";
   import { onMount } from 'svelte';
+  import Content from "./Modal/Content.svelte";
+  import Modal from 'svelte-simple-modal';
 
   const projectID = window.location.pathname.split("/")[2];
 
@@ -11,21 +13,17 @@
 </script>
 
 <div class="projects">
-  <div>
-      <h1>Projects</h1>
-  </div>
-  <div class="list">
-      <li>
-        {$currentProject.shortCode}
-      </li>
-      <li>
-        {$currentProject.shortName}
-      </li>
-      <li>
-        {$currentProject.longName}
-      </li>
-      <li>
-        {$currentProject.description}
-      </li>
-  </div>
+    <div>
+        <h1>Projects</h1>
+    </div>
+    <div class="info">
+        <p>Short Code: {$currentProject.shortCode}</p>
+        <p>Short Name: {$currentProject.shortName}</p>
+        <p>Long Name: {$currentProject.longName}</p>
+        <p>Description: {$currentProject.description}</p>
+    </div>
+    <!--    Modal for editing a project-->
+    <Modal>
+        <Content modalType="edit" currentProject={$currentProject}/>
+    </Modal>
 </div>
