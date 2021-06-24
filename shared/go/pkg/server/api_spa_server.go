@@ -6,8 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"strings"
-	"unicode/utf8"
-
 	"time"
 
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/middleware"
@@ -63,6 +61,12 @@ type APISPAServer struct {
 	spa    spaHandler
 }
 
+/*
+Set the path to the single page application.
+
+The path passed should point to the directory where `index.html` lies, though without tailing slash:
+ srv.SetSPA("public/admin")
+*/
 func (server *APISPAServer) SetSPA(path string) {
 	server.spa = spaHandler{
 		staticPath: path,
@@ -70,6 +74,8 @@ func (server *APISPAServer) SetSPA(path string) {
 	}
 }
 
+// Create an http.Server from the APISPAServer. is called from ListenAndServe().
+// The `log` flag specifies if negroni should log
 func (server *APISPAServer) prepare(log bool) http.Server {
 	// apply SPA handler
 	server.Router.PathPrefix("/").Handler(server.spa)
@@ -94,6 +100,7 @@ func (server *APISPAServer) prepare(log bool) http.Server {
 	return *srv
 }
 
+// Start the server and listen to requests on the specified port.
 func (server *APISPAServer) ListenAndServe() error {
 	srv := server.prepare(true)
 	log.Println("Serving on port:", srv.Addr)
@@ -109,6 +116,8 @@ type spaHandler struct {
 // handle SPA to serve always from right place, no matter of route
 func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path == "/" {
+		// Root requested.
+		// -> serve index.html
 		http.ServeFile(w, r, filepath.Join(h.staticPath, h.indexPath))
 		return
 	}
@@ -121,11 +130,12 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	path = filepath.Join(h.staticPath, path)
 	_, err2 := os.Stat(path)
 	if err2 == nil {
-		// file exists -> serve file
+		// file exists
+		// -> serve file
 		http.FileServer(http.Dir(h.staticPath)).ServeHTTP(w, r)
 		return
 	} else {
-		cropped := trimFirstRune((r.URL.Path))
+		cropped := strings.TrimPrefix(r.URL.Path, "/")
 		if strings.Contains(cropped, "/") {
 			// subroute requested
 			// e.g. `proj/global.css`
@@ -140,9 +150,4 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 			h.ServeHTTP(w, r)
 		}
 	}
-}
-
-func trimFirstRune(s string) string {
-	_, i := utf8.DecodeRuneInString(s)
-	return s[i:]
 }
