@@ -8,8 +8,9 @@ import (
 	"regexp"
 	"time"
 
-	"github.com/gorilla/handlers"
+	// "github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/urfave/negroni"
 )
 
 // NewAPISPAServer returns a new server instance.
@@ -19,6 +20,16 @@ import (
 // for the single page application.
 func NewAPISPAServer(port string) *APISPAServer {
 	r := mux.NewRouter()
+	// metricService, err := metric.NewPrometheusService()
+	// if err != nil {
+	// 	log.Fatal(err.Error())
+	// }
+
+	// n := negroni.New(
+	// 	negroni.HandlerFunc(middleware.Cors),
+	// 	negroni.HandlerFunc(middleware.Metrics(metricService)),
+	// 	negroni.NewLogger(),
+	// )
 	defaultSPAHandler := spaHandler{
 		staticPath: "public",
 		indexPath:  "index.html",
@@ -26,7 +37,8 @@ func NewAPISPAServer(port string) *APISPAServer {
 	return &APISPAServer{
 		port:   port,
 		Router: *r,
-		spa:    defaultSPAHandler,
+		// Negroni: *n,
+		spa: defaultSPAHandler,
 	}
 }
 
@@ -53,7 +65,8 @@ func NewAPISPAServer(port string) *APISPAServer {
 type APISPAServer struct {
 	port   string
 	Router mux.Router
-	spa    spaHandler
+	// Negroni negroni.Negroni
+	spa spaHandler
 }
 
 func (server *APISPAServer) SetSPA(path string) {
@@ -64,13 +77,16 @@ func (server *APISPAServer) SetSPA(path string) {
 }
 
 func (server *APISPAServer) ListenAndServe() error {
-	h := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(&server.Router)
+	// h := handlers.CORS(handlers.AllowedOrigins([]string{"*"}))(&server.Router)
 
 	// apply SPA handler
 	server.Router.PathPrefix("/").Handler(server.spa)
 
+	n := negroni.Classic() // Includes some default middlewares
+	n.UseHandler(&server.Router)
+
 	srv := &http.Server{
-		Handler:      h,
+		Handler:      n,
 		Addr:         ":" + server.port,
 		WriteTimeout: 15 * time.Second,
 		ReadTimeout:  15 * time.Second,
