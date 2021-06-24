@@ -113,7 +113,7 @@ apispa: ## manual testing
 
 .PHONY: apispa-test
 apispa-test: ## run API-SPA-Server tests
-	@go test ./shared/go/pkg/server/... -v
+	@go test ./shared/go/pkg/server/... -v -cover
 
 #################################
 # Docs targets

@@ -142,66 +142,11 @@ func TestSPA(t *testing.T) {
 				body, _ := ioutil.ReadAll(res.Body)
 				exp, err := ioutil.ReadFile("testfiles/" + test.expFile)
 				if err != nil {
-					t.Fatal("Could not read reference file `index.html` from disc")
+					t.Fatalf("Could not read reference file %v from disc", test.expFile)
 				}
 				assert.Equal(t, exp, body)
 			})
 		})
 	}
-
-	// t.Run("Test Root", func(t *testing.T) {
-	// 	res, err := http.Get(ts.URL + "/")
-	// 	if err != nil {
-	// 		t.Fatal(err)
-	// 	}
-	// 	t.Run("Test status code", func(t *testing.T) {
-	// 		assert.Equal(t, 200, res.StatusCode)
-	// 	})
-	// 	t.Run("Test content", func(t *testing.T) {
-	// 		// assert.Equal(t, 200, res.StatusCode)
-	// 		body, _ := ioutil.ReadAll(res.Body)
-	// 		exp, err := ioutil.ReadFile("testfiles/index.html")
-	// 		if err != nil {
-	// 			t.Fatal("Could not read reference file `index.html` from disc")
-	// 		}
-	// 		assert.Equal(t, exp, body)
-	// 	})
-	// })
-
-	// t.Run("Test Root-index", func(t *testing.T) {
-	// 	res, err := http.Get(ts.URL + "/index.html")
-	// 	if err != nil {
-	// 		t.Fatal(err)
-	// 	}
-	// 	t.Run("Test status code", func(t *testing.T) {
-	// 		assert.Equal(t, 200, res.StatusCode)
-	// 	})
-	// 	t.Run("Test content", func(t *testing.T) {
-	// 		// assert.Equal(t, 200, res.StatusCode)
-	// 		body, _ := ioutil.ReadAll(res.Body)
-	// 		exp, err := ioutil.ReadFile("testfiles/index.html")
-	// 		if err != nil {
-	// 			t.Fatal("Could not read reference file `index.html` from disc")
-	// 		}
-	// 		assert.Equal(t, exp, body)
-	// 	})
-	// })
-
-	// go func() {
-	// 	fmt.Println("Serving...")
-	// 	s.ListenAndServe()
-	// }()
-	// time.Sleep(100 * time.Millisecond)
-
-	// t.Run("Testing SPA Route", func(t *testing.T) {
-	// 	rs := make(chan int, 1)
-	// 	go func() {
-	// 		res, _ := http.Get("http://localhost:8080/public/global.css")
-	// 		rs <- res.StatusCode
-	// 	}()
-
-	// 	code := <-rs
-	// 	assert.Equal(t, 200, code)
-	// })
 
 }
