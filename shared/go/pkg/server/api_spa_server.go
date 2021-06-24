@@ -70,7 +70,7 @@ func (server *APISPAServer) SetSPA(path string) {
 	}
 }
 
-func (server *APISPAServer) ListenAndServe() error {
+func (server *APISPAServer) prepare(log bool) http.Server {
 	// apply SPA handler
 	server.Router.PathPrefix("/").Handler(server.spa)
 
@@ -78,17 +78,24 @@ func (server *APISPAServer) ListenAndServe() error {
 	n := negroni.New(
 		negroni.HandlerFunc(middleware.Cors),
 		negroni.HandlerFunc(middleware.Metrics(metricService)),
-		negroni.NewLogger(),
 	)
+	if log {
+		n.Use(negroni.NewLogger())
+	}
 
 	n.UseHandler(&server.Router)
 
 	srv := &http.Server{
 		Handler:      n,
 		Addr:         ":" + server.port,
-		WriteTimeout: 15 * time.Second,
-		ReadTimeout:  15 * time.Second,
+		WriteTimeout: 1 * time.Second,
+		ReadTimeout:  1 * time.Second,
 	}
+	return *srv
+}
+
+func (server *APISPAServer) ListenAndServe() error {
+	srv := server.prepare(true)
 	log.Println("Serving on port:", srv.Addr)
 	err := srv.ListenAndServe()
 	return err
