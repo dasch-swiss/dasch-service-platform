@@ -108,6 +108,11 @@ type spaHandler struct {
 
 // handle SPA to serve always from right place, no matter of route
 func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
+	if r.URL.Path == "/" {
+		http.ServeFile(w, r, filepath.Join(h.staticPath, h.indexPath))
+		return
+	}
+
 	path, err := filepath.Abs(r.URL.Path)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
@@ -131,7 +136,7 @@ func (h spaHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 		} else {
 			// Non-existing file
 			// -> index.html
-			r.URL.Path = "/index.html"
+			r.URL.Path = "/"
 			h.ServeHTTP(w, r)
 		}
 	}
