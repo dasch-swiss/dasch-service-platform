@@ -9,6 +9,8 @@ import (
 	"time"
 
 	// "github.com/gorilla/handlers"
+	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/middleware"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
 	"github.com/gorilla/mux"
 	"github.com/urfave/negroni"
 )
@@ -82,7 +84,17 @@ func (server *APISPAServer) ListenAndServe() error {
 	// apply SPA handler
 	server.Router.PathPrefix("/").Handler(server.spa)
 
-	n := negroni.Classic() // Includes some default middlewares
+	// n := negroni.Classic() // Includes some default middlewares
+	metricService, _ := metric.NewPrometheusService()
+	// n.Use(negroni.HandlerFunc(middleware.Cors))
+	// n.Use(negroni.HandlerFunc(middleware.Metrics(metricService)))
+	// n.Use(negroni.NewLogger())
+	n := negroni.New(
+		negroni.HandlerFunc(middleware.Cors),
+		negroni.HandlerFunc(middleware.Metrics(metricService)),
+		negroni.NewLogger(),
+	)
+
 	n.UseHandler(&server.Router)
 
 	srv := &http.Server{

@@ -17,3 +17,13 @@ GET http://localhost:8080/build/bundle.js HTTP/1.1
 
 GET http://localhost:8080/projects/global.css HTTP/1.1
 
+
+###
+
+GET http://localhost:8080/proj/global.css HTTP/1.1
+
+
+###
+
+GET http://localhost:8080/proj/ HTTP/1.1
+
