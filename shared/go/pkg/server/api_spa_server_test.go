@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/http/httptest"
 	"testing"
+	"time"
 
 	"github.com/stretchr/testify/assert"
 )
@@ -148,5 +149,33 @@ func TestSPA(t *testing.T) {
 			})
 		})
 	}
+}
 
+func TestServer(t *testing.T) {
+	s := NewAPISPAServer("8079")
+	r := &s.Router
+	r.HandleFunc("/status", func(rw http.ResponseWriter, r *http.Request) { io.WriteString(rw, "OK") })
+	serverRes := make(chan error)
+	go func() {
+		err := s.ListenAndServe()
+		fmt.Println("here")
+		serverRes <- err
+	}()
+	time.Sleep(100 * time.Millisecond)
+
+	t.Run("Test server running", func(t *testing.T) {
+		res, err := http.Get("http://localhost:8079/status")
+		if err != nil {
+			t.Fatal(err)
+		}
+		assert.Equal(t, "200 OK", res.Status)
+		assert.NotEqual(t, 0, res.StatusCode)
+	})
+
+	t.Run("Test server shutdown", func(t *testing.T) {
+		s.Shutdown()
+		time.Sleep(100 * time.Millisecond)
+		res := <-serverRes
+		assert.NotNil(t, res)
+	})
 }

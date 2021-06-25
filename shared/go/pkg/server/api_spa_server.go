@@ -1,9 +1,12 @@
 package server
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"os/signal"
 	"path/filepath"
 	"strings"
 	"time"
@@ -59,6 +62,8 @@ type APISPAServer struct {
 	port   string
 	Router mux.Router
 	spa    spaHandler
+	srv    http.Server
+	stop   chan bool
 }
 
 /*
@@ -102,10 +107,49 @@ func (server *APISPAServer) prepare(log bool) http.Server {
 
 // Start the server and listen to requests on the specified port.
 func (server *APISPAServer) ListenAndServe() error {
-	srv := server.prepare(true)
-	log.Println("Serving on port:", srv.Addr)
-	err := srv.ListenAndServe()
+	server.srv = server.prepare(true)
+	server.stop = make(chan bool, 1)
+	serverRes := make(chan error)
+	// start server
+	go func() {
+		log.Println("Starting server...")
+		err := server.srv.ListenAndServe()
+		if err != http.ErrServerClosed {
+			err = http.ErrServerClosed
+		}
+		serverRes <- err
+	}()
+	// catch os interrupt
+	stop := make(chan os.Signal, 1)
+	signal.Notify(stop, os.Interrupt)
+	log.Println("Serving on port:", server.srv.Addr)
+	go func() {
+		// wait for os interrupt
+		sig := <-stop
+		fmt.Println("")
+		log.Println("Server interrupted: ", sig)
+		server.stop <- true
+	}()
+	<-server.stop
+	server.shutdown()
+	err := <-serverRes
 	return err
+}
+
+// Shut down server gracefully.
+func (server *APISPAServer) Shutdown() {
+	server.stop <- true
+}
+
+// internally shut down server
+func (server *APISPAServer) shutdown() {
+	log.Println("Server interrupted...")
+	srv := server.srv
+	err := srv.Shutdown(context.Background())
+	if err != nil {
+		log.Panicln("Server failed to shut down gracefully: ", err)
+	}
+	log.Println("Server shut down.")
 }
 
 type spaHandler struct {
