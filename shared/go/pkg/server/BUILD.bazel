@@ -24,7 +24,7 @@ go_test(
     data = [
         "//shared/go/pkg/server/testfiles",
     ],
-    # embed = [":server"],
+    embed = [":server"],
     visibility = ["//visibility:public"],
     deps = [
         "@com_github_stretchr_testify//assert",
