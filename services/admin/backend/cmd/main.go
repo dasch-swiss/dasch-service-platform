@@ -30,7 +30,6 @@ import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/project"
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/server"
 	"log"
-	"net/http"
 )
 
 func main() {
@@ -59,8 +58,4 @@ func main() {
 	handler.MakeProjectHandlers(&s.Router, projectService)
 
 	log.Fatal(s.ListenAndServe())
-}
-
-func spaHandler(responseWriter http.ResponseWriter, request *http.Request) {
-	http.ServeFile(responseWriter, request, "./public/index.html")
 }
