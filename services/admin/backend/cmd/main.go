@@ -44,11 +44,11 @@ func main() {
 
 	client, err := client.NewClient(config)
 	if err != nil {
-		log.Fatal("Unexpected failure setting up test connection: ", err.Error())
+		log.Fatal("Unexpected failure while creating new client: ", err.Error())
 	}
 	err = client.Connect()
 	if err != nil {
-		log.Fatal("Unexpected failure connecting: ", err.Error())
+		log.Fatal("Unexpected failure while connecting to client: ", err.Error())
 	}
 
 	projectRepo := projectRepository.NewProjectRepository(client)
