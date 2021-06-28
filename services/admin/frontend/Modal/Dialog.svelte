@@ -46,23 +46,6 @@
     });
 </script>
 
-<style>
-    h2 {
-        font-size: 2rem;
-        text-align: center;
-    }
-
-    input {
-        width: 100%;
-    }
-
-    .buttons {
-        display: flex;
-        justify-content: space-between;
-    }
-</style>
-
-
 <div>
     {#if editMode}
         <h2>Edit project info</h2>
@@ -99,3 +82,19 @@
         Okay
     </button>
 </div>
+
+<style>
+    h2 {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    input {
+        width: 100%;
+    }
+
+    .buttons {
+        display: flex;
+        justify-content: space-between;
+    }
+</style>

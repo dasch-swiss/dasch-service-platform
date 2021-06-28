@@ -472,26 +472,6 @@ func listProjects(service project.UseCase) func(w http.ResponseWriter, r *http.R
 //MakeProjectHandlers make url handlers for creating, updating, deleting, and getting projects
 func MakeProjectHandlers(r *mux.Router, service project.UseCase) {
 
-	//r.Handle("/v1/projects", n.With(
-	//	negroni.Wrap(createProject(service)),
-	//)).Methods("POST", "OPTIONS").Name("createProject")
-	//
-	//r.Handle("/v1/projects/{id}", n.With(
-	//	negroni.Wrap(updateProject(service)),
-	//)).Methods("PUT", "OPTIONS").Name("updateProject")
-	//
-	//r.Handle("/v1/projects/{id}", n.With(
-	//	negroni.Wrap(getProject(service)),
-	//)).Methods("GET", "OPTIONS").Name("getProject")
-	//
-	//r.Handle("/v1/projects/{id}", n.With(
-	//	negroni.Wrap(deleteProject(service)),
-	//)).Methods("DELETE", "OPTIONS").Name("deleteProject")
-
-	//r.Handle("/v1/projects", n.With(
-	//	negroni.Wrap(listProjects(service)),
-	//)).Methods("GET", "OPTIONS").Name("listProjects")
-
 	r.HandleFunc("/v1/projects", createProject(service)).Methods("POST", "OPTIONS")
 
 	r.HandleFunc("/v1/projects/{id}", updateProject(service)).Methods("PUT", "OPTIONS")
