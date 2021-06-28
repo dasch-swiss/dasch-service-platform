@@ -6,7 +6,7 @@ go_binary(
     name = "cmd",
     srcs = ["main.go"],
     data = [
-        "//public",
+        "//public/admin",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -24,6 +24,7 @@ go_binary(
         "@com_github_prometheus_client_golang//prometheus/promhttp",
         "@com_github_urfave_negroni//:negroni",
         "@com_github_eventstore_eventstore_client_go//client",
+        "//shared/go/pkg/server",
     ],
 )
 
@@ -33,7 +34,7 @@ go_image(
     name = "image",
     srcs = ["main.go"],
     data = [
-        "//public",
+        "//public/admin",
     ],
     visibility = ["//visibility:public"],
     deps = [
@@ -51,5 +52,6 @@ go_image(
         "@com_github_prometheus_client_golang//prometheus/promhttp",
         "@com_github_urfave_negroni//:negroni",
         "@com_github_eventstore_eventstore_client_go//client",
+        "//shared/go/pkg/server",
     ],
 )

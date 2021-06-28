@@ -39,7 +39,6 @@ export async function getProject(uuid: string): Promise<void> {
   
   response.json().then(res => {
       currentProject.set(res);
-      console.log(currentProject)
   });
 }
 

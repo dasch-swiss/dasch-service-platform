@@ -24,38 +24,19 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"net/http"
-	"os"
-	"strconv"
-	"time"
-
 	"github.com/EventStore/EventStore-Client-Go/client"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/handler"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/middleware"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/infrastructure/repository"
 	projectRepository "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/infrastructure/repository/project"
-	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/organization"
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/project"
-	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/metric"
-	"github.com/gorilla/context"
-	"github.com/gorilla/mux"
-	"github.com/prometheus/client_golang/prometheus/promhttp"
-	"github.com/urfave/negroni"
+	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/server"
+	"log"
+	"net/http"
 )
 
 func main() {
 
-	path, err := os.Getwd()
-	if err != nil {
-		log.Println(err)
-	}
-	fmt.Println(path)
-
-	// organizationRepository := repository.NewInmemDB()
-	organizationRepository := repository.NewInmemDB()
-	organizationService := organization.NewService(organizationRepository)
+	s := server.NewAPISPAServer("8080")
+	s.SetSPA("public/admin")
 
 	config, err := client.ParseConnectionString("esdb://localhost:2113?tls=false")
 	if err != nil {
@@ -71,47 +52,73 @@ func main() {
 		log.Fatal("Unexpected failure connecting: ", err.Error())
 	}
 
-	projectRepository := projectRepository.NewProjectRepository(client)
+	projectRepo := projectRepository.NewProjectRepository(client)
 
-	projectService := project.NewService(projectRepository)
+	projectService := project.NewService(projectRepo)
 
-	metricService, err := metric.NewPrometheusService()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
-	r := mux.NewRouter()
-	//handlers
-	n := negroni.New(
-		negroni.HandlerFunc(middleware.Cors),
-		negroni.HandlerFunc(middleware.Metrics(metricService)),
-		negroni.NewLogger(),
-	)
+	handler.MakeProjectHandlers(&s.Router, projectService)
 
-	//organization
-	handler.MakeOrganizationHandlers(r, *n, organizationService)
+	log.Fatal(s.ListenAndServe())
 
-	//project
-	handler.MakeProjectHandlers(r, *n, projectService)
-
-	http.Handle("/", r)
-	http.Handle("/metrics", promhttp.Handler())
-	r.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
-		w.WriteHeader(http.StatusOK)
-	})
-
-	logger := log.New(os.Stderr, "logger: ", log.Lshortfile)
-	srv := &http.Server{
-		ReadTimeout:  5 * time.Second,
-		WriteTimeout: 10 * time.Second,
-		Addr:         ":" + strconv.Itoa(8080),
-		// FIXME: get rid of deprecated github.com/gorilla/context library
-		Handler:  context.ClearHandler(http.DefaultServeMux),
-		ErrorLog: logger,
-	}
-	err = srv.ListenAndServe()
-	if err != nil {
-		log.Fatal(err.Error())
-	}
+	// organizationRepository := repository.NewInmemDB()
+	//organizationRepository := repository.NewInmemDB()
+	//organizationService := organization.NewService(organizationRepository)
+	//
+	//config, err := client.ParseConnectionString("esdb://localhost:2113?tls=false")
+	//if err != nil {
+	//	log.Fatal("Unexpected configuration error: ", err.Error())
+	//}
+	//
+	//client, err := client.NewClient(config)
+	//if err != nil {
+	//	log.Fatal("Unexpected failure setting up test connection: ", err.Error())
+	//}
+	//err = client.Connect()
+	//if err != nil {
+	//	log.Fatal("Unexpected failure connecting: ", err.Error())
+	//}
+	//
+	//projectRepository := projectRepository.NewProjectRepository(client)
+	//
+	//projectService := project.NewService(projectRepository)
+	//
+	//metricService, err := metric.NewPrometheusService()
+	//if err != nil {
+	//	log.Fatal(err.Error())
+	//}
+	//r := mux.NewRouter()
+	////handlers
+	//n := negroni.New(
+	//	negroni.HandlerFunc(middleware.Cors),
+	//	negroni.HandlerFunc(middleware.Metrics(metricService)),
+	//	negroni.NewLogger(),
+	//)
+	//
+	////organization
+	//handler.MakeOrganizationHandlers(r, *n, organizationService)
+	//
+	////project
+	//handler.MakeProjectHandlers(r, *n, projectService)
+	//
+	//http.Handle("/", r)
+	//http.Handle("/metrics", promhttp.Handler())
+	//r.HandleFunc("/ping", func(w http.ResponseWriter, r *http.Request) {
+	//	w.WriteHeader(http.StatusOK)
+	//})
+	//
+	//logger := log.New(os.Stderr, "logger: ", log.Lshortfile)
+	//srv := &http.Server{
+	//	ReadTimeout:  5 * time.Second,
+	//	WriteTimeout: 10 * time.Second,
+	//	Addr:         ":" + strconv.Itoa(8080),
+	//	// FIXME: get rid of deprecated github.com/gorilla/context library
+	//	Handler:  context.ClearHandler(http.DefaultServeMux),
+	//	ErrorLog: logger,
+	//}
+	//err = srv.ListenAndServe()
+	//if err != nil {
+	//	log.Fatal(err.Error())
+	//}
 
 	/*
 		// create file server handler to serve public folder relative to workspace root
@@ -132,29 +139,6 @@ func main() {
 	*/
 }
 
-/*
 func spaHandler(responseWriter http.ResponseWriter, request *http.Request) {
 	http.ServeFile(responseWriter, request, "./public/index.html")
 }
-
-func dbHandler(responseWriter http.ResponseWriter, request *http.Request) {
-	http.ServeFile(responseWriter, request, "./services/metadata/backend/data/db.json")
-}
-
-func projectsHandler(responseWriter http.ResponseWriter, request *http.Request) {
-
-	resp, err := http.Get("https://api.staging.dasch.swiss/admin/projects")
-	if err != nil {
-		// handle error
-	}
-
-	defer resp.Body.Close()
-
-	body, readErr := ioutil.ReadAll(resp.Body)
-	if readErr != nil {
-		log.Fatal(readErr)
-	}
-
-	fmt.Fprintf(responseWriter, string(body))
-}
-*/

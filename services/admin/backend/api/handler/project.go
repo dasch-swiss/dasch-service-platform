@@ -29,7 +29,6 @@ import (
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/service/project"
 	"github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/valueobject"
 	"github.com/gorilla/mux"
-	"github.com/urfave/negroni"
 )
 
 // RequestBody provides a reusable struct to use when decoding the JSON request body.
@@ -41,8 +40,8 @@ type RequestBody struct {
 }
 
 // createProject creates a project with the provided RequestBody.
-func createProject(service project.UseCase) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func createProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
 		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
@@ -137,7 +136,7 @@ func createProject(service project.UseCase) http.Handler {
 			w.Write([]byte(err.Error()))
 			return
 		}
-	})
+	}
 }
 
 // updateProject updates a project with the provided RequestBody.
@@ -145,8 +144,8 @@ func createProject(service project.UseCase) http.Handler {
 // All fields of the RequestBody must be provided.
 // At least one of the values of the provided RequestBody must differ from the current value of the corresponding project field.
 // If a value of a field is identical to what it already is, the update will not be performed for that field.
-func updateProject(service project.UseCase) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func updateProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
 		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
@@ -266,12 +265,12 @@ func updateProject(service project.UseCase) http.Handler {
 			w.Write([]byte(err.Error()))
 			return
 		}
-	})
+	}
 }
 
 // getProject gets a project with the provided UUID.
-func getProject(service project.UseCase) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func getProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
 		// get variables from request url
 		vars := mux.Vars(r)
@@ -328,12 +327,12 @@ func getProject(service project.UseCase) http.Handler {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 		}
-	})
+	}
 }
 
 // deleteProject deletes a project with the provided UUID.
-func deleteProject(service project.UseCase) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func deleteProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 
 		// get variables from request url
 		vars := mux.Vars(r)
@@ -398,14 +397,14 @@ func deleteProject(service project.UseCase) http.Handler {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 		}
-	})
+	}
 }
 
 // listProjects gets a list of all projects.
 // By default, this only returns active projects.
 // ReturnDeletedProjects can be provided in the request body to also return projects marked as deleted.
-func listProjects(service project.UseCase) http.Handler {
-	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+func listProjects(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
 		var input struct {
 			ReturnDeletedProjects bool `json:"returnDeletedProjects"`
 		}
@@ -467,30 +466,39 @@ func listProjects(service project.UseCase) http.Handler {
 			w.WriteHeader(http.StatusInternalServerError)
 			w.Write([]byte(err.Error()))
 		}
-	})
+	}
 }
 
 //MakeProjectHandlers make url handlers for creating, updating, deleting, and getting projects
-func MakeProjectHandlers(r *mux.Router, n negroni.Negroni, service project.UseCase) {
+func MakeProjectHandlers(r *mux.Router, service project.UseCase) {
 
-	r.Handle("/v1/projects", n.With(
-		negroni.Wrap(createProject(service)),
-	)).Methods("POST", "OPTIONS").Name("createProject")
+	//r.Handle("/v1/projects", n.With(
+	//	negroni.Wrap(createProject(service)),
+	//)).Methods("POST", "OPTIONS").Name("createProject")
+	//
+	//r.Handle("/v1/projects/{id}", n.With(
+	//	negroni.Wrap(updateProject(service)),
+	//)).Methods("PUT", "OPTIONS").Name("updateProject")
+	//
+	//r.Handle("/v1/projects/{id}", n.With(
+	//	negroni.Wrap(getProject(service)),
+	//)).Methods("GET", "OPTIONS").Name("getProject")
+	//
+	//r.Handle("/v1/projects/{id}", n.With(
+	//	negroni.Wrap(deleteProject(service)),
+	//)).Methods("DELETE", "OPTIONS").Name("deleteProject")
 
-	r.Handle("/v1/projects/{id}", n.With(
-		negroni.Wrap(updateProject(service)),
-	)).Methods("PUT", "OPTIONS").Name("updateProject")
+	//r.Handle("/v1/projects", n.With(
+	//	negroni.Wrap(listProjects(service)),
+	//)).Methods("GET", "OPTIONS").Name("listProjects")
 
-	r.Handle("/v1/projects/{id}", n.With(
-		negroni.Wrap(getProject(service)),
-	)).Methods("GET", "OPTIONS").Name("getProject")
+	r.HandleFunc("/v1/projects", createProject(service)).Methods("POST", "OPTIONS")
 
-	r.Handle("/v1/projects/{id}", n.With(
-		negroni.Wrap(deleteProject(service)),
-	)).Methods("DELETE", "OPTIONS").Name("deleteProject")
+	r.HandleFunc("/v1/projects/{id}", updateProject(service)).Methods("PUT", "OPTIONS")
 
-	r.Handle("/v1/projects", n.With(
-		negroni.Wrap(listProjects(service)),
-	)).Methods("GET", "OPTIONS").Name("listProjects")
+	r.HandleFunc("/v1/projects/{id}", deleteProject(service)).Methods("DELETE", "OPTIONS")
 
+	r.HandleFunc("/v1/projects/{id}", getProject(service)).Methods("GET", "OPTIONS")
+
+	r.HandleFunc("/v1/projects", listProjects(service)).Methods("GET", "OPTIONS")
 }
