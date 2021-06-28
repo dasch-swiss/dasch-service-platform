@@ -1,0 +1,11 @@
+package(default_visibility = ["//visibility:public"])
+
+filegroup(
+    name = "testfiles",
+    srcs = [
+        "build/bundle.css",
+        "build/bundle.js",
+        "global.css",
+        "index.html",
+    ],
+)

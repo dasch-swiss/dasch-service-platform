@@ -1,0 +1,32 @@
+load("@io_bazel_rules_go//go:def.bzl", "go_library", "go_test")
+
+go_library(
+    name = "server",
+    srcs = [
+        "api_spa_server.go",
+    ],
+    importpath = "github.com/dasch-swiss/dasch-service-platform/shared/go/pkg/server",
+    visibility = ["//visibility:public"],
+    deps = [
+        "//services/admin/backend/api/middleware",
+        "//shared/go/pkg/metric",
+        "@com_github_gorilla_mux//:mux",
+        "@com_github_urfave_negroni//:negroni",
+    ],
+)
+
+go_test(
+    name = "server_test",
+    size = "small",
+    srcs = [
+        "api_spa_server_test.go",
+    ],
+    data = [
+        "//shared/go/pkg/server/testfiles",
+    ],
+    embed = [":server"],
+    visibility = ["//visibility:public"],
+    deps = [
+        "@com_github_stretchr_testify//assert",
+    ],
+)

@@ -104,6 +104,14 @@ resource-service-test: ## run all resource-service tests
 	@bazel test //services/resource/backend/...
 
 #################################
+# API-SPA-Server targets
+#################################
+
+.PHONY: apispa-test
+apispa-test: ## run API-SPA-Server tests
+	@bazel test //shared/go/pkg/server/...
+
+#################################
 # Docs targets
 #################################
 
