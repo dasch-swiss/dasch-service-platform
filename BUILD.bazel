@@ -15,7 +15,6 @@ load("@bazel_gazelle//:def.bzl", "gazelle")
 # gazelle:prefix github.com/dasch-swiss/dasch-service-platform
 gazelle(name = "gazelle")
 
-
 filegroup(
     name = "version",
     srcs = ["version.txt"],
