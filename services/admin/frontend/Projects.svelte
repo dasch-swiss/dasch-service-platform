@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import {getProjects, deleteProject, projectsList, userInfo} from "./store";
     import {onMount} from 'svelte';
     import {Router, Link} from "svelte-routing";
