@@ -19,6 +19,7 @@ import type { Project} from './interfaces';
 
 export const projectsList = writable([] as Project[]);
 export const currentProject = writable({} as Project);
+export const userInfo = writable({});
 
 const protocol = window.location.protocol;
 const port = protocol === 'https:' ? '' : ':8080';
