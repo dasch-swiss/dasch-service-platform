@@ -30,27 +30,25 @@
 </script>
 <div class="projects">
     <div class="header">
-        {#if logged_in && $userInfo.preferred_username}
+        <div class="login-logout">
+            {#if logged_in && $userInfo.preferred_username}
+                <!--            <pre>{JSON.stringify($userInfo, null, 2)}</pre>-->
+                <div>
+                    {$userInfo.preferred_username}
+                    <button on:click={() => { kc.logout(); }}>
+                        Logout
+                    </button>
+                </div>
+            {/if}
 
-            <pre>{JSON.stringify($userInfo, null,2)}</pre>
-            You are logged in as {$userInfo.preferred_username}
-
-            <button
-                on:click={() => {
-                    kc.logout();
-                }}>Logout</button
-            >
-
-        {/if}
-
-        {#if logged_in == false}
-            You are not logged in
-            <button
-                on:click={() => {
-                    kc.login();
-                }}>Login</button
-            >
-        {/if}
+            {#if logged_in == false}
+                <div>
+                    <button on:click={() => { kc.login(); }}>
+                        Login
+                    </button>
+                </div>
+            {/if}
+        </div>
     </div>
     <div>
         <h1>Projects</h1>
@@ -80,8 +78,25 @@
 
 <style lang="scss">
     .projects {
-        width: 100%;
+        width: 96%;
         padding-left: 2%;
+        padding-right: 2%;
+    }
+
+    .projects .header .login-logout {
+      float: right;
+    }
+
+    .projects .header .login-logout button{
+      color: white;
+      background: #1e90ff;
+      border: 1px #1e90ff solid;
+      border-radius: 5px;
+      padding: 5px 10px;
+    }
+
+    .projects .header .login-logout button:hover{
+      background: #027cf4;
     }
 
     .projects .list {
