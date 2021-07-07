@@ -67,13 +67,13 @@
                    </Router>
                </div>
                <div class="delete">
-                   <button on:click={deleteProject(p.id)}>X</button>
+                   <button on:click={deleteProject($currentUser.token, p.id)}>X</button>
                </div>
            </li>
         {/each}
         <!--    Modal for creating a new project-->
         <Modal>
-            <Content modalType="create"/>
+            <Content modalType="create" token="{$currentUser.token}"/>
         </Modal>
     </div>
 </div>

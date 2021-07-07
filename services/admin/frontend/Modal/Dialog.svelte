@@ -6,6 +6,7 @@
     export let onOkay = () => {};
 
     export let editMode;
+    export let token;
 
     const { close } = getContext('simple-modal');
 
@@ -24,9 +25,9 @@
 
     async function _onOkay(){
         if (editMode) {
-            await editProject(projectID, shortCode, shortName, longName, description);
+            await editProject(token, projectID, shortCode, shortName, longName, description);
         } else {
-            await createProject(shortCode, shortName, longName, description);
+            await createProject(token, shortCode, shortName, longName, description);
         }
         close();
     }

@@ -65,7 +65,7 @@
     </div>
     <!--    Modal for editing a project-->
     <Modal>
-        <Content modalType="edit"/>
+        <Content modalType="edit" token="{$currentUser.token}"/>
     </Modal>
 </div>
 

@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
     import { getContext } from 'svelte';
     import Dialog from './Dialog.svelte';
 
@@ -8,6 +8,7 @@
     let status = 0;
 
     export let modalType = 'create' | 'edit';
+    export let token;
 
     const onCancel = (text) => {
         name = '';
@@ -24,6 +25,7 @@
             Dialog,
             {
                 editMode: modalType == 'edit',
+                token: token,
                 onCancel,
                 onOkay
             },
