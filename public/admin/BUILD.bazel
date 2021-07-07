@@ -6,6 +6,6 @@ filegroup(
         "favicon.png",
         "global.css",
         "index.html",
-        "keycloak.json"
+        "keycloak.json",
     ],
 )

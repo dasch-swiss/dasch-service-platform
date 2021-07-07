@@ -486,6 +486,13 @@ def go_dependencies():
         version = "v0.0.0-20190702054246-869f871628b6",
     )
     go_repository(
+        name = "com_github_golang_jwt_jwt",
+        importpath = "github.com/golang-jwt/jwt",
+        sum = "h1:73Z+4BJcrTC+KczS6WvTPvRGOp1WmfEP4Q1lOd9Z/+c=",
+        version = "v3.2.1+incompatible",
+    )
+
+    go_repository(
         name = "com_github_golang_mock",
         importpath = "github.com/golang/mock",
         sum = "h1:G5FRp8JnTd7RQH5kemVNlMeyXQAztQ3mOWV95KxsXH8=",

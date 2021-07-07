@@ -1,5 +1,5 @@
 <script>
-    import {getProjects, deleteProject, projectsList, userInfo} from "./store";
+    import {getProjects, deleteProject, projectsList, currentUser} from "./store";
     import {onMount} from 'svelte';
     import {Router, Link} from "svelte-routing";
     import Content from "./Modal/Content.svelte";
@@ -17,24 +17,27 @@
 
             kc.loadUserInfo().then((user) => {
                 user.token = kc.idToken;
-                userInfo.set(user)
+                currentUser.set(user);
             })
         }
     })
 
-    onMount(async () => {
-        await getProjects();
+    onMount(() => {
+        currentUser.subscribe(async info => {
+            await getProjects(info.token);
+        });
     });
 
 
 </script>
 <div class="projects">
     <div class="header">
+        <pre>{JSON.stringify($currentUser, null, 2)}</pre>
+        <div><p>{JSON.stringify($currentUser.token, null, 2)}</p></div>
         <div class="login-logout">
-            {#if logged_in && $userInfo.preferred_username}
-                <!--            <pre>{JSON.stringify($userInfo, null, 2)}</pre>-->
+            {#if logged_in && $currentUser.preferred_username}
                 <div>
-                    {$userInfo.preferred_username}
+                    {$currentUser.preferred_username}
                     <button on:click={() => { kc.logout(); }}>
                         Logout
                     </button>
@@ -58,7 +61,7 @@
            <li>
                <div class="name">
                    <Router>
-                       <Link to={`/projects/${p.id}`}>
+                       <Link to={`/projects/${p.id}`} let:params>
                            {p.longName}
                        </Link>
                    </Router>

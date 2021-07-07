@@ -15,35 +15,39 @@
  *
  */
 import { writable } from 'svelte/store'
-import type { Project} from './interfaces';
+import type { Project, User} from './interfaces';
 
 export const projectsList = writable([] as Project[]);
 export const currentProject = writable({} as Project);
-export const userInfo = writable({});
+export const currentUser = writable({});
 
 const protocol = window.location.protocol;
 const port = protocol === 'https:' ? '' : ':8080';
 const baseUrl = `${protocol}//${window.location.hostname}${port}/`;
 
-export async function getProjects(returnDeletedProjects?: boolean): Promise<void> {
+export async function getProjects(jwt: string, returnDeletedProjects?: boolean): Promise<void> {
 
-  const response = await fetch(`${baseUrl}v1/projects`);
+  const response = await fetch(`${baseUrl}v1/projects`, {
+    headers: {'Authorization': 'Bearer ' + jwt}
+  });
   
   response.json().then(res => {
       projectsList.set(res);
   });
 }
 
-export async function getProject(uuid: string): Promise<void> {
+export async function getProject(jwt: string, uuid: string): Promise<void> {
 
-  const response = await fetch(`${baseUrl}v1/projects/${uuid}`);
+  const response = await fetch(`${baseUrl}v1/projects/${uuid}`, {
+    headers: {'Authorization': 'Bearer ' + jwt}
+  });
   
   response.json().then(res => {
       currentProject.set(res);
   });
 }
 
-export async function createProject(sc: string, sn: string, ln: string, desc: string): Promise<void> {
+export async function createProject(jwt: string, sc: string, sn: string, ln: string, desc: string): Promise<void> {
 
   const p = {
     shortCode: sc,
@@ -54,15 +58,16 @@ export async function createProject(sc: string, sn: string, ln: string, desc: st
 
   const response = await fetch(`${baseUrl}v1/projects`, {
     method: 'POST',
+    headers: {'Authorization': 'Bearer ' + jwt},
     body: JSON.stringify(p)
   });
 
   response.json().then(() => {
-    getProjects();
+    getProjects(jwt);
   })
 }
 
-export async function editProject(uuid: string, sc: string, sn: string, ln: string, desc: string): Promise<void> {
+export async function editProject(jwt: string, uuid: string, sc: string, sn: string, ln: string, desc: string): Promise<void> {
 
   const p = {
     shortCode: sc,
@@ -73,21 +78,28 @@ export async function editProject(uuid: string, sc: string, sn: string, ln: stri
 
   const response = await fetch(`${baseUrl}v1/projects/${uuid}`, {
     method: 'PUT',
+    headers: {'Authorization': 'Bearer ' + jwt},
     body: JSON.stringify(p)
   });
 
   response.json().then(() => {
-    getProject(uuid);
+    getProject(jwt, uuid);
   })
 }
 
-export async function deleteProject(uuid: string): Promise<void> {
+export async function deleteProject(jwt: string, uuid: string): Promise<void> {
 
   const response = await fetch(`${baseUrl}v1/projects/${uuid}`, {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {'Authorization': 'Bearer ' + jwt}
   });
 
-  response.json().then(res => {
-    getProjects();
+  response.json().then(() => {
+    getProjects(jwt);
   });
+}
+
+export function getUser(user: User) {
+  console.log(user);
+  currentUser.set(user);
 }

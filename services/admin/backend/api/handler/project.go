@@ -20,8 +20,11 @@ package handler
 import (
 	"context"
 	"encoding/json"
+	"fmt"
+	"github.com/golang-jwt/jwt"
 	"log"
 	"net/http"
+	"strings"
 	"time"
 
 	"github.com/dasch-swiss/dasch-service-platform/services/admin/backend/api/presenter"
@@ -42,6 +45,15 @@ type RequestBody struct {
 // createProject creates a project with the provided RequestBody.
 func createProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		// check JWT token to make sure user is authenticated
+		// an object containing the users info is returned by ExtractTokenMetadata (currently not used, hence the underscore)
+		_, tokenErr := ExtractTokenMetadata(r)
+		if tokenErr != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte(tokenErr.Error()))
+			return
+		}
 
 		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
@@ -146,6 +158,15 @@ func createProject(service project.UseCase) func(w http.ResponseWriter, r *http.
 // If a value of a field is identical to what it already is, the update will not be performed for that field.
 func updateProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		// check JWT token to make sure user is authenticated
+		// an object containing the users info is returned by ExtractTokenMetadata (currently not used, hence the underscore)
+		_, tokenErr := ExtractTokenMetadata(r)
+		if tokenErr != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte(tokenErr.Error()))
+			return
+		}
 
 		var input RequestBody
 		err := json.NewDecoder(r.Body).Decode(&input)
@@ -272,6 +293,17 @@ func updateProject(service project.UseCase) func(w http.ResponseWriter, r *http.
 func getProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
 
+		// check JWT token to make sure user is authenticated
+		// an object containing the users info is returned by ExtractTokenMetadata (currently not used, hence the underscore)
+		_, tokenErr := ExtractTokenMetadata(r)
+		if tokenErr != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte(tokenErr.Error()))
+			return
+		}
+
+		//log.Print(tokenAuth.UserId)
+
 		// get variables from request url
 		vars := mux.Vars(r)
 
@@ -333,6 +365,15 @@ func getProject(service project.UseCase) func(w http.ResponseWriter, r *http.Req
 // deleteProject deletes a project with the provided UUID.
 func deleteProject(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		// check JWT token to make sure user is authenticated
+		// an object containing the users info is returned by ExtractTokenMetadata (currently not used, hence the underscore)
+		_, tokenErr := ExtractTokenMetadata(r)
+		if tokenErr != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte(tokenErr.Error()))
+			return
+		}
 
 		// get variables from request url
 		vars := mux.Vars(r)
@@ -405,6 +446,16 @@ func deleteProject(service project.UseCase) func(w http.ResponseWriter, r *http.
 // ReturnDeletedProjects can be provided in the request body to also return projects marked as deleted.
 func listProjects(service project.UseCase) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
+
+		// check JWT token to make sure user is authenticated
+		// an object containing the users info is returned by ExtractTokenMetadata (currently not used, hence the underscore)
+		_, tokenErr := ExtractTokenMetadata(r)
+		if tokenErr != nil {
+			w.WriteHeader(http.StatusUnauthorized)
+			w.Write([]byte(tokenErr.Error()))
+			return
+		}
+
 		var input struct {
 			ReturnDeletedProjects bool `json:"returnDeletedProjects"`
 		}
@@ -481,4 +532,77 @@ func MakeProjectHandlers(r *mux.Router, service project.UseCase) {
 	r.HandleFunc("/v1/projects/{id}", getProject(service)).Methods("GET", "OPTIONS")
 
 	r.HandleFunc("/v1/projects", listProjects(service)).Methods("GET", "OPTIONS")
+}
+
+// ExtractToken extracts the JWT token from the header.
+func ExtractToken(r *http.Request) string {
+	bearToken := r.Header.Get("Authorization")
+	//normally Authorization the_token_xxx
+	strArr := strings.Split(bearToken, " ")
+	if len(strArr) == 2 {
+		return strArr[1]
+	}
+	return ""
+}
+
+// VerifyToken verifies the JWT token to ensure the public key was provided and it was signed via RSA.
+func VerifyToken(r *http.Request) (*jwt.Token, error) {
+	tokenString := ExtractToken(r)
+
+	key, err := jwt.ParseRSAPublicKeyFromPEM(getPublicKey())
+	if err != nil {
+		return nil, fmt.Errorf("error parsing RSA public key: %v\n", err)
+	}
+
+	token, err := jwt.Parse(tokenString, func(token *jwt.Token) (interface{}, error) {
+		//Make sure that the token method conform to "SigningMethodRSA"
+		if _, ok := token.Method.(*jwt.SigningMethodRSA); !ok {
+			return nil, fmt.Errorf("unexpected signing method: %v", token.Header["alg"])
+		}
+		return key, nil
+	})
+	if err != nil {
+		return nil, err
+	}
+	return token, nil
+}
+
+// TokenValid checks if a JWT token is valid.
+func TokenValid(r *http.Request) error {
+	token, err := VerifyToken(r)
+	if err != nil {
+		return err
+	}
+	if _, ok := token.Claims.(jwt.Claims); !ok && !token.Valid {
+		return err
+	}
+	return nil
+}
+
+// ExtractTokenMetadata extracts the data contained within the JWT token and returns an AccessDetails object.
+func ExtractTokenMetadata(r *http.Request) (*AccessDetails, error) {
+	token, err := VerifyToken(r)
+	if err != nil {
+		return nil, err
+	}
+	claims, ok := token.Claims.(jwt.MapClaims)
+	if ok && token.Valid {
+		userId, ok := claims["sub"].(string)
+		if !ok {
+			return nil, err
+		}
+		return &AccessDetails{
+			UserId: userId,
+		}, nil
+	}
+	return nil, err
+}
+
+type AccessDetails struct {
+	UserId string
+}
+
+// TODO: figure out the correct way to provide the public key
+func getPublicKey() []byte {
+	return []byte("-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlxODHtViZgHJgchXZWJ2QvuFBrBJ4jM5yqme0+5yCRQLMKGUH5fXDCxZSdCjky5wKDgquJ9hyEdaB7jMqVdZRfLUHGZ3Z5rvTKf5Rh6LqOI1ZECJEFQPBe3HJMrR9uS0svjaEVtzdd615cNKgW6k44XybaKgbkQcnwa73lZ0eXiMxB3SjEiM4qz21b7PB0zgdLUv9+6eLBXZx3tgd1e4TXv3H+xLCyjr1WVr+cnjakc4Dn1ZHgtIbttolg4U4rKfEpijo8sECzzCUNgtEVMIpYXaCDqb5+hq7RARmpzbyRAtXWuvlHqwhfSGNqQEedJYEl4C0qThXE37KFtU3LZRdwIDAQAB\n-----END PUBLIC KEY-----")
 }

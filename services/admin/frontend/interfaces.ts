@@ -28,3 +28,18 @@ export interface Project {
     deletedAt: string;
     deletedBy: string;
 }
+
+export interface User {
+    sub: string;
+    email_verified: boolean;
+    lastName: string;
+    jwt: string;
+    day_profession: string;
+    name: string;
+    preferred_username: string;
+    given_name: string;
+    family_name: string;
+    email: string;
+    night_profession: string;
+    token: string;
+}
