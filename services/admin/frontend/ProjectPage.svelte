@@ -8,9 +8,10 @@
     const projectID = window.location.pathname.split("/")[2];
 
     onMount(async () => {
-        currentUser.subscribe(async info => {
-            console.log("ProjectPage currentUser: ", $currentUser)
-            await getProject(info.token, projectID);
+        currentUser.subscribe(async userInfo => {
+            if ($currentUser.token) {
+                await getProject(userInfo.token, projectID);
+            }
         });
     });
 
@@ -20,14 +21,20 @@
     <div>
         <h1>Project Info</h1>
     </div>
-    <div class="info">
-        <p>Short Code: {$currentProject.shortCode}</p>
-        <p>Short Name: {$currentProject.shortName}</p>
-        <p>Long Name: {$currentProject.longName}</p>
-        <p>Description: {$currentProject.description}</p>
-    </div>
-    <!--    Modal for editing a project-->
-    <Modal>
-        <Content modalType="edit" token="{$currentUser.token}"/>
-    </Modal>
+    {#if $currentUser.token}
+        <div class="info">
+            <p>Short Code: {$currentProject.shortCode}</p>
+            <p>Short Name: {$currentProject.shortName}</p>
+            <p>Long Name: {$currentProject.longName}</p>
+            <p>Description: {$currentProject.description}</p>
+        </div>
+        <!--    Modal for editing a project-->
+        <Modal>
+            <Content modalType="edit" token="{$currentUser.token}"/>
+        </Modal>
+    {:else}
+        <div>
+            <p>You must be logged in to access the project info.</p>
+        </div>
+    {/if}
 </div>

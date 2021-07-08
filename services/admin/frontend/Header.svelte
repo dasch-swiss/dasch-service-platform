@@ -16,7 +16,6 @@
                 kc.loadUserInfo().then((user) => {
                     user.token = kc.idToken;
                     currentUser.set(user);
-                    //console.log($currentUser);
                 });
             }
         })
