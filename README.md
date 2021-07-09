@@ -61,7 +61,7 @@ To run, build and publish a docker image of the server, use the commands `metada
 
 #### Server
 
-This service depends on a running event store.
+This service requires a running event store.
 
 For testing, you can create a local event store by running:
 
@@ -73,14 +73,27 @@ Then run:
 ```make admin-service-run```
 
 The terminal will hang on:
-```/private/var/tmp/_bazel_username/6ae9f9aa2327923c1b3eb247cfa2ec4b/execroot/swiss_dasch_dsp_repository/bazel-out/darwin-fastbuild/bin/services/admin/backend/cmd/cmd_/cmd.runfiles/swiss_dasch_dsp_repository```
+
+```2021/07/08 14:01:33 Starting server...```
+
+```2021/07/08 14:01:33 Serving on port: :8080```
 
 This is because of Negroni, which will log out the results of your API requests.
 Now you can send requests to the API via Postman or your preferred application/method.
 
+**A valid JWT token must be provided with each API request**
+
 Example create project request:
 URL:
 ```POST http://localhost:8080/v1/projects```
+
+Headers:
+```json
+{
+  "Authorization": "bearer [JWT]"
+}
+```
+
 JSON request body:
 ```json
 {
@@ -98,6 +111,14 @@ Example update project request:
 
 URL:
 ```PUT http://localhost:8080/v1/projects/[uuid]```
+
+Headers:
+```json
+{
+  "Authorization": "bearer [JWT]"
+}
+```
+
 JSON request body:
 ```json
 {
@@ -114,13 +135,39 @@ Example delete project request:
 
 URL:
 ```DELETE http://localhost:8080/v1/projects/[uuid]```
+
+Headers:
+```json
+{
+  "Authorization": "bearer [JWT]"
+}
+```
+
 You will then see this project deletion event in your event store on http://localhost:2113 under the Stream Browser tab (you may need to refresh the page if you're currently on it).
+
 To get a list of all the projects:
+
 URL:
 ```GET http://localhost:8080/v1/projects```
+
+Headers:
+```json
+{
+  "Authorization": "bearer [JWT]"
+}
+```
+
 To get a project:
+
 URL:
 ```GET http://localhost:8080/v1/projects/[uuid]```
+
+Headers:
+```json
+{
+  "Authorization": "bearer [JWT]"
+}
+```
 
 ## Go dependencies
 
