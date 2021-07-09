@@ -22,6 +22,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/golang-jwt/jwt"
+	"io/ioutil"
 	"log"
 	"net/http"
 	"strings"
@@ -602,7 +603,11 @@ type AccessDetails struct {
 	UserId string
 }
 
-// TODO: figure out the correct way to provide the public key
 func getPublicKey() []byte {
-	return []byte("-----BEGIN PUBLIC KEY-----\nMIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlxODHtViZgHJgchXZWJ2QvuFBrBJ4jM5yqme0+5yCRQLMKGUH5fXDCxZSdCjky5wKDgquJ9hyEdaB7jMqVdZRfLUHGZ3Z5rvTKf5Rh6LqOI1ZECJEFQPBe3HJMrR9uS0svjaEVtzdd615cNKgW6k44XybaKgbkQcnwa73lZ0eXiMxB3SjEiM4qz21b7PB0zgdLUv9+6eLBXZx3tgd1e4TXv3H+xLCyjr1WVr+cnjakc4Dn1ZHgtIbttolg4U4rKfEpijo8sECzzCUNgtEVMIpYXaCDqb5+hq7RARmpzbyRAtXWuvlHqwhfSGNqQEedJYEl4C0qThXE37KFtU3LZRdwIDAQAB\n-----END PUBLIC KEY-----")
+	publicKey, err := ioutil.ReadFile("services/admin/backend/config/keycloak_realm_key.rsa.pub")
+	if err != nil {
+		log.Fatal(err.Error())
+	}
+
+	return publicKey
 }
