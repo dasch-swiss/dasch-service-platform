@@ -12,8 +12,8 @@ These values should match your Keycloak server/realm configurations.
 
 ```json
 {
-  "realm": "admin-service-dsp-1760",
-  "auth-server-url": "https://auth.dasch.swiss/auth/",
+  "realm": "my-realm-name",
+  "auth-server-url": "https://auth.server.url",
   "ssl-required": "external",
   "resource": "dasch-service-platform",
   "public-client": true,
@@ -21,5 +21,5 @@ These values should match your Keycloak server/realm configurations.
 }
 ```
 
-## key.rsa.pub
-TODO: Once the public key is moved to a file, clarify that this file must be updated with the Keycloak realms public key.
+## keycloak_realm_key.rsa.pub
+This file is found in services/admin/backend/config. The contents should be replaced with the public key from your Keycloak realm which can be found under the "Keys" tab under "Realm Settings" in the Keycloak admin console. The file name must remain "keycloak_realm_key.rsa.pub".
