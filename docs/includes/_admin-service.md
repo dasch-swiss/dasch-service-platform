@@ -1,5 +1,9 @@
 # Admin Service
 
+<aside class="notice">
+    All API requests require a valid JWT token which can be obtained from the token returned from a successful Keycloak login.
+</aside>
+
 ## Create a Project
 
 ```javascript
@@ -10,10 +14,13 @@ async function CreateProject() {
     "longName": "long name",
     "description": "description"
   };
+  
+  const jwt = "8y7h3rt89h4tn";
 
   const response = await fetch('http://localhost:8080/v1/projects',
    {
      method: 'POST',
+     headers: {'Authorization': 'Bearer ' + jwt},
      body: JSON.stringify(projectInfo)
    });
    
@@ -31,7 +38,7 @@ projectInfo = {
     'description': 'description'
 }
 
-response = requests.post('http://localhost:8080/v1/projects', json=projectInfo)
+response = requests.post('http://localhost:8080/v1/projects', json=projectInfo, headers={'Authorization': 'Bearer 8y7h3rt89h4tn'})
 
 project = response.content
 ```
@@ -64,6 +71,11 @@ This endpoint creates a project.
 
 `POST http://localhost:8080/v1/projects`
 
+###  Request Headers
+Property | Description
+--------- | -----------
+Authorization | Bearer [JWT]
+
 ### Request Body 
 Property | Description
 --------- | -----------
@@ -87,9 +99,12 @@ async function UpdateProject() {
     "description": "updated description"
   };
 
+  const jwt = "8y7h3rt89h4tn";
+    
   const response = await fetch('http://localhost:8080/v1/projects/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8',
    {
      method: 'PUT',
+     headers: {'Authorization': 'Bearer ' + jwt},
      body: JSON.stringify(updateProjectData)
    });
    
@@ -107,7 +122,7 @@ updateProjectData = {
   'description': 'updated description'
 }
 
-response = requests.put('http://localhost:8080/v1/projects/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8', json=updateProjectData)
+response = requests.put('http://localhost:8080/v1/projects/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8', json=updateProjectData, headers={'Authorization': 'Bearer 8y7h3rt89h4tn'})
 
 project = response.content
 ```
@@ -164,10 +179,14 @@ description | The updated description of the project
 
 ```javascript
 async function DeleteProject() {
+  const jwt = "8y7h3rt89h4tn";
+    
   const response = await fetch('http://localhost:8080/v1/projects/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8',
   {
-    method: 'DELETE'
+    method: 'DELETE',
+    headers: {'Authorization': 'Bearer ' + jwt}
   });
+  
   const project = await response.json();
 }
 ```
@@ -175,7 +194,7 @@ async function DeleteProject() {
 ```python
 import requests
 
-response = requests.delete('http://localhost:8080/v1/projects/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8')
+response = requests.delete('http://localhost:8080/v1/projects/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8', headers={'Authorization': 'Bearer 8y7h3rt89h4tn'})
 
 project = response.content
 ```
@@ -217,7 +236,12 @@ ID | The ID of the project to delete
 let projectsList = [];
 
 async function GetAllProjects() {
-  const response = await fetch('http://localhost:8080/v1/projects');
+  const jwt = "8y7h3rt89h4tn";
+    
+  const response = await fetch('http://localhost:8080/v1/projects', {
+      headers: {'Authorization': 'Bearer ' + jwt}
+  });
+  
   projectsList = await response.json();
 }
 ```
@@ -225,7 +249,7 @@ async function GetAllProjects() {
 ```python
 import requests
 
-response = requests.get('http://localhost:8080/v1/projects')
+response = requests.get('http://localhost:8080/v1/projects', headers={'Authorization': 'Bearer 8y7h3rt89h4tn'})
 
 projectsList = response.content
 ```
@@ -284,7 +308,12 @@ returnDeletedProjects | Boolean | If true, the list returned will also include p
 
 ```javascript
 async function GetProject() {
-  const response = await fetch('http://localhost:8080/v1/project/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8');
+  const jwt = "8y7h3rt89h4tn";
+  
+  const response = await fetch('http://localhost:8080/v1/project/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8', {
+      headers: {'Authorization': 'Bearer ' + jwt}
+  });
+  
   const project = await response.json();
 }
 ```
@@ -292,7 +321,7 @@ async function GetProject() {
 ```python
 import requests
 
-response = requests.get('http://localhost:8080/v1/project/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8')
+response = requests.get('http://localhost:8080/v1/project/b9d7a6e4-dcd6-43ff-a928-f55e9e8097f8', headers={'Authorization': 'Bearer 8y7h3rt89h4tn'})
 
 project = response.content
 ```
