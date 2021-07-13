@@ -42,6 +42,7 @@
       bottom: 0px;
       z-index: 1;
     }
+    .version{padding-left: 12px;}
   }
   @media screen and (min-width: 1200px) {
   .footer-container {
