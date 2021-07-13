@@ -1,5 +1,25 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.3.0...v1.4.0) (2021-07-13)
+
+
+### Bug Fixes
+
+* **metadata:** remove EULA link ([#99](https://www.github.com/dasch-swiss/dasch-service-platform/issues/99)) ([1ff6170](https://www.github.com/dasch-swiss/dasch-service-platform/commit/1ff617038e43be9b1990fec4f8a1f2d775974f83))
+
+
+### Enhancements
+
+* **admin-gui:** admin service project gui (DSP-1738) ([#91](https://www.github.com/dasch-swiss/dasch-service-platform/issues/91)) ([8e90261](https://www.github.com/dasch-swiss/dasch-service-platform/commit/8e902611e35472fb1423e40ae41f5212f5d92ce8))
+* **admin-gui:** keycloak authentication (DSP-1760) ([#95](https://www.github.com/dasch-swiss/dasch-service-platform/issues/95)) ([7e6b7b5](https://www.github.com/dasch-swiss/dasch-service-platform/commit/7e6b7b59c67e5ebb7628f07182e05f667c649e90))
+* **admin-service:** admin service authorization (DSP-1772) ([#96](https://www.github.com/dasch-swiss/dasch-service-platform/issues/96)) ([13cd89a](https://www.github.com/dasch-swiss/dasch-service-platform/commit/13cd89aafba4eb33aa9380bfb7306275a0431698))
+* write generic Go SPA and API server (DSP-1759) ([#93](https://www.github.com/dasch-swiss/dasch-service-platform/issues/93)) ([4edb145](https://www.github.com/dasch-swiss/dasch-service-platform/commit/4edb14535d678cb469f84c47ee5537b377f58bbc))
+
+
+### Documentation
+
+* updates slate docs and README ([#97](https://www.github.com/dasch-swiss/dasch-service-platform/issues/97)) ([6816c3a](https://www.github.com/dasch-swiss/dasch-service-platform/commit/6816c3a7ce8211418a54527b643d87fced0a89e5))
+
 ## [1.3.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.2.0...v1.3.0) (2021-06-15)
 
 
