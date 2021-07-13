@@ -5,7 +5,6 @@ go_library(
     srcs = [
         "event.go",
         "project.go",
-        "user.go",
     ],
     importpath = "github.com/dasch-swiss/dasch-service-platform/services/admin/backend/event",
     visibility = ["//services/admin:__subpackages__"],
