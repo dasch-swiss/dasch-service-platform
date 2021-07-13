@@ -16,8 +16,9 @@
     <div class="modal-wrapper">
       <div class="modal-text">
         DaSCH uses cookies to provide greater user experience. By using our applications you accept
-        <a href="https://dasch.swiss/cookie-policy/" target=_blank>cookie policy</a>,
-        <a href="https://dasch.swiss/eula/" target=_blank>EULA</a> and
+        <a href="https://dasch.swiss/cookie-policy/" target=_blank>cookie policy</a>
+        <!-- <a href="https://dasch.swiss/eula/" target=_blank>EULA</a> -->
+        and
         <a href="https://dasch.swiss/privacy-policy/" target=_blank>privacy policy</a>.
       </div>
       <div class="modal-buttons">
