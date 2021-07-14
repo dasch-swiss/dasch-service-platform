@@ -1,5 +1,17 @@
 # Changelog
 
+### [1.4.1](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.4.0...v1.4.1) (2021-07-14)
+
+
+### Bug Fixes
+
+* metadata page gives 404 error after release 1.4.0 (DSP-1793) ([#102](https://www.github.com/dasch-swiss/dasch-service-platform/issues/102)) ([4090965](https://www.github.com/dasch-swiss/dasch-service-platform/commit/40909657a88a5213495e6c72c570f3120e03db13))
+
+
+### Maintenance
+
+* **admin-service:** removes organization and user implementations ([#100](https://www.github.com/dasch-swiss/dasch-service-platform/issues/100)) ([26107c4](https://www.github.com/dasch-swiss/dasch-service-platform/commit/26107c4b8aa604017f96eb33901c24916f3fafcc))
+
 ## [1.4.0](https://www.github.com/dasch-swiss/dasch-service-platform/compare/v1.3.0...v1.4.0) (2021-07-13)
 
 
