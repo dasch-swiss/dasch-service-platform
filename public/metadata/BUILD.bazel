@@ -1,7 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
 filegroup(
-    name = "public",
+    name = "metadata",
     srcs = glob(["assets/**/*"]) + glob(["build/**/*"]) + [
         "favicon.png",
         "global.css",
